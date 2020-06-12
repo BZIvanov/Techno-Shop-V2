@@ -1,16 +1,15 @@
 import React from 'react';
 import { MenuItem } from '../../molecules';
 import { AppWidth, ItemsContainer } from '../../atoms';
+import categories from './data';
 
 const ProductCategories = () => {
   return (
     <AppWidth>
       <ItemsContainer>
-        <MenuItem title="Mobile Phones" />
-        <MenuItem title="Tablets" />
-        <MenuItem title="Smart Watches" />
-        <MenuItem title="Fitnes Wrist" />
-        <MenuItem title="Headphones" />
+        {categories.map((category) => (
+          <MenuItem key={category.id} {...category} />
+        ))}
       </ItemsContainer>
     </AppWidth>
   );
