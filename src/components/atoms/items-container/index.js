@@ -8,8 +8,9 @@ const ItemsContainer = styled.div`
   @media (max-width: ${({ theme }) => theme.breakpoints.md}px) {
     padding: 1.5rem 3rem;
   }
-  @media (max-width: ${({ theme }) => theme.breakpoints.md}px) {
+  @media (max-width: ${({ theme }) => theme.breakpoints.sm}px) {
     padding: 1rem;
+    justify-content: center;
   }
 `;
 

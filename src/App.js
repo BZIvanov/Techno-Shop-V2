@@ -1,6 +1,6 @@
 import React from 'react';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
-import { Home } from './components/pages';
+import { Home, Shop } from './components/pages';
 import { GlobalStyles } from './components/atoms';
 import './App.css';
 
@@ -10,6 +10,7 @@ function App() {
       <GlobalStyles />
       <Switch>
         <Route path="/" exact component={Home} />
+        <Route path="/shop" exact component={Shop} />
       </Switch>
     </BrowserRouter>
   );

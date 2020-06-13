@@ -13,15 +13,6 @@ const CommonSubheading = styled.p`
 `;
 
 const HeadingOne = styled(CommonHeading).attrs({ as: 'h1' })`
-  font-size: 2.5rem;
-  @media (max-width: ${({ theme }) => theme.breakpoints.md}px) {
-    font-size: 2.2rem;
-  }
-  @media (max-width: ${({ theme }) => theme.breakpoints.sm}px) {
-    font-size: 2rem;
-  }
-`;
-const HeadingTwo = styled(CommonHeading).attrs({ as: 'h2' })`
   font-size: 2.2rem;
   @media (max-width: ${({ theme }) => theme.breakpoints.md}px) {
     font-size: 2rem;
@@ -30,16 +21,16 @@ const HeadingTwo = styled(CommonHeading).attrs({ as: 'h2' })`
     font-size: 1.8rem;
   }
 `;
-const HeadingThree = styled(CommonHeading).attrs({ as: 'h3' })`
-  font-size: 1.8rem;
+const HeadingTwo = styled(CommonHeading).attrs({ as: 'h2' })`
+  font-size: 2rem;
   @media (max-width: ${({ theme }) => theme.breakpoints.md}px) {
-    font-size: 1.6rem;
+    font-size: 1.8rem;
   }
   @media (max-width: ${({ theme }) => theme.breakpoints.sm}px) {
-    font-size: 1.4rem;
+    font-size: 1.6rem;
   }
 `;
-const HeadingFour = styled(CommonHeading).attrs({ as: 'h4' })`
+const HeadingThree = styled(CommonHeading).attrs({ as: 'h3' })`
   font-size: 1.6rem;
   @media (max-width: ${({ theme }) => theme.breakpoints.md}px) {
     font-size: 1.4rem;
@@ -48,17 +39,26 @@ const HeadingFour = styled(CommonHeading).attrs({ as: 'h4' })`
     font-size: 1.2rem;
   }
 `;
-const HeadingFive = styled(CommonHeading).attrs({ as: 'h5' })`
+const HeadingFour = styled(CommonHeading).attrs({ as: 'h4' })`
   font-size: 1.4rem;
   @media (max-width: ${({ theme }) => theme.breakpoints.md}px) {
+    font-size: 1.3rem;
+  }
+  @media (max-width: ${({ theme }) => theme.breakpoints.sm}px) {
     font-size: 1.2rem;
+  }
+`;
+const HeadingFive = styled(CommonHeading).attrs({ as: 'h5' })`
+  font-size: 1.2rem;
+  @media (max-width: ${({ theme }) => theme.breakpoints.md}px) {
+    font-size: 1.1rem;
   }
   @media (max-width: ${({ theme }) => theme.breakpoints.sm}px) {
     font-size: 1rem;
   }
 `;
 const HeadingSix = styled(CommonHeading).attrs({ as: 'h6' })`
-  font-size: 1.2rem;
+  font-size: 1.1rem;
   @media (max-width: ${({ theme }) => theme.breakpoints.md}px) {
     font-size: 1rem;
   }
@@ -67,12 +67,12 @@ const HeadingSix = styled(CommonHeading).attrs({ as: 'h6' })`
   }
 `;
 const SubtitleOne = styled(CommonSubheading)`
-  font-size: 1.4rem;
+  font-size: 1.1rem;
   @media (max-width: ${({ theme }) => theme.breakpoints.md}px) {
-    font-size: 1.2rem;
+    font-size: 1rem;
   }
   @media (max-width: ${({ theme }) => theme.breakpoints.sm}px) {
-    font-size: 1rem;
+    font-size: 0.9rem;
   }
 `;
 const SubtitleTwo = styled(CommonSubheading)`
