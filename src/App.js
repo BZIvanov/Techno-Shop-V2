@@ -3,7 +3,6 @@ import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import { Home, Shop } from './components/pages';
 import { Header } from './components/organisms';
 import { GlobalStyles } from './components/atoms';
-import './App.css';
 
 function App() {
   return (

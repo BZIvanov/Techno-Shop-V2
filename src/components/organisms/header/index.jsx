@@ -1,4 +1,5 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import styled from 'styled-components';
 import { NavLinks } from '../../molecules';
 import { Link, TabletMobileComboIcon } from '../../atoms';
@@ -23,4 +24,8 @@ const Header = () => {
   );
 };
 
-export default Header;
+const mapStateToProps = (state) => ({
+  isAuthenticated: state.user.user,
+});
+
+export default connect(mapStateToProps)(Header);
