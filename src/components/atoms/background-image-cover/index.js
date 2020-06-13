@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 
 const BackgroundCss = styled.div`
-  background-image: url(${({ imageURL }) => imageURL});
+  background-image: url(${({ imageUrl }) => imageUrl});
   background-position: center;
   background-size: cover;
   positions: absolute;
@@ -10,8 +10,8 @@ const BackgroundCss = styled.div`
   height: 100%;
 `;
 
-const BackgroundImageBox = (props) => (
+const BackgroundImageCover = (props) => (
   <BackgroundCss {...props}>{props.children}</BackgroundCss>
 );
 
-export default BackgroundImageBox;
+export default BackgroundImageCover;

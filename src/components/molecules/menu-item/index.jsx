@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { withRouter } from 'react-router-dom';
-import { Typography, BackgroundImageBox } from '../../atoms';
+import { Typography, BackgroundImageCover } from '../../atoms';
 
 const ItemCss = styled.article`
   min-width: 30%;
@@ -58,7 +58,7 @@ const MenuItem = (props) => {
 
   return (
     <ItemCss {...props} onClick={handleNavigate}>
-      <BackgroundImageBox {...props} />
+      <BackgroundImageCover {...props} />
       <ContentCss>
         <Typography variant="h4">{props.title}</Typography>
         <Typography variant="subtitle1">Shop now</Typography>
