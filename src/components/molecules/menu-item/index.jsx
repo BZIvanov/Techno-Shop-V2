@@ -1,11 +1,13 @@
 import React from 'react';
 import styled from 'styled-components';
+import { withRouter } from 'react-router-dom';
 import { Typography, BackgroundImageBox } from '../../atoms';
 
 const ItemCss = styled.article`
   min-width: 30%;
   height: ${({ size }) => (size === 'large' ? '24rem' : '15rem')};
   flex: 1 1 auto;
+  text-align: center;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -15,10 +17,17 @@ const ItemCss = styled.article`
   overflow: hidden;
   &:hover {
     cursor: pointer;
+    & > *:first-child {
+      transform: scale(1.1);
+      transition: transform 5s cubic-bezier(0.25, 0.45, 0.45, 0.95);
+    }
   }
-  & > *:first-child:hover {
-    transform: scale(1.1);
-    transition: transform 5s cubic-bezier(0.25, 0.45, 0.45, 0.95);
+  @media (max-width: ${({ theme }) => theme.breakpoints.md}px) {
+    min-width: 45%;
+    height: 15rem;
+  }
+  @media (max-width: ${({ theme }) => theme.breakpoints.sm}px) {
+    min-width: 100%;
   }
 `;
 
@@ -42,8 +51,13 @@ const ContentCss = styled.div`
 `;
 
 const MenuItem = (props) => {
+  console.log(props);
+  const handleNavigate = () => {
+    props.history.push(`${props.match.url}${props.linkURL}`);
+  };
+
   return (
-    <ItemCss {...props}>
+    <ItemCss {...props} onClick={handleNavigate}>
       <BackgroundImageBox {...props} />
       <ContentCss>
         <Typography variant="h4">{props.title}</Typography>
@@ -53,4 +67,4 @@ const MenuItem = (props) => {
   );
 };
 
-export default MenuItem;
+export default withRouter(MenuItem);

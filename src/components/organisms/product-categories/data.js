@@ -4,6 +4,7 @@ export default [
     title: 'Mobile Phones',
     imageURL:
       'https://images.pexels.com/photos/47261/pexels-photo-47261.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940',
+    linkURL: 'mobile-phones',
   },
   {
     id: 2,
