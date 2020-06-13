@@ -51,7 +51,6 @@ const ContentCss = styled.div`
 `;
 
 const MenuItem = (props) => {
-  console.log(props);
   const handleNavigate = () => {
     props.history.push(`${props.match.url}${props.linkURL}`);
   };

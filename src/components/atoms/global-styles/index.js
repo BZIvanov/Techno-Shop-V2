@@ -6,7 +6,7 @@ const GlobalStyles = createGlobalStyle`
     font-size: 16px;
   }
   *, *:before, *:after {
-    box-sizing: inherit;
+    box-sizing: border-box;
   }
   body {
     padding: 0;
