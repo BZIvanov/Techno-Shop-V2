@@ -8,7 +8,7 @@ const theme = {
   },
   palette: {
     primary: '#4a4a4a',
-    secondary: '#297373',
+    secondary: '#FFAD05',
     tertiary: '#FF8552',
     quaternary: '#E6E6E6',
     quinary: '#39393A',

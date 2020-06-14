@@ -6,3 +6,4 @@ export { default as CommonForm } from './common-form';
 export { default as CartCount } from './cart-count';
 export { default as CartProduct } from './cart-product';
 export { default as CheckoutHeader } from './checkout-header';
+export { default as CheckoutProduct } from './checkout-product';

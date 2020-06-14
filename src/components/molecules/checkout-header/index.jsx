@@ -4,7 +4,7 @@ import { Typography } from '../../atoms';
 
 const Headers = styled.div`
   display: grid;
-  grid-template-columns: 2fr 2fr 2fr 2fr 1fr;
+  grid-template-columns: 2fr 3fr 1fr 2fr 1fr;
   grid-column-gap: 1rem;
   margin: 1rem 7rem;
   border-bottom: 2px solid black;
@@ -19,7 +19,7 @@ const Headers = styled.div`
   }
 `;
 
-const HEADERS = ['Product', 'Description', 'Quantity', 'Price', 'Remove'];
+const HEADERS = ['Product', 'Name', 'Qty.', 'Price', 'Remove'];
 
 const CheckoutHeader = () => {
   const renderHeaders = HEADERS.map((header) => (
