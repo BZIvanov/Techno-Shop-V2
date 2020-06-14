@@ -1,5 +1,5 @@
 import React from 'react';
-import { TextInput, TextWarning, Button, FormGroup } from '../../atoms';
+import { TextInput, TextWarning, PrimaryButton, FormGroup } from '../../atoms';
 import { useForm } from 'react-hook-form';
 
 const CommonForm = (props) => {
@@ -23,7 +23,7 @@ const CommonForm = (props) => {
   return (
     <form onSubmit={handleSubmit(onFormSubmit)}>
       {inputs}
-      <Button type="submit">{buttonText}</Button>
+      <PrimaryButton type="submit">{buttonText}</PrimaryButton>
     </form>
   );
 };

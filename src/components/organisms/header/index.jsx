@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import { CartDropdown } from '../';
 import { NavLinks } from '../../molecules';
 import { Link, TabletMobileComboIcon } from '../../atoms';
 
@@ -19,6 +20,7 @@ const Header = () => {
         <TabletMobileComboIcon themeColor="primary" size={48} />
       </Link>
       <NavLinks />
+      <CartDropdown />
     </Navigation>
   );
 };
