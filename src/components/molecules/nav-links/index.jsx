@@ -1,11 +1,13 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
+import { CartCount } from '../';
 import { NavLink } from '../../atoms';
 
 const Navigation = styled.nav`
   display: flex;
   justify-content: space-between;
+  align-items: center;
   & a {
     padding: 0 1rem;
   }
@@ -14,12 +16,13 @@ const Navigation = styled.nav`
 const NavLinks = ({ isAuthenticated }) => {
   return (
     <Navigation>
-      {isAuthenticated ? (
+      {!isAuthenticated ? (
         <>
           <NavLink to="/" exact>
             Home
           </NavLink>
           <NavLink to="/shop">Shop</NavLink>
+          <CartCount />
         </>
       ) : (
         <>

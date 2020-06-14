@@ -4,12 +4,14 @@ import styled from 'styled-components';
 const CommonHeading = styled.h1`
   font-weight: bold;
   line-height: 1.5;
-  color: ${({ color, theme }) => color || theme.palette.primary};
+  color: ${({ color, theme }) =>
+    color ? theme.palette[color] : theme.palette.primary};
 `;
 
 const CommonSubheading = styled.p`
   line-height: 1.5;
-  color: ${({ color, theme }) => color || theme.palette.primary};
+  color: ${({ color, theme }) =>
+    color ? theme.palette[color] : theme.palette.primary};
 `;
 
 const HeadingOne = styled(CommonHeading).attrs({ as: 'h1' })`
@@ -85,26 +87,26 @@ const SubtitleTwo = styled(CommonSubheading)`
   }
 `;
 
-const Typography = ({ variant, children }) => {
+const Typography = ({ variant, children, ...rest }) => {
   switch (variant) {
     case 'h1':
-      return <HeadingOne>{children}</HeadingOne>;
+      return <HeadingOne {...rest}>{children}</HeadingOne>;
     case 'h2':
-      return <HeadingTwo>{children}</HeadingTwo>;
+      return <HeadingTwo {...rest}>{children}</HeadingTwo>;
     case 'h3':
-      return <HeadingThree>{children}</HeadingThree>;
+      return <HeadingThree {...rest}>{children}</HeadingThree>;
     case 'h4':
-      return <HeadingFour>{children}</HeadingFour>;
+      return <HeadingFour {...rest}>{children}</HeadingFour>;
     case 'h5':
-      return <HeadingFive>{children}</HeadingFive>;
+      return <HeadingFive {...rest}>{children}</HeadingFive>;
     case 'h6':
-      return <HeadingSix>{children}</HeadingSix>;
+      return <HeadingSix {...rest}>{children}</HeadingSix>;
     case 'subtitle1':
-      return <SubtitleOne>{children}</SubtitleOne>;
+      return <SubtitleOne {...rest}>{children}</SubtitleOne>;
     case 'subtitle2':
-      return <SubtitleTwo>{children}</SubtitleTwo>;
+      return <SubtitleTwo {...rest}>{children}</SubtitleTwo>;
     default:
-      return <HeadingOne>{children}</HeadingOne>;
+      return <HeadingOne {...rest}>{children}</HeadingOne>;
   }
 };
 
