@@ -10,22 +10,26 @@ const CartContent = styled.div`
     color: ${({ theme }) => theme.palette.quaternary};
     position: absolute;
     top: 3px;
-    left: 15px;
+    left: 12px;
     font-size: 0.9rem;
   }
 `;
 
-const CartCount = ({ toggleCartView }) => {
+const CartCount = ({ count, toggleCartView }) => {
   return (
     <CartContent onClick={toggleCartView}>
       <ShoppingCartIcon themeColor="primary" size={32} />
-      <span>0</span>
+      <span>{count}</span>
     </CartContent>
   );
 };
+
+const mapStateToProps = ({ cart: { products } }) => ({
+  count: products.reduce((acc, product) => acc + product.quantity, 0),
+});
 
 const mapDispatchToProps = (dispatch) => ({
   toggleCartView: () => dispatch(toggleCartView()),
 });
 
-export default connect(null, mapDispatchToProps)(CartCount);
+export default connect(mapStateToProps, mapDispatchToProps)(CartCount);

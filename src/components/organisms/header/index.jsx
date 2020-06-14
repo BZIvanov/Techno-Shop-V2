@@ -18,7 +18,7 @@ const Header = ({ hidden }) => {
   return (
     <Navigation>
       <Link to="/">
-        <TabletMobileComboIcon themeColor="primary" size={48} />
+        <TabletMobileComboIcon themeColor="primary" size={42} />
       </Link>
       <NavLinks />
       {hidden ? null : <CartDropdown />}

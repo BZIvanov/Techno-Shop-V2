@@ -86,6 +86,15 @@ const SubtitleTwo = styled(CommonSubheading)`
     font-size: 0.8rem;
   }
 `;
+const SubtitleThree = styled(CommonSubheading)`
+  font-size: 0.85rem;
+  @media (max-width: ${({ theme }) => theme.breakpoints.md}px) {
+    font-size: 0.8rem;
+  }
+  @media (max-width: ${({ theme }) => theme.breakpoints.sm}px) {
+    font-size: 0.7rem;
+  }
+`;
 
 const Typography = ({ variant, children, ...rest }) => {
   switch (variant) {
@@ -105,6 +114,8 @@ const Typography = ({ variant, children, ...rest }) => {
       return <SubtitleOne {...rest}>{children}</SubtitleOne>;
     case 'subtitle2':
       return <SubtitleTwo {...rest}>{children}</SubtitleTwo>;
+    case 'subtitle3':
+      return <SubtitleThree {...rest}>{children}</SubtitleThree>;
     default:
       return <HeadingOne {...rest}>{children}</HeadingOne>;
   }
