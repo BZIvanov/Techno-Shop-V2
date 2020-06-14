@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
 import { Typography, BackgroundImageHeight, PrimaryButton } from '../../atoms';
-import { addProduct } from '../../../store/actions/cart';
+import { addCartProduct } from '../../../store/actions/cart';
 
 const Item = styled.div`
   position: relative;
@@ -51,7 +51,7 @@ const InfoBox = styled.div`
   }
 `;
 
-const CollectionItem = ({ product, addProduct }) => {
+const CollectionItem = ({ product, addCartProduct }) => {
   const { name, price, imageUrl } = product;
 
   return (
@@ -61,7 +61,7 @@ const CollectionItem = ({ product, addProduct }) => {
         <Typography variant="subtitle1">{name}</Typography>
         <Typography variant="subtitle1">{price.toFixed(2)}</Typography>
       </InfoBox>
-      <PrimaryButton onClick={() => addProduct(product)}>
+      <PrimaryButton onClick={() => addCartProduct(product)}>
         Add to Cart
       </PrimaryButton>
     </Item>
@@ -69,7 +69,7 @@ const CollectionItem = ({ product, addProduct }) => {
 };
 
 const mapDispatchToProps = (dispatch) => ({
-  addProduct: (product) => dispatch(addProduct(product)),
+  addCartProduct: (product) => dispatch(addCartProduct(product)),
 });
 
 export default connect(null, mapDispatchToProps)(CollectionItem);
