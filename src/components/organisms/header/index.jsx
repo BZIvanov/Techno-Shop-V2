@@ -1,4 +1,5 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import styled from 'styled-components';
 import { CartDropdown } from '../';
 import { NavLinks } from '../../molecules';
@@ -13,16 +14,20 @@ const Navigation = styled.section`
   padding: 0.5rem 7rem;
 `;
 
-const Header = () => {
+const Header = ({ hidden }) => {
   return (
     <Navigation>
       <Link to="/">
         <TabletMobileComboIcon themeColor="primary" size={48} />
       </Link>
       <NavLinks />
-      <CartDropdown />
+      {hidden ? null : <CartDropdown />}
     </Navigation>
   );
 };
 
-export default Header;
+const mapStateToProps = ({ cart: { hidden } }) => ({
+  hidden,
+});
+
+export default connect(mapStateToProps)(Header);

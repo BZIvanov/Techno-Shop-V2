@@ -75,56 +75,56 @@ export default [
     routeName: 'tablets',
     items: [
       {
-        id: 1,
+        id: 10,
         name: 'MLS KIDO 2019 PINK + MAIC',
         imageUrl:
           'https://www.technopolis.bg/medias/sys_master/hd8/h59/12117202501662.jpg',
         price: 129.0,
       },
       {
-        id: 2,
+        id: 11,
         name: 'LENOVO TAB M10',
         imageUrl:
           'https://www.technopolis.bg/medias/sys_master/hcf/hd8/11815502446622.jpg',
         price: 309.0,
       },
       {
-        id: 3,
+        id: 12,
         name: 'SAMSUNG TAB A 2019',
         imageUrl:
           'https://www.technopolis.bg/medias/sys_master/h40/hfe/11549615751198.jpg',
         price: 349.0,
       },
       {
-        id: 4,
+        id: 14,
         name: 'APPLE IPAD 7 CELL GOLD',
         imageUrl:
           'https://www.technopolis.bg/medias/sys_master/hfb/h80/11933859512350.jpg',
         price: 1259.0,
       },
       {
-        id: 5,
+        id: 15,
         name: 'APPLE IPAD PRO 11',
         imageUrl:
           'https://www.technopolis.bg/medias/sys_master/hbf/h6c/12569871581214.jpg',
         price: 1789.0,
       },
       {
-        id: 6,
+        id: 16,
         name: 'APPLE IPAD PRO 12.9" WI-FI SILVER',
         imageUrl:
           'https://www.technopolis.bg/medias/sys_master/hac/h20/12569860800542.jpg',
         price: 2219.0,
       },
       {
-        id: 7,
+        id: 17,
         name: 'APPLE IPAD PRO 12.9" CELL SP. GRAY',
         imageUrl:
           'https://www.technopolis.bg/medias/sys_master/hae/h96/12569869418526.jpg',
         price: 3209.0,
       },
       {
-        id: 8,
+        id: 18,
         name: 'LENOVO TAB 7 4G BK ZA330082BG 7.0',
         imageUrl:
           'https://www.technopolis.bg/medias/sys_master/ha4/h9a/11477906685982.jpg',
@@ -138,35 +138,35 @@ export default [
     routeName: 'smart-watches',
     items: [
       {
-        id: 1,
+        id: 21,
         name: 'SMART WATCH Q-BAND Q-90 METAL HEART RATE MONITOR',
         imageUrl:
           'https://www.technopolis.bg/medias/sys_master/he9/h4d/11704012439582.jpg',
         price: 74.9,
       },
       {
-        id: 2,
+        id: 22,
         name: 'SMART WATCH MYKRONOZ ZENEO SILVER 1.1',
         imageUrl:
           'https://www.technopolis.bg/medias/sys_master/hde/he0/11936745750558.jpg',
         price: 79.0,
       },
       {
-        id: 3,
+        id: 23,
         name: 'SMART WATCH MYKRONOZ ZEROUND 3 LITE BK 1.2',
         imageUrl:
           'https://www.technopolis.bg/medias/sys_master/hf5/h6e/11861596864542.jpg',
         price: 119.0,
       },
       {
-        id: 4,
+        id: 24,
         name: 'SMART WATCH HONOR MAGIC TALOS-B19 1.2',
         imageUrl:
           'https://www.technopolis.bg/medias/sys_master/hd3/hc4/11493146034206.jpg',
         price: 199.0,
       },
       {
-        id: 5,
+        id: 25,
         name: 'SMART WATCH XIAOMI AMAZFIT GTR ALUMINIUM ALLOY',
         imageUrl:
           'https://www.technopolis.bg/medias/sys_master/h92/h40/11979108089886.jpg',
@@ -180,49 +180,49 @@ export default [
     routeName: 'fitness-wrist',
     items: [
       {
-        id: 1,
+        id: 31,
         name: 'CANYON CNE-SB11BB 0.96',
         imageUrl:
           'https://www.technopolis.bg/medias/sys_master/hc8/hbc/11583416860702.jpg',
         price: 44.9,
       },
       {
-        id: 2,
+        id: 32,
         name: 'DIVA SB1910B 1.14',
         imageUrl:
           'https://www.technopolis.bg/medias/sys_master/hc6/h7e/12117210955806.jpg',
         price: 44.9,
       },
       {
-        id: 3,
+        id: 33,
         name: 'SAMSUNG GALAXY FIT E R375 YELLOW 0.74',
         imageUrl:
           'https://www.technopolis.bg/medias/sys_master/hea/h14/11735217700894.jpg',
         price: 58.9,
       },
       {
-        id: 4,
+        id: 34,
         name: 'CANYON CNS-SB41BG 0.96',
         imageUrl:
           'https://www.technopolis.bg/medias/sys_master/hd8/h6e/11519388254238.jpg',
         price: 59.0,
       },
       {
-        id: 5,
+        id: 35,
         name: 'SAMSUNG GALAXY FIT R370 SILVER 0.95',
         imageUrl:
           'https://www.technopolis.bg/medias/sys_master/hd0/h97/11622430703646.jpg',
         price: 169.0,
       },
       {
-        id: 6,
+        id: 36,
         name: 'FITBIT CHARGE 3 FB409RGGY HEART RATE MONITOR',
         imageUrl:
           'https://www.technopolis.bg/medias/sys_master/h4f/hbe/11481408929822.jpg',
         price: 249.0,
       },
       {
-        id: 7,
+        id: 37,
         name: 'FITBIT CHARGE 3 FB409GMBK HEART RATE MONITOR',
         imageUrl:
           'https://www.technopolis.bg/medias/sys_master/h19/hdc/11481409847326.jpg',
@@ -236,42 +236,42 @@ export default [
     routeName: 'headphones',
     items: [
       {
-        id: 1,
+        id: 41,
         name: 'MOTOROLA PULSE ESC.EAR BUDS BLU IN-EAR',
         imageUrl:
           'https://www.technopolis.bg/medias/sys_master/h46/h90/11482411237406.jpg',
         price: 12.9,
       },
       {
-        id: 2,
+        id: 42,
         name: 'CELLULAR LINE CUTE AND SWEET 19 GOAL IN-EAR',
         imageUrl:
           'https://www.technopolis.bg/medias/sys_master/h6d/hce/12104412692510.jpg',
         price: 13.9,
       },
       {
-        id: 3,
+        id: 43,
         name: 'PANASONIC RP-HF100E-P ON-EAR',
         imageUrl:
           'https://www.technopolis.bg/medias/sys_master/hf4/hb3/11463804223518.jpg',
         price: 26.9,
       },
       {
-        id: 4,
+        id: 44,
         name: 'HAMA BLINK N KIDS 135664 PINK',
         imageUrl:
           'https://www.technopolis.bg/medias/sys_master/hce/h83/11492686659614.jpg',
         price: 34.99,
       },
       {
-        id: 5,
+        id: 45,
         name: 'JBL E45BT WHT ON-EAR',
         imageUrl:
           'https://www.technopolis.bg/medias/sys_master/h7d/h92/11468077301790.jpg',
         price: 169.0,
       },
       {
-        id: 6,
+        id: 46,
         name: 'BEATS EP RED ML9C2ZM/A ON-EAR',
         imageUrl:
           'https://www.technopolis.bg/medias/sys_master/h8e/h85/11467171135518.jpg',

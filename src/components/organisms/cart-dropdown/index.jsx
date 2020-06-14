@@ -17,7 +17,7 @@ const CartBox = styled.div`
   border: 1px solid black;
   background-color: ${({ theme }) => theme.palette.offWhite};
   top: 50px;
-  right: 20px;
+  right: 5%;
 `;
 
 const CartDropdown = () => {

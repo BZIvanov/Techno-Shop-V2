@@ -1,7 +1,9 @@
-import { TOGGLE_CART_DROPDOWN } from '../actions/types';
+import { TOGGLE_CART_DROPDOWN, ADD_PRODUCT } from '../actions/types';
+import { addProductToCart } from '../utils';
 
 const INITIAL_STATE = {
   hidden: true,
+  products: [],
 };
 
 const reducer = (state = INITIAL_STATE, action) => {
@@ -10,6 +12,11 @@ const reducer = (state = INITIAL_STATE, action) => {
       return {
         ...state,
         hidden: !state.hidden,
+      };
+    case ADD_PRODUCT:
+      return {
+        ...state,
+        products: addProductToCart(state.products, action.payload),
       };
     default:
       return state;

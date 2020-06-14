@@ -1,6 +1,8 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import styled from 'styled-components';
 import { ShoppingCartIcon } from '../../atoms';
+import { toggleCartView } from '../../../store/actions/cart';
 
 const CartContent = styled.div`
   position: relative;
@@ -13,13 +15,17 @@ const CartContent = styled.div`
   }
 `;
 
-const CartCount = (props) => {
+const CartCount = ({ toggleCartView }) => {
   return (
-    <CartContent>
+    <CartContent onClick={toggleCartView}>
       <ShoppingCartIcon themeColor="primary" size={32} />
       <span>0</span>
     </CartContent>
   );
 };
 
-export default CartCount;
+const mapDispatchToProps = (dispatch) => ({
+  toggleCartView: () => dispatch(toggleCartView()),
+});
+
+export default connect(null, mapDispatchToProps)(CartCount);
