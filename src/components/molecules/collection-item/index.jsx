@@ -1,8 +1,11 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import styled from 'styled-components';
-import { Typography, BackgroundImageHeight } from '../../atoms';
+import { Typography, BackgroundImageHeight, PrimaryButton } from '../../atoms';
+import { addProduct } from '../../../store/actions/cart';
 
 const Item = styled.div`
+  position: relative;
   width: 22%;
   display: flex;
   flex-direction: column;
@@ -18,6 +21,19 @@ const Item = styled.div`
     width: 100%;
     max-width: 290px;
     height: 300px;
+  }
+  & button {
+    position: absolute;
+    opacity: 0.8;
+    bottom: 25%;
+    display: none;
+  }
+  &:hover {
+    opacity: 0.8;
+  }
+  &:hover button {
+    opacity: 0.9;
+    display: flex;
   }
 `;
 
@@ -35,16 +51,25 @@ const InfoBox = styled.div`
   }
 `;
 
-const CollectionItem = (props) => {
+const CollectionItem = ({ product, addProduct }) => {
+  const { name, price, imageUrl } = product;
+
   return (
     <Item>
-      <BackgroundImageHeight {...props} />
+      <BackgroundImageHeight imageUrl={imageUrl} />
       <InfoBox>
-        <Typography variant="subtitle1">{props.name}</Typography>
-        <Typography variant="subtitle1">{props.price.toFixed(2)}</Typography>
+        <Typography variant="subtitle1">{name}</Typography>
+        <Typography variant="subtitle1">{price.toFixed(2)}</Typography>
       </InfoBox>
+      <PrimaryButton onClick={() => addProduct(product)}>
+        Add to Cart
+      </PrimaryButton>
     </Item>
   );
 };
 
-export default CollectionItem;
+const mapDispatchToProps = (dispatch) => ({
+  addProduct: (product) => dispatch(addProduct(product)),
+});
+
+export default connect(null, mapDispatchToProps)(CollectionItem);
