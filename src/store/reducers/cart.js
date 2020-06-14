@@ -1,15 +1,15 @@
-import { SET_CURRENT_USER } from '../actions/types';
+import { TOGGLE_CART_DROPDOWN } from '../actions/types';
 
 const INITIAL_STATE = {
-  user: null,
+  hidden: true,
 };
 
 const reducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
-    case SET_CURRENT_USER:
+    case TOGGLE_CART_DROPDOWN:
       return {
         ...state,
-        user: action.payload,
+        hidden: !state.hidden,
       };
     default:
       return state;

@@ -8,7 +8,7 @@ export { default as NavLink } from './nav-link';
 export { default as Link } from './link';
 export { default as TextInput } from './text-input';
 export { default as TextWarning } from './text-warning';
-export { default as Button } from './button';
 export { default as FormGroup } from './form-group';
 export { default as FormWrapper } from './form-wrapper';
 export * from './icons';
+export * from './buttons';

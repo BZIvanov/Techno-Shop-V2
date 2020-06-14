@@ -9,7 +9,13 @@ const Navigation = styled.nav`
   justify-content: space-between;
   align-items: center;
   & a {
-    padding: 0 1rem;
+    margin: 0 1rem;
+  }
+  & div {
+    margin-left: 1rem;
+  }
+  & div:hover {
+    cursor: pointer;
   }
 `;
 
