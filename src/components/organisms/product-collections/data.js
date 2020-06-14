@@ -7,13 +7,15 @@ export default [
       {
         id: 1,
         name: 'SAMSUNG GALAXY A20E A202F DS BLACK',
+        shortName: 'SAMSUNG GALAXY A20E',
         imageUrl:
           'https://www.technopolis.bg/medias/sys_master/h83/ha2/11614797234206.jpg',
         price: 249.0,
       },
       {
         id: 2,
-        name: 'GSM HONOR 10 LITE 64/3 BLACK',
+        name: 'HONOR 10 LITE 64/3 BLACK',
+        shortName: 'HONOR 10 LITE',
         imageUrl:
           'https://www.technopolis.bg/medias/sys_master/hfd/h1c/11740888170526.jpg',
         price: 299.0,
@@ -21,6 +23,7 @@ export default [
       {
         id: 3,
         name: 'MOTOROLA G8 POWER LITE ROYAL BLUE',
+        shortName: 'MOTOROLA G8',
         imageUrl:
           'https://www.technopolis.bg/medias/sys_master/h08/hbe/12661020131358.jpg',
         price: 299.0,
@@ -28,6 +31,7 @@ export default [
       {
         id: 4,
         name: 'XIAOMI REDMI NOTE 8 PRO GREY',
+        shortName: 'XIAOMI REDMI',
         imageUrl:
           'https://www.technopolis.bg/medias/sys_master/hbe/ha3/12017683726366.jpg',
         price: 429.0,
@@ -35,6 +39,7 @@ export default [
       {
         id: 5,
         name: 'HONOR 9X DS BLACK',
+        shortName: 'HONOR 9X',
         imageUrl:
           'https://www.technopolis.bg/medias/sys_master/h46/hc3/12098244935710.jpg',
         price: 449.0,
@@ -42,6 +47,7 @@ export default [
       {
         id: 6,
         name: 'HONOR 20 DS BLACK',
+        shortName: 'HONOR 20 DS',
         imageUrl:
           'https://www.technopolis.bg/medias/sys_master/h07/h5c/11786896474142.jpg',
         price: 649.0,
@@ -49,6 +55,7 @@ export default [
       {
         id: 7,
         name: 'APPLE IPHONE SE 2GEN WHITE',
+        shortName: 'IPHONE SE 2GEN',
         imageUrl:
           'https://www.technopolis.bg/medias/sys_master/h80/h97/12661036711966.jpg',
         price: 1245.0,
@@ -56,6 +63,7 @@ export default [
       {
         id: 8,
         name: 'APPLE IPHONE 11 GREEN',
+        shortName: 'IPHONE 11',
         imageUrl:
           'https://www.technopolis.bg/medias/sys_master/h42/h5f/11885072318494.jpg',
         price: 1969.0,
@@ -63,6 +71,7 @@ export default [
       {
         id: 9,
         name: 'NOKIA 2.3 DUAL GREEN',
+        shortName: 'NOKIA 2.3',
         imageUrl:
           'https://www.technopolis.bg/medias/sys_master/heb/h81/12229005705246.jpg',
         price: 219.0,
@@ -77,6 +86,7 @@ export default [
       {
         id: 10,
         name: 'MLS KIDO 2019 PINK + MAIC',
+        shortName: 'MLS KIDO',
         imageUrl:
           'https://www.technopolis.bg/medias/sys_master/hd8/h59/12117202501662.jpg',
         price: 129.0,
@@ -84,6 +94,7 @@ export default [
       {
         id: 11,
         name: 'LENOVO TAB M10',
+        shortName: 'LENOVO M10',
         imageUrl:
           'https://www.technopolis.bg/medias/sys_master/hcf/hd8/11815502446622.jpg',
         price: 309.0,
@@ -91,6 +102,7 @@ export default [
       {
         id: 12,
         name: 'SAMSUNG TAB A 2019',
+        shortName: 'SAMSUNG TAB',
         imageUrl:
           'https://www.technopolis.bg/medias/sys_master/h40/hfe/11549615751198.jpg',
         price: 349.0,
@@ -98,6 +110,7 @@ export default [
       {
         id: 14,
         name: 'APPLE IPAD 7 CELL GOLD',
+        shortName: 'APPLE IPAD',
         imageUrl:
           'https://www.technopolis.bg/medias/sys_master/hfb/h80/11933859512350.jpg',
         price: 1259.0,
@@ -105,6 +118,7 @@ export default [
       {
         id: 15,
         name: 'APPLE IPAD PRO 11',
+        shortName: 'APPLE IPAD',
         imageUrl:
           'https://www.technopolis.bg/medias/sys_master/hbf/h6c/12569871581214.jpg',
         price: 1789.0,
@@ -112,6 +126,7 @@ export default [
       {
         id: 16,
         name: 'APPLE IPAD PRO 12.9" WI-FI SILVER',
+        shortName: 'APPLE IPAD',
         imageUrl:
           'https://www.technopolis.bg/medias/sys_master/hac/h20/12569860800542.jpg',
         price: 2219.0,
@@ -119,6 +134,7 @@ export default [
       {
         id: 17,
         name: 'APPLE IPAD PRO 12.9" CELL SP. GRAY',
+        shortName: 'APPLE IPAD',
         imageUrl:
           'https://www.technopolis.bg/medias/sys_master/hae/h96/12569869418526.jpg',
         price: 3209.0,
@@ -126,6 +142,7 @@ export default [
       {
         id: 18,
         name: 'LENOVO TAB 7 4G BK ZA330082BG 7.0',
+        shortName: 'LENOVO TAB 7',
         imageUrl:
           'https://www.technopolis.bg/medias/sys_master/ha4/h9a/11477906685982.jpg',
         price: 169.0,
@@ -140,6 +157,7 @@ export default [
       {
         id: 21,
         name: 'SMART WATCH Q-BAND Q-90 METAL HEART RATE MONITOR',
+        shortName: 'Q-BAND Q-90',
         imageUrl:
           'https://www.technopolis.bg/medias/sys_master/he9/h4d/11704012439582.jpg',
         price: 74.9,
@@ -147,6 +165,7 @@ export default [
       {
         id: 22,
         name: 'SMART WATCH MYKRONOZ ZENEO SILVER 1.1',
+        shortName: 'MYKRONOZ ZENEO',
         imageUrl:
           'https://www.technopolis.bg/medias/sys_master/hde/he0/11936745750558.jpg',
         price: 79.0,
@@ -154,6 +173,7 @@ export default [
       {
         id: 23,
         name: 'SMART WATCH MYKRONOZ ZEROUND 3 LITE BK 1.2',
+        shortName: 'MYKRONOZ',
         imageUrl:
           'https://www.technopolis.bg/medias/sys_master/hf5/h6e/11861596864542.jpg',
         price: 119.0,
@@ -161,6 +181,7 @@ export default [
       {
         id: 24,
         name: 'SMART WATCH HONOR MAGIC TALOS-B19 1.2',
+        shortName: 'HONOR MAGIC',
         imageUrl:
           'https://www.technopolis.bg/medias/sys_master/hd3/hc4/11493146034206.jpg',
         price: 199.0,
@@ -168,6 +189,7 @@ export default [
       {
         id: 25,
         name: 'SMART WATCH XIAOMI AMAZFIT GTR ALUMINIUM ALLOY',
+        shortName: 'XIAOMI AMAZFIT',
         imageUrl:
           'https://www.technopolis.bg/medias/sys_master/h92/h40/11979108089886.jpg',
         price: 249.0,
@@ -182,6 +204,7 @@ export default [
       {
         id: 31,
         name: 'CANYON CNE-SB11BB 0.96',
+        shortName: 'CANYON',
         imageUrl:
           'https://www.technopolis.bg/medias/sys_master/hc8/hbc/11583416860702.jpg',
         price: 44.9,
@@ -189,6 +212,7 @@ export default [
       {
         id: 32,
         name: 'DIVA SB1910B 1.14',
+        shortName: 'DIVA',
         imageUrl:
           'https://www.technopolis.bg/medias/sys_master/hc6/h7e/12117210955806.jpg',
         price: 44.9,
@@ -196,6 +220,7 @@ export default [
       {
         id: 33,
         name: 'SAMSUNG GALAXY FIT E R375 YELLOW 0.74',
+        shortName: 'SAMSUNG GALAXY',
         imageUrl:
           'https://www.technopolis.bg/medias/sys_master/hea/h14/11735217700894.jpg',
         price: 58.9,
@@ -203,6 +228,7 @@ export default [
       {
         id: 34,
         name: 'CANYON CNS-SB41BG 0.96',
+        shortName: 'CANYON',
         imageUrl:
           'https://www.technopolis.bg/medias/sys_master/hd8/h6e/11519388254238.jpg',
         price: 59.0,
@@ -210,6 +236,7 @@ export default [
       {
         id: 35,
         name: 'SAMSUNG GALAXY FIT R370 SILVER 0.95',
+        shortName: 'SAMSUNG GALAXY',
         imageUrl:
           'https://www.technopolis.bg/medias/sys_master/hd0/h97/11622430703646.jpg',
         price: 169.0,
@@ -217,6 +244,7 @@ export default [
       {
         id: 36,
         name: 'FITBIT CHARGE 3 FB409RGGY HEART RATE MONITOR',
+        shortName: 'FITBIT',
         imageUrl:
           'https://www.technopolis.bg/medias/sys_master/h4f/hbe/11481408929822.jpg',
         price: 249.0,
@@ -224,6 +252,7 @@ export default [
       {
         id: 37,
         name: 'FITBIT CHARGE 3 FB409GMBK HEART RATE MONITOR',
+        shortName: 'FITBIT',
         imageUrl:
           'https://www.technopolis.bg/medias/sys_master/h19/hdc/11481409847326.jpg',
         price: 249.0,
@@ -238,6 +267,7 @@ export default [
       {
         id: 41,
         name: 'MOTOROLA PULSE ESC.EAR BUDS BLU IN-EAR',
+        shortName: 'MOTOROLA PULSE',
         imageUrl:
           'https://www.technopolis.bg/medias/sys_master/h46/h90/11482411237406.jpg',
         price: 12.9,
@@ -245,6 +275,7 @@ export default [
       {
         id: 42,
         name: 'CELLULAR LINE CUTE AND SWEET 19 GOAL IN-EAR',
+        shortName: 'CELLULAR',
         imageUrl:
           'https://www.technopolis.bg/medias/sys_master/h6d/hce/12104412692510.jpg',
         price: 13.9,
@@ -252,6 +283,7 @@ export default [
       {
         id: 43,
         name: 'PANASONIC RP-HF100E-P ON-EAR',
+        shortName: 'PANASONIC',
         imageUrl:
           'https://www.technopolis.bg/medias/sys_master/hf4/hb3/11463804223518.jpg',
         price: 26.9,
@@ -259,6 +291,7 @@ export default [
       {
         id: 44,
         name: 'HAMA BLINK N KIDS 135664 PINK',
+        shortName: 'HAMA',
         imageUrl:
           'https://www.technopolis.bg/medias/sys_master/hce/h83/11492686659614.jpg',
         price: 34.99,
@@ -266,6 +299,7 @@ export default [
       {
         id: 45,
         name: 'JBL E45BT WHT ON-EAR',
+        shortName: 'JBL E45BT',
         imageUrl:
           'https://www.technopolis.bg/medias/sys_master/h7d/h92/11468077301790.jpg',
         price: 169.0,
@@ -273,6 +307,7 @@ export default [
       {
         id: 46,
         name: 'BEATS EP RED ML9C2ZM/A ON-EAR',
+        shortName: 'BEATS EP',
         imageUrl:
           'https://www.technopolis.bg/medias/sys_master/h8e/h85/11467171135518.jpg',
         price: 209.0,
