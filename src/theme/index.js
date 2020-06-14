@@ -12,6 +12,7 @@ const theme = {
     tertiary: '#FF8552',
     quaternary: '#E6E6E6',
     quinary: '#39393A',
+    warning: '#FF8552',
     offWhite: '#F6F4F3',
     offBlack: '#1B1B1E',
   },

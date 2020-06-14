@@ -1,4 +1,5 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import styled from 'styled-components';
 import { NavLink } from '../../atoms';
 
@@ -10,15 +11,28 @@ const Navigation = styled.nav`
   }
 `;
 
-const NavLinks = () => {
+const NavLinks = ({ isAuthenticated }) => {
   return (
     <Navigation>
-      <NavLink to="/" exact>
-        Home
-      </NavLink>
-      <NavLink to="/shop">Shop</NavLink>
+      {isAuthenticated ? (
+        <>
+          <NavLink to="/" exact>
+            Home
+          </NavLink>
+          <NavLink to="/shop">Shop</NavLink>
+        </>
+      ) : (
+        <>
+          <NavLink to="/login">login</NavLink>
+          <NavLink to="/register">register</NavLink>
+        </>
+      )}
     </Navigation>
   );
 };
 
-export default NavLinks;
+const mapStateToProps = (state) => ({
+  isAuthenticated: state.user.user,
+});
+
+export default connect(mapStateToProps)(NavLinks);
