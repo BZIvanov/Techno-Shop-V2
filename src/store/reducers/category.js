@@ -1,4 +1,4 @@
-export default [
+const INITIAL_STATE = [
   {
     id: 1,
     title: 'Mobile Phones',
@@ -33,3 +33,12 @@ export default [
     size: 'large',
   },
 ];
+
+const reducer = (state = INITIAL_STATE, action) => {
+  switch (action.type) {
+    default:
+      return state;
+  }
+};
+
+export default reducer;
