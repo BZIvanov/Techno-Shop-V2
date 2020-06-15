@@ -1,9 +1,9 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import { MenuItem } from '../../molecules';
 import { AppWidth, ItemsContainer } from '../../atoms';
-import categories from './data';
 
-const ProductCategories = () => {
+const ProductCategories = ({ categories }) => {
   return (
     <AppWidth>
       <ItemsContainer>
@@ -15,4 +15,8 @@ const ProductCategories = () => {
   );
 };
 
-export default ProductCategories;
+const mapStateToProps = ({ categories }) => ({
+  categories,
+});
+
+export default connect(mapStateToProps)(ProductCategories);

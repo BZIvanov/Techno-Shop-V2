@@ -1,9 +1,9 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import { CollectionPreview } from '../../molecules';
 import { AppWidth } from '../../atoms';
-import collections from './data';
 
-const ProductCollections = () => {
+const ProductCollections = ({ collections }) => {
   const renderData = collections.map((collection) => (
     <CollectionPreview key={collection.id} {...collection} />
   ));
@@ -11,4 +11,8 @@ const ProductCollections = () => {
   return <AppWidth>{renderData}</AppWidth>;
 };
 
-export default ProductCollections;
+const mapStateToProps = ({ shop }) => ({
+  collections: shop.collections,
+});
+
+export default connect(mapStateToProps)(ProductCollections);
