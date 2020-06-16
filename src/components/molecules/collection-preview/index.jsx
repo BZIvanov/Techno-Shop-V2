@@ -19,16 +19,17 @@ const CollectionContainer = styled.div`
 `;
 
 const CollectionPreview = (props) => {
+  let renderData = props.items.map((product) => (
+    <CollectionItem key={product.id} product={product} />
+  ));
+
+  if (props.filter) {
+    renderData = renderData.filter((_, idx) => idx < 4);
+  }
   return (
     <CollectionContainer>
       <Typography variant="h1">{props.title}</Typography>
-      <ItemsContainer>
-        {props.items
-          .filter((_, idx) => idx < 4)
-          .map((product) => (
-            <CollectionItem key={product.id} product={product} />
-          ))}
-      </ItemsContainer>
+      <ItemsContainer>{renderData}</ItemsContainer>
     </CollectionContainer>
   );
 };

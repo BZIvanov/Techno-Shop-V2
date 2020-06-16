@@ -5,7 +5,7 @@ import { AppWidth } from '../../atoms';
 
 const ProductCollections = ({ collections }) => {
   const renderData = collections.map((collection) => (
-    <CollectionPreview key={collection.id} {...collection} />
+    <CollectionPreview key={collection.id} {...collection} filter />
   ));
 
   return <AppWidth>{renderData}</AppWidth>;

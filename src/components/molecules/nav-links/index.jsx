@@ -27,7 +27,9 @@ const NavLinks = ({ isAuthenticated }) => {
           <NavLink to="/" exact>
             Home
           </NavLink>
-          <NavLink to="/shop">Shop</NavLink>
+          <NavLink to="/shop" exact>
+            Shop
+          </NavLink>
           <CartCount />
         </>
       ) : (
