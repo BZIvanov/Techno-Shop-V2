@@ -4,17 +4,12 @@ import schema from './schema';
 import formBuilder from './formBuilder';
 import { CommonForm } from '../../molecules';
 import { AppWidth, FormWrapper } from '../../atoms';
-import { setCurrentUser } from '../../../store/actions/user';
+import { fetchUserStartAsync } from '../../../store/actions/user';
 
-const RegisterForm = ({ setCurrentUser }) => {
+const RegisterForm = ({ register }) => {
   const handleFormSubmit = (data) => {
     const { username, email, password } = data;
-    const user = {
-      username,
-      email,
-      password,
-    };
-    setCurrentUser(user);
+    register(username, email, password);
   };
 
   return (
@@ -32,7 +27,8 @@ const RegisterForm = ({ setCurrentUser }) => {
 };
 
 const mapDispatchToProps = (dispatch) => ({
-  setCurrentUser: (user) => dispatch(setCurrentUser(user)),
+  register: (username, email, password) =>
+    dispatch(fetchUserStartAsync(username, email, password)),
 });
 
 export default connect(null, mapDispatchToProps)(RegisterForm);

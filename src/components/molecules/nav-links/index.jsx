@@ -22,7 +22,7 @@ const Navigation = styled.nav`
 const NavLinks = ({ isAuthenticated }) => {
   return (
     <Navigation>
-      {!isAuthenticated ? (
+      {isAuthenticated ? (
         <>
           <NavLink to="/" exact>
             Home
