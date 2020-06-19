@@ -5,8 +5,9 @@ import {
   FETCH_USER_FAILURE,
 } from './types';
 
-export const fetchUserStart = () => ({
+export const fetchUserStart = (user) => ({
   type: FETCH_USER_START,
+  payload: user,
 });
 
 export const fetchUserSuccess = (user) => ({
