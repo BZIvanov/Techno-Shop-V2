@@ -3,8 +3,29 @@ const Room = require('../models/room');
 const catchAsync = require('../middlewares/catch-async');
 const AppError = require('../utils/app-error');
 
+const handleQueryParams = (params) => {
+  const { name, location, category } = params;
+
+  const build = {
+    ...(name && { name: { $regex: name, $options: 'i' } }),
+    ...(location && { address: { $regex: location, $options: 'i' } }),
+    ...(category && { category }),
+  };
+
+  return build;
+};
+
 exports.getAllRooms = catchAsync(async (req, res) => {
-  const rooms = await Room.find();
+  const { page, perPage, ...rest } = req.query;
+
+  const builder = handleQueryParams(rest);
+
+  const pageNumber = parseInt(page || 1, 10);
+  const perPageNumber = parseInt(perPage || 12, 10);
+
+  const rooms = await Room.find(builder)
+    .skip((pageNumber - 1) * perPageNumber)
+    .limit(perPageNumber);
 
   const totalCount = await Room.countDocuments();
 
@@ -16,7 +37,7 @@ exports.getAllRooms = catchAsync(async (req, res) => {
 });
 
 exports.getRoom = catchAsync(async (req, res, next) => {
-  const room = await Room.findById(req.query.id);
+  const room = await Room.findById(req.params.id);
 
   if (!room) {
     return next(new AppError('Room not found', status.NOT_FOUND));
