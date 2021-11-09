@@ -1,5 +1,5 @@
 const status = require('http-status');
-const AppError = require('../utils/appError');
+const AppError = require('../utils/app-error');
 
 // always keep all 4 parameters for this function or it will not fire
 module.exports = (err, req, res, next) => {
@@ -15,7 +15,7 @@ module.exports = (err, req, res, next) => {
   }
 
   if (err.name === 'ValidationError') {
-    const message = Object.values(err.errors).map((val) => val.message);
+    const message = Object.values(err.errors).map((value) => value.message);
     error = new AppError(message, status.BAD_REQUEST);
   }
 
