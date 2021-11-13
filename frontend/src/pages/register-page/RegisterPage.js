@@ -1,6 +1,8 @@
+import { useSelector, useDispatch } from 'react-redux';
+import { Navigate } from 'react-router-dom';
 import { Form, Field } from 'react-final-form';
 import { Box, Typography, Button } from '@mui/material';
-import { Face } from '@mui/icons-material';
+import { Face, Email } from '@mui/icons-material';
 import { TextFieldAdapter } from '../../components/text-field-adapter';
 import { PasswordTextFieldAdapter } from '../../components/password-text-field-adapter';
 import {
@@ -8,10 +10,15 @@ import {
   minLength,
   composeValidators,
 } from '../../utils/form-field-validators';
+import { registerUserAction } from '../../store/action-creators';
 
 const RegisterPage = () => {
+  const { user } = useSelector((state) => state.user);
+
+  const dispatch = useDispatch();
+
   const handleFormSubmit = (values) => {
-    console.log(values);
+    dispatch(registerUserAction(values));
   };
 
   const handleFormValidate = (values) => {
@@ -26,6 +33,10 @@ const RegisterPage = () => {
 
     return errors;
   };
+
+  if (user) {
+    return <Navigate to='/' />;
+  }
 
   return (
     <Box
@@ -60,6 +71,15 @@ const RegisterPage = () => {
                     validate={required}
                     label='Username'
                     Icon={Face}
+                  />
+                </Box>
+                <Box my={1}>
+                  <Field
+                    name='email'
+                    component={TextFieldAdapter}
+                    validate={required}
+                    label='Email'
+                    Icon={Email}
                   />
                 </Box>
                 <Box my={1}>

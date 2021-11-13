@@ -6,7 +6,7 @@ const { User, userTypes } = require('../constants');
 
 const schema = new Schema(
   {
-    name: {
+    username: {
       type: String,
       required: [true, 'Please provide a name'],
       maxLength: [50, 'User name should be at most 50 characters'],
@@ -23,10 +23,7 @@ const schema = new Schema(
       minLength: [6, 'Password must be at least 6 characters'],
       select: false,
     },
-    avatar: {
-      publicId: { type: String, required: true },
-      url: { type: String, required: true },
-    },
+    address: String,
     role: {
       type: String,
       enum: Object.values(userTypes),

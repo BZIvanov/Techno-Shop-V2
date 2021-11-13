@@ -1,32 +1,23 @@
 [
   {
     "_id": "6171c360168d11250b4e15d9",
-    "name": "Iva",
+    "username": "Iva",
     "email": "iva@mail.bg",
     "password": "12345678",
-    "avatar": {
-      "publicId": "TODO update with public id",
-      "url": "TODO update with url"
-    }
+    "address": "Sofia, Cherni vrah 100"
   },
   {
     "_id": "6171c8cf168d11250b4e15dc",
-    "name": "Mira",
+    "username": "Mira",
     "email": "mira@mail.bg",
     "password": "12345678",
-    "avatar": {
-      "publicId": "TODO update with public id",
-      "url": "TODO update with url"
-    }
+    "address": "Sofia, bul Bulgaria 99"
   },
   {
     "_id": "6171cb4b168d11250b4e15df",
-    "name": "Dimo",
+    "username": "Dimo",
     "email": "dimo@mail.bg",
     "password": "12345678",
-    "avatar": {
-      "publicId": "TODO update with public id",
-      "url": "TODO update with url"
-    }
+    "address": "Plovidv, ul Svoboda 21"
   }
 ]
