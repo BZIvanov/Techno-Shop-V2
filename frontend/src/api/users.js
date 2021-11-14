@@ -19,3 +19,7 @@ export const logoutUserCall = (token) => {
 export const forgotPasswordCall = (data) => {
   return axios.post('/users/forgot-password', data);
 };
+
+export const resetPasswordCall = (data) => {
+  return axios.post('/users/reset-password', data);
+};

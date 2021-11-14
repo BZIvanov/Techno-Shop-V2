@@ -1,3 +1,4 @@
+const crypto = require('crypto');
 const status = require('http-status');
 const jwt = require('jsonwebtoken');
 const User = require('../models/user');
@@ -70,9 +71,7 @@ exports.forgotPassword = catchAsync(async (req, res, next) => {
 
   await user.save({ validateBeforeSave: false });
 
-  const resetUrl = `${req.protocol}://${req.get(
-    'host'
-  )}/api/v1/users/reset-password/${resetToken}`;
+  const resetUrl = `http://localhost:3000/reset-password/${resetToken}`;
 
   const text = `Here is your password reset URL:\n\n${resetUrl}`;
 
@@ -92,4 +91,29 @@ exports.forgotPassword = catchAsync(async (req, res, next) => {
   }
 
   res.status(status.OK).json({ success: true });
+});
+
+exports.resetPassword = catchAsync(async (req, res, next) => {
+  const { token, newPassword } = req.body;
+
+  const resetPasswordToken = crypto
+    .createHash('sha256')
+    .update(token)
+    .digest('hex');
+
+  const user = await User.findOne({
+    resetPasswordToken,
+    resetPasswordExpire: { $gt: Date.now() },
+  });
+
+  if (!user) {
+    return next(new AppError('Invalid token', status.BAD_REQUEST));
+  }
+
+  user.password = newPassword;
+  user.resetPasswordToken = undefined;
+  user.resetPasswordExpire = undefined;
+  await user.save();
+
+  sendTokenResponse(user, status.OK, res);
 });
