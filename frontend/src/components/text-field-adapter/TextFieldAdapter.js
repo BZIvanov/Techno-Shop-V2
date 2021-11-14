@@ -9,7 +9,7 @@ const TextFieldAdapter = ({ input, meta, ...rest }) => {
   const { Icon, ...restProps } = rest;
 
   return (
-    <FormControl sx={{ m: 1, width: '25ch' }}>
+    <FormControl sx={{ m: 1, width: '100%' }}>
       <TextField
         variant='standard'
         error={meta.touched && Boolean(meta.error)}
