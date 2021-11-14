@@ -1,6 +1,7 @@
 const status = require('http-status');
 const jwt = require('jsonwebtoken');
 const User = require('../models/user');
+const sendEmail = require('../providers/mailer');
 const AppError = require('../utils/app-error');
 const catchAsync = require('../middlewares/catch-async');
 
@@ -37,7 +38,7 @@ exports.login = catchAsync(async (req, res, next) => {
     return next(new AppError('Invalid credentials', status.UNAUTHORIZED));
   }
 
-  const isMatch = await user.matchPassword(password);
+  const isMatch = await user.comparePassword(password);
   if (!isMatch) {
     return next(new AppError('Invalid credentials', status.UNAUTHORIZED));
   }
@@ -54,4 +55,41 @@ exports.logout = catchAsync(async (req, res, next) => {
     .header('Authorization', `Bearer ${token}`)
     .status(status.OK)
     .json({ success: true, user: { token } });
+});
+
+exports.forgotPassword = catchAsync(async (req, res, next) => {
+  const user = await User.findOne({ email: req.body.email });
+
+  if (!user) {
+    return next(
+      new AppError('There is no user with that e-mail', status.NOT_FOUND)
+    );
+  }
+
+  const resetToken = user.getResetPasswordToken();
+
+  await user.save({ validateBeforeSave: false });
+
+  const resetUrl = `${req.protocol}://${req.get(
+    'host'
+  )}/api/v1/users/reset-password/${resetToken}`;
+
+  const text = `Here is your password reset URL:\n\n${resetUrl}`;
+
+  try {
+    await sendEmail({
+      email: user.email,
+      subject: 'Password reset token',
+      text,
+    });
+  } catch (error) {
+    user.resetPasswordToken = undefined;
+    user.resetPasswordExpire = undefined;
+    await user.save({ validateBeforeSave: false });
+    return next(
+      new AppError('Email was not sent!', status.INTERNAL_SERVER_ERROR)
+    );
+  }
+
+  res.status(status.OK).json({ success: true });
 });

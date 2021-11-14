@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { AppBar, Box, Toolbar, Grid, Typography } from '@mui/material';
 import { PersonAdd, Login, ExitToApp } from '@mui/icons-material';
 import { HeaderNavLink } from '../header-nav-link';
@@ -20,9 +20,11 @@ const links = [
 ];
 
 const Header = () => {
+  const { user } = useSelector((state) => state.user);
+
   const dispatch = useDispatch();
 
-  const logoutUser = (e) => {
+  const logoutUser = () => {
     dispatch(logoutUserAction());
   };
 
@@ -49,28 +51,30 @@ const Header = () => {
           </Grid>
           <Grid item={true}>
             <Box sx={{ display: 'flex' }}>
-              {links.map((link) => (
-                <HeaderNavLink key={link.toLink} {...link} />
-              ))}
-
-              <Box
-                component={() => (
-                  <Box
-                    onClick={logoutUser}
-                    sx={{
-                      display: 'flex',
-                      flexDirection: 'column',
-                      alignItems: 'center',
-                      padding: '8px',
-                      cursor: 'pointer',
-                      color: (theme) => theme.palette.secondary.dark,
-                    }}
-                  >
-                    <ExitToApp fontSize='small' />
-                    <Typography>Logout</Typography>
-                  </Box>
-                )}
-              />
+              {!user ? (
+                links.map((link) => (
+                  <HeaderNavLink key={link.toLink} {...link} />
+                ))
+              ) : (
+                <Box
+                  component={() => (
+                    <Box
+                      onClick={logoutUser}
+                      sx={{
+                        display: 'flex',
+                        flexDirection: 'column',
+                        alignItems: 'center',
+                        padding: '8px',
+                        cursor: 'pointer',
+                        color: (theme) => theme.palette.secondary.dark,
+                      }}
+                    >
+                      <ExitToApp fontSize='small' />
+                      <Typography>Logout</Typography>
+                    </Box>
+                  )}
+                />
+              )}
             </Box>
           </Grid>
         </Grid>

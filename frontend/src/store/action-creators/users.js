@@ -1,4 +1,9 @@
-import { registerUserCall, logoutUserCall } from '../../api/users';
+import {
+  registerUserCall,
+  loginUserCall,
+  logoutUserCall,
+  forgotPasswordCall,
+} from '../../api/users';
 import { apiCallStartType, apiCallSuccessType, apiCallFailType } from './';
 import { actionType } from '../action-types';
 
@@ -26,6 +31,20 @@ export const registerUserAction = (values) => {
   };
 };
 
+export const loginUserAction = (values) => {
+  return async (dispatch) => {
+    dispatch(apiCallStartType());
+
+    try {
+      const { data } = await loginUserCall(values);
+      dispatch(apiCallSuccessType());
+      dispatch(loginOrRegisterUserType(data.user));
+    } catch (error) {
+      dispatch(apiCallFailType(error.response.data.error));
+    }
+  };
+};
+
 export const logoutUserAction = (values) => {
   return async (dispatch, getState) => {
     const { user } = getState();
@@ -33,13 +52,25 @@ export const logoutUserAction = (values) => {
 
     try {
       const token = user.user ? user.user.token : '';
-      console.log(user);
-      console.log(token);
+
       await logoutUserCall(token);
       dispatch(apiCallSuccessType());
       dispatch(logoutUserType());
     } catch (error) {
       dispatch(apiCallFailType(error.response.data.error));
+    }
+  };
+};
+
+export const forgotPasswordAction = (resetMailData) => {
+  return async (dispatch) => {
+    dispatch(apiCallStartType());
+
+    try {
+      await forgotPasswordCall(resetMailData);
+      dispatch(apiCallSuccessType());
+    } catch (error) {
+      dispatch(apiCallFailType(error.message));
     }
   };
 };
