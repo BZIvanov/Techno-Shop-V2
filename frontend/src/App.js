@@ -4,6 +4,7 @@ import { Rooms } from './components/rooms';
 import { HomePage } from './pages/home-page';
 import { RegisterPage } from './pages/register-page';
 import { LoginPage } from './pages/login-page';
+import { ResetPasswordPage } from './pages/reset-password-page';
 
 const App = () => {
   return (
@@ -14,6 +15,7 @@ const App = () => {
         <Route path='/' element={<HomePage />} />
         <Route path='/login' element={<LoginPage />} />
         <Route path='/register' element={<RegisterPage />} />
+        <Route path='/reset-password/:token' element={<ResetPasswordPage />} />
       </Routes>
     </>
   );

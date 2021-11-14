@@ -3,8 +3,14 @@ import {
   loginUserCall,
   logoutUserCall,
   forgotPasswordCall,
+  resetPasswordCall,
 } from '../../api/users';
-import { apiCallStartType, apiCallSuccessType, apiCallFailType } from './';
+import {
+  apiCallStartType,
+  apiCallSuccessType,
+  apiCallFailType,
+  RESET_PASSWORD_CODE,
+} from './';
 import { actionType } from '../action-types';
 
 export const loginOrRegisterUserType = (userData) => ({
@@ -62,13 +68,26 @@ export const logoutUserAction = (values) => {
   };
 };
 
-export const forgotPasswordAction = (resetMailData) => {
+export const forgotPasswordAction = (resetData) => {
   return async (dispatch) => {
     dispatch(apiCallStartType());
 
     try {
-      await forgotPasswordCall(resetMailData);
+      await forgotPasswordCall(resetData);
       dispatch(apiCallSuccessType());
+    } catch (error) {
+      dispatch(apiCallFailType(error.message));
+    }
+  };
+};
+
+export const resetPasswordAction = (resetData) => {
+  return async (dispatch) => {
+    dispatch(apiCallStartType());
+
+    try {
+      await resetPasswordCall(resetData);
+      dispatch(apiCallSuccessType('', RESET_PASSWORD_CODE));
     } catch (error) {
       dispatch(apiCallFailType(error.message));
     }
