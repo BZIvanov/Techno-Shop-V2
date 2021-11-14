@@ -12,7 +12,7 @@ const sendTokenResponse = (user, statusCode, res) => {
   res
     .header('Authorization', `Bearer ${token}`)
     .status(statusCode)
-    .json({ success: true });
+    .json({ success: true, user: { token, username: user.username } });
 };
 
 exports.register = catchAsync(async (req, res) => {
@@ -43,4 +43,15 @@ exports.login = catchAsync(async (req, res, next) => {
   }
 
   sendTokenResponse(user, status.OK, res);
+});
+
+exports.logout = catchAsync(async (req, res, next) => {
+  const token = jwt.sign({ id: '' }, process.env.JWT_SECRET, {
+    expiresIn: 1, // 1second
+  });
+
+  res
+    .header('Authorization', `Bearer ${token}`)
+    .status(status.OK)
+    .json({ success: true, user: { token } });
 });
