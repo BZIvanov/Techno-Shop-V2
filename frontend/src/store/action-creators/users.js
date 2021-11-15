@@ -13,9 +13,9 @@ import {
 } from './';
 import { actionType } from '../action-types';
 
-export const loginOrRegisterUserType = (userData) => ({
-  type: actionType.LOGIN,
-  payload: userData,
+export const loginOrRegisterUserType = (user, token) => ({
+  type: actionType.REGISTER_OR_LOGIN,
+  payload: { user, token },
 });
 
 export const logoutUserType = () => ({
@@ -29,7 +29,7 @@ export const registerUserAction = (values) => {
     try {
       const { data } = await registerUserCall(values);
       dispatch(apiCallSuccessType());
-      dispatch(loginOrRegisterUserType(data.user));
+      dispatch(loginOrRegisterUserType(data.user, data.token));
     } catch (error) {
       // here is how we can find the error message from the backend with axios
       dispatch(apiCallFailType(error.response.data.error));
@@ -44,7 +44,7 @@ export const loginUserAction = (values) => {
     try {
       const { data } = await loginUserCall(values);
       dispatch(apiCallSuccessType());
-      dispatch(loginOrRegisterUserType(data.user));
+      dispatch(loginOrRegisterUserType(data.user, data.token));
     } catch (error) {
       dispatch(apiCallFailType(error.response.data.error));
     }
@@ -57,9 +57,7 @@ export const logoutUserAction = (values) => {
     dispatch(apiCallStartType());
 
     try {
-      const token = user.user ? user.user.token : '';
-
-      await logoutUserCall(token);
+      await logoutUserCall(user.token);
       dispatch(apiCallSuccessType());
       dispatch(logoutUserType());
     } catch (error) {

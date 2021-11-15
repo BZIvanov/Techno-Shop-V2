@@ -1,14 +1,26 @@
 import { actionType } from '../action-types';
 
 const initialState = {
+  token: null,
   user: null,
 };
 
 export const userReducer = (state = initialState, action) => {
   switch (action.type) {
-    case actionType.LOGIN:
-      return { ...state, user: { ...action.payload } };
+    case actionType.REGISTER_OR_LOGIN:
+      window.localStorage.setItem(
+        'userToken',
+        JSON.stringify(action.payload.token)
+      );
+
+      return {
+        ...state,
+        user: action.payload.user,
+        token: action.payload.token,
+      };
     case actionType.LOGOUT:
+      window.localStorage.removeItem('userToken');
+
       return { ...state, user: null };
     case actionType.UPDATE_USER:
       return {

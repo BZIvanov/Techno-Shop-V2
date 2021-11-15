@@ -14,7 +14,11 @@ const sendTokenResponse = (user, statusCode, res) => {
   res
     .header('Authorization', `Bearer ${token}`)
     .status(statusCode)
-    .json({ success: true, user: { token, username: user.username } });
+    .json({
+      success: true,
+      token,
+      user: { _id: user._id, username: user.username, role: user.role },
+    });
 };
 
 exports.register = catchAsync(async (req, res) => {
@@ -56,6 +60,12 @@ exports.logout = catchAsync(async (req, res, next) => {
     .header('Authorization', `Bearer ${token}`)
     .status(status.OK)
     .json({ success: true, user: { token } });
+});
+
+exports.currentUser = catchAsync(async (req, res, next) => {
+  const user = await User.findById(req.user.id);
+
+  res.status(status.OK).json({ success: true, user });
 });
 
 exports.forgotPassword = catchAsync(async (req, res, next) => {
