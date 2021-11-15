@@ -65,7 +65,10 @@ exports.logout = catchAsync(async (req, res, next) => {
 exports.currentUser = catchAsync(async (req, res, next) => {
   const user = await User.findById(req.user.id);
 
-  res.status(status.OK).json({ success: true, user });
+  res.status(status.OK).json({
+    success: true,
+    user: { _id: user._id, username: user.username, role: user.role },
+  });
 });
 
 exports.forgotPassword = catchAsync(async (req, res, next) => {
