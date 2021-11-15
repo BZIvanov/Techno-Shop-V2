@@ -4,6 +4,7 @@ import {
   logoutUserCall,
   forgotPasswordCall,
   resetPasswordCall,
+  getCurrentUserCall,
 } from '../../api/users';
 import {
   apiCallStartType,
@@ -20,6 +21,11 @@ export const loginOrRegisterUserType = (user, token) => ({
 
 export const logoutUserType = () => ({
   type: actionType.LOGOUT,
+});
+
+export const currentUserType = (user) => ({
+  type: actionType.REGISTER_OR_LOGIN,
+  payload: user,
 });
 
 export const registerUserAction = (values) => {
@@ -86,6 +92,20 @@ export const resetPasswordAction = (resetData) => {
     try {
       await resetPasswordCall(resetData);
       dispatch(apiCallSuccessType('', RESET_PASSWORD_CODE));
+    } catch (error) {
+      dispatch(apiCallFailType(error.message));
+    }
+  };
+};
+
+export const getCurrentUserAction = (token) => {
+  return async (dispatch) => {
+    dispatch(apiCallStartType());
+
+    try {
+      const { data } = await getCurrentUserCall(token);
+      dispatch(apiCallSuccessType());
+      dispatch(loginOrRegisterUserType(data.user, token));
     } catch (error) {
       dispatch(apiCallFailType(error.message));
     }
