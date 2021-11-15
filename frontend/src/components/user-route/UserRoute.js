@@ -1,10 +1,10 @@
 import { useSelector } from 'react-redux';
-import { Navigate } from 'react-router-dom';
+import { CountdownProgress } from '../countdown-progress';
 
 const UserRoute = ({ children, redirectTo }) => {
   const { user } = useSelector((state) => state.user);
 
-  return user ? children : <Navigate to={redirectTo} />;
+  return user ? children : <CountdownProgress redirectTo={redirectTo} />;
 };
 
 export default UserRoute;
