@@ -29,7 +29,7 @@ export const apiCallReducer = (state = initialState, action) => {
         callCode: action.payload.callCode,
       };
     case actionType.API_CALL_RESET:
-      return initialState;
+      return { ...initialState };
     default:
       return state;
   }
