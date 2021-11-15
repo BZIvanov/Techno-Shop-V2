@@ -21,7 +21,7 @@ export const userReducer = (state = initialState, action) => {
     case actionType.LOGOUT:
       window.localStorage.removeItem('userToken');
 
-      return { ...state, user: null };
+      return { ...initialState };
     case actionType.UPDATE_USER:
       return {
         ...state,

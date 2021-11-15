@@ -7,6 +7,8 @@ import { HomePage } from './pages/home-page';
 import { RegisterPage } from './pages/register-page';
 import { LoginPage } from './pages/login-page';
 import { ResetPasswordPage } from './pages/reset-password-page';
+import { UserPage } from './pages/user-page';
+import { UserRoute } from './components/user-route';
 import { getCurrentUserAction } from './store/action-creators';
 
 const App = () => {
@@ -25,9 +27,19 @@ const App = () => {
       <Routes>
         <Route path='/rooms' element={<Rooms />} />
         <Route path='/' element={<HomePage />} />
-        <Route path='/login' element={<LoginPage />} />
-        <Route path='/register' element={<RegisterPage />} />
-        <Route path='/reset-password/:token' element={<ResetPasswordPage />} />
+        <Route path='login' element={<LoginPage />} />
+        <Route path='register' element={<RegisterPage />} />
+        <Route path='reset-password/:token' element={<ResetPasswordPage />} />
+        <Route
+          path='user'
+          element={
+            <UserRoute redirectTo='/login'>
+              <UserPage />
+            </UserRoute>
+          }
+        >
+          <Route path='dashboard' element={<Rooms />} />
+        </Route>
       </Routes>
     </>
   );

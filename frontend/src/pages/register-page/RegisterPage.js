@@ -51,7 +51,10 @@ const RegisterPage = () => {
   };
 
   if (user) {
-    return <Navigate to='/' />;
+    if (user.role === 'admin') {
+      return <Navigate to='/admin/dashboard' />;
+    }
+    return <Navigate to='/user/dashboard' />;
   }
 
   return (
