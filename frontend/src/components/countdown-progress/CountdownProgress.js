@@ -2,12 +2,16 @@ import { useState, useEffect } from 'react';
 import { Navigate } from 'react-router-dom';
 import { CircularProgress, Typography, Box, Backdrop } from '@mui/material';
 
+const SECONDS = 3;
+
 const CountdownProgress = ({ redirectTo }) => {
-  const [progress, setProgress] = useState(5);
+  const [progress, setProgress] = useState(SECONDS);
 
   useEffect(() => {
     const timer = setInterval(() => {
-      setProgress((prevProgress) => (prevProgress < 1 ? 5 : prevProgress - 1));
+      setProgress((prevProgress) =>
+        prevProgress < 1 ? SECONDS : prevProgress - 1
+      );
     }, 1000);
 
     return () => {
