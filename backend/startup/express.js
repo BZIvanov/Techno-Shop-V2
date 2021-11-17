@@ -1,7 +1,7 @@
 const express = require('express');
 const cors = require('cors');
-const users = require('../routes/users');
-const rooms = require('../routes/rooms');
+const user = require('../routes/user');
+const category = require('../routes/category');
 const globalError = require('../middlewares/global-error');
 
 module.exports = function startApp(app) {
@@ -9,8 +9,8 @@ module.exports = function startApp(app) {
 
   app.use(cors());
 
-  app.use('/api/v1/users', users);
-  app.use('/api/v1/rooms', rooms);
+  app.use('/api/v1/user', user);
+  app.use('/api/v1/category', category);
   // globalError has to be the last route
   app.use(globalError);
 };

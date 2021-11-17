@@ -2,7 +2,10 @@ const crypto = require('crypto');
 const { Schema, model } = require('mongoose');
 const bcrypt = require('bcryptjs');
 const validator = require('validator');
-const { User, userTypes } = require('../constants');
+const {
+  models: { User },
+  userTypes,
+} = require('../constants');
 
 const schema = new Schema(
   {

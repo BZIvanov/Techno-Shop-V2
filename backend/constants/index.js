@@ -1,6 +1,7 @@
-// Model names
-exports.User = 'User';
-exports.Room = 'Room';
+exports.models = {
+  User: 'User',
+  Category: 'Category',
+};
 
 exports.userTypes = {
   user: 'user',
