@@ -9,7 +9,7 @@ import { LoginPage } from './pages/login-page';
 import { ResetPasswordPage } from './pages/reset-password-page';
 import { UserPage } from './pages/user-page';
 import { UserPasswordUpdate } from './components/user-password-update';
-import { UserRoute } from './components/user-route';
+import { ProtectedRoute } from './components/protected-route';
 import { getCurrentUserAction } from './store/action-creators';
 
 const App = () => {
@@ -34,9 +34,9 @@ const App = () => {
         <Route
           path='user'
           element={
-            <UserRoute redirectTo='/login'>
+            <ProtectedRoute authRedirectTo='/login'>
               <UserPage />
-            </UserRoute>
+            </ProtectedRoute>
           }
         >
           <Route path='dashboard' element={<Rooms />} />

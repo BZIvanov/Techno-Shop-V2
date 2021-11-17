@@ -57,7 +57,7 @@ const UserPasswordUpdate = () => {
         marginTop: { xs: '10px', sm: '20px', md: '40px' },
       }}
     >
-      <Typography variant='h1'>Password Reset Form</Typography>
+      <Typography variant='h1'>Password Update Form</Typography>
 
       <Box
         sx={{
