@@ -1,12 +1,12 @@
 import { combineReducers } from 'redux';
 import { apiCallReducer } from './api-call';
 import { userReducer } from './user';
-import { roomsReducer } from './rooms';
+import { categoryReducer } from './category';
 
 const rootReducer = combineReducers({
   apiCall: apiCallReducer,
   user: userReducer,
-  rooms: roomsReducer,
+  category: categoryReducer,
 });
 
 export default rootReducer;

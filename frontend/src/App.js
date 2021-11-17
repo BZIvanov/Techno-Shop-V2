@@ -2,12 +2,12 @@ import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { Routes, Route } from 'react-router-dom';
 import { Header } from './components/header';
-import { Rooms } from './components/rooms';
 import { HomePage } from './pages/home-page';
 import { RegisterPage } from './pages/register-page';
 import { LoginPage } from './pages/login-page';
 import { ResetPasswordPage } from './pages/reset-password-page';
 import { UserPage } from './pages/user-page';
+import { ManageCategory } from './components/manage-category';
 import { UserPasswordUpdate } from './components/user-password-update';
 import { ProtectedRoute } from './components/protected-route';
 import { getCurrentUserAction } from './store/action-creators';
@@ -26,11 +26,10 @@ const App = () => {
     <>
       <Header />
       <Routes>
-        <Route path='/rooms' element={<Rooms />} />
         <Route path='/' element={<HomePage />} />
-        <Route path='login' element={<LoginPage />} />
-        <Route path='register' element={<RegisterPage />} />
-        <Route path='reset-password/:token' element={<ResetPasswordPage />} />
+        <Route path='/login' element={<LoginPage />} />
+        <Route path='/register' element={<RegisterPage />} />
+        <Route path='/reset-password/:token' element={<ResetPasswordPage />} />
         <Route
           path='user'
           element={
@@ -39,8 +38,24 @@ const App = () => {
             </ProtectedRoute>
           }
         >
-          <Route path='dashboard' element={<Rooms />} />
-          <Route path='wishlist' element={<Rooms />} />
+          <Route path='dashboard' element={<UserPasswordUpdate />} />
+          <Route path='wishlist' element={<UserPasswordUpdate />} />
+          <Route path='password' element={<UserPasswordUpdate />} />
+        </Route>
+        <Route
+          path='admin'
+          element={
+            <ProtectedRoute
+              authRedirectTo='/login'
+              roleRedirectTo='/'
+              roles={['admin']}
+            >
+              <UserPage />
+            </ProtectedRoute>
+          }
+        >
+          <Route path='dashboard' element={<UserPasswordUpdate />} />
+          <Route path='category' element={<ManageCategory />} />
           <Route path='password' element={<UserPasswordUpdate />} />
         </Route>
       </Routes>
