@@ -71,6 +71,29 @@ exports.currentUser = catchAsync(async (req, res, next) => {
   });
 });
 
+exports.updatePassword = catchAsync(async (req, res, next) => {
+  const user = await User.findById(req.user._id).select('+password');
+
+  const { oldPassword, newPassword } = req.body;
+
+  if (!oldPassword || !newPassword) {
+    return next(
+      new AppError(
+        'Both current and new passwords are required',
+        status.BAD_REQUEST
+      )
+    );
+  }
+
+  if (!(await user.comparePassword(oldPassword))) {
+    return next(new AppError('Incorrect password', status.UNAUTHORIZED));
+  }
+
+  user.password = newPassword;
+  await user.save();
+  res.status(status.OK).json({ success: true });
+});
+
 exports.forgotPassword = catchAsync(async (req, res, next) => {
   const user = await User.findOne({ email: req.body.email });
 

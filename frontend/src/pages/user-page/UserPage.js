@@ -6,7 +6,9 @@ const UserPage = () => {
   return (
     <Box sx={{ display: 'flex' }}>
       <LeftNavMenu />
-      <Outlet />
+      <Box sx={{ flexGrow: 1 }}>
+        <Outlet />
+      </Box>
     </Box>
   );
 };

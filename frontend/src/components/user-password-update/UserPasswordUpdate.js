@@ -1,5 +1,4 @@
 import { useSelector, useDispatch } from 'react-redux';
-import { Navigate, useParams } from 'react-router-dom';
 import { Form, Field } from 'react-final-form';
 import {
   Box,
@@ -17,25 +16,22 @@ import {
   composeValidators,
 } from '../../utils/form-field-validators';
 import {
-  resetPasswordAction,
+  updatePasswordAction,
   apiCallResetType,
 } from '../../store/action-creators';
-import { RESET_PASSWORD_CODE } from '../../store/action-creators/api-call';
 
-const ResetPasswordPage = () => {
-  const { user } = useSelector((state) => state.user);
-  const { loading, error, callCode } = useSelector((state) => state.apiCall);
+const UserPasswordUpdate = () => {
+  const { loading, success, error } = useSelector((state) => state.apiCall);
 
   const dispatch = useDispatch();
 
-  const { token } = useParams();
-
-  const handleCloseError = () => {
+  const handleCloseSnackbar = () => {
     dispatch(apiCallResetType());
   };
 
-  const handleFormSubmit = (values) => {
-    dispatch(resetPasswordAction({ ...values, token }));
+  const handleFormSubmit = (values, handlers) => {
+    dispatch(updatePasswordAction(values));
+    handlers.restart();
   };
 
   const handleFormValidate = (values) => {
@@ -50,14 +46,6 @@ const ResetPasswordPage = () => {
 
     return errors;
   };
-
-  if (user) {
-    return <Navigate to='/' />;
-  }
-
-  if (callCode && callCode === RESET_PASSWORD_CODE) {
-    return <Navigate to='/login' />;
-  }
 
   return (
     <Box
@@ -91,6 +79,14 @@ const ResetPasswordPage = () => {
           render={({ handleSubmit, form, submitting, pristine }) => {
             return (
               <form onSubmit={handleSubmit}>
+                <Box my={1}>
+                  <Field
+                    name='oldPassword'
+                    component={PasswordTextFieldAdapter}
+                    validate={composeValidators(required, minLength(8))}
+                    label='Old Password'
+                  />
+                </Box>
                 <Box my={1}>
                   <Field
                     name='newPassword'
@@ -136,14 +132,18 @@ const ResetPasswordPage = () => {
           }}
         />
       </Box>
-      {error && (
+      {(error || success) && (
         <Snackbar
-          open={Boolean(error)}
+          open={Boolean(error) || Boolean(success)}
           anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
-          onClose={handleCloseError}
+          autoHideDuration={3000}
+          onClose={handleCloseSnackbar}
         >
-          <Alert severity='error' onClose={handleCloseError}>
-            {error}
+          <Alert
+            severity={error ? 'error' : 'success'}
+            onClose={handleCloseSnackbar}
+          >
+            {error ? error : success}
           </Alert>
         </Snackbar>
       )}
@@ -151,4 +151,4 @@ const ResetPasswordPage = () => {
   );
 };
 
-export default ResetPasswordPage;
+export default UserPasswordUpdate;
