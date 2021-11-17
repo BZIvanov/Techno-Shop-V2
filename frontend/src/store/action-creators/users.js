@@ -2,6 +2,7 @@ import {
   registerUserCall,
   loginUserCall,
   logoutUserCall,
+  updatePasswordCall,
   forgotPasswordCall,
   resetPasswordCall,
   getCurrentUserCall,
@@ -66,6 +67,20 @@ export const logoutUserAction = (values) => {
       await logoutUserCall(user.token);
       dispatch(apiCallSuccessType());
       dispatch(logoutUserType());
+    } catch (error) {
+      dispatch(apiCallFailType(error.response.data.error));
+    }
+  };
+};
+
+export const updatePasswordAction = (passwordsData) => {
+  return async (dispatch, getState) => {
+    const { user } = getState();
+    dispatch(apiCallStartType());
+
+    try {
+      await updatePasswordCall(passwordsData, user.token);
+      dispatch(apiCallSuccessType('Password updated', RESET_PASSWORD_CODE));
     } catch (error) {
       dispatch(apiCallFailType(error.response.data.error));
     }

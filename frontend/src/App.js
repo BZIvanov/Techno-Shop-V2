@@ -8,6 +8,7 @@ import { RegisterPage } from './pages/register-page';
 import { LoginPage } from './pages/login-page';
 import { ResetPasswordPage } from './pages/reset-password-page';
 import { UserPage } from './pages/user-page';
+import { UserPasswordUpdate } from './components/user-password-update';
 import { UserRoute } from './components/user-route';
 import { getCurrentUserAction } from './store/action-creators';
 
@@ -40,7 +41,7 @@ const App = () => {
         >
           <Route path='dashboard' element={<Rooms />} />
           <Route path='wishlist' element={<Rooms />} />
-          <Route path='password' element={<Rooms />} />
+          <Route path='password' element={<UserPasswordUpdate />} />
         </Route>
       </Routes>
     </>

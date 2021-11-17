@@ -22,6 +22,12 @@ export const getCurrentUserCall = (token) => {
   });
 };
 
+export const updatePasswordCall = (data, token) => {
+  return axios.put('/users/update-password', data, {
+    headers: { authorization: `Bearer ${token}` },
+  });
+};
+
 export const forgotPasswordCall = (data) => {
   return axios.post('/users/forgot-password', data);
 };
