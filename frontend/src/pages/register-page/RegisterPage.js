@@ -1,37 +1,24 @@
 import { useSelector, useDispatch } from 'react-redux';
 import { Navigate } from 'react-router-dom';
 import { Form, Field } from 'react-final-form';
-import {
-  Box,
-  Typography,
-  Button,
-  Alert,
-  Snackbar,
-  Backdrop,
-  CircularProgress,
-} from '@mui/material';
+import { Box, Typography, Button } from '@mui/material';
 import { Face, Email } from '@mui/icons-material';
 import { TextFieldAdapter } from '../../components/text-field-adapter';
 import { PasswordTextFieldAdapter } from '../../components/password-text-field-adapter';
+import { ApiCallAlert } from '../../components/api-call-alert';
+import { ApiCallLoader } from '../../components/api-call-loader';
 import {
   required,
   minLength,
   composeValidators,
 } from '../../utils/form-field-validators';
-import {
-  registerUserAction,
-  apiCallResetType,
-} from '../../store/action-creators';
+import { registerUserAction } from '../../store/action-creators';
 
 const RegisterPage = () => {
   const { user } = useSelector((state) => state.user);
-  const { loading, error } = useSelector((state) => state.apiCall);
+  const { loading } = useSelector((state) => state.apiCall);
 
   const dispatch = useDispatch();
-
-  const handleCloseError = () => {
-    dispatch(apiCallResetType());
-  };
 
   const handleFormSubmit = (values) => {
     dispatch(registerUserAction(values));
@@ -77,12 +64,6 @@ const RegisterPage = () => {
           },
         }}
       >
-        <Backdrop
-          sx={{ zIndex: (theme) => theme.zIndex.drawer + 1 }}
-          open={loading}
-        >
-          <CircularProgress />
-        </Backdrop>
         <Form
           onSubmit={handleFormSubmit}
           validate={handleFormValidate}
@@ -142,7 +123,7 @@ const RegisterPage = () => {
                   <Button
                     variant='contained'
                     type='submit'
-                    disabled={submitting}
+                    disabled={submitting || loading}
                   >
                     Register
                   </Button>
@@ -152,17 +133,10 @@ const RegisterPage = () => {
           }}
         />
       </Box>
-      {error && (
-        <Snackbar
-          open={Boolean(error)}
-          anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
-          onClose={handleCloseError}
-        >
-          <Alert severity='error' onClose={handleCloseError}>
-            {error}
-          </Alert>
-        </Snackbar>
-      )}
+
+      <ApiCallLoader />
+
+      <ApiCallAlert />
     </Box>
   );
 };

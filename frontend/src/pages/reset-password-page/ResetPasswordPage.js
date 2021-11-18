@@ -1,38 +1,25 @@
 import { useSelector, useDispatch } from 'react-redux';
 import { Navigate, useParams } from 'react-router-dom';
 import { Form, Field } from 'react-final-form';
-import {
-  Box,
-  Typography,
-  Button,
-  Alert,
-  Snackbar,
-  Backdrop,
-  CircularProgress,
-} from '@mui/material';
+import { Box, Typography, Button } from '@mui/material';
 import { PasswordTextFieldAdapter } from '../../components/password-text-field-adapter';
+import { ApiCallAlert } from '../../components/api-call-alert';
+import { ApiCallLoader } from '../../components/api-call-loader';
 import {
   required,
   minLength,
   composeValidators,
 } from '../../utils/form-field-validators';
-import {
-  resetPasswordAction,
-  apiCallResetType,
-} from '../../store/action-creators';
+import { resetPasswordAction } from '../../store/action-creators';
 import { RESET_PASSWORD_CODE } from '../../store/action-creators/api-call';
 
 const ResetPasswordPage = () => {
   const { user } = useSelector((state) => state.user);
-  const { loading, error, callCode } = useSelector((state) => state.apiCall);
+  const { loading, callCode } = useSelector((state) => state.apiCall);
 
   const dispatch = useDispatch();
 
   const { token } = useParams();
-
-  const handleCloseError = () => {
-    dispatch(apiCallResetType());
-  };
 
   const handleFormSubmit = (values) => {
     dispatch(resetPasswordAction({ ...values, token }));
@@ -79,12 +66,6 @@ const ResetPasswordPage = () => {
           },
         }}
       >
-        <Backdrop
-          sx={{ zIndex: (theme) => theme.zIndex.drawer + 1 }}
-          open={loading}
-        >
-          <CircularProgress />
-        </Backdrop>
         <Form
           onSubmit={handleFormSubmit}
           validate={handleFormValidate}
@@ -126,7 +107,7 @@ const ResetPasswordPage = () => {
                   <Button
                     variant='contained'
                     type='submit'
-                    disabled={submitting}
+                    disabled={submitting || loading}
                   >
                     Submit
                   </Button>
@@ -136,17 +117,10 @@ const ResetPasswordPage = () => {
           }}
         />
       </Box>
-      {error && (
-        <Snackbar
-          open={Boolean(error)}
-          anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
-          onClose={handleCloseError}
-        >
-          <Alert severity='error' onClose={handleCloseError}>
-            {error}
-          </Alert>
-        </Snackbar>
-      )}
+
+      <ApiCallLoader />
+
+      <ApiCallAlert />
     </Box>
   );
 };

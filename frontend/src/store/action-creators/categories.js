@@ -1,4 +1,8 @@
-import { getAllCategoriesCall, createCategoryCall } from '../../api/categories';
+import {
+  getAllCategoriesCall,
+  createCategoryCall,
+  deleteCategoryCall,
+} from '../../api/categories';
 import { apiCallStartType, apiCallSuccessType, apiCallFailType } from './';
 import { actionType } from '../action-types';
 
@@ -10,6 +14,11 @@ export const allCategoriesType = (categories) => ({
 export const createCategoryType = (category) => ({
   type: actionType.CREATE_CATEGORY,
   payload: category,
+});
+
+export const deleteCategoryType = (categoryId) => ({
+  type: actionType.DELETE_CATEGORY,
+  payload: categoryId,
 });
 
 export const getAllCategoriesAction = () => {
@@ -36,6 +45,21 @@ export const createCategoryAction = (category, token) => {
 
       dispatch(apiCallSuccessType(`Category '${data.category.name}' created`));
       dispatch(createCategoryType(data.category));
+    } catch (error) {
+      dispatch(apiCallFailType('Create category error'));
+    }
+  };
+};
+
+export const deleteCategoryAction = (categoryId, token) => {
+  return async (dispatch) => {
+    dispatch(apiCallStartType());
+
+    try {
+      await deleteCategoryCall(categoryId, token);
+
+      dispatch(apiCallSuccessType('Category deleted'));
+      dispatch(deleteCategoryType(categoryId));
     } catch (error) {
       dispatch(apiCallFailType('Create category error'));
     }

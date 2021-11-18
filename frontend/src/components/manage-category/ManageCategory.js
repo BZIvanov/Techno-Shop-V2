@@ -1,16 +1,7 @@
 import { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Form, Field } from 'react-final-form';
-import {
-  Box,
-  Typography,
-  Backdrop,
-  CircularProgress,
-  Button,
-  Divider,
-  Paper,
-  Chip,
-} from '@mui/material';
+import { Box, Typography, Button, Divider, Paper, Chip } from '@mui/material';
 import { Category } from '@mui/icons-material';
 import { TextFieldAdapter } from '../text-field-adapter';
 import { ListItem } from '../list-item';
@@ -22,12 +13,14 @@ import {
 import {
   getAllCategoriesAction,
   createCategoryAction,
+  deleteCategoryAction,
 } from '../../store/action-creators';
+import { ApiCallAlert } from '../api-call-alert';
+import { ApiCallLoader } from '../api-call-loader';
 
 const ManageCategory = () => {
   const { token } = useSelector((state) => state.user);
   const { categories } = useSelector((state) => state.category);
-  const { loading } = useSelector((state) => state.apiCall);
 
   const dispatch = useDispatch();
 
@@ -35,24 +28,18 @@ const ManageCategory = () => {
     dispatch(getAllCategoriesAction());
   }, [dispatch]);
 
-  const handleFormSubmit = ({ category }) => {
+  const handleFormSubmit = ({ category }, handlers) => {
     dispatch(createCategoryAction({ name: category }, token));
+    handlers.restart();
   };
 
   const handleCategoryDelete = (categoryId) => () => {
-    console.log(categoryId);
+    dispatch(deleteCategoryAction(categoryId, token));
   };
 
   return (
     <Box sx={{ padding: (theme) => theme.spacing(1) }}>
       <Typography variant='h1'>Manage Categories</Typography>
-
-      <Backdrop
-        sx={{ zIndex: (theme) => theme.zIndex.drawer + 1 }}
-        open={loading}
-      >
-        <CircularProgress />
-      </Backdrop>
 
       <Box sx={{ width: '90%' }}>
         <Form
@@ -107,6 +94,10 @@ const ManageCategory = () => {
           );
         })}
       </Paper>
+
+      <ApiCallLoader />
+
+      <ApiCallAlert />
     </Box>
   );
 };
