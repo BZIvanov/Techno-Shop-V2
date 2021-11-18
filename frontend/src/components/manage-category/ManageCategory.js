@@ -24,7 +24,11 @@ const ManageCategory = () => {
   const { token } = useSelector((state) => state.user);
   const { categories } = useSelector((state) => state.category);
 
-  const [confirmDelete, setConfirmDelete] = useState(false);
+  const [removeCategoryDialog, setRemoveCategoryDialog] = useState({
+    open: false,
+    text: '',
+    onConfirm: () => {},
+  });
 
   const dispatch = useDispatch();
 
@@ -32,12 +36,17 @@ const ManageCategory = () => {
     dispatch(getAllCategoriesAction());
   }, [dispatch]);
 
-  const handleFormSubmit = ({ category }, handlers) => {
+  const handleCreateCategorySubmit = ({ category }, handlers) => {
     dispatch(createCategoryAction({ name: category }, token));
     handlers.restart();
   };
 
-  const handleCategoryDelete = (categoryId) => () => {
+  const handleCategoryDeleteClick = (categoryId) => () => {
+    setRemoveCategoryDialog({
+      open: false,
+      text: '',
+      onConfirm: () => {},
+    });
     dispatch(deleteCategoryAction(categoryId, token));
   };
 
@@ -47,7 +56,7 @@ const ManageCategory = () => {
 
       <Box sx={{ width: '90%' }}>
         <Form
-          onSubmit={handleFormSubmit}
+          onSubmit={handleCreateCategorySubmit}
           render={({ handleSubmit, submitting }) => {
             return (
               <form onSubmit={handleSubmit}>
@@ -94,7 +103,13 @@ const ManageCategory = () => {
                   sx={{ '&:hover': { cursor: 'pointer' } }}
                   icon={undefined}
                   label={category.name}
-                  onDelete={handleCategoryDelete(category._id)}
+                  onDelete={() =>
+                    setRemoveCategoryDialog({
+                      open: true,
+                      text: 'Are you sure you want to delete this category?',
+                      onConfirm: handleCategoryDeleteClick(category._id),
+                    })
+                  }
                 />
               </ListItem>
             );
@@ -107,9 +122,8 @@ const ManageCategory = () => {
       </Paper>
 
       <ConfirmDialog
-        text='Are you sure you want to delete this category?'
-        open={confirmDelete}
-        cancelHandler={setConfirmDelete}
+        dialogConfig={removeCategoryDialog}
+        setDialogConfig={setRemoveCategoryDialog}
       />
 
       <ApiCallLoader />

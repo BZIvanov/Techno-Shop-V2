@@ -1,18 +1,30 @@
-import Button from '@mui/material/Button';
-import Dialog from '@mui/material/Dialog';
-import DialogActions from '@mui/material/DialogActions';
-import DialogContent from '@mui/material/DialogContent';
-import DialogContentText from '@mui/material/DialogContentText';
+import {
+  Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+} from '@mui/material';
 
-const ConfirmDialog = ({ text, open, cancelHandler, confirmHandler }) => {
+const ConfirmDialog = ({
+  dialogConfig: { open, text, onConfirm },
+  setDialogConfig,
+}) => {
   return (
-    <Dialog open={open} onClose={() => cancelHandler(false)}>
+    <Dialog
+      open={open}
+      onClose={() => setDialogConfig({ text, onConfirm, open: false })}
+    >
       <DialogContent>
         <DialogContentText>{text}</DialogContentText>
       </DialogContent>
       <DialogActions>
-        <Button onClick={() => cancelHandler(false)}>Cancel</Button>
-        <Button onClick={confirmHandler} autoFocus={true}>
+        <Button
+          onClick={() => setDialogConfig({ text, onConfirm, open: false })}
+        >
+          Cancel
+        </Button>
+        <Button onClick={() => onConfirm()} autoFocus={true}>
           Continue
         </Button>
       </DialogActions>
