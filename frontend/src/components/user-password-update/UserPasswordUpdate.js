@@ -1,33 +1,20 @@
 import { useSelector, useDispatch } from 'react-redux';
 import { Form, Field } from 'react-final-form';
-import {
-  Box,
-  Typography,
-  Button,
-  Alert,
-  Snackbar,
-  Backdrop,
-  CircularProgress,
-} from '@mui/material';
+import { Box, Typography, Button } from '@mui/material';
 import { PasswordTextFieldAdapter } from '../../components/password-text-field-adapter';
+import { ApiCallAlert } from '../api-call-alert';
+import { ApiCallLoader } from '../api-call-loader';
 import {
   required,
   minLength,
   composeValidators,
 } from '../../utils/form-field-validators';
-import {
-  updatePasswordAction,
-  apiCallResetType,
-} from '../../store/action-creators';
+import { updatePasswordAction } from '../../store/action-creators';
 
 const UserPasswordUpdate = () => {
-  const { loading, success, error } = useSelector((state) => state.apiCall);
+  const { loading } = useSelector((state) => state.apiCall);
 
   const dispatch = useDispatch();
-
-  const handleCloseSnackbar = () => {
-    dispatch(apiCallResetType());
-  };
 
   const handleFormSubmit = (values, handlers) => {
     dispatch(updatePasswordAction(values));
@@ -67,12 +54,6 @@ const UserPasswordUpdate = () => {
           },
         }}
       >
-        <Backdrop
-          sx={{ zIndex: (theme) => theme.zIndex.drawer + 1 }}
-          open={loading}
-        >
-          <CircularProgress />
-        </Backdrop>
         <Form
           onSubmit={handleFormSubmit}
           validate={handleFormValidate}
@@ -122,7 +103,7 @@ const UserPasswordUpdate = () => {
                   <Button
                     variant='contained'
                     type='submit'
-                    disabled={submitting}
+                    disabled={submitting || loading}
                   >
                     Submit
                   </Button>
@@ -132,21 +113,10 @@ const UserPasswordUpdate = () => {
           }}
         />
       </Box>
-      {(error || success) && (
-        <Snackbar
-          open={Boolean(error) || Boolean(success)}
-          anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
-          autoHideDuration={3000}
-          onClose={handleCloseSnackbar}
-        >
-          <Alert
-            severity={error ? 'error' : 'success'}
-            onClose={handleCloseSnackbar}
-          >
-            {error ? error : success}
-          </Alert>
-        </Snackbar>
-      )}
+
+      <ApiCallLoader />
+
+      <ApiCallAlert />
     </Box>
   );
 };

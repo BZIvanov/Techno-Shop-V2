@@ -9,3 +9,9 @@ export const createCategoryCall = (data, token) => {
     headers: { authorization: `Bearer ${token}` },
   });
 };
+
+export const deleteCategoryCall = (id, token) => {
+  return axios.delete(`/category/${id}`, {
+    headers: { authorization: `Bearer ${token}` },
+  });
+};
