@@ -1,10 +1,11 @@
-import { useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Form, Field } from 'react-final-form';
 import { Box, Typography, Button, Divider, Paper, Chip } from '@mui/material';
 import { Category } from '@mui/icons-material';
 import { TextFieldAdapter } from '../text-field-adapter';
 import { ListItem } from '../list-item';
+import { ConfirmDialog } from '../confirm-dialog';
 import {
   required,
   minLength,
@@ -19,8 +20,11 @@ import { ApiCallAlert } from '../api-call-alert';
 import { ApiCallLoader } from '../api-call-loader';
 
 const ManageCategory = () => {
+  const { loading } = useSelector((state) => state.apiCall);
   const { token } = useSelector((state) => state.user);
   const { categories } = useSelector((state) => state.category);
+
+  const [confirmDelete, setConfirmDelete] = useState(false);
 
   const dispatch = useDispatch();
 
@@ -59,7 +63,7 @@ const ManageCategory = () => {
                   <Button
                     variant='contained'
                     type='submit'
-                    disabled={submitting}
+                    disabled={submitting || loading}
                   >
                     Create
                   </Button>
@@ -82,18 +86,31 @@ const ManageCategory = () => {
         }}
         component='ul'
       >
-        {categories.map((category) => {
-          return (
-            <ListItem key={category._id}>
-              <Chip
-                icon={undefined}
-                label={category.name}
-                onDelete={handleCategoryDelete(category._id)}
-              />
-            </ListItem>
-          );
-        })}
+        {categories.length ? (
+          categories.map((category) => {
+            return (
+              <ListItem key={category._id}>
+                <Chip
+                  sx={{ '&:hover': { cursor: 'pointer' } }}
+                  icon={undefined}
+                  label={category.name}
+                  onDelete={handleCategoryDelete(category._id)}
+                />
+              </ListItem>
+            );
+          })
+        ) : (
+          <Typography variant='subtitle2'>
+            No categories. Use the form above to create some.
+          </Typography>
+        )}
       </Paper>
+
+      <ConfirmDialog
+        text='Are you sure you want to delete this category?'
+        open={confirmDelete}
+        cancelHandler={setConfirmDelete}
+      />
 
       <ApiCallLoader />
 
