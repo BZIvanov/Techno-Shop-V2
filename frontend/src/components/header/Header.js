@@ -1,21 +1,29 @@
 import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { AppBar, Box, Toolbar, Grid, Typography } from '@mui/material';
-import { PersonAdd, Login, ExitToApp } from '@mui/icons-material';
+import { PersonAdd, Login, ExitToApp, Dashboard } from '@mui/icons-material';
 import { HeaderNavLink } from '../header-nav-link';
 import logoImage from '../../assets/images/awesome-logo.png';
 import { logoutUserAction } from '../../store/action-creators';
 
-const links = [
+const noUserLinks = [
   {
-    toLink: 'login',
+    toLink: '/login',
     Icon: Login,
     linkText: 'Login',
   },
   {
-    toLink: 'register',
+    toLink: '/register',
     Icon: PersonAdd,
     linkText: 'Register',
+  },
+];
+
+const userLinks = [
+  {
+    toLink: '/user/dashboard',
+    Icon: Dashboard,
+    linkText: 'Dashboard',
   },
 ];
 
@@ -52,28 +60,39 @@ const Header = () => {
           <Grid item={true}>
             <Box sx={{ display: 'flex' }}>
               {!user ? (
-                links.map((link) => (
+                noUserLinks.map((link) => (
                   <HeaderNavLink key={link.toLink} {...link} />
                 ))
               ) : (
-                <Box
-                  component={() => (
-                    <Box
-                      onClick={logoutUser}
-                      sx={{
-                        display: 'flex',
-                        flexDirection: 'column',
-                        alignItems: 'center',
-                        padding: '8px',
-                        cursor: 'pointer',
-                        color: (theme) => theme.palette.secondary.dark,
-                      }}
-                    >
-                      <ExitToApp fontSize='small' />
-                      <Typography>Logout</Typography>
-                    </Box>
-                  )}
-                />
+                <>
+                  {userLinks.map((link) => {
+                    const userLink = { ...link };
+                    if (user.role === 'admin') {
+                      userLink.toLink = userLink.toLink.replace(
+                        'user',
+                        'admin'
+                      );
+                    }
+
+                    return (
+                      <HeaderNavLink key={userLink.toLink} {...userLink} />
+                    );
+                  })}
+                  <Box
+                    onClick={logoutUser}
+                    sx={{
+                      display: 'flex',
+                      flexDirection: 'column',
+                      alignItems: 'center',
+                      padding: '8px',
+                      cursor: 'pointer',
+                      color: (theme) => theme.palette.secondary.dark,
+                    }}
+                  >
+                    <ExitToApp fontSize='small' />
+                    <Typography>Logout</Typography>
+                  </Box>
+                </>
               )}
             </Box>
           </Grid>

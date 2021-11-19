@@ -2,6 +2,7 @@ const express = require('express');
 const cors = require('cors');
 const user = require('../routes/user');
 const category = require('../routes/category');
+const subcategory = require('../routes/subcategory');
 const globalError = require('../middlewares/global-error');
 
 module.exports = function startApp(app) {
@@ -11,6 +12,7 @@ module.exports = function startApp(app) {
 
   app.use('/api/v1/user', user);
   app.use('/api/v1/category', category);
+  app.use('/api/v1/subcategory', subcategory);
   // globalError has to be the last route
   app.use(globalError);
 };
