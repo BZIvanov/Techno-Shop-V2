@@ -1,6 +1,7 @@
 exports.models = {
   User: 'User',
   Category: 'Category',
+  Subcategory: 'Subcategory',
 };
 
 exports.userTypes = {
