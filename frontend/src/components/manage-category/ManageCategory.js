@@ -14,6 +14,7 @@ import {
 import {
   getAllCategoriesAction,
   createCategoryAction,
+  updateCategoryAction,
   deleteCategoryAction,
 } from '../../store/action-creators';
 import { ApiCallAlert } from '../api-call-alert';
@@ -24,6 +25,7 @@ const ManageCategory = () => {
   const { token } = useSelector((state) => state.user);
   const { categories } = useSelector((state) => state.category);
 
+  const [selectedCategory, setSelectedCategory] = useState(null);
   const [removeCategoryDialog, setRemoveCategoryDialog] = useState({
     open: false,
     text: '',
@@ -36,9 +38,21 @@ const ManageCategory = () => {
     dispatch(getAllCategoriesAction());
   }, [dispatch]);
 
-  const handleCreateCategorySubmit = ({ category }, handlers) => {
-    dispatch(createCategoryAction({ name: category }, token));
+  const handleCategorySubmit = ({ category }, handlers) => {
+    if (selectedCategory) {
+      dispatch(
+        updateCategoryAction(
+          { _id: selectedCategory._id, name: category },
+          token
+        )
+      );
+    } else {
+      dispatch(createCategoryAction({ name: category }, token));
+    }
+
     handlers.restart();
+
+    setSelectedCategory(null);
   };
 
   const handleCategoryDeleteClick = (categoryId) => () => {
@@ -56,8 +70,11 @@ const ManageCategory = () => {
 
       <Box sx={{ width: '90%' }}>
         <Form
-          onSubmit={handleCreateCategorySubmit}
-          render={({ handleSubmit, submitting }) => {
+          initialValues={{
+            category: selectedCategory?.name || '',
+          }}
+          onSubmit={handleCategorySubmit}
+          render={({ handleSubmit, submitting, form, values }) => {
             return (
               <form onSubmit={handleSubmit}>
                 <Field
@@ -71,10 +88,23 @@ const ManageCategory = () => {
                 <Box mt={2} ml={1}>
                   <Button
                     variant='contained'
+                    color='secondary'
+                    type='button'
+                    onClick={() => {
+                      setSelectedCategory(null);
+                      form.reset();
+                    }}
+                    disabled={submitting || loading || !values.category}
+                  >
+                    Reset Form
+                  </Button>
+                  <Button
+                    sx={{ marginLeft: '5px' }}
+                    variant='contained'
                     type='submit'
                     disabled={submitting || loading}
                   >
-                    Create
+                    {selectedCategory ? 'Update' : 'Create'}
                   </Button>
                 </Box>
               </form>
@@ -96,18 +126,19 @@ const ManageCategory = () => {
         component='ul'
       >
         {categories.length ? (
-          categories.map((category) => {
+          categories.map(({ _id, name }) => {
             return (
-              <ListItem key={category._id}>
+              <ListItem key={_id}>
                 <Chip
                   sx={{ '&:hover': { cursor: 'pointer' } }}
                   icon={undefined}
-                  label={category.name}
+                  label={name}
+                  onClick={() => setSelectedCategory({ _id, name })}
                   onDelete={() =>
                     setRemoveCategoryDialog({
                       open: true,
                       text: 'Are you sure you want to delete this category?',
-                      onConfirm: handleCategoryDeleteClick(category._id),
+                      onConfirm: handleCategoryDeleteClick(_id),
                     })
                   }
                 />

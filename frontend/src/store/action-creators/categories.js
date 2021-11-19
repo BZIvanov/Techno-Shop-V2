@@ -1,6 +1,7 @@
 import {
   getAllCategoriesCall,
   createCategoryCall,
+  updateCategoryCall,
   deleteCategoryCall,
 } from '../../api/categories';
 import { apiCallStartType, apiCallSuccessType, apiCallFailType } from './';
@@ -13,6 +14,11 @@ export const allCategoriesType = (categories) => ({
 
 export const createCategoryType = (category) => ({
   type: actionType.CREATE_CATEGORY,
+  payload: category,
+});
+
+export const updateCategoryType = (category) => ({
+  type: actionType.UPDATE_CATEGORY,
   payload: category,
 });
 
@@ -47,6 +53,21 @@ export const createCategoryAction = (category, token) => {
       dispatch(createCategoryType(data.category));
     } catch (error) {
       dispatch(apiCallFailType('Create category error'));
+    }
+  };
+};
+
+export const updateCategoryAction = (category, token) => {
+  return async (dispatch) => {
+    dispatch(apiCallStartType());
+    console.log(category, token);
+    try {
+      const { data } = await updateCategoryCall(category, token);
+
+      dispatch(apiCallSuccessType(`Category '${data.category.name}' updated`));
+      dispatch(updateCategoryType(data.category));
+    } catch (error) {
+      dispatch(apiCallFailType('Update category error'));
     }
   };
 };
