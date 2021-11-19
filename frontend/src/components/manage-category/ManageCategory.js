@@ -1,7 +1,15 @@
 import { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Form, Field } from 'react-final-form';
-import { Box, Typography, Button, Divider, Paper, Chip } from '@mui/material';
+import {
+  Box,
+  Typography,
+  Button,
+  Divider,
+  Paper,
+  Chip,
+  TextField,
+} from '@mui/material';
 import { Category } from '@mui/icons-material';
 import { TextFieldAdapter } from '../text-field-adapter';
 import { ListItem } from '../list-item';
@@ -31,6 +39,7 @@ const ManageCategory = () => {
     text: '',
     onConfirm: () => {},
   });
+  const [filterCategoryText, setFilterCategoryText] = useState('');
 
   const dispatch = useDispatch();
 
@@ -62,6 +71,7 @@ const ManageCategory = () => {
       onConfirm: () => {},
     });
     dispatch(deleteCategoryAction(categoryId, token));
+    setSelectedCategory(null);
   };
 
   return (
@@ -115,6 +125,14 @@ const ManageCategory = () => {
 
       <Divider style={{ margin: '20px 0' }} />
 
+      <Box sx={{ marginBottom: 2 }}>
+        <TextField
+          label='Search'
+          variant='standard'
+          value={filterCategoryText}
+          onChange={(e) => setFilterCategoryText(e.target.value)}
+        />
+      </Box>
       <Paper
         sx={{
           display: 'flex',
@@ -126,25 +144,29 @@ const ManageCategory = () => {
         component='ul'
       >
         {categories.length ? (
-          categories.map(({ _id, name }) => {
-            return (
-              <ListItem key={_id}>
-                <Chip
-                  sx={{ '&:hover': { cursor: 'pointer' } }}
-                  icon={undefined}
-                  label={name}
-                  onClick={() => setSelectedCategory({ _id, name })}
-                  onDelete={() =>
-                    setRemoveCategoryDialog({
-                      open: true,
-                      text: 'Are you sure you want to delete this category?',
-                      onConfirm: handleCategoryDeleteClick(_id),
-                    })
-                  }
-                />
-              </ListItem>
-            );
-          })
+          categories
+            .filter(({ name }) =>
+              name.toLowerCase().includes(filterCategoryText.toLowerCase())
+            )
+            .map(({ _id, name }) => {
+              return (
+                <ListItem key={_id}>
+                  <Chip
+                    sx={{ '&:hover': { cursor: 'pointer' } }}
+                    icon={undefined}
+                    label={name}
+                    onClick={() => setSelectedCategory({ _id, name })}
+                    onDelete={() =>
+                      setRemoveCategoryDialog({
+                        open: true,
+                        text: 'Are you sure you want to delete this category?',
+                        onConfirm: handleCategoryDeleteClick(_id),
+                      })
+                    }
+                  />
+                </ListItem>
+              );
+            })
         ) : (
           <Typography variant='subtitle2'>
             No categories. Use the form above to create some.
