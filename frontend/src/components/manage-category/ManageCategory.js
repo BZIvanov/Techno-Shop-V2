@@ -104,7 +104,7 @@ const ManageCategory = () => {
                       setSelectedCategory(null);
                       form.reset();
                     }}
-                    disabled={submitting || loading || !values.category}
+                    disabled={submitting || loading}
                   >
                     Reset Form
                   </Button>

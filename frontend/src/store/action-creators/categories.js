@@ -60,7 +60,7 @@ export const createCategoryAction = (category, token) => {
 export const updateCategoryAction = (category, token) => {
   return async (dispatch) => {
     dispatch(apiCallStartType());
-    console.log(category, token);
+
     try {
       const { data } = await updateCategoryCall(category, token);
 
@@ -82,7 +82,7 @@ export const deleteCategoryAction = (categoryId, token) => {
       dispatch(apiCallSuccessType('Category deleted'));
       dispatch(deleteCategoryType(categoryId));
     } catch (error) {
-      dispatch(apiCallFailType('Create category error'));
+      dispatch(apiCallFailType('Delete category error'));
     }
   };
 };

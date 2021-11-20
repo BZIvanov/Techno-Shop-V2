@@ -43,7 +43,7 @@ exports.updateSubcategory = catchAsync(async (req, res, next) => {
       new: true,
       runValidators: true,
     }
-  );
+  ).populate('categoryId'); // important to populate here, because the frontend relies on this data
 
   if (!subcategory) {
     return next(new AppError('Subcategory not found', status.NOT_FOUND));
