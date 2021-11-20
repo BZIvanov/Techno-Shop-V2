@@ -1,11 +1,13 @@
 const status = require('http-status');
 const slugify = require('slugify');
-const Subcategory = require('../models/category');
+const Subcategory = require('../models/subcategory');
 const catchAsync = require('../middlewares/catch-async');
 const AppError = require('../utils/app-error');
 
 exports.getSubcategories = catchAsync(async (req, res) => {
-  const subcategories = await Subcategory.find().sort({ createdAt: -1 });
+  const subcategories = await Subcategory.find()
+    .populate('categoryId')
+    .sort({ createdAt: -1 });
 
   res.status(status.OK).json({ success: true, subcategories });
 });
