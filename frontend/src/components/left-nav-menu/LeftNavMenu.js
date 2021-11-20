@@ -1,6 +1,12 @@
 import { useSelector } from 'react-redux';
 import { Divider, MenuList } from '@mui/material';
-import { Dashboard, ListAlt, Password, Category } from '@mui/icons-material';
+import {
+  Dashboard,
+  ListAlt,
+  Password,
+  Category,
+  AutoAwesomeMosaic,
+} from '@mui/icons-material';
 import { LeftNavLink } from '../left-nav-link';
 
 const userLinks = [
@@ -31,6 +37,11 @@ const adminLinks = [
     toLink: 'category',
     Icon: Category,
     linkText: 'Manage categories',
+  },
+  {
+    toLink: 'subcategory',
+    Icon: AutoAwesomeMosaic,
+    linkText: 'Manage subcategories',
   },
   {
     toLink: 'password',
