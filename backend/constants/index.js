@@ -2,6 +2,7 @@ exports.models = {
   User: 'User',
   Category: 'Category',
   Subcategory: 'Subcategory',
+  Product: 'Product',
 };
 
 exports.userTypes = {
@@ -9,8 +10,7 @@ exports.userTypes = {
   admin: 'admin',
 };
 
-exports.roomCategories = {
-  kingsize: 'Kingsize',
-  single: 'Single',
-  double: 'Double',
+exports.yesNo = {
+  yes: 'Yes',
+  no: 'No',
 };

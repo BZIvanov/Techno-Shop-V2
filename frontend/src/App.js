@@ -9,6 +9,7 @@ import { ResetPasswordPage } from './pages/reset-password-page';
 import { UserPage } from './pages/user-page';
 import { ManageCategory } from './components/manage-category';
 import { ManageSubcategory } from './components/manage-subcategory';
+import { ManageProduct } from './components/manage-product';
 import { UserPasswordUpdate } from './components/user-password-update';
 import { ProtectedRoute } from './components/protected-route';
 import { getCurrentUserAction } from './store/action-creators';
@@ -58,6 +59,7 @@ const App = () => {
           <Route path='dashboard' element={<UserPasswordUpdate />} />
           <Route path='category' element={<ManageCategory />} />
           <Route path='subcategory' element={<ManageSubcategory />} />
+          <Route path='product' element={<ManageProduct />} />
           <Route path='password' element={<UserPasswordUpdate />} />
         </Route>
       </Routes>

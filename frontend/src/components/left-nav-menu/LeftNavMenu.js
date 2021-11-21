@@ -6,6 +6,7 @@ import {
   Password,
   Category,
   AutoAwesomeMosaic,
+  Gradient,
 } from '@mui/icons-material';
 import { LeftNavLink } from '../left-nav-link';
 
@@ -42,6 +43,11 @@ const adminLinks = [
     toLink: 'subcategory',
     Icon: AutoAwesomeMosaic,
     linkText: 'Manage subcategories',
+  },
+  {
+    toLink: 'product',
+    Icon: Gradient,
+    linkText: 'Manage products',
   },
   {
     toLink: 'password',
