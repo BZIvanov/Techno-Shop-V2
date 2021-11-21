@@ -16,15 +16,19 @@ const TextFieldAdapter = ({ input, meta, ...rest }) => {
         helperText={meta.touched && meta.error}
         {...input}
         {...restProps}
-        InputProps={{
-          endAdornment: (
-            <InputAdornment position='end'>
-              <IconButton>
-                <Icon />
-              </IconButton>
-            </InputAdornment>
-          ),
-        }}
+        InputProps={
+          Icon
+            ? {
+                endAdornment: (
+                  <InputAdornment position='end'>
+                    <IconButton>
+                      <Icon />
+                    </IconButton>
+                  </InputAdornment>
+                ),
+              }
+            : {}
+        }
       />
     </FormControl>
   );

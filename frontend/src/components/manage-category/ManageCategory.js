@@ -10,7 +10,6 @@ import {
   Chip,
   TextField,
 } from '@mui/material';
-import { Category } from '@mui/icons-material';
 import { TextFieldAdapter } from '../text-field-adapter';
 import { ListItem } from '../list-item';
 import { ConfirmDialog } from '../confirm-dialog';
@@ -78,13 +77,13 @@ const ManageCategory = () => {
     <Box sx={{ padding: (theme) => theme.spacing(1) }}>
       <Typography variant='h1'>Manage Categories</Typography>
 
-      <Box sx={{ width: '90%' }}>
+      <Box sx={{ width: '99%' }}>
         <Form
           initialValues={{
             category: selectedCategory?.name || '',
           }}
           onSubmit={handleCategorySubmit}
-          render={({ handleSubmit, submitting, form, values }) => {
+          render={({ handleSubmit, submitting, form }) => {
             return (
               <form onSubmit={handleSubmit}>
                 <Field
@@ -92,7 +91,6 @@ const ManageCategory = () => {
                   component={TextFieldAdapter}
                   validate={composeValidators(required, minLength(2))}
                   label='Category Name'
-                  Icon={Category}
                 />
 
                 <Box mt={2} ml={1}>

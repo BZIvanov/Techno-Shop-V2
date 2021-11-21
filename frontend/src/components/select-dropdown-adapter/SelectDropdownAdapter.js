@@ -17,11 +17,21 @@ const SelectDropdownAdapter = (props) => {
     >
       <InputLabel>{label}</InputLabel>
       <Select {...input} label={label}>
-        {options.map((option) => (
-          <MenuItem key={option._id} value={option._id}>
-            {option.name}
-          </MenuItem>
-        ))}
+        {options.map((option) => {
+          if (typeof option === 'string') {
+            return (
+              <MenuItem key={option} value={option}>
+                {option}
+              </MenuItem>
+            );
+          }
+
+          return (
+            <MenuItem key={option._id} value={option._id}>
+              {option.name}
+            </MenuItem>
+          );
+        })}
       </Select>
       {meta.touched && meta.error && (
         <FormHelperText>{meta.error}</FormHelperText>
