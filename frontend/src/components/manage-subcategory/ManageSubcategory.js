@@ -10,7 +10,6 @@ import {
   Chip,
   TextField,
 } from '@mui/material';
-import { Category } from '@mui/icons-material';
 import { SelectDropdownAdapter } from '../select-dropdown-adapter';
 import { TextFieldAdapter } from '../text-field-adapter';
 import { ListItem } from '../list-item';
@@ -110,7 +109,6 @@ const ManageSubcategory = () => {
                   component={TextFieldAdapter}
                   validate={composeValidators(required, minLength(2))}
                   label='Subcategory'
-                  Icon={Category}
                 />
                 <Box mt={2} ml={1}>
                   <Button
