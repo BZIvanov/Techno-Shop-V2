@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { Controller } from 'react-hook-form';
 import {
   FormControl,
   InputAdornment,
@@ -7,7 +8,7 @@ import {
 } from '@mui/material';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
 
-const PasswordTextFieldAdapter = ({ input, meta, ...rest }) => {
+const PasswordTextFieldAdapter = ({ name, control, label }) => {
   const [showPassword, setShowPassword] = useState(false);
 
   const handleClickShowPassword = () => {
@@ -15,25 +16,33 @@ const PasswordTextFieldAdapter = ({ input, meta, ...rest }) => {
   };
 
   return (
-    <FormControl sx={{ m: 1, width: '25ch' }}>
-      <TextField
-        type={showPassword ? 'text' : 'password'}
-        variant='standard'
-        error={meta.touched && Boolean(meta.error)}
-        helperText={meta.touched && meta.error}
-        {...input}
-        {...rest}
-        InputProps={{
-          endAdornment: (
-            <InputAdornment position='end'>
-              <IconButton onClick={handleClickShowPassword}>
-                {showPassword ? <Visibility /> : <VisibilityOff />}
-              </IconButton>
-            </InputAdornment>
-          ),
-        }}
-      />
-    </FormControl>
+    <Controller
+      name={name}
+      control={control}
+      render={({ field, fieldState }) => {
+        return (
+          <FormControl sx={{ m: 1, width: '100%' }}>
+            <TextField
+              type={showPassword ? 'text' : 'password'}
+              inputProps={{ ...field }}
+              label={label}
+              variant='standard'
+              error={fieldState.isTouched && Boolean(fieldState.error)}
+              helperText={fieldState.isTouched && fieldState.error?.message}
+              InputProps={{
+                endAdornment: (
+                  <InputAdornment position='end'>
+                    <IconButton onClick={handleClickShowPassword}>
+                      {showPassword ? <Visibility /> : <VisibilityOff />}
+                    </IconButton>
+                  </InputAdornment>
+                ),
+              }}
+            />
+          </FormControl>
+        );
+      }}
+    />
   );
 };
 

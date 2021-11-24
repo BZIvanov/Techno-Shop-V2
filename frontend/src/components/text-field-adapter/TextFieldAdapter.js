@@ -1,3 +1,4 @@
+import { Controller } from 'react-hook-form';
 import {
   FormControl,
   InputAdornment,
@@ -5,32 +6,38 @@ import {
   TextField,
 } from '@mui/material';
 
-const TextFieldAdapter = ({ input, meta, ...rest }) => {
-  const { Icon, ...restProps } = rest;
-
+const TextFieldAdapter = ({ name, control, label, Icon }) => {
   return (
-    <FormControl sx={{ m: 1, width: '100%' }}>
-      <TextField
-        variant='standard'
-        error={meta.touched && Boolean(meta.error)}
-        helperText={meta.touched && meta.error}
-        {...input}
-        {...restProps}
-        InputProps={
-          Icon
-            ? {
-                endAdornment: (
-                  <InputAdornment position='end'>
-                    <IconButton>
-                      <Icon />
-                    </IconButton>
-                  </InputAdornment>
-                ),
+    <Controller
+      name={name}
+      control={control}
+      render={({ field, fieldState }) => {
+        return (
+          <FormControl sx={{ m: 1, width: '100%' }}>
+            <TextField
+              inputProps={{ ...field }}
+              variant='standard'
+              label={label}
+              error={fieldState.isTouched && Boolean(fieldState.error)}
+              helperText={fieldState.isTouched && fieldState.error?.message}
+              InputProps={
+                Icon
+                  ? {
+                      endAdornment: (
+                        <InputAdornment position='end'>
+                          <IconButton>
+                            <Icon />
+                          </IconButton>
+                        </InputAdornment>
+                      ),
+                    }
+                  : {}
               }
-            : {}
-        }
-      />
-    </FormControl>
+            />
+          </FormControl>
+        );
+      }}
+    />
   );
 };
 
