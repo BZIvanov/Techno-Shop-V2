@@ -1,17 +1,14 @@
 import { useSelector, useDispatch } from 'react-redux';
 import { Navigate, useParams } from 'react-router-dom';
-import { Form, Field } from 'react-final-form';
+import { useForm } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
 import { Box, Typography, Button } from '@mui/material';
 import { PasswordTextFieldAdapter } from '../../components/password-text-field-adapter';
 import { ApiCallAlert } from '../../components/api-call-alert';
 import { ApiCallLoader } from '../../components/api-call-loader';
-import {
-  required,
-  minLength,
-  composeValidators,
-} from '../../utils/form-field-validators';
 import { resetPasswordAction } from '../../store/action-creators';
 import { RESET_PASSWORD_CODE } from '../../store/action-creators/api-call';
+import schema from './form-schema';
 
 const ResetPasswordPage = () => {
   const { user } = useSelector((state) => state.user);
@@ -21,21 +18,16 @@ const ResetPasswordPage = () => {
 
   const { token } = useParams();
 
+  const { control, handleSubmit, formState, reset } = useForm({
+    defaultValues: {
+      newPassword: '',
+      confirmNewPassword: '',
+    },
+    resolver: yupResolver(schema),
+  });
+
   const handleFormSubmit = (values) => {
     dispatch(resetPasswordAction({ ...values, token }));
-  };
-
-  const handleFormValidate = (values) => {
-    const errors = {};
-    if (
-      values.newPassword &&
-      values.confirmNewPassword &&
-      values.newPassword !== values.confirmNewPassword
-    ) {
-      errors.confirmNewPassword = 'Passwords must match';
-    }
-
-    return errors;
   };
 
   if (user) {
@@ -66,56 +58,48 @@ const ResetPasswordPage = () => {
           },
         }}
       >
-        <Form
-          onSubmit={handleFormSubmit}
-          validate={handleFormValidate}
-          render={({ handleSubmit, form, submitting, pristine }) => {
-            return (
-              <form onSubmit={handleSubmit}>
-                <Box my={1}>
-                  <Field
-                    name='newPassword'
-                    component={PasswordTextFieldAdapter}
-                    validate={composeValidators(required, minLength(8))}
-                    label='New Password'
-                  />
-                </Box>
-                <Box my={1}>
-                  <Field
-                    name='confirmNewPassword'
-                    component={PasswordTextFieldAdapter}
-                    validate={composeValidators(required, minLength(8))}
-                    label='Confirm New Password'
-                  />
-                </Box>
-                <Box
-                  sx={{
-                    display: 'flex',
-                    justifyContent: 'space-evenly',
-                    marginTop: '20px',
-                  }}
-                >
-                  <Button
-                    variant='contained'
-                    color='secondary'
-                    type='button'
-                    onClick={form.reset}
-                    disabled={submitting || pristine}
-                  >
-                    Reset Form
-                  </Button>
-                  <Button
-                    variant='contained'
-                    type='submit'
-                    disabled={submitting || loading}
-                  >
-                    Submit
-                  </Button>
-                </Box>
-              </form>
-            );
-          }}
-        />
+        <form onSubmit={handleSubmit(handleFormSubmit)}>
+          <Box my={1}>
+            <PasswordTextFieldAdapter
+              control={control}
+              name='newPassword'
+              label='New Password'
+            />
+          </Box>
+
+          <Box my={1}>
+            <PasswordTextFieldAdapter
+              control={control}
+              name='confirmNewPassword'
+              label='Confirm New Password'
+            />
+          </Box>
+
+          <Box
+            sx={{
+              display: 'flex',
+              justifyContent: 'space-evenly',
+              marginTop: '20px',
+            }}
+          >
+            <Button
+              variant='contained'
+              color='secondary'
+              type='button'
+              onClick={() => reset()}
+              disabled={formState.submitting}
+            >
+              Reset
+            </Button>
+            <Button
+              variant='contained'
+              type='submit'
+              disabled={formState.submitting || loading}
+            >
+              Register
+            </Button>
+          </Box>
+        </form>
       </Box>
 
       <ApiCallLoader />
