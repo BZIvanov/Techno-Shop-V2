@@ -1,3 +1,4 @@
+import { Controller } from 'react-hook-form';
 import {
   FormControl,
   InputLabel,
@@ -6,37 +7,43 @@ import {
   FormHelperText,
 } from '@mui/material';
 
-const SelectDropdownAdapter = (props) => {
-  const { input, meta, label, options } = props;
-
+const SelectDropdownAdapter = ({ name, control, label, options }) => {
   return (
-    <FormControl
-      sx={{ m: 1, width: '100%' }}
-      variant='standard'
-      error={meta.touched && Boolean(meta.error)}
-    >
-      <InputLabel>{label}</InputLabel>
-      <Select {...input}>
-        {options.map((option) => {
-          if (typeof option === 'string') {
-            return (
-              <MenuItem key={option} value={option}>
-                {option}
-              </MenuItem>
-            );
-          }
+    <Controller
+      name={name}
+      control={control}
+      render={({ field, fieldState }) => {
+        return (
+          <FormControl
+            sx={{ m: 1, width: '100%' }}
+            variant='standard'
+            error={fieldState.isTouched && Boolean(fieldState.error)}
+          >
+            <InputLabel>{label}</InputLabel>
+            <Select {...field}>
+              {options.map((option) => {
+                if (typeof option === 'string') {
+                  return (
+                    <MenuItem key={option} value={option}>
+                      {option}
+                    </MenuItem>
+                  );
+                }
 
-          return (
-            <MenuItem key={option._id} value={option._id}>
-              {option.name}
-            </MenuItem>
-          );
-        })}
-      </Select>
-      {meta.touched && meta.error && (
-        <FormHelperText>{meta.error}</FormHelperText>
-      )}
-    </FormControl>
+                return (
+                  <MenuItem key={option._id} value={option._id}>
+                    {option.name}
+                  </MenuItem>
+                );
+              })}
+            </Select>
+            {fieldState.isTouched && fieldState.error && (
+              <FormHelperText>{fieldState.error.message}</FormHelperText>
+            )}
+          </FormControl>
+        );
+      }}
+    />
   );
 };
 

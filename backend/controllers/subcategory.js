@@ -24,11 +24,14 @@ exports.getSubcategory = catchAsync(async (req, res, next) => {
 
 exports.createSubcategory = catchAsync(async (req, res) => {
   const { name, categoryId } = req.body;
-  const subcategory = await Subcategory.create({
+  let subcategory = await Subcategory.create({
     name,
     categoryId,
     slug: slugify(name),
   });
+
+  // important to populate here, because the frontend relies on this data
+  subcategory = await subcategory.populate('categoryId');
 
   res.status(status.CREATED).json({ success: true, subcategory });
 });

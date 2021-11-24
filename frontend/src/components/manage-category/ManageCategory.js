@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { Form, Field } from 'react-final-form';
+import { useForm } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
 import {
   Box,
   Typography,
@@ -14,11 +15,6 @@ import { TextFieldAdapter } from '../text-field-adapter';
 import { ListItem } from '../list-item';
 import { ConfirmDialog } from '../confirm-dialog';
 import {
-  required,
-  minLength,
-  composeValidators,
-} from '../../utils/form-field-validators';
-import {
   getAllCategoriesAction,
   createCategoryAction,
   updateCategoryAction,
@@ -26,6 +22,7 @@ import {
 } from '../../store/action-creators';
 import { ApiCallAlert } from '../api-call-alert';
 import { ApiCallLoader } from '../api-call-loader';
+import schema from './form-schema';
 
 const ManageCategory = () => {
   const { loading } = useSelector((state) => state.apiCall);
@@ -46,7 +43,12 @@ const ManageCategory = () => {
     dispatch(getAllCategoriesAction());
   }, [dispatch]);
 
-  const handleCategorySubmit = ({ category }, handlers) => {
+  const { control, handleSubmit, formState, reset, setValue } = useForm({
+    defaultValues: { category: '' },
+    resolver: yupResolver(schema),
+  });
+
+  const handleCategorySubmit = ({ category }) => {
     if (selectedCategory) {
       dispatch(
         updateCategoryAction(
@@ -58,7 +60,7 @@ const ManageCategory = () => {
       dispatch(createCategoryAction({ name: category }, token));
     }
 
-    handlers.restart();
+    reset();
 
     setSelectedCategory(null);
   };
@@ -78,47 +80,38 @@ const ManageCategory = () => {
       <Typography variant='h1'>Manage Categories</Typography>
 
       <Box sx={{ width: '99%' }}>
-        <Form
-          initialValues={{
-            category: selectedCategory?.name || '',
-          }}
-          onSubmit={handleCategorySubmit}
-          render={({ handleSubmit, submitting, form }) => {
-            return (
-              <form onSubmit={handleSubmit}>
-                <Field
-                  name='category'
-                  component={TextFieldAdapter}
-                  validate={composeValidators(required, minLength(2))}
-                  label='Category Name'
-                />
+        <form onSubmit={handleSubmit(handleCategorySubmit)}>
+          <Box my={1}>
+            <TextFieldAdapter
+              control={control}
+              name='category'
+              label='Category Name'
+            />
+          </Box>
 
-                <Box mt={2} ml={1}>
-                  <Button
-                    variant='contained'
-                    color='secondary'
-                    type='button'
-                    onClick={() => {
-                      setSelectedCategory(null);
-                      form.reset();
-                    }}
-                    disabled={submitting || loading}
-                  >
-                    Reset Form
-                  </Button>
-                  <Button
-                    sx={{ marginLeft: '5px' }}
-                    variant='contained'
-                    type='submit'
-                    disabled={submitting || loading}
-                  >
-                    {selectedCategory ? 'Update' : 'Create'}
-                  </Button>
-                </Box>
-              </form>
-            );
-          }}
-        />
+          <Box mt={2} ml={1}>
+            <Button
+              variant='contained'
+              color='secondary'
+              type='button'
+              onClick={() => {
+                setSelectedCategory(null);
+                reset();
+              }}
+              disabled={formState.submitting || loading}
+            >
+              Reset
+            </Button>
+            <Button
+              sx={{ marginLeft: '5px' }}
+              variant='contained'
+              type='submit'
+              disabled={formState.submitting || loading}
+            >
+              {selectedCategory ? 'Update' : 'Create'}
+            </Button>
+          </Box>
+        </form>
       </Box>
 
       <Divider style={{ margin: '20px 0' }} />
@@ -153,7 +146,10 @@ const ManageCategory = () => {
                     sx={{ '&:hover': { cursor: 'pointer' } }}
                     icon={undefined}
                     label={name}
-                    onClick={() => setSelectedCategory({ _id, name })}
+                    onClick={() => {
+                      setValue('category', name);
+                      setSelectedCategory({ _id, name });
+                    }}
                     onDelete={() =>
                       setRemoveCategoryDialog({
                         open: true,
