@@ -16,7 +16,7 @@ const SelectDropdownAdapter = (props) => {
       error={meta.touched && Boolean(meta.error)}
     >
       <InputLabel>{label}</InputLabel>
-      <Select {...input} label={label}>
+      <Select {...input}>
         {options.map((option) => {
           if (typeof option === 'string') {
             return (
