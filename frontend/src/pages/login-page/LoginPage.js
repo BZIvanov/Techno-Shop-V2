@@ -1,7 +1,8 @@
 import { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Navigate } from 'react-router-dom';
-import { Form, Field } from 'react-final-form';
+import { useForm } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
 import { Box, Typography, Button } from '@mui/material';
 import { Email } from '@mui/icons-material';
 import { TextFieldAdapter } from '../../components/text-field-adapter';
@@ -9,12 +10,8 @@ import { PasswordTextFieldAdapter } from '../../components/password-text-field-a
 import { ForgotPasswordDialog } from '../../components/forgot-password-dialog';
 import { ApiCallAlert } from '../../components/api-call-alert';
 import { ApiCallLoader } from '../../components/api-call-loader';
-import {
-  required,
-  minLength,
-  composeValidators,
-} from '../../utils/form-field-validators';
 import { loginUserAction } from '../../store/action-creators';
+import schema from './form-schema';
 
 const LoginPage = () => {
   const [showForgotPasswordModal, setShowForgotPasswordModal] = useState(false);
@@ -23,6 +20,14 @@ const LoginPage = () => {
   const { loading } = useSelector((state) => state.apiCall);
 
   const dispatch = useDispatch();
+
+  const { control, handleSubmit, formState } = useForm({
+    defaultValues: {
+      email: '',
+      password: '',
+    },
+    resolver: yupResolver(schema),
+  });
 
   const handleFormSubmit = (values) => {
     dispatch(loginUserAction(values));
@@ -55,46 +60,40 @@ const LoginPage = () => {
           },
         }}
       >
-        <Form
-          onSubmit={handleFormSubmit}
-          render={({ handleSubmit, submitting }) => {
-            return (
-              <form onSubmit={handleSubmit}>
-                <Box my={1}>
-                  <Field
-                    name='email'
-                    component={TextFieldAdapter}
-                    validate={required}
-                    label='Email'
-                    Icon={Email}
-                  />
-                </Box>
-                <Box my={1}>
-                  <Field
-                    name='password'
-                    component={PasswordTextFieldAdapter}
-                    validate={composeValidators(required, minLength(8))}
-                    label='Password'
-                  />
-                </Box>
-                <Box
-                  sx={{
-                    marginTop: '20px',
-                    textAlign: 'center',
-                  }}
-                >
-                  <Button
-                    variant='contained'
-                    type='submit'
-                    disabled={submitting || loading}
-                  >
-                    Login
-                  </Button>
-                </Box>
-              </form>
-            );
-          }}
-        />
+        <form onSubmit={handleSubmit(handleFormSubmit)}>
+          <Box my={1}>
+            <TextFieldAdapter
+              control={control}
+              name='email'
+              label='Email'
+              Icon={Email}
+            />
+          </Box>
+
+          <Box my={1}>
+            <PasswordTextFieldAdapter
+              control={control}
+              name='password'
+              label='Password'
+            />
+          </Box>
+
+          <Box
+            sx={{
+              marginTop: '20px',
+              textAlign: 'center',
+            }}
+          >
+            <Button
+              variant='contained'
+              type='submit'
+              disabled={formState.submitting || loading}
+            >
+              Login
+            </Button>
+          </Box>
+        </form>
+
         <Box
           sx={{
             marginTop: '30px',
