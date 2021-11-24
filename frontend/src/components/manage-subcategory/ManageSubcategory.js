@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { Form, Field } from 'react-final-form';
+import { useForm } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
 import {
   Box,
   Typography,
@@ -15,11 +16,6 @@ import { TextFieldAdapter } from '../text-field-adapter';
 import { ListItem } from '../list-item';
 import { ConfirmDialog } from '../confirm-dialog';
 import {
-  required,
-  minLength,
-  composeValidators,
-} from '../../utils/form-field-validators';
-import {
   getAllCategoriesAction,
   getSubcategoriesAction,
   createSubcategoryAction,
@@ -28,6 +24,7 @@ import {
 } from '../../store/action-creators';
 import { ApiCallAlert } from '../api-call-alert';
 import { ApiCallLoader } from '../api-call-loader';
+import schema from './form-schema';
 
 const ManageSubcategory = () => {
   const { loading } = useSelector((state) => state.apiCall);
@@ -50,7 +47,12 @@ const ManageSubcategory = () => {
     dispatch(getSubcategoriesAction());
   }, [dispatch]);
 
-  const handleCategorySubmit = ({ categoryId, subcategoryName }, handlers) => {
+  const { control, handleSubmit, formState, reset, setValue } = useForm({
+    defaultValues: { categoryId: '', subcategoryName: '' },
+    resolver: yupResolver(schema),
+  });
+
+  const handleSubcategorySubmit = ({ categoryId, subcategoryName }) => {
     if (selectedSubcategory) {
       dispatch(
         updateSubcategoryAction(
@@ -68,7 +70,7 @@ const ManageSubcategory = () => {
       );
     }
 
-    handlers.restart();
+    reset();
 
     setSelectedSubcategory(null);
   };
@@ -88,54 +90,47 @@ const ManageSubcategory = () => {
       <Typography variant='h1'>Manage Subcategories</Typography>
 
       <Box sx={{ width: '90%' }}>
-        <Form
-          initialValues={{
-            categoryId: selectedSubcategory?.categoryId?._id || '',
-            subcategoryName: selectedSubcategory?.name || '',
-          }}
-          onSubmit={handleCategorySubmit}
-          render={({ handleSubmit, submitting, form }) => {
-            return (
-              <form onSubmit={handleSubmit}>
-                <Field
-                  name='categoryId'
-                  component={SelectDropdownAdapter}
-                  validate={composeValidators(required)}
-                  label='Category'
-                  options={categories}
-                />
-                <Field
-                  name='subcategoryName'
-                  component={TextFieldAdapter}
-                  validate={composeValidators(required, minLength(2))}
-                  label='Subcategory'
-                />
-                <Box mt={2} ml={1}>
-                  <Button
-                    variant='contained'
-                    color='secondary'
-                    type='button'
-                    onClick={() => {
-                      setSelectedSubcategory(null);
-                      form.reset();
-                    }}
-                    disabled={submitting || loading}
-                  >
-                    Reset Form
-                  </Button>
-                  <Button
-                    sx={{ marginLeft: '5px' }}
-                    variant='contained'
-                    type='submit'
-                    disabled={submitting || loading}
-                  >
-                    {selectedSubcategory ? 'Update' : 'Create'}
-                  </Button>
-                </Box>
-              </form>
-            );
-          }}
-        />
+        <form onSubmit={handleSubmit(handleSubcategorySubmit)}>
+          <Box my={1}>
+            <SelectDropdownAdapter
+              control={control}
+              name='categoryId'
+              label='Category'
+              options={categories}
+            />
+          </Box>
+
+          <Box my={1}>
+            <TextFieldAdapter
+              control={control}
+              name='subcategoryName'
+              label='Subcategory'
+            />
+          </Box>
+
+          <Box mt={2} ml={1}>
+            <Button
+              variant='contained'
+              color='secondary'
+              type='button'
+              onClick={() => {
+                setSelectedSubcategory(null);
+                reset();
+              }}
+              disabled={formState.submitting || loading}
+            >
+              Reset
+            </Button>
+            <Button
+              sx={{ marginLeft: '5px' }}
+              variant='contained'
+              type='submit'
+              disabled={formState.submitting || loading}
+            >
+              {selectedSubcategory ? 'Update' : 'Create'}
+            </Button>
+          </Box>
+        </form>
       </Box>
 
       <Divider style={{ margin: '20px 0' }} />
@@ -170,9 +165,11 @@ const ManageSubcategory = () => {
                     sx={{ '&:hover': { cursor: 'pointer' } }}
                     icon={undefined}
                     label={name}
-                    onClick={() =>
-                      setSelectedSubcategory({ _id, name, categoryId })
-                    }
+                    onClick={() => {
+                      setValue('categoryId', categoryId._id);
+                      setValue('subcategoryName', name);
+                      setSelectedSubcategory({ _id, name, categoryId });
+                    }}
                     onDelete={() =>
                       setRemoveSubcategoryDialog({
                         open: true,

@@ -65,7 +65,7 @@ export const updateSubcategoryAction = (subcategory, token) => {
 
     try {
       const { data } = await updateSubcategoryCall(subcategory, token);
-      console.log(data);
+
       dispatch(
         apiCallSuccessType(`Subcategory '${data.subcategory.name}' updated`)
       );
