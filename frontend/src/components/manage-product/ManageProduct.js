@@ -1,20 +1,15 @@
 import { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { Form, Field } from 'react-final-form';
+import { useForm } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
 import { Box, Typography, Button } from '@mui/material';
 import { TextFieldAdapter } from '../text-field-adapter';
 import { SelectDropdownAdapter } from '../select-dropdown-adapter';
 import {
-  required,
-  minLength,
-  mustBeNumber,
-  minValue,
-  composeValidators,
-} from '../../utils/form-field-validators';
-import {
   getAllCategoriesAction,
   createProductAction,
 } from '../../store/action-creators';
+import schema from './form-schema';
 
 const ManageProduct = () => {
   const { loading } = useSelector((state) => state.apiCall);
@@ -27,10 +22,24 @@ const ManageProduct = () => {
     dispatch(getAllCategoriesAction());
   }, [dispatch]);
 
-  const handleProductSubmit = ({ title }, handlers) => {
-    dispatch(createProductAction({ title }, token));
+  const { control, handleSubmit, formState, reset } = useForm({
+    defaultValues: {
+      title: '',
+      description: '',
+      price: 0,
+      shipping: 'Yes',
+      quantity: 0,
+      color: '',
+      brand: '',
+      categoryId: '',
+    },
+    resolver: yupResolver(schema),
+  });
 
-    handlers.restart();
+  const handleProductSubmit = (values) => {
+    dispatch(createProductAction(values, token));
+
+    reset();
   };
 
   return (
@@ -38,107 +47,78 @@ const ManageProduct = () => {
       <Typography variant='h1'>Manage Products</Typography>
 
       <Box sx={{ width: '99%' }}>
-        <Form
-          initialValues={{
-            title: '',
-            description: '',
-            price: '0',
-            shipping: 'Yes',
-            quantity: '0',
-            color: '',
-            brand: '',
-          }}
-          onSubmit={handleProductSubmit}
-          render={({ handleSubmit, submitting, form, values }) => {
-            return (
-              <form onSubmit={handleSubmit}>
-                <Field
-                  name='title'
-                  component={TextFieldAdapter}
-                  validate={composeValidators(required, minLength(2))}
-                  label='Title'
-                />
-                <Field
-                  name='description'
-                  component={TextFieldAdapter}
-                  validate={composeValidators(required, minLength(2))}
-                  label='Description'
-                />
-                <Field
-                  name='price'
-                  component={TextFieldAdapter}
-                  validate={composeValidators(
-                    required,
-                    mustBeNumber,
-                    minValue(0.01)
-                  )}
-                  label='Price'
-                  type='number'
-                />
-                <Field
-                  name='shipping'
-                  component={SelectDropdownAdapter}
-                  validate={composeValidators(required)}
-                  label='Shipping'
-                  options={['Yes', 'No']}
-                />
-                <Field
-                  name='quantity'
-                  component={TextFieldAdapter}
-                  validate={composeValidators(
-                    required,
-                    mustBeNumber,
-                    minValue(1)
-                  )}
-                  label='Quantity'
-                  type='number'
-                />
-                <Field
-                  name='color'
-                  component={TextFieldAdapter}
-                  validate={composeValidators(required, minLength(2))}
-                  label='Color'
-                />
-                <Field
-                  name='brand'
-                  component={TextFieldAdapter}
-                  validate={composeValidators(required, minLength(2))}
-                  label='Brand'
-                />
-                <Field
-                  name='categoryId'
-                  component={SelectDropdownAdapter}
-                  validate={composeValidators(required)}
-                  label='Category'
-                  options={categories}
-                />
+        <form onSubmit={handleSubmit(handleProductSubmit)}>
+          <Box my={1}>
+            <TextFieldAdapter control={control} name='title' label='Title' />
+          </Box>
+          <Box my={1}>
+            <TextFieldAdapter
+              control={control}
+              name='description'
+              label='Description'
+            />
+          </Box>
+          <Box my={1}>
+            <TextFieldAdapter
+              control={control}
+              name='price'
+              label='Price'
+              type='number'
+            />
+          </Box>
+          <Box my={1}>
+            <SelectDropdownAdapter
+              control={control}
+              name='shipping'
+              label='Shipping'
+              options={['Yes', 'No']}
+            />
+          </Box>
+          <Box my={1}>
+            <TextFieldAdapter
+              control={control}
+              name='quantity'
+              label='Quantity'
+              type='number'
+            />
+          </Box>
+          <Box my={1}>
+            <TextFieldAdapter control={control} name='color' label='Color' />
+          </Box>
+          <Box my={1}>
+            <TextFieldAdapter control={control} name='brand' label='Brand' />
+          </Box>
+          <Box my={1}>
+            <SelectDropdownAdapter
+              control={control}
+              name='categoryId'
+              label='Category'
+              options={categories}
+            />
+          </Box>
 
-                <Box mt={2} ml={1}>
-                  <Button
-                    variant='contained'
-                    color='secondary'
-                    type='button'
-                    onClick={() => {
-                      form.reset();
-                    }}
-                    disabled={submitting || loading}
-                  >
-                    Reset Form
-                  </Button>
-                  <Button
-                    sx={{ marginLeft: '5px' }}
-                    variant='contained'
-                    type='submit'
-                    disabled={submitting || loading}
-                  >
-                    Create
-                  </Button>
-                </Box>
-                {JSON.stringify(values)}
-              </form>
-            );
-          }}
-        />
+          <Box mt={2} ml={1}>
+            <Button
+              variant='contained'
+              color='secondary'
+              type='button'
+              onClick={() => {
+                reset();
+              }}
+              disabled={formState.submitting || loading}
+            >
+              Reset
+            </Button>
+            <Button
+              sx={{ marginLeft: '5px' }}
+              variant='contained'
+              type='submit'
+              disabled={formState.submitting || loading}
+            >
+              Create
+            </Button>
+          </Box>
+        </form>
       </Box>
     </Box>
   );

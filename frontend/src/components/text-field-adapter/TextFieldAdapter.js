@@ -6,7 +6,7 @@ import {
   TextField,
 } from '@mui/material';
 
-const TextFieldAdapter = ({ name, control, label, Icon }) => {
+const TextFieldAdapter = ({ name, control, label, type = 'text', Icon }) => {
   return (
     <Controller
       name={name}
@@ -15,7 +15,7 @@ const TextFieldAdapter = ({ name, control, label, Icon }) => {
         return (
           <FormControl sx={{ m: 1, width: '100%' }}>
             <TextField
-              inputProps={{ ...field }}
+              inputProps={{ ...field, type }}
               variant='standard'
               label={label}
               error={fieldState.isTouched && Boolean(fieldState.error)}

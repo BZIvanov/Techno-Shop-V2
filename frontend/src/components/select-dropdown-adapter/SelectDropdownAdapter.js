@@ -17,7 +17,7 @@ const SelectDropdownAdapter = ({ name, control, label, options }) => {
           <FormControl
             sx={{ m: 1, width: '100%' }}
             variant='standard'
-            error={fieldState.isTouched && Boolean(fieldState.error)}
+            error={Boolean(fieldState.error)}
           >
             <InputLabel>{label}</InputLabel>
             <Select {...field}>
@@ -37,7 +37,7 @@ const SelectDropdownAdapter = ({ name, control, label, options }) => {
                 );
               })}
             </Select>
-            {fieldState.isTouched && fieldState.error && (
+            {fieldState.error && (
               <FormHelperText>{fieldState.error.message}</FormHelperText>
             )}
           </FormControl>

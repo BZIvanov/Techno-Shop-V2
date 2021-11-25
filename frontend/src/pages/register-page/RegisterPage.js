@@ -50,14 +50,7 @@ const RegisterPage = () => {
     >
       <Typography variant='h1'>Register Form</Typography>
 
-      <Box
-        sx={{
-          width: { xs: '90%', sm: '290px' },
-          '& .MuiFormControl-root': {
-            width: '100%',
-          },
-        }}
-      >
+      <Box sx={{ width: { xs: '90%', sm: '290px' } }}>
         <form onSubmit={handleSubmit(handleFormSubmit)}>
           <Box my={1}>
             <TextFieldAdapter
