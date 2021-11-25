@@ -21,3 +21,7 @@ export const deleteCategoryCall = (id, token) => {
     headers: { authorization: `Bearer ${token}` },
   });
 };
+
+export const getCategorySubcategoriesCall = (id) => {
+  return axios.get(`/category/${id}/subcategory`);
+};

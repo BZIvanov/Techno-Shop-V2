@@ -3,6 +3,7 @@ import {
   createCategoryCall,
   updateCategoryCall,
   deleteCategoryCall,
+  getCategorySubcategoriesCall,
 } from '../../api/categories';
 import { apiCallStartType, apiCallSuccessType, apiCallFailType } from './';
 import { actionType } from '../action-types';
@@ -25,6 +26,11 @@ export const updateCategoryType = (category) => ({
 export const deleteCategoryType = (categoryId) => ({
   type: actionType.DELETE_CATEGORY,
   payload: categoryId,
+});
+
+export const getCategorySubcategoriesType = (subcategories) => ({
+  type: actionType.GET_CATEGORY_SUBCATEGORIES,
+  payload: subcategories,
 });
 
 export const getAllCategoriesAction = () => {
@@ -83,6 +89,21 @@ export const deleteCategoryAction = (categoryId, token) => {
       dispatch(deleteCategoryType(categoryId));
     } catch (error) {
       dispatch(apiCallFailType('Delete category error'));
+    }
+  };
+};
+
+export const getCategorySubcategoriesAction = (categoryId) => {
+  return async (dispatch) => {
+    dispatch(apiCallStartType());
+
+    try {
+      const { data } = await getCategorySubcategoriesCall(categoryId);
+
+      dispatch(apiCallSuccessType());
+      dispatch(getCategorySubcategoriesType(data.subcategories));
+    } catch (error) {
+      dispatch(apiCallFailType('Get category subcategories error'));
     }
   };
 };

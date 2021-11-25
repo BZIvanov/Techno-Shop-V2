@@ -2,6 +2,7 @@ import { actionType } from '../action-types';
 
 const initialState = {
   categories: [],
+  selectedCategorySubcategories: [],
 };
 
 export const categoryReducer = (state = initialState, action) => {
@@ -20,6 +21,8 @@ export const categoryReducer = (state = initialState, action) => {
         (category) => category._id !== action.payload
       );
       return { ...state, categories: filteredCategories };
+    case actionType.GET_CATEGORY_SUBCATEGORIES:
+      return { ...state, selectedCategorySubcategories: action.payload };
     default:
       return state;
   }

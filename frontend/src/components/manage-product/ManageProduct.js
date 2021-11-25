@@ -7,6 +7,7 @@ import { TextFieldAdapter } from '../text-field-adapter';
 import { SelectDropdownAdapter } from '../select-dropdown-adapter';
 import {
   getAllCategoriesAction,
+  getCategorySubcategoriesAction,
   createProductAction,
 } from '../../store/action-creators';
 import schema from './form-schema';
@@ -14,7 +15,9 @@ import schema from './form-schema';
 const ManageProduct = () => {
   const { loading } = useSelector((state) => state.apiCall);
   const { token } = useSelector((state) => state.user);
-  const { categories } = useSelector((state) => state.category);
+  const { categories, selectedCategorySubcategories } = useSelector(
+    (state) => state.category
+  );
 
   const dispatch = useDispatch();
 
@@ -22,7 +25,7 @@ const ManageProduct = () => {
     dispatch(getAllCategoriesAction());
   }, [dispatch]);
 
-  const { control, handleSubmit, formState, reset } = useForm({
+  const { control, handleSubmit, formState, reset, watch } = useForm({
     defaultValues: {
       title: '',
       description: '',
@@ -41,6 +44,14 @@ const ManageProduct = () => {
 
     reset();
   };
+
+  const selectedCategoryId = watch('categoryId');
+
+  useEffect(() => {
+    if (selectedCategoryId) {
+      dispatch(getCategorySubcategoriesAction(selectedCategoryId));
+    }
+  }, [dispatch, selectedCategoryId]);
 
   return (
     <Box sx={{ padding: (theme) => theme.spacing(1) }}>
