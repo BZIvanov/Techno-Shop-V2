@@ -5,6 +5,9 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { Box, Typography, Button } from '@mui/material';
 import { TextFieldAdapter } from '../text-field-adapter';
 import { SelectDropdownAdapter } from '../select-dropdown-adapter';
+import { SelectDropdownMultichipAdapter } from '../select-dropdown-multichip-adapter';
+import { ApiCallLoader } from '../api-call-loader';
+import { ApiCallAlert } from '../api-call-alert';
 import {
   getAllCategoriesAction,
   getCategorySubcategoriesAction,
@@ -25,7 +28,7 @@ const ManageProduct = () => {
     dispatch(getAllCategoriesAction());
   }, [dispatch]);
 
-  const { control, handleSubmit, formState, reset, watch } = useForm({
+  const { control, handleSubmit, formState, reset, watch, setValue } = useForm({
     defaultValues: {
       title: '',
       description: '',
@@ -35,12 +38,19 @@ const ManageProduct = () => {
       color: '',
       brand: '',
       categoryId: '',
+      subcategories: [],
     },
     resolver: yupResolver(schema),
   });
 
   const handleProductSubmit = (values) => {
-    dispatch(createProductAction(values, token));
+    const subcategoriesIds = values.subcategories.map(
+      (subcategory) => subcategory._id
+    );
+
+    dispatch(
+      createProductAction({ ...values, subcategories: subcategoriesIds }, token)
+    );
 
     reset();
   };
@@ -49,9 +59,10 @@ const ManageProduct = () => {
 
   useEffect(() => {
     if (selectedCategoryId) {
+      setValue('subcategories', []);
       dispatch(getCategorySubcategoriesAction(selectedCategoryId));
     }
-  }, [dispatch, selectedCategoryId]);
+  }, [dispatch, setValue, selectedCategoryId]);
 
   return (
     <Box sx={{ padding: (theme) => theme.spacing(1) }}>
@@ -108,6 +119,15 @@ const ManageProduct = () => {
             />
           </Box>
 
+          <Box>
+            <SelectDropdownMultichipAdapter
+              control={control}
+              name='subcategories'
+              label='Subcategory'
+              options={selectedCategorySubcategories}
+            />
+          </Box>
+
           <Box mt={2} ml={1}>
             <Button
               variant='contained'
@@ -131,6 +151,10 @@ const ManageProduct = () => {
           </Box>
         </form>
       </Box>
+
+      <ApiCallLoader />
+
+      <ApiCallAlert />
     </Box>
   );
 };
