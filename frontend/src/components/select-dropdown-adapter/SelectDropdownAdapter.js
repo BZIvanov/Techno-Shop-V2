@@ -1,3 +1,4 @@
+import { useSelector } from 'react-redux';
 import { Controller } from 'react-hook-form';
 import {
   FormControl,
@@ -8,6 +9,8 @@ import {
 } from '@mui/material';
 
 const SelectDropdownAdapter = ({ name, control, label, options }) => {
+  const { loading } = useSelector((state) => state.apiCall);
+
   return (
     <Controller
       name={name}
@@ -18,6 +21,7 @@ const SelectDropdownAdapter = ({ name, control, label, options }) => {
             sx={{ m: 1, width: '100%' }}
             variant='standard'
             error={Boolean(fieldState.error)}
+            disabled={loading}
           >
             <InputLabel>{label}</InputLabel>
             <Select {...field}>

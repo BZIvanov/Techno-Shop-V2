@@ -1,6 +1,7 @@
 const status = require('http-status');
 const slugify = require('slugify');
 const Category = require('../models/category');
+const Subcategory = require('../models/subcategory');
 const catchAsync = require('../middlewares/catch-async');
 const AppError = require('../utils/app-error');
 
@@ -54,4 +55,10 @@ exports.deleteCategory = catchAsync(async (req, res, next) => {
   }
 
   res.status(status.NO_CONTENT).json();
+});
+
+exports.getCategorySubcategories = catchAsync(async (req, res, next) => {
+  const subcategories = await Subcategory.find({ categoryId: req.params.id });
+
+  res.status(status.OK).json({ success: true, subcategories });
 });
