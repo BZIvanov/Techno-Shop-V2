@@ -2,10 +2,11 @@ import { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { Box, Typography, Button } from '@mui/material';
+import { Box, Typography, Button, Divider } from '@mui/material';
 import { TextFieldAdapter } from '../text-field-adapter';
 import { SelectDropdownAdapter } from '../select-dropdown-adapter';
 import { SelectDropdownMultichipAdapter } from '../select-dropdown-multichip-adapter';
+import { ImagesFieldAdapter } from '../images-field-adapter';
 import { ApiCallLoader } from '../api-call-loader';
 import { ApiCallAlert } from '../api-call-alert';
 import {
@@ -32,13 +33,14 @@ const ManageProduct = () => {
     defaultValues: {
       title: '',
       description: '',
-      price: 0,
+      price: '',
       shipping: 'Yes',
-      quantity: 0,
+      quantity: '',
       color: '',
       brand: '',
       categoryId: '',
       subcategories: [],
+      images: [],
     },
     resolver: yupResolver(schema),
   });
@@ -118,7 +120,6 @@ const ManageProduct = () => {
               options={categories}
             />
           </Box>
-
           <Box>
             <SelectDropdownMultichipAdapter
               control={control}
@@ -126,6 +127,11 @@ const ManageProduct = () => {
               label='Subcategory'
               options={selectedCategorySubcategories}
             />
+          </Box>
+
+          <Divider sx={{ margin: '8px 0' }} />
+          <Box>
+            <ImagesFieldAdapter control={control} name='images' />
           </Box>
 
           <Box mt={2} ml={1}>

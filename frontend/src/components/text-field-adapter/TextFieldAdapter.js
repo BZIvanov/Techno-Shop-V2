@@ -13,7 +13,7 @@ const TextFieldAdapter = ({ name, control, label, type = 'text', Icon }) => {
       control={control}
       render={({ field, fieldState }) => {
         return (
-          <FormControl sx={{ m: 1, width: '100%' }}>
+          <FormControl sx={{ width: '100%' }}>
             <TextField
               inputProps={{ ...field, type }}
               variant='standard'

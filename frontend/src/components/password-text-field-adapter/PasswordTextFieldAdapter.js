@@ -21,7 +21,7 @@ const PasswordTextFieldAdapter = ({ name, control, label }) => {
       control={control}
       render={({ field, fieldState }) => {
         return (
-          <FormControl sx={{ m: 1, width: '100%' }}>
+          <FormControl sx={{ width: '100%' }}>
             <TextField
               type={showPassword ? 'text' : 'password'}
               inputProps={{ ...field }}
