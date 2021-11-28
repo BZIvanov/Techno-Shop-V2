@@ -18,8 +18,8 @@ const schema = yup
           name: yup.string().required(),
         })
       )
-      .min(1)
-      .required('Subcategory is required'),
+      .min(1),
+    images: yup.array().of(yup.mixed()).min(1),
   })
   .required();
 

@@ -32,7 +32,7 @@ const SelectDropdownMultichipAdapter = ({ name, control, label, options }) => {
       render={({ field, fieldState }) => {
         return (
           <FormControl
-            sx={{ m: 1, width: '100%' }}
+            sx={{ width: '100%' }}
             variant='standard'
             error={Boolean(fieldState.error)}
             disabled={loading || options.length < 1}
