@@ -1,8 +1,17 @@
-import { useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { Box, Typography, Button, Divider } from '@mui/material';
+import {
+  Box,
+  Typography,
+  Button,
+  Divider,
+  Stack,
+  Badge,
+  Avatar,
+} from '@mui/material';
+import { CloseOutlined } from '@mui/icons-material';
 import { TextFieldAdapter } from '../text-field-adapter';
 import { SelectDropdownAdapter } from '../select-dropdown-adapter';
 import { SelectDropdownMultichipAdapter } from '../select-dropdown-multichip-adapter';
@@ -22,6 +31,8 @@ const ManageProduct = () => {
   const { categories, selectedCategorySubcategories } = useSelector(
     (state) => state.category
   );
+
+  const [previewImages, setPreviewImages] = useState([]);
 
   const dispatch = useDispatch();
 
@@ -57,14 +68,27 @@ const ManageProduct = () => {
     reset();
   };
 
-  const selectedCategoryId = watch('categoryId');
+  const selectedFormCategoryId = watch('categoryId');
+  const selectedFormImages = watch('images');
 
+  // reset selected subcategories and fetch subcategories for the selected category, when category changes
   useEffect(() => {
-    if (selectedCategoryId) {
+    if (selectedFormCategoryId) {
       setValue('subcategories', []);
-      dispatch(getCategorySubcategoriesAction(selectedCategoryId));
+      dispatch(getCategorySubcategoriesAction(selectedFormCategoryId));
     }
-  }, [dispatch, setValue, selectedCategoryId]);
+  }, [dispatch, setValue, selectedFormCategoryId]);
+
+  // watch images
+  useEffect(() => {
+    const images = selectedFormImages.map((img) =>
+      Object.assign(img, {
+        preview: URL.createObjectURL(img),
+      })
+    );
+
+    setPreviewImages(images);
+  }, [selectedFormImages]);
 
   return (
     <Box sx={{ padding: (theme) => theme.spacing(1) }}>
@@ -133,6 +157,34 @@ const ManageProduct = () => {
           <Box>
             <ImagesFieldAdapter control={control} name='images' />
           </Box>
+
+          <Stack sx={{ marginTop: 3 }} spacing={2} direction='row'>
+            {previewImages.map((previewImg) => (
+              <Badge
+                key={previewImg.name}
+                badgeContent={
+                  <CloseOutlined
+                    sx={{ cursor: 'pointer' }}
+                    htmlColor={'red'}
+                    onClick={() =>
+                      setValue(
+                        'images',
+                        previewImages.filter(
+                          (pi) => pi.name !== previewImg.name
+                        )
+                      )
+                    }
+                  />
+                }
+              >
+                <Avatar
+                  alt='product preview'
+                  src={previewImg.preview}
+                  sx={{ width: 90, height: 90 }}
+                />
+              </Badge>
+            ))}
+          </Stack>
 
           <Box mt={2} ml={1}>
             <Button
