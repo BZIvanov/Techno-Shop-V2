@@ -1,6 +1,7 @@
 import { createProductCall } from '../../api/products';
 import { apiCallStartType, apiCallSuccessType, apiCallFailType } from './';
 import { actionType } from '../action-types';
+import imageResizer from '../../utils/image-resizer';
 
 export const createProductType = (product) => ({
   type: actionType.CREATE_PRODUCT,
@@ -12,7 +13,14 @@ export const createProductAction = (product, token) => {
     dispatch(apiCallStartType());
 
     try {
-      const { data } = await createProductCall(product, token);
+      const base64Images = await Promise.all(
+        product.images.map((imageData) => imageResizer(imageData))
+      );
+
+      const { data } = await createProductCall(
+        { ...product, images: base64Images },
+        token
+      );
 
       dispatch(apiCallSuccessType(`Product '${data.product.title}' created`));
       dispatch(createProductType(data.product));

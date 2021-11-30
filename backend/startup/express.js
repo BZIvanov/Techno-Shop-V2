@@ -8,7 +8,7 @@ const image = require('../routes/image');
 const globalError = require('../middlewares/global-error');
 
 module.exports = function startApp(app) {
-  app.use(express.json({ limit: '10kb' }));
+  app.use(express.json({ limit: '5mb' }));
 
   app.use(cors());
 
