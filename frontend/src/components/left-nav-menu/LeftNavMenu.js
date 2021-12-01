@@ -7,6 +7,7 @@ import {
   Category,
   AutoAwesomeMosaic,
   Gradient,
+  PhoneAndroid,
 } from '@mui/icons-material';
 import { LeftNavLink } from '../left-nav-link';
 
@@ -48,6 +49,11 @@ const adminLinks = [
     toLink: 'product',
     Icon: Gradient,
     linkText: 'Manage products',
+  },
+  {
+    toLink: 'products-list',
+    Icon: PhoneAndroid,
+    linkText: 'Products List',
   },
   {
     toLink: 'password',
