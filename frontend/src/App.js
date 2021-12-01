@@ -7,6 +7,7 @@ import { RegisterPage } from './pages/register-page';
 import { LoginPage } from './pages/login-page';
 import { ResetPasswordPage } from './pages/reset-password-page';
 import { UserPage } from './pages/user-page';
+import { ProductsCardsList } from './components/products-cards-list';
 import { ManageCategory } from './components/manage-category';
 import { ManageSubcategory } from './components/manage-subcategory';
 import { ManageProduct } from './components/manage-product';
@@ -56,7 +57,7 @@ const App = () => {
             </ProtectedRoute>
           }
         >
-          <Route path='dashboard' element={<UserPasswordUpdate />} />
+          <Route path='dashboard' element={<ProductsCardsList />} />
           <Route path='category' element={<ManageCategory />} />
           <Route path='subcategory' element={<ManageSubcategory />} />
           <Route path='product' element={<ManageProduct />} />

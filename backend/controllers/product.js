@@ -12,6 +12,28 @@ cloudinary.config({
   api_secret: process.env.CLOUDINARY_API_SECRET,
 });
 
+exports.getProducts = catchAsync(async (req, res) => {
+  const {
+    sortColumn = 'createdAt',
+    order = 'desc',
+    page,
+    perPage,
+    ...rest
+  } = req.query;
+
+  const pageNumber = parseInt(page || 1, 10);
+  const perPageNumber = parseInt(perPage || 12, 10);
+
+  const products = await Product.find()
+    .skip((pageNumber - 1) * perPageNumber)
+    .limit(perPageNumber)
+    .populate('category')
+    .populate('subcategories')
+    .sort([[sortColumn, order]]);
+
+  res.status(status.OK).json({ success: true, products });
+});
+
 exports.createProduct = catchAsync(async (req, res) => {
   const { images, ...rest } = req.body;
   rest.slug = slugify(rest.title);
