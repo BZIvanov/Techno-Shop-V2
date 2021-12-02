@@ -4,7 +4,7 @@ const { v4: uuidv4 } = require('uuid');
 const slugify = require('slugify');
 const Product = require('../models/product');
 const catchAsync = require('../middlewares/catch-async');
-// const AppError = require('../utils/app-error');
+const AppError = require('../utils/app-error');
 
 cloudinary.config({
   cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
@@ -55,4 +55,18 @@ exports.createProduct = catchAsync(async (req, res) => {
   const product = await Product.create(rest);
 
   res.status(status.CREATED).json({ success: true, product });
+});
+
+exports.deleteProduct = catchAsync(async (req, res, next) => {
+  const product = await Product.findByIdAndDelete(req.params.id);
+
+  if (!product) {
+    return next(new AppError('Product not found', status.NOT_FOUND));
+  }
+
+  product.images.forEach(async (image) => {
+    await cloudinary.uploader.destroy(image.publicId);
+  });
+
+  res.status(status.NO_CONTENT).json();
 });
