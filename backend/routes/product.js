@@ -1,5 +1,9 @@
 const router = require('express').Router();
-const { getProducts, createProduct } = require('../controllers/product');
+const {
+  getProducts,
+  createProduct,
+  deleteProduct,
+} = require('../controllers/product');
 const authenticate = require('../middlewares/authenticate');
 const authorize = require('../middlewares/authorize');
 const {
@@ -10,5 +14,7 @@ router
   .route('/')
   .get(getProducts)
   .post(authenticate, authorize(admin), createProduct);
+
+router.route('/:id').delete(authenticate, authorize(admin), deleteProduct);
 
 module.exports = router;

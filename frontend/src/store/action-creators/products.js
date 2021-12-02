@@ -1,4 +1,8 @@
-import { getProductsCall, createProductCall } from '../../api/products';
+import {
+  getProductsCall,
+  createProductCall,
+  deleteProductCall,
+} from '../../api/products';
 import { apiCallStartType, apiCallSuccessType, apiCallFailType } from './';
 import { actionType } from '../action-types';
 import imageResizer from '../../utils/image-resizer';
@@ -13,6 +17,11 @@ export const getProductsType = (products) => {
 export const createProductType = (product) => ({
   type: actionType.CREATE_PRODUCT,
   payload: product,
+});
+
+export const deleteProductType = (productId) => ({
+  type: actionType.DELETE_PRODUCT,
+  payload: productId,
 });
 
 export const getProductsAction = (params) => {
@@ -48,6 +57,21 @@ export const createProductAction = (product, token) => {
       dispatch(createProductType(data.product));
     } catch (error) {
       dispatch(apiCallFailType('Create product error'));
+    }
+  };
+};
+
+export const deleteProductAction = (productId, token) => {
+  return async (dispatch) => {
+    dispatch(apiCallStartType());
+
+    try {
+      await deleteProductCall(productId, token);
+
+      dispatch(apiCallSuccessType('Product deleted'));
+      dispatch(deleteProductType(productId));
+    } catch (error) {
+      dispatch(apiCallFailType('Delete product error'));
     }
   };
 };

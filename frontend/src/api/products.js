@@ -9,3 +9,9 @@ export const createProductCall = (data, token) => {
     headers: { authorization: `Bearer ${token}` },
   });
 };
+
+export const deleteProductCall = (id, token) => {
+  return axios.delete(`/product/${id}`, {
+    headers: { authorization: `Bearer ${token}` },
+  });
+};

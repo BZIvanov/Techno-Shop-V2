@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import {
   Box,
@@ -12,12 +12,17 @@ import {
   Grid,
 } from '@mui/material';
 import { Edit, Delete } from '@mui/icons-material';
+import { ConfirmDialog } from '../confirm-dialog';
 import { ApiCallAlert } from '../api-call-alert';
 import { ApiCallLoader } from '../api-call-loader';
-import { getProductsAction } from '../../store/action-creators';
+import {
+  getProductsAction,
+  deleteProductAction,
+} from '../../store/action-creators';
 import productImage from '../../assets/images/product.png';
 
 const ProductsCardsList = () => {
+  const { token } = useSelector((state) => state.user);
   const { products } = useSelector((state) => state.product);
 
   const dispatch = useDispatch();
@@ -25,6 +30,21 @@ const ProductsCardsList = () => {
   useEffect(() => {
     dispatch(getProductsAction());
   }, [dispatch]);
+
+  const [removeProductDialog, setRemoveProductDialog] = useState({
+    open: false,
+    text: '',
+    onConfirm: () => {},
+  });
+
+  const handleProductDeleteClick = (productId) => () => {
+    setRemoveProductDialog({
+      open: false,
+      text: '',
+      onConfirm: () => {},
+    });
+    dispatch(deleteProductAction(productId, token));
+  };
 
   return (
     <Box
@@ -64,7 +84,17 @@ const ProductsCardsList = () => {
                 <IconButton size='medium' color='warning'>
                   <Edit />
                 </IconButton>
-                <IconButton size='medium' color='warning'>
+                <IconButton
+                  size='medium'
+                  color='warning'
+                  onClick={() =>
+                    setRemoveProductDialog({
+                      open: true,
+                      text: 'Are you sure you want to delete this product?',
+                      onConfirm: handleProductDeleteClick(_id),
+                    })
+                  }
+                >
                   <Delete />
                 </IconButton>
               </CardActions>
@@ -72,6 +102,11 @@ const ProductsCardsList = () => {
           </Grid>
         ))}
       </Grid>
+
+      <ConfirmDialog
+        dialogConfig={removeProductDialog}
+        setDialogConfig={setRemoveProductDialog}
+      />
 
       <ApiCallLoader />
 
