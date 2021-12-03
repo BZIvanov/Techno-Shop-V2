@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+import { useParams } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import {
@@ -21,6 +22,7 @@ import { ApiCallAlert } from '../api-call-alert';
 import {
   getAllCategoriesAction,
   getCategorySubcategoriesAction,
+  getProductAction,
   createProductAction,
 } from '../../store/action-creators';
 import schema from './form-schema';
@@ -31,14 +33,22 @@ const ManageProduct = () => {
   const { categories, selectedCategorySubcategories } = useSelector(
     (state) => state.category
   );
+  const { product } = useSelector((state) => state.product);
+
+  const { id } = useParams();
 
   const [previewImages, setPreviewImages] = useState([]);
 
   const dispatch = useDispatch();
 
   useEffect(() => {
+    // if product id is found in the url, we are editing a product
+    if (id) {
+      dispatch(getProductAction(id));
+    }
+
     dispatch(getAllCategoriesAction());
-  }, [dispatch]);
+  }, [dispatch, id]);
 
   const { control, handleSubmit, formState, reset, watch, setValue } = useForm({
     defaultValues: {
@@ -49,7 +59,7 @@ const ManageProduct = () => {
       quantity: '',
       color: '',
       brand: '',
-      categoryId: '',
+      category: '',
       subcategories: [],
       images: [],
     },
@@ -68,8 +78,21 @@ const ManageProduct = () => {
     reset();
   };
 
-  const selectedFormCategoryId = watch('categoryId');
+  const selectedFormCategoryId = watch('category');
   const selectedFormImages = watch('images');
+
+  useEffect(() => {
+    if (product && categories.length > 0) {
+      setValue('title', product.title);
+      setValue('description', product.description);
+      setValue('price', product.price);
+      setValue('shipping', product.shipping);
+      setValue('quantity', product.quantity);
+      setValue('color', product.color);
+      setValue('brand', product.brand);
+      setValue('category', product.category._id);
+    }
+  }, [setValue, product, categories]);
 
   // reset selected subcategories and fetch subcategories for the selected category, when category changes
   useEffect(() => {
@@ -139,7 +162,7 @@ const ManageProduct = () => {
           <Box my={1}>
             <SelectDropdownAdapter
               control={control}
-              name='categoryId'
+              name='category'
               label='Category'
               options={categories}
             />
