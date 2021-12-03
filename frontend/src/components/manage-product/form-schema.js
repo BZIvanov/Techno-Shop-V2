@@ -9,7 +9,7 @@ const schema = yup
     quantity: yup.number().min(1).required(),
     color: yup.string().required('Color is required'),
     brand: yup.string().required('Brand is required'),
-    categoryId: yup.string().required('Category is required'),
+    category: yup.string().required('Category is required'),
     subcategories: yup
       .array()
       .of(

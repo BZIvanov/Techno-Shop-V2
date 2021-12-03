@@ -4,6 +4,10 @@ export const getProductsCall = (params = {}) => {
   return axios.get('/product', { params });
 };
 
+export const getProductCall = (id) => {
+  return axios.get(`/product/${id}`);
+};
+
 export const createProductCall = (data, token) => {
   return axios.post('/product', data, {
     headers: { authorization: `Bearer ${token}` },

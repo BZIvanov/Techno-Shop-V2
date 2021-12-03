@@ -34,6 +34,18 @@ exports.getProducts = catchAsync(async (req, res) => {
   res.status(status.OK).json({ success: true, products });
 });
 
+exports.getProduct = catchAsync(async (req, res, next) => {
+  const product = await Product.findById(req.params.id)
+    .populate('category')
+    .populate('subcategories');
+
+  if (!product) {
+    return next(new AppError('Product not found', status.NOT_FOUND));
+  }
+
+  res.status(status.OK).json({ success: true, product });
+});
+
 exports.createProduct = catchAsync(async (req, res) => {
   const { images, ...rest } = req.body;
   rest.slug = slugify(rest.title);

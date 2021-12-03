@@ -1,5 +1,6 @@
 import {
   getProductsCall,
+  getProductCall,
   createProductCall,
   deleteProductCall,
 } from '../../api/products';
@@ -13,6 +14,11 @@ export const getProductsType = (products) => {
     payload: products,
   };
 };
+
+export const getProductType = (product) => ({
+  type: actionType.GET_PRODUCT,
+  payload: product,
+});
 
 export const createProductType = (product) => ({
   type: actionType.CREATE_PRODUCT,
@@ -35,6 +41,21 @@ export const getProductsAction = (params) => {
       dispatch(getProductsType(data.products));
     } catch (error) {
       dispatch(apiCallFailType('Get products error'));
+    }
+  };
+};
+
+export const getProductAction = (id) => {
+  return async (dispatch) => {
+    dispatch(apiCallStartType());
+
+    try {
+      const { data } = await getProductCall(id);
+
+      dispatch(apiCallSuccessType());
+      dispatch(getProductType(data.product));
+    } catch (error) {
+      dispatch(apiCallFailType('Get product error'));
     }
   };
 };

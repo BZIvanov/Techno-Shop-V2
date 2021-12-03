@@ -2,6 +2,7 @@ import { actionType } from '../action-types';
 
 const initialState = {
   products: [],
+  product: null,
 };
 
 export const productReducer = (state = initialState, action) => {
@@ -11,6 +12,8 @@ export const productReducer = (state = initialState, action) => {
         ...state,
         products: action.payload,
       };
+    case actionType.GET_PRODUCT:
+      return { ...state, product: action.payload };
     case actionType.CREATE_PRODUCT:
       return { ...state, products: [...state.products, action.payload] };
     case actionType.DELETE_PRODUCT:
