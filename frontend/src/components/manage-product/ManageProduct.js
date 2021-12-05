@@ -67,13 +67,12 @@ const ManageProduct = () => {
   });
 
   const handleProductSubmit = (values) => {
-    const subcategoriesIds = values.subcategories.map(
-      (subcategory) => subcategory._id
-    );
-
-    dispatch(
-      createProductAction({ ...values, subcategories: subcategoriesIds }, token)
-    );
+    if (id) {
+      console.log(values);
+      console.log(previewImages);
+    } else {
+      dispatch(createProductAction(values, token));
+    }
 
     reset();
   };
@@ -82,7 +81,7 @@ const ManageProduct = () => {
   const selectedFormImages = watch('images');
 
   useEffect(() => {
-    if (product && categories.length > 0) {
+    if (id && product && categories.length > 0) {
       setValue('title', product.title);
       setValue('description', product.description);
       setValue('price', product.price);
@@ -91,8 +90,20 @@ const ManageProduct = () => {
       setValue('color', product.color);
       setValue('brand', product.brand);
       setValue('category', product.category._id);
+      setValue(
+        'subcategories',
+        product.subcategories.map((subcategory) => subcategory._id)
+      );
+      // formless images with no files involved when editing without interacting with the dropzone
+      setPreviewImages(
+        product.images.map((image) => ({
+          name: image.publicId,
+          preview: image.url,
+          removedImagesWithoutUpdate: true,
+        }))
+      );
     }
-  }, [setValue, product, categories]);
+  }, [setValue, id, product, categories]);
 
   // reset selected subcategories and fetch subcategories for the selected category, when category changes
   useEffect(() => {
@@ -104,13 +115,8 @@ const ManageProduct = () => {
 
   // watch images
   useEffect(() => {
-    const images = selectedFormImages.map((img) =>
-      Object.assign(img, {
-        preview: URL.createObjectURL(img),
-      })
-    );
-
-    setPreviewImages(images);
+    // images ...
+    setPreviewImages(selectedFormImages);
   }, [selectedFormImages]);
 
   return (
@@ -189,14 +195,25 @@ const ManageProduct = () => {
                   <CloseOutlined
                     sx={{ cursor: 'pointer' }}
                     htmlColor={'red'}
-                    onClick={() =>
+                    onClick={() => {
+                      // the user is editing product and only removing products so we are not using the dropzone
+                      if (previewImg.formless) {
+                        setPreviewImages((prev) =>
+                          prev.filter(
+                            (prevImage) => prevImage.name !== previewImg.name
+                          )
+                        );
+                        return;
+                      }
+
+                      // the user updated images, regardless it's update or create product with dropzone and now we use the form
                       setValue(
                         'images',
                         previewImages.filter(
                           (pi) => pi.name !== previewImg.name
                         )
-                      )
-                    }
+                      );
+                    }}
                   />
                 }
               >
@@ -227,7 +244,7 @@ const ManageProduct = () => {
               type='submit'
               disabled={formState.submitting || loading}
             >
-              Create
+              {id ? 'Update' : 'Create'}
             </Button>
           </Box>
         </form>

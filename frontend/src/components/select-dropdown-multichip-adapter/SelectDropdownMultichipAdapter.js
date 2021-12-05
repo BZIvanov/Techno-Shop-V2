@@ -44,9 +44,11 @@ const SelectDropdownMultichipAdapter = ({ name, control, label, options }) => {
               renderValue={(selected) => {
                 return (
                   <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
-                    {selected.map((value) => (
-                      <Chip key={value._id} label={value.name} />
-                    ))}
+                    {options
+                      .filter((option) => selected.includes(option._id))
+                      .map((option) => (
+                        <Chip key={option._id} label={option.name} />
+                      ))}
                   </Box>
                 );
               }}
@@ -54,7 +56,7 @@ const SelectDropdownMultichipAdapter = ({ name, control, label, options }) => {
             >
               {options.map((option) => {
                 return (
-                  <MenuItem key={option._id} value={option}>
+                  <MenuItem key={option._id} value={option._id}>
                     {option.name}
                   </MenuItem>
                 );

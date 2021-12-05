@@ -10,9 +10,19 @@ const ImagesFieldAdapter = ({ name, control }) => {
       control={control}
       name={name}
       render={({ field: { name, onChange, onBlur }, fieldState }) => {
+        const onChangeDroppedImages = (files) => {
+          const images = files.map((file) =>
+            Object.assign(file, {
+              preview: URL.createObjectURL(file),
+            })
+          );
+
+          onChange(images);
+        };
+
         return (
           <FormControl sx={{ width: '100%' }}>
-            <Dropzone onDrop={onChange}>
+            <Dropzone onDrop={onChangeDroppedImages}>
               {({ getRootProps, getInputProps }) => {
                 return (
                   <Paper

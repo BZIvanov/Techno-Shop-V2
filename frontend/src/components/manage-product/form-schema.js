@@ -10,16 +10,8 @@ const schema = yup
     color: yup.string().required('Color is required'),
     brand: yup.string().required('Brand is required'),
     category: yup.string().required('Category is required'),
-    subcategories: yup
-      .array()
-      .of(
-        yup.object().shape({
-          _id: yup.string().required(),
-          name: yup.string().required(),
-        })
-      )
-      .min(1),
-    images: yup.array().of(yup.mixed()).min(1),
+    subcategories: yup.array().of(yup.string()).min(1),
+    images: yup.array().of(yup.mixed()),
   })
   .required();
 
