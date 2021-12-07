@@ -91,7 +91,7 @@ export const createProductAction = (product, token) => {
 export const updateProductAction = (product, token) => {
   return async (dispatch) => {
     dispatch(apiCallStartType());
-    console.log(product);
+
     try {
       const { data } = await updateProductCall(product, token);
 
