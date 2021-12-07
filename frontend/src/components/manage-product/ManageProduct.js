@@ -51,6 +51,12 @@ const ManageProduct = () => {
     dispatch(getAllCategoriesAction());
   }, [dispatch, id]);
 
+  useEffect(() => {
+    if (product) {
+      dispatch(getCategorySubcategoriesAction(product.category._id));
+    }
+  }, [dispatch, product]);
+
   const { control, handleSubmit, formState, reset, watch, setValue } = useForm({
     defaultValues: {
       title: '',
@@ -87,7 +93,12 @@ const ManageProduct = () => {
   const selectedFormImages = watch('images');
 
   useEffect(() => {
-    if (id && product && categories.length > 0) {
+    if (
+      id &&
+      product &&
+      categories.length > 0 &&
+      selectedCategorySubcategories.length > 0
+    ) {
       setValue('title', product.title);
       setValue('description', product.description);
       setValue('price', product.price);
@@ -101,7 +112,7 @@ const ManageProduct = () => {
         product.subcategories.map((subcategory) => subcategory._id)
       );
     }
-  }, [setValue, id, product, categories]);
+  }, [setValue, id, product, categories, selectedCategorySubcategories]);
 
   // reset selected subcategories and fetch subcategories for the selected category, when category changes
   useEffect(() => {
