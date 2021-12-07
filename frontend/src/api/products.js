@@ -14,6 +14,12 @@ export const createProductCall = (data, token) => {
   });
 };
 
+export const updateProductCall = (data, token) => {
+  return axios.put(`/product/${data._id}`, data, {
+    headers: { authorization: `Bearer ${token}` },
+  });
+};
+
 export const deleteProductCall = (id, token) => {
   return axios.delete(`/product/${id}`, {
     headers: { authorization: `Bearer ${token}` },

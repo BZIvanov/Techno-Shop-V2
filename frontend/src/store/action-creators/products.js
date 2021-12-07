@@ -2,6 +2,7 @@ import {
   getProductsCall,
   getProductCall,
   createProductCall,
+  updateProductCall,
   deleteProductCall,
 } from '../../api/products';
 import { apiCallStartType, apiCallSuccessType, apiCallFailType } from './';
@@ -22,6 +23,11 @@ export const getProductType = (product) => ({
 
 export const createProductType = (product) => ({
   type: actionType.CREATE_PRODUCT,
+  payload: product,
+});
+
+export const updateProductType = (product) => ({
+  type: actionType.UPDATE_PRODUCT,
   payload: product,
 });
 
@@ -78,6 +84,21 @@ export const createProductAction = (product, token) => {
       dispatch(createProductType(data.product));
     } catch (error) {
       dispatch(apiCallFailType('Create product error'));
+    }
+  };
+};
+
+export const updateProductAction = (product, token) => {
+  return async (dispatch) => {
+    dispatch(apiCallStartType());
+    console.log(product);
+    try {
+      const { data } = await updateProductCall(product, token);
+
+      dispatch(apiCallSuccessType(`Product '${data.product.name}' updated`));
+      dispatch(updateProductType(data.product));
+    } catch (error) {
+      dispatch(apiCallFailType('Update product error'));
     }
   };
 };
