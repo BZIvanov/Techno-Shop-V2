@@ -69,6 +69,19 @@ exports.createProduct = catchAsync(async (req, res) => {
   res.status(status.CREATED).json({ success: true, product });
 });
 
+exports.updateProduct = catchAsync(async (req, res, next) => {
+  const product = await Product.findByIdAndUpdate(req.params.id, req.body, {
+    new: true,
+    runValidators: true,
+  });
+
+  if (!product) {
+    return next(new AppError('Product not found', status.NOT_FOUND));
+  }
+
+  res.status(status.OK).json({ success: true, product });
+});
+
 exports.deleteProduct = catchAsync(async (req, res, next) => {
   const product = await Product.findByIdAndDelete(req.params.id);
 

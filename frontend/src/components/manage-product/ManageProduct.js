@@ -24,6 +24,7 @@ import {
   getCategorySubcategoriesAction,
   getProductAction,
   createProductAction,
+  updateProductAction,
 } from '../../store/action-creators';
 import schema from './form-schema';
 
@@ -68,8 +69,13 @@ const ManageProduct = () => {
 
   const handleProductSubmit = (values) => {
     if (id) {
-      console.log(values);
-      console.log(previewImages);
+      const { images, ...rest } = values;
+      dispatch(
+        updateProductAction(
+          { _id: id, images: images.length > 0 ? images : undefined, ...rest },
+          token
+        )
+      );
     } else {
       dispatch(createProductAction(values, token));
     }
@@ -94,14 +100,6 @@ const ManageProduct = () => {
         'subcategories',
         product.subcategories.map((subcategory) => subcategory._id)
       );
-      // formless images with no files involved when editing without interacting with the dropzone
-      setPreviewImages(
-        product.images.map((image) => ({
-          name: image.publicId,
-          preview: image.url,
-          removedImagesWithoutUpdate: true,
-        }))
-      );
     }
   }, [setValue, id, product, categories]);
 
@@ -115,7 +113,6 @@ const ManageProduct = () => {
 
   // watch images
   useEffect(() => {
-    // images ...
     setPreviewImages(selectedFormImages);
   }, [selectedFormImages]);
 
@@ -196,17 +193,6 @@ const ManageProduct = () => {
                     sx={{ cursor: 'pointer' }}
                     htmlColor={'red'}
                     onClick={() => {
-                      // the user is editing product and only removing products so we are not using the dropzone
-                      if (previewImg.formless) {
-                        setPreviewImages((prev) =>
-                          prev.filter(
-                            (prevImage) => prevImage.name !== previewImg.name
-                          )
-                        );
-                        return;
-                      }
-
-                      // the user updated images, regardless it's update or create product with dropzone and now we use the form
                       setValue(
                         'images',
                         previewImages.filter(

@@ -3,6 +3,7 @@ const {
   getProducts,
   getProduct,
   createProduct,
+  updateProduct,
   deleteProduct,
 } = require('../controllers/product');
 const authenticate = require('../middlewares/authenticate');
@@ -19,6 +20,7 @@ router
 router
   .route('/:id')
   .get(getProduct)
+  .put(authenticate, authorize(admin), updateProduct)
   .delete(authenticate, authorize(admin), deleteProduct);
 
 module.exports = router;
