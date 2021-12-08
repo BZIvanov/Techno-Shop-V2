@@ -1,18 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
-import {
-  Box,
-  Typography,
-  Card,
-  CardContent,
-  CardMedia,
-  CardActionArea,
-  CardActions,
-  IconButton,
-  Grid,
-  Paper,
-} from '@mui/material';
+import { Box, Typography, IconButton, Grid, Paper } from '@mui/material';
 import { Edit, Delete } from '@mui/icons-material';
 import { ConfirmDialog } from '../confirm-dialog';
 import { ApiCallAlert } from '../api-call-alert';
@@ -21,7 +10,7 @@ import {
   getProductsAction,
   deleteProductAction,
 } from '../../store/action-creators';
-import productImage from '../../assets/images/product.png';
+import { ProductCard } from '../product-card';
 
 const ProductsCardsList = () => {
   const { token } = useSelector((state) => state.user);
@@ -63,31 +52,13 @@ const ProductsCardsList = () => {
       <Paper sx={{ width: '100%', padding: 2 }}>
         {products.length > 0 ? (
           <Grid container={true} spacing={3}>
-            {products.map(({ _id, title, description, images }) => (
-              <Grid key={_id} item={true} xs={12} sm={6} md={4} lg={3}>
-                <Card>
-                  <CardActionArea>
-                    <CardMedia
-                      component='img'
-                      height='140'
-                      image={images.length > 0 ? images[0].url : productImage}
-                      alt='app product'
-                    />
-                    <CardContent>
-                      <Typography gutterBottom variant='h5' component='div'>
-                        {title}
-                      </Typography>
-                      <Typography variant='body2' color='text.secondary'>
-                        {description.length > 80
-                          ? description.substring(0, 80) + '...'
-                          : description}
-                      </Typography>
-                    </CardContent>
-                  </CardActionArea>
-                  <CardActions>
+            {products.map((product) => (
+              <Grid key={product._id} item={true} xs={12} sm={6} md={4} lg={3}>
+                <ProductCard product={product}>
+                  <>
                     <IconButton
                       component={Link}
-                      to={`/admin/product/${_id}`}
+                      to={`/admin/product/${product._id}`}
                       size='medium'
                       color='warning'
                     >
@@ -100,14 +71,14 @@ const ProductsCardsList = () => {
                         setRemoveProductDialog({
                           open: true,
                           text: 'Are you sure you want to delete this product?',
-                          onConfirm: handleProductDeleteClick(_id),
+                          onConfirm: handleProductDeleteClick(product._id),
                         })
                       }
                     >
                       <Delete />
                     </IconButton>
-                  </CardActions>
-                </Card>
+                  </>
+                </ProductCard>
               </Grid>
             ))}
           </Grid>
