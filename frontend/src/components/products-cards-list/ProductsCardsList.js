@@ -53,7 +53,15 @@ const ProductsCardsList = () => {
         {products.length > 0 ? (
           <Grid container={true} spacing={3}>
             {products.map((product) => (
-              <Grid key={product._id} item={true} xs={12} sm={6} md={4} lg={3}>
+              <Grid
+                key={product._id}
+                item={true}
+                xs={12}
+                sm={6}
+                md={4}
+                lg={3}
+                xl={2}
+              >
                 <ProductCard product={product}>
                   <>
                     <IconButton
