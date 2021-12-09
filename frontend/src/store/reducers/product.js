@@ -1,13 +1,15 @@
 import { actionType } from '../action-types';
 
 const initialState = {
-  products: [],
+  allProducts: [],
+  newestProducts: [],
+  bestsellingProducts: [],
   product: null,
 };
 
 export const productReducer = (state = initialState, action) => {
   switch (action.type) {
-    case actionType.GET_PRODUCTS:
+    case actionType.GET_ALL_PRODUCTS:
       return {
         ...state,
         products: action.payload,

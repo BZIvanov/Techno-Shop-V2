@@ -11,7 +11,7 @@ import imageResizer from '../../utils/image-resizer';
 
 export const getProductsType = (products) => {
   return {
-    type: actionType.GET_PRODUCTS,
+    type: actionType.GET_ALL_PRODUCTS,
     payload: products,
   };
 };

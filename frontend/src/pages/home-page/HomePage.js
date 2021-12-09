@@ -12,12 +12,12 @@ import { getProductsAction } from '../../store/action-creators';
 const JUMBOTRON_TEXTS = ['Latest Products', 'New Arrivals', 'Best Sellers'];
 
 const HomePage = () => {
-  const { products } = useSelector((state) => state.product);
+  const { newestProducts } = useSelector((state) => state.product);
 
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(getProductsAction());
+    dispatch(getProductsAction({ sortColumn: 'createdAt' }));
   }, [dispatch]);
 
   return (
@@ -36,9 +36,9 @@ const HomePage = () => {
         <Typography variant='h1'>{JUMBOTRON_TEXTS[0]}</Typography>
 
         <Paper sx={{ width: '100%', padding: 2 }}>
-          {products.length > 0 ? (
+          {newestProducts.length > 0 ? (
             <Grid container={true} spacing={3}>
-              {products.map((product) => (
+              {newestProducts.map((product) => (
                 <Grid
                   key={product._id}
                   item={true}
@@ -71,8 +71,8 @@ const HomePage = () => {
               ))}
             </Grid>
           ) : (
-            <Typography variant='subtitle2'>
-              No Products found. Use the form above to create some.
+            <Typography sx={{ textAlign: 'center' }} variant='subtitle2'>
+              No Products found.
             </Typography>
           )}
         </Paper>
