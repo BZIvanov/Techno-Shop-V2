@@ -14,7 +14,7 @@ import { ProductCard } from '../product-card';
 
 const ProductsCardsList = () => {
   const { token } = useSelector((state) => state.user);
-  const { products } = useSelector((state) => state.product);
+  const { allProducts } = useSelector((state) => state.product);
 
   const dispatch = useDispatch();
 
@@ -50,9 +50,9 @@ const ProductsCardsList = () => {
       <Typography variant='h1'>Products List</Typography>
 
       <Paper sx={{ width: '100%', padding: 2 }}>
-        {products.length > 0 ? (
+        {allProducts.length > 0 ? (
           <Grid container={true} spacing={3}>
-            {products.map((product) => (
+            {allProducts.map((product) => (
               <Grid
                 key={product._id}
                 item={true}
