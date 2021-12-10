@@ -14,6 +14,16 @@ export const productReducer = (state = initialState, action) => {
         ...state,
         allProducts: action.payload,
       };
+    case actionType.GET_NEWEST_PRODUCTS:
+      return {
+        ...state,
+        newestProducts: action.payload,
+      };
+    case actionType.GET_BESTSELLING_PRODUCTS:
+      return {
+        ...state,
+        bestsellingProducts: action.payload,
+      };
     case actionType.GET_PRODUCT:
       return { ...state, product: action.payload };
     case actionType.CREATE_PRODUCT:
