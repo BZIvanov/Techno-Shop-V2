@@ -8,10 +8,18 @@ import {
 import { apiCallStartType, apiCallSuccessType, apiCallFailType } from './';
 import { actionType } from '../action-types';
 import imageResizer from '../../utils/image-resizer';
+import { PRODUCTS_LIST_TYPES } from '../../constants';
 
-export const getProductsType = (products) => {
+export const getProductsType = (products, productsType) => {
+  let type = actionType.GET_ALL_PRODUCTS;
+  if (productsType === PRODUCTS_LIST_TYPES.newest) {
+    type = actionType.GET_NEWEST_PRODUCTS;
+  } else if (productsType === PRODUCTS_LIST_TYPES.bestselling) {
+    type = actionType.GET_BESTSELLING_PRODUCTS;
+  }
+
   return {
-    type: actionType.GET_ALL_PRODUCTS,
+    type,
     payload: products,
   };
 };
@@ -36,15 +44,15 @@ export const deleteProductType = (productId) => ({
   payload: productId,
 });
 
-export const getProductsAction = (params) => {
+export const getProductsAction = ({ productsType, ...rest }) => {
   return async (dispatch) => {
     dispatch(apiCallStartType());
 
     try {
-      const { data } = await getProductsCall(params);
+      const { data } = await getProductsCall(rest);
 
       dispatch(apiCallSuccessType());
-      dispatch(getProductsType(data.products));
+      dispatch(getProductsType(data.products, productsType));
     } catch (error) {
       dispatch(apiCallFailType('Get products error'));
     }
