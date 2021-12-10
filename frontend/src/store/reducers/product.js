@@ -12,7 +12,7 @@ export const productReducer = (state = initialState, action) => {
     case actionType.GET_ALL_PRODUCTS:
       return {
         ...state,
-        products: action.payload,
+        allProducts: action.payload,
       };
     case actionType.GET_PRODUCT:
       return { ...state, product: action.payload };
