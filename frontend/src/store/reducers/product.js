@@ -1,9 +1,9 @@
 import { actionType } from '../action-types';
 
 const initialState = {
-  allProducts: [],
-  newestProducts: [],
-  bestsellingProducts: [],
+  all: { products: [], totalCount: 0 },
+  newest: { products: [], totalCount: 0 },
+  bestselling: { products: [], totalCount: 0 },
   product: null,
 };
 
@@ -12,17 +12,26 @@ export const productReducer = (state = initialState, action) => {
     case actionType.GET_ALL_PRODUCTS:
       return {
         ...state,
-        allProducts: action.payload,
+        all: {
+          totalCount: action.payload.totalCount,
+          products: action.payload.products,
+        },
       };
     case actionType.GET_NEWEST_PRODUCTS:
       return {
         ...state,
-        newestProducts: action.payload,
+        newest: {
+          totalCount: action.payload.totalCount,
+          products: action.payload.products,
+        },
       };
     case actionType.GET_BESTSELLING_PRODUCTS:
       return {
         ...state,
-        bestsellingProducts: action.payload,
+        bestselling: {
+          totalCount: action.payload.totalCount,
+          products: action.payload.products,
+        },
       };
     case actionType.GET_PRODUCT:
       return { ...state, product: action.payload };

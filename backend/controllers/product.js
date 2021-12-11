@@ -31,7 +31,9 @@ exports.getProducts = catchAsync(async (req, res) => {
     .populate('subcategories')
     .sort([[sortColumn, order]]);
 
-  res.status(status.OK).json({ success: true, products });
+  const totalCount = await Product.find().estimatedDocumentCount();
+
+  res.status(status.OK).json({ success: true, products, totalCount });
 });
 
 exports.getProduct = catchAsync(async (req, res, next) => {
