@@ -10,7 +10,7 @@ import { actionType } from '../action-types';
 import imageResizer from '../../utils/image-resizer';
 import { PRODUCTS_LIST_TYPES } from '../../constants';
 
-export const getProductsType = (products, productsType) => {
+export const getProductsType = (data, productsType) => {
   let type = actionType.GET_ALL_PRODUCTS;
   if (productsType === PRODUCTS_LIST_TYPES.newest) {
     type = actionType.GET_NEWEST_PRODUCTS;
@@ -20,7 +20,7 @@ export const getProductsType = (products, productsType) => {
 
   return {
     type,
-    payload: products,
+    payload: data,
   };
 };
 
@@ -52,7 +52,7 @@ export const getProductsAction = ({ productsType, ...rest }) => {
       const { data } = await getProductsCall(rest);
 
       dispatch(apiCallSuccessType());
-      dispatch(getProductsType(data.products, productsType));
+      dispatch(getProductsType(data, productsType));
     } catch (error) {
       dispatch(apiCallFailType('Get products error'));
     }

@@ -11,15 +11,16 @@ import {
   deleteProductAction,
 } from '../../store/action-creators';
 import { ProductCard } from '../product-card';
+import { PRODUCTS_LIST_TYPES } from '../../constants';
 
 const ProductsCardsList = () => {
   const { token } = useSelector((state) => state.user);
-  const { allProducts } = useSelector((state) => state.product);
+  const { products } = useSelector((state) => state.product.all);
 
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(getProductsAction());
+    dispatch(getProductsAction({ productsType: PRODUCTS_LIST_TYPES.all }));
   }, [dispatch]);
 
   const [removeProductDialog, setRemoveProductDialog] = useState({
@@ -50,9 +51,9 @@ const ProductsCardsList = () => {
       <Typography variant='h1'>Products List</Typography>
 
       <Paper sx={{ width: '100%', padding: 2 }}>
-        {allProducts.length > 0 ? (
+        {products.length > 0 ? (
           <Grid container={true} spacing={3}>
-            {allProducts.map((product) => (
+            {products.map((product) => (
               <Grid
                 key={product._id}
                 item={true}

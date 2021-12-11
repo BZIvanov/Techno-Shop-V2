@@ -1,9 +1,29 @@
+import { useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { Box, Typography, IconButton, Grid, Paper } from '@mui/material';
 import { AddShoppingCart, Preview } from '@mui/icons-material';
 import { ProductCard } from '../../components/product-card';
+import { getProductsAction } from '../../store/action-creators';
+import { PRODUCTS_LIST_TYPES } from '../../constants';
 
-const ProductsList = ({ header, products }) => {
+const ProductsList = ({ type, header }) => {
+  const { products } = useSelector(({ product }) =>
+    type === PRODUCTS_LIST_TYPES.newest ? product.newest : product.bestselling
+  );
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(
+      getProductsAction({
+        productsType: type,
+        sortColumn: type === PRODUCTS_LIST_TYPES.newest ? 'createdAt' : 'sold',
+        perPage: 3,
+      })
+    );
+  }, [dispatch, type]);
+
   return (
     <>
       <Box
