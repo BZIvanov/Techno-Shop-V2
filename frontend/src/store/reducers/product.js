@@ -4,7 +4,7 @@ const initialState = {
   all: { products: [], totalCount: 0 },
   newest: { products: [], totalCount: 0 },
   bestselling: { products: [], totalCount: 0 },
-  product: null,
+  selectedProduct: null,
 };
 
 export const productReducer = (state = initialState, action) => {
@@ -34,7 +34,7 @@ export const productReducer = (state = initialState, action) => {
         },
       };
     case actionType.GET_PRODUCT:
-      return { ...state, product: action.payload };
+      return { ...state, selectedProduct: action.payload };
     case actionType.CREATE_PRODUCT:
       return { ...state, products: [...state.products, action.payload] };
     case actionType.UPDATE_PRODUCT:

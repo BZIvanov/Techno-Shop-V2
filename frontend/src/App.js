@@ -12,6 +12,7 @@ import { ManageCategory } from './components/manage-category';
 import { ManageSubcategory } from './components/manage-subcategory';
 import { ManageProduct } from './components/manage-product';
 import { UserPasswordUpdate } from './components/user-password-update';
+import { ProductDetails } from './components/product-details';
 import { ProtectedRoute } from './components/protected-route';
 import { getCurrentUserAction } from './store/action-creators';
 
@@ -65,6 +66,7 @@ const App = () => {
           <Route path='products-list' element={<ProductsCardsList />} />
           <Route path='password' element={<UserPasswordUpdate />} />
         </Route>
+        <Route path='/product/:id' element={<ProductDetails />} />
       </Routes>
     </>
   );

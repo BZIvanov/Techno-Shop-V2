@@ -70,18 +70,30 @@ const ProductsList = ({ type, header }) => {
                     <>
                       <IconButton
                         component={Link}
-                        to={`/admin/product/${product._id}`}
+                        to={`/product/${product._id}`}
                         size='medium'
                         color='warning'
+                        sx={{
+                          display: 'flex',
+                          flexDirection: 'column',
+                          padding: '5px 12px',
+                        }}
                       >
                         <Preview />
+                        <Typography variant='caption'>Details</Typography>
                       </IconButton>
                       <IconButton
                         size='medium'
                         color='warning'
                         onClick={() => console.log('works')}
+                        sx={{
+                          display: 'flex',
+                          flexDirection: 'column',
+                          padding: '5px 12px',
+                        }}
                       >
                         <AddShoppingCart />
+                        <Typography variant='caption'>Add to cart</Typography>
                       </IconButton>
                     </>
                   </ProductCard>
