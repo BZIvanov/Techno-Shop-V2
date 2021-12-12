@@ -1,16 +1,28 @@
-import { useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { Box, Typography, IconButton, Grid, Paper } from '@mui/material';
+import {
+  Box,
+  Typography,
+  IconButton,
+  Grid,
+  Paper,
+  Stack,
+  Pagination,
+} from '@mui/material';
 import { AddShoppingCart, Preview } from '@mui/icons-material';
 import { ProductCard } from '../../components/product-card';
 import { getProductsAction } from '../../store/action-creators';
 import { PRODUCTS_LIST_TYPES } from '../../constants';
 
+const PRODUCTS_PER_PAGE = 3;
+
 const ProductsList = ({ type, header }) => {
-  const { products } = useSelector(({ product }) =>
+  const { products, totalCount } = useSelector(({ product }) =>
     type === PRODUCTS_LIST_TYPES.newest ? product.newest : product.bestselling
   );
+
+  const [page, setPage] = useState(1);
 
   const dispatch = useDispatch();
 
@@ -19,24 +31,27 @@ const ProductsList = ({ type, header }) => {
       getProductsAction({
         productsType: type,
         sortColumn: type === PRODUCTS_LIST_TYPES.newest ? 'createdAt' : 'sold',
-        perPage: 3,
+        page,
+        perPage: PRODUCTS_PER_PAGE,
       })
     );
-  }, [dispatch, type]);
+  }, [dispatch, type, page]);
+
+  const handlePageChange = (_, value) => {
+    setPage(value);
+  };
 
   return (
     <>
       <Box
         sx={{
-          display: 'flex',
-          flexDirection: 'column',
-          justifyContent: 'center',
-          alignItems: 'center',
-          marginTop: { xs: '10px', sm: '20px', md: '40px' },
           width: '100%',
+          backgroundColor: (theme) => theme.palette.grey[300],
         }}
       >
-        <Typography variant='h1'>{header}</Typography>
+        <Typography variant='h1' sx={{ textAlign: 'center' }}>
+          {header}
+        </Typography>
 
         <Paper sx={{ width: '100%', padding: 2 }}>
           {products.length > 0 ? (
@@ -77,6 +92,19 @@ const ProductsList = ({ type, header }) => {
             <Typography sx={{ textAlign: 'center' }} variant='subtitle2'>
               No Products found.
             </Typography>
+          )}
+
+          {products.length > 0 && (
+            <Stack sx={{ margin: 2, display: 'flex', alignItems: 'center' }}>
+              <Pagination
+                page={page}
+                onChange={handlePageChange}
+                count={Math.ceil(totalCount / PRODUCTS_PER_PAGE)}
+                boundaryCount={2}
+                showFirstButton={true}
+                showLastButton={true}
+              />
+            </Stack>
           )}
         </Paper>
       </Box>
