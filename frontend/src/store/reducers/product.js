@@ -36,17 +36,35 @@ export const productReducer = (state = initialState, action) => {
     case actionType.GET_PRODUCT:
       return { ...state, selectedProduct: action.payload };
     case actionType.CREATE_PRODUCT:
-      return { ...state, products: [...state.products, action.payload] };
+      return {
+        ...state,
+        all: {
+          products: [...state.all.products, action.payload],
+          totalCount: state.all.totalCount + 1,
+        },
+      };
     case actionType.UPDATE_PRODUCT:
-      const untouchedProducts = state.products.filter(
+      const untouchedProducts = state.all.products.filter(
         (product) => product._id !== action.payload._id
       );
-      return { ...state, products: [...untouchedProducts, action.payload] };
+      return {
+        ...state,
+        all: {
+          ...state.all,
+          products: [...untouchedProducts, action.payload],
+        },
+      };
     case actionType.DELETE_PRODUCT:
-      const filteredProducts = state.products.filter(
+      const filteredProducts = state.all.products.filter(
         (product) => product._id !== action.payload
       );
-      return { ...state, products: filteredProducts };
+      return {
+        ...state,
+        all: {
+          products: filteredProducts,
+          totalCount: state.all.totalCount - 1,
+        },
+      };
     default:
       return state;
   }
