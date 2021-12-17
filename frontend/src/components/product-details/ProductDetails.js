@@ -8,11 +8,8 @@ import {
   CardContent,
   CardActions,
   IconButton,
-  List,
-  ListItem,
-  ListItemText,
-  Stack,
   Chip,
+  Box,
 } from '@mui/material';
 import { AddShoppingCart, Favorite } from '@mui/icons-material';
 import { Carousel } from 'react-responsive-carousel';
@@ -53,7 +50,7 @@ const ProductDetails = () => {
             </Carousel>
           </Grid>
 
-          <Grid item={true} sm={12} md={6} sx={{ padding: 2 }}>
+          <Grid item={true} xs={12} sm={12} md={6} sx={{ padding: 2 }}>
             <Typography
               gutterBottom={true}
               variant='h2'
@@ -66,60 +63,120 @@ const ProductDetails = () => {
               {product.title}
             </Typography>
 
-            <Card>
+            <Card sx={{ width: '100%', bgcolor: 'background.paper' }}>
               <CardContent>
-                <List sx={{ width: '100%', bgcolor: 'background.paper' }}>
-                  <ListItem secondaryAction={`$ ${product.price}`}>
-                    <ListItemText primary='Price' />
-                  </ListItem>
-
-                  <ListItem
-                    secondaryAction={
-                      <Chip
-                        label={product.category.name}
-                        variant='outlined'
-                        onClick={() => navigate('/admin/password')}
-                        size='small'
-                      />
-                    }
+                <Box>
+                  <Box
+                    sx={{
+                      display: 'flex',
+                      justifyContent: 'space-between',
+                      padding: 1,
+                    }}
                   >
-                    <ListItemText primary='Category' />
-                  </ListItem>
+                    <Typography variant='body1'>Price:</Typography>
+                    <Typography variant='body1'>{`$ ${product.price}`}</Typography>
+                  </Box>
 
-                  <ListItem
-                    secondaryAction={
-                      <Stack direction='row' spacing={1}>
-                        {product.subcategories.map((subcategory) => (
-                          <Chip
-                            key={subcategory._id}
-                            label={subcategory.name}
-                            variant='outlined'
-                            onClick={() => navigate('/admin/password')}
-                            size='small'
-                          />
-                        ))}
-                      </Stack>
-                    }
+                  <Box
+                    sx={{
+                      display: 'flex',
+                      justifyContent: 'space-between',
+                      padding: 1,
+                      alignItems: 'center',
+                    }}
                   >
-                    <ListItemText primary='Subcategories' />
-                  </ListItem>
+                    <Typography variant='body1'>Category:</Typography>
+                    <Chip
+                      label={product.category.name}
+                      variant='outlined'
+                      onClick={() =>
+                        navigate(`/category/${product.category._id}`)
+                      }
+                      size='small'
+                      sx={{ margin: 0.2 }}
+                    />
+                  </Box>
 
-                  <ListItem secondaryAction={product.shipping}>
-                    <ListItemText primary='Shipping' />
-                  </ListItem>
-                  <ListItem secondaryAction={product.color}>
-                    <ListItemText primary='Color' />
-                  </ListItem>
-                  <ListItem secondaryAction={product.brand}>
-                    <ListItemText primary='Brand' />
-                  </ListItem>
-                  <ListItem secondaryAction={product.quantity}>
-                    <ListItemText primary='Quantity' />
-                  </ListItem>
-                  <ListItem secondaryAction={product.sold}>
-                    <ListItemText primary='Sold' />
-                  </ListItem>
-                </List>
+                  <Box
+                    sx={{
+                      display: 'flex',
+                      justifyContent: 'space-between',
+                      padding: 1,
+                      alignItems: 'center',
+                    }}
+                  >
+                    <Typography variant='body1'>Subcategories:</Typography>
+                    <Box sx={{ display: 'flex', flexWrap: 'wrap' }}>
+                      {product.subcategories.map((subcategory) => (
+                        <Chip
+                          key={subcategory._id}
+                          label={subcategory.name}
+                          variant='outlined'
+                          onClick={() =>
+                            navigate(`/subcategory/${subcategory._id}`)
+                          }
+                          size='small'
+                          sx={{ margin: 0.2 }}
+                        />
+                      ))}
+                    </Box>
+                  </Box>
+
+                  <Box
+                    sx={{
+                      display: 'flex',
+                      justifyContent: 'space-between',
+                      padding: 1,
+                    }}
+                  >
+                    <Typography variant='body1'>Shipping:</Typography>
+                    <Typography variant='body1'>{product.shipping}</Typography>
+                  </Box>
+
+                  <Box
+                    sx={{
+                      display: 'flex',
+                      justifyContent: 'space-between',
+                      padding: 1,
+                    }}
+                  >
+                    <Typography variant='body1'>Color:</Typography>
+                    <Typography variant='body1'>{product.color}</Typography>
+                  </Box>
+
+                  <Box
+                    sx={{
+                      display: 'flex',
+                      justifyContent: 'space-between',
+                      padding: 1,
+                    }}
+                  >
+                    <Typography variant='body1'>Brand:</Typography>
+                    <Typography variant='body1'>{product.brand}</Typography>
+                  </Box>
+
+                  <Box
+                    sx={{
+                      display: 'flex',
+                      justifyContent: 'space-between',
+                      padding: 1,
+                    }}
+                  >
+                    <Typography variant='body1'>Quantity:</Typography>
+                    <Typography variant='body1'>{product.quantity}</Typography>
+                  </Box>
+
+                  <Box
+                    sx={{
+                      display: 'flex',
+                      justifyContent: 'space-between',
+                      padding: 1,
+                    }}
+                  >
+                    <Typography variant='body1'>Sold:</Typography>
+                    <Typography variant='body1'>{product.sold}</Typography>
+                  </Box>
+                </Box>
               </CardContent>
 
               <CardActions>

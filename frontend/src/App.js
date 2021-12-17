@@ -67,6 +67,8 @@ const App = () => {
           <Route path='password' element={<UserPasswordUpdate />} />
         </Route>
         <Route path='/product/:id' element={<ProductDetails />} />
+        <Route path='/category/:id' element={<ProductDetails />} />
+        <Route path='/subcategory/:id' element={<ProductDetails />} />
       </Routes>
     </>
   );
