@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import {
@@ -10,7 +10,9 @@ import {
   IconButton,
   Chip,
   Box,
+  Tab,
 } from '@mui/material';
+import { TabContext, TabList, TabPanel } from '@mui/lab';
 import { AddShoppingCart, Favorite } from '@mui/icons-material';
 import { Carousel } from 'react-responsive-carousel';
 import { getProductAction } from '../../store/action-creators';
@@ -21,6 +23,8 @@ import productImage from '../../assets/images/product.png';
 
 const ProductDetails = () => {
   const { selectedProduct: product } = useSelector((state) => state.product);
+
+  const [tabValue, setTabValue] = useState(0);
 
   const navigate = useNavigate();
   const { id } = useParams();
@@ -208,6 +212,25 @@ const ProductDetails = () => {
                 </IconButton>
               </CardActions>
             </Card>
+          </Grid>
+
+          <Grid item={true} xs={12}>
+            <TabContext value={tabValue}>
+              <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+                <TabList
+                  onChange={(event, newValue) => {
+                    setTabValue(newValue);
+                  }}
+                >
+                  <Tab label='Description' value={0} />
+                  <Tab label='Contact us' value={1} />
+                </TabList>
+              </Box>
+              <TabPanel value={0}>{product.description}</TabPanel>
+              <TabPanel value={1}>
+                Contact us on +359899 000 111 or on email: info@test.com
+              </TabPanel>
+            </TabContext>
           </Grid>
         </Grid>
       )}
