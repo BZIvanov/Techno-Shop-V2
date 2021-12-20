@@ -129,5 +129,5 @@ exports.rateProduct = async (req, res) => {
     .populate('category')
     .populate('subcategories');
 
-  res.status(status.OK).json(updatedProduct);
+  res.status(status.OK).json({ success: true, product: updatedProduct });
 };

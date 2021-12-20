@@ -4,6 +4,7 @@ import {
   createProductCall,
   updateProductCall,
   deleteProductCall,
+  rateProductCall,
 } from '../../api/products';
 import { apiCallStartType, apiCallSuccessType, apiCallFailType } from './';
 import { actionType } from '../action-types';
@@ -122,6 +123,21 @@ export const deleteProductAction = (productId, token) => {
       dispatch(deleteProductType(productId));
     } catch (error) {
       dispatch(apiCallFailType('Delete product error'));
+    }
+  };
+};
+
+export const rateProductAction = (productId, rating, token) => {
+  return async (dispatch) => {
+    dispatch(apiCallStartType());
+
+    try {
+      const { data } = await rateProductCall(productId, rating, token);
+
+      dispatch(apiCallSuccessType(`Product '${data.product.title}' rated`));
+      dispatch(getProductType(data.product));
+    } catch (error) {
+      dispatch(apiCallFailType('Rate product error'));
     }
   };
 };
