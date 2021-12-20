@@ -13,17 +13,25 @@ import {
   Tab,
 } from '@mui/material';
 import { TabContext, TabList, TabPanel } from '@mui/lab';
-import { AddShoppingCart, Favorite, Star } from '@mui/icons-material';
+import {
+  AddShoppingCart,
+  Favorite,
+  Star,
+  StarBorderOutlined,
+} from '@mui/icons-material';
 import { Carousel } from 'react-responsive-carousel';
 import { RatingDialog } from '../rating-dialog';
-import { getProductAction } from '../../store/action-creators';
+import {
+  getProductAction,
+  rateProductAction,
+} from '../../store/action-creators';
 import { ApiCallAlert } from '../api-call-alert';
 import { ApiCallLoader } from '../api-call-loader';
 import 'react-responsive-carousel/lib/styles/carousel.min.css';
 import productImage from '../../assets/images/product.png';
 
 const ProductDetails = () => {
-  const { user } = useSelector((state) => state.user);
+  const { user, token } = useSelector((state) => state.user);
   const { selectedProduct: product } = useSelector((state) => state.product);
 
   const [rating, setRating] = useState(0);
@@ -40,17 +48,18 @@ const ProductDetails = () => {
   }, [dispatch, id]);
 
   useEffect(() => {
-    const userRating = product.ratings.find(
-      (rating) => rating.postedBy.toString() === user._id.toString()
-    );
-    userRating && setRating(userRating.star);
+    if (product && user) {
+      const userRating = product.ratings.find(
+        (rating) => rating.postedBy === user._id
+      );
+      userRating && setRating(userRating.star);
+    }
 
     return () => setRating(0);
-  }, [product.ratings, user._id]);
+  }, [product, user]);
 
   const rateProduct = () => {
-    console.log(rating);
-    // dispatch(rateProductAction(product._id, { rating }, user.token));
+    dispatch(rateProductAction(product._id, { rating }, token));
   };
 
   return (
@@ -246,7 +255,7 @@ const ProductDetails = () => {
                     padding: '5px 12px',
                   }}
                 >
-                  <Star />
+                  {rating > 0 ? <Star /> : <StarBorderOutlined />}
                   <Typography variant='caption'>
                     {user ? 'Leave rating' : 'Login to leave rating'}
                   </Typography>

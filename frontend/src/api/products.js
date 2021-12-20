@@ -25,3 +25,9 @@ export const deleteProductCall = (id, token) => {
     headers: { authorization: `Bearer ${token}` },
   });
 };
+
+export const rateProductCall = (id, rating, token) => {
+  return axios.put(`/product/${id}/rate`, rating, {
+    headers: { authorization: `Bearer ${token}` },
+  });
+};
