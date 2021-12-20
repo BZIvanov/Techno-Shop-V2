@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { Navigate } from 'react-router-dom';
+import { Navigate, useLocation } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Box, Typography, Button } from '@mui/material';
@@ -20,6 +20,7 @@ const LoginPage = () => {
   const { loading } = useSelector((state) => state.apiCall);
 
   const dispatch = useDispatch();
+  const location = useLocation();
 
   const { control, handleSubmit, formState } = useForm({
     defaultValues: {
@@ -34,6 +35,12 @@ const LoginPage = () => {
   };
 
   if (user) {
+    // if the user was trying to rate a product while not logged in, redirect him back to the product page
+    const productId = location.state.productId;
+    if (productId) {
+      return <Navigate to={`/product/${productId}`} />;
+    }
+
     if (user.role === 'admin') {
       return <Navigate to='/admin/dashboard' />;
     }
@@ -102,12 +109,10 @@ const LoginPage = () => {
         </Box>
       </Box>
 
-      <Box>
-        <ForgotPasswordDialog
-          showForgotPasswordModal={showForgotPasswordModal}
-          setShowForgotPasswordModal={setShowForgotPasswordModal}
-        />
-      </Box>
+      <ForgotPasswordDialog
+        showForgotPasswordModal={showForgotPasswordModal}
+        setShowForgotPasswordModal={setShowForgotPasswordModal}
+      />
 
       <ApiCallLoader />
 

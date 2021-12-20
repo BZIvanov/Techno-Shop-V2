@@ -5,6 +5,7 @@ const {
   createProduct,
   updateProduct,
   deleteProduct,
+  rateProduct,
 } = require('../controllers/product');
 const authenticate = require('../middlewares/authenticate');
 const authorize = require('../middlewares/authorize');
@@ -22,5 +23,7 @@ router
   .get(getProduct)
   .put(authenticate, authorize(admin), updateProduct)
   .delete(authenticate, authorize(admin), deleteProduct);
+
+router.route('/:id/rate').put(authenticate, rateProduct);
 
 module.exports = router;
