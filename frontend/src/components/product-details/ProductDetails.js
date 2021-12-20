@@ -13,8 +13,9 @@ import {
   Tab,
 } from '@mui/material';
 import { TabContext, TabList, TabPanel } from '@mui/lab';
-import { AddShoppingCart, Favorite } from '@mui/icons-material';
+import { AddShoppingCart, Favorite, Star } from '@mui/icons-material';
 import { Carousel } from 'react-responsive-carousel';
+import { RatingDialog } from '../rating-dialog';
 import { getProductAction } from '../../store/action-creators';
 import { ApiCallAlert } from '../api-call-alert';
 import { ApiCallLoader } from '../api-call-loader';
@@ -22,9 +23,12 @@ import 'react-responsive-carousel/lib/styles/carousel.min.css';
 import productImage from '../../assets/images/product.png';
 
 const ProductDetails = () => {
+  const { user } = useSelector((state) => state.user);
   const { selectedProduct: product } = useSelector((state) => state.product);
 
-  const [tabValue, setTabValue] = useState(0);
+  const [rating, setRating] = useState(0);
+  const [showRatingModal, setShowRatingModal] = useState(false);
+  const [tabValue, setTabValue] = useState('0');
 
   const navigate = useNavigate();
   const { id } = useParams();
@@ -34,6 +38,20 @@ const ProductDetails = () => {
   useEffect(() => {
     dispatch(getProductAction(id));
   }, [dispatch, id]);
+
+  useEffect(() => {
+    const userRating = product.ratings.find(
+      (rating) => rating.postedBy.toString() === user._id.toString()
+    );
+    userRating && setRating(userRating.star);
+
+    return () => setRating(0);
+  }, [product.ratings, user._id]);
+
+  const rateProduct = () => {
+    console.log(rating);
+    // dispatch(rateProductAction(product._id, { rating }, user.token));
+  };
 
   return (
     <>
@@ -210,6 +228,29 @@ const ProductDetails = () => {
                   <Favorite />
                   <Typography variant='caption'>Add to wishlist</Typography>
                 </IconButton>
+                <IconButton
+                  size='medium'
+                  color='warning'
+                  onClick={() => {
+                    if (user) {
+                      setShowRatingModal(true);
+                    } else {
+                      navigate('/login', {
+                        state: { productId: product._id },
+                      });
+                    }
+                  }}
+                  sx={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                    padding: '5px 12px',
+                  }}
+                >
+                  <Star />
+                  <Typography variant='caption'>
+                    {user ? 'Leave rating' : 'Login to leave rating'}
+                  </Typography>
+                </IconButton>
               </CardActions>
             </Card>
           </Grid>
@@ -222,18 +263,26 @@ const ProductDetails = () => {
                     setTabValue(newValue);
                   }}
                 >
-                  <Tab label='Description' value={0} />
-                  <Tab label='Contact us' value={1} />
+                  <Tab label='Description' value={'0'} />
+                  <Tab label='Contact us' value={'1'} />
                 </TabList>
               </Box>
-              <TabPanel value={0}>{product.description}</TabPanel>
-              <TabPanel value={1}>
+              <TabPanel value={'0'}>{product.description}</TabPanel>
+              <TabPanel value={'1'}>
                 Contact us on +359899 000 111 or on email: info@test.com
               </TabPanel>
             </TabContext>
           </Grid>
         </Grid>
       )}
+
+      <RatingDialog
+        showRatingModal={showRatingModal}
+        setShowRatingModal={setShowRatingModal}
+        rating={rating}
+        setRating={setRating}
+        rateProduct={rateProduct}
+      />
 
       <ApiCallLoader />
 

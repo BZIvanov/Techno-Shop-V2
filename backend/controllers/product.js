@@ -97,3 +97,37 @@ exports.deleteProduct = catchAsync(async (req, res, next) => {
 
   res.status(status.NO_CONTENT).json();
 });
+
+exports.rateProduct = async (req, res) => {
+  const { rating: userRating } = req.body;
+
+  const product = await Product.findById(req.params.id);
+
+  const existingRatingObject = product.ratings.find(
+    (rating) => rating.postedBy.toString() === req.user._id.toString()
+  );
+
+  if (existingRatingObject) {
+    await Product.updateOne(
+      {
+        ratings: { $elemMatch: existingRatingObject },
+      },
+      { $set: { 'ratings.$.star': userRating } },
+      { new: true }
+    );
+  } else {
+    await Product.findByIdAndUpdate(
+      product._id,
+      {
+        $push: { ratings: { star: userRating, postedBy: req.user._id } },
+      },
+      { new: true }
+    );
+  }
+
+  const updatedProduct = await Product.findById(req.params.id)
+    .populate('category')
+    .populate('subcategories');
+
+  res.status(status.OK).json(updatedProduct);
+};
