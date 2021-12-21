@@ -36,7 +36,7 @@ const LoginPage = () => {
 
   if (user) {
     // if the user was trying to rate a product while not logged in, redirect him back to the product page
-    const productId = location.state.productId;
+    const productId = location.state && location.state.productId;
     if (productId) {
       return <Navigate to={`/product/${productId}`} />;
     }

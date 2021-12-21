@@ -12,6 +12,7 @@ import {
 } from '@mui/material';
 import { AddShoppingCart, Preview } from '@mui/icons-material';
 import { ProductCard } from '../../components/product-card';
+import { AverageRating } from '../average-rating';
 import { getProductsAction } from '../../store/action-creators';
 import { PRODUCTS_LIST_TYPES } from '../../constants';
 
@@ -66,6 +67,8 @@ const ProductsList = ({ type, header }) => {
                   lg={3}
                   xl={2}
                 >
+                  <AverageRating ratings={product.ratings} size='small' />
+
                   <ProductCard product={product}>
                     <>
                       <IconButton

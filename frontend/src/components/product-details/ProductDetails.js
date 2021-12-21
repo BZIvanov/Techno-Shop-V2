@@ -21,6 +21,7 @@ import {
 } from '@mui/icons-material';
 import { Carousel } from 'react-responsive-carousel';
 import { RatingDialog } from '../rating-dialog';
+import { AverageRating } from '../average-rating';
 import {
   getProductAction,
   rateProductAction,
@@ -93,6 +94,8 @@ const ProductDetails = () => {
             >
               {product.title}
             </Typography>
+
+            <AverageRating ratings={product.ratings} />
 
             <Card sx={{ width: '100%', bgcolor: 'background.paper' }}>
               <CardContent>
