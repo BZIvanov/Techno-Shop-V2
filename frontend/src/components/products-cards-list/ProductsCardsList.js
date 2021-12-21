@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { Box, Typography, IconButton, Grid, Paper } from '@mui/material';
 import { Edit, Delete } from '@mui/icons-material';
 import { ConfirmDialog } from '../confirm-dialog';
+import { AverageRating } from '../average-rating';
 import { ApiCallAlert } from '../api-call-alert';
 import { ApiCallLoader } from '../api-call-loader';
 import {
@@ -63,6 +64,8 @@ const ProductsCardsList = () => {
                 lg={3}
                 xl={2}
               >
+                <AverageRating ratings={product.ratings} size='small' />
+
                 <ProductCard product={product}>
                   <>
                     <IconButton
