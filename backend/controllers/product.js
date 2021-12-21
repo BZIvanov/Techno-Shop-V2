@@ -131,3 +131,23 @@ exports.rateProduct = async (req, res) => {
 
   res.status(status.OK).json({ success: true, product: updatedProduct });
 };
+
+exports.getSimilarProducts = async (req, res) => {
+  const product = await Product.findById(req.params.id);
+
+  const PRODUCTS_COUNT = 3;
+
+  const similarProducts = await Product.find({
+    _id: { $ne: product._id },
+    category: product.category,
+  })
+    .limit(PRODUCTS_COUNT)
+    .populate('category')
+    .populate('subcategories');
+
+  res.status(status.OK).json({
+    success: true,
+    products: similarProducts,
+    totalCount: PRODUCTS_COUNT,
+  });
+};
