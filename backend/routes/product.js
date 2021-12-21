@@ -6,6 +6,7 @@ const {
   updateProduct,
   deleteProduct,
   rateProduct,
+  getSimilarProducts,
 } = require('../controllers/product');
 const authenticate = require('../middlewares/authenticate');
 const authorize = require('../middlewares/authorize');
@@ -25,5 +26,7 @@ router
   .delete(authenticate, authorize(admin), deleteProduct);
 
 router.route('/:id/rate').put(authenticate, rateProduct);
+
+router.route('/:id/similar').put(authenticate, getSimilarProducts);
 
 module.exports = router;
