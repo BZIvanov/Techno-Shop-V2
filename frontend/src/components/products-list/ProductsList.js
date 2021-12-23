@@ -1,5 +1,3 @@
-import { useState, useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import {
   Box,
@@ -13,35 +11,15 @@ import {
 import { AddShoppingCart, Preview } from '@mui/icons-material';
 import { ProductCard } from '../../components/product-card';
 import { AverageRating } from '../average-rating';
-import { getProductsAction } from '../../store/action-creators';
-import { PRODUCTS_LIST_TYPES } from '../../constants';
 
-const PRODUCTS_PER_PAGE = 3;
-
-const ProductsList = ({ type, header }) => {
-  const { products, totalCount } = useSelector(({ product }) =>
-    type === PRODUCTS_LIST_TYPES.newest ? product.newest : product.bestselling
-  );
-
-  const [page, setPage] = useState(1);
-
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    dispatch(
-      getProductsAction({
-        productsType: type,
-        sortColumn: type === PRODUCTS_LIST_TYPES.newest ? 'createdAt' : 'sold',
-        page,
-        perPage: PRODUCTS_PER_PAGE,
-      })
-    );
-  }, [dispatch, type, page]);
-
-  const handlePageChange = (_, value) => {
-    setPage(value);
-  };
-
+const ProductsList = ({
+  header,
+  products,
+  page,
+  handlePageChange,
+  totalCount,
+  productsPerPage,
+}) => {
   return (
     <>
       <Box
@@ -114,7 +92,7 @@ const ProductsList = ({ type, header }) => {
               <Pagination
                 page={page}
                 onChange={handlePageChange}
-                count={Math.ceil(totalCount / PRODUCTS_PER_PAGE)}
+                count={Math.ceil(totalCount / productsPerPage)}
                 boundaryCount={2}
                 showFirstButton={true}
                 showLastButton={true}
