@@ -1,11 +1,58 @@
+import { useState, useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import { Box } from '@mui/material';
 import { Jumbotron } from '../../components/jumbotron';
 import { ProductsList } from '../../components/products-list';
 import { ApiCallAlert } from '../../components/api-call-alert';
 import { ApiCallLoader } from '../../components/api-call-loader';
+import { getProductsAction } from '../../store/action-creators';
 import { PRODUCTS_LIST_TYPES, JUMBOTRON_TEXTS } from '../../constants';
 
+const PRODUCTS_PER_PAGE = 3;
+
 const HomePage = () => {
+  const { products: newestProducts, totalCount: newestProductsTotalCount } =
+    useSelector(({ product: { newest } }) => newest);
+  const {
+    products: bestsellingProducts,
+    totalCount: bestsellingProductsTotalCount,
+  } = useSelector(({ product: { bestselling } }) => bestselling);
+
+  const [latestProductsPage, setLatestProductsPage] = useState(1);
+  const [bestsellingProductsPage, setBestsellingProductsPage] = useState(1);
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(
+      getProductsAction({
+        productsType: PRODUCTS_LIST_TYPES.newest,
+        sortColumn: 'createdAt',
+        page: latestProductsPage,
+        perPage: PRODUCTS_PER_PAGE,
+      })
+    );
+  }, [dispatch, latestProductsPage]);
+
+  useEffect(() => {
+    dispatch(
+      getProductsAction({
+        productsType: PRODUCTS_LIST_TYPES.bestselling,
+        sortColumn: 'sold',
+        page: bestsellingProductsPage,
+        perPage: PRODUCTS_PER_PAGE,
+      })
+    );
+  }, [dispatch, bestsellingProductsPage]);
+
+  const handleLatestPageChange = (_, value) => {
+    setLatestProductsPage(value);
+  };
+
+  const handleBestsellingPageChange = (_, value) => {
+    setBestsellingProductsPage(value);
+  };
+
   return (
     <>
       <Jumbotron texts={JUMBOTRON_TEXTS} />
@@ -20,13 +67,21 @@ const HomePage = () => {
         }}
       >
         <ProductsList
-          type={PRODUCTS_LIST_TYPES.newest}
           header={JUMBOTRON_TEXTS[0]}
+          products={newestProducts}
+          page={latestProductsPage}
+          handlePageChange={handleLatestPageChange}
+          totalCount={newestProductsTotalCount}
+          productsPerPage={PRODUCTS_PER_PAGE}
         />
 
         <ProductsList
-          type={PRODUCTS_LIST_TYPES.bestselling}
           header={JUMBOTRON_TEXTS[1]}
+          products={bestsellingProducts}
+          page={bestsellingProductsPage}
+          handlePageChange={handleBestsellingPageChange}
+          totalCount={bestsellingProductsTotalCount}
+          productsPerPage={PRODUCTS_PER_PAGE}
         />
       </Box>
 

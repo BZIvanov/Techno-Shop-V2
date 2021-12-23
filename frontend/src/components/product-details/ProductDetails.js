@@ -10,26 +10,23 @@ import {
   IconButton,
   Chip,
   Box,
-  Tab,
 } from '@mui/material';
-import { TabContext, TabList, TabPanel } from '@mui/lab';
 import {
   AddShoppingCart,
   Favorite,
   Star,
   StarBorderOutlined,
 } from '@mui/icons-material';
-import { Carousel } from 'react-responsive-carousel';
+import { ImagesCarousel } from '../images-carousel';
 import { RatingDialog } from '../rating-dialog';
 import { AverageRating } from '../average-rating';
+import { ProductInfoTabs } from '../product-info-tabs';
 import {
   getProductAction,
   rateProductAction,
 } from '../../store/action-creators';
 import { ApiCallAlert } from '../api-call-alert';
 import { ApiCallLoader } from '../api-call-loader';
-import 'react-responsive-carousel/lib/styles/carousel.min.css';
-import productImage from '../../assets/images/product.png';
 
 const ProductDetails = () => {
   const { user, token } = useSelector((state) => state.user);
@@ -37,7 +34,6 @@ const ProductDetails = () => {
 
   const [rating, setRating] = useState(0);
   const [showRatingModal, setShowRatingModal] = useState(false);
-  const [tabValue, setTabValue] = useState('0');
 
   const navigate = useNavigate();
   const { id } = useParams();
@@ -71,15 +67,7 @@ const ProductDetails = () => {
           sx={{ '& .slide img': { maxHeight: '390px', objectFit: 'cover' } }}
         >
           <Grid item={true} sm={12} md={6}>
-            <Carousel showArrows={true} autoPlay={true} infiniteLoop={true}>
-              {product.images.length > 0 ? (
-                product.images.map(({ publicId, url }) => (
-                  <img src={url} key={publicId} alt='product-preview' />
-                ))
-              ) : (
-                <img src={productImage} alt='product-preview' />
-              )}
-            </Carousel>
+            <ImagesCarousel images={product.images} />
           </Grid>
 
           <Grid item={true} xs={12} sm={12} md={6} sx={{ padding: 2 }}>
@@ -268,22 +256,7 @@ const ProductDetails = () => {
           </Grid>
 
           <Grid item={true} xs={12}>
-            <TabContext value={tabValue}>
-              <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-                <TabList
-                  onChange={(event, newValue) => {
-                    setTabValue(newValue);
-                  }}
-                >
-                  <Tab label='Description' value={'0'} />
-                  <Tab label='Contact us' value={'1'} />
-                </TabList>
-              </Box>
-              <TabPanel value={'0'}>{product.description}</TabPanel>
-              <TabPanel value={'1'}>
-                Contact us on +359899 000 111 or on email: info@test.com
-              </TabPanel>
-            </TabContext>
+            <ProductInfoTabs description={product.description} />
           </Grid>
         </Grid>
       )}
