@@ -4,7 +4,7 @@ const initialState = {
   all: { products: [], totalCount: 0 },
   newest: { products: [], totalCount: 0 },
   bestselling: { products: [], totalCount: 0 },
-  selectedProduct: null,
+  selectedProduct: { product: null, similarProducts: [] },
 };
 
 export const productReducer = (state = initialState, action) => {
@@ -34,7 +34,18 @@ export const productReducer = (state = initialState, action) => {
         },
       };
     case actionType.GET_PRODUCT:
-      return { ...state, selectedProduct: action.payload };
+      return {
+        ...state,
+        selectedProduct: { ...state.selectedProduct, product: action.payload },
+      };
+    case actionType.GET_SIMILAR_PRODUCTS:
+      return {
+        ...state,
+        selectedProduct: {
+          ...state.selectedProduct,
+          similarProducts: action.payload,
+        },
+      };
     case actionType.CREATE_PRODUCT:
       return {
         ...state,

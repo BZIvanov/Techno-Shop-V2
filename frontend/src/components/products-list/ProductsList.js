@@ -19,6 +19,7 @@ const ProductsList = ({
   handlePageChange,
   totalCount,
   productsPerPage,
+  showPagination = true,
 }) => {
   return (
     <>
@@ -87,7 +88,7 @@ const ProductsList = ({
             </Typography>
           )}
 
-          {products.length > 0 && (
+          {showPagination && products.length > 0 && (
             <Stack sx={{ margin: 2, display: 'flex', alignItems: 'center' }}>
               <Pagination
                 page={page}

@@ -34,7 +34,7 @@ const ManageProduct = () => {
   const { categories, selectedCategorySubcategories } = useSelector(
     (state) => state.category
   );
-  const { selectedProduct: product } = useSelector((state) => state.product);
+  const { product } = useSelector((state) => state.product.selectedProduct);
 
   const { id } = useParams();
 

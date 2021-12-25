@@ -148,6 +148,6 @@ exports.getSimilarProducts = async (req, res) => {
   res.status(status.OK).json({
     success: true,
     products: similarProducts,
-    totalCount: PRODUCTS_COUNT,
+    totalCount: similarProducts.length,
   });
 };
