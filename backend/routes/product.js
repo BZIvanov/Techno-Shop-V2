@@ -27,6 +27,6 @@ router
 
 router.route('/:id/rate').put(authenticate, rateProduct);
 
-router.route('/:id/similar').put(authenticate, getSimilarProducts);
+router.route('/:id/similar').get(getSimilarProducts);
 
 module.exports = router;

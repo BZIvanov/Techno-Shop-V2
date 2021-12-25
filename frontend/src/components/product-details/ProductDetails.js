@@ -21,8 +21,10 @@ import { ImagesCarousel } from '../images-carousel';
 import { RatingDialog } from '../rating-dialog';
 import { AverageRating } from '../average-rating';
 import { ProductInfoTabs } from '../product-info-tabs';
+import { ProductsList } from '../products-list';
 import {
   getProductAction,
+  getSimilarProductsAction,
   rateProductAction,
 } from '../../store/action-creators';
 import { ApiCallAlert } from '../api-call-alert';
@@ -30,7 +32,9 @@ import { ApiCallLoader } from '../api-call-loader';
 
 const ProductDetails = () => {
   const { user, token } = useSelector((state) => state.user);
-  const { selectedProduct: product } = useSelector((state) => state.product);
+  const { product, similarProducts } = useSelector(
+    (state) => state.product.selectedProduct
+  );
 
   const [rating, setRating] = useState(0);
   const [showRatingModal, setShowRatingModal] = useState(false);
@@ -42,6 +46,7 @@ const ProductDetails = () => {
 
   useEffect(() => {
     dispatch(getProductAction(id));
+    dispatch(getSimilarProductsAction(id));
   }, [dispatch, id]);
 
   useEffect(() => {
@@ -257,6 +262,14 @@ const ProductDetails = () => {
 
           <Grid item={true} xs={12}>
             <ProductInfoTabs description={product.description} />
+          </Grid>
+
+          <Grid item={true} xs={12}>
+            <ProductsList
+              header='Similar Products'
+              products={similarProducts}
+              showPagination={false}
+            />
           </Grid>
         </Grid>
       )}

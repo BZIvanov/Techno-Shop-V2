@@ -31,3 +31,7 @@ export const rateProductCall = (id, rating, token) => {
     headers: { authorization: `Bearer ${token}` },
   });
 };
+
+export const getSimilarProductsCall = (productId) => {
+  return axios.get(`/product/${productId}/similar`);
+};
