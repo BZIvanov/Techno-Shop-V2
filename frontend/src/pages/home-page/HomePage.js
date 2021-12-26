@@ -3,9 +3,14 @@ import { useSelector, useDispatch } from 'react-redux';
 import { Box } from '@mui/material';
 import { Jumbotron } from '../../components/jumbotron';
 import { ProductsList } from '../../components/products-list';
+import { ChipsList } from '../../components/chips-list';
 import { ApiCallAlert } from '../../components/api-call-alert';
 import { ApiCallLoader } from '../../components/api-call-loader';
-import { getProductsAction } from '../../store/action-creators';
+import {
+  getProductsAction,
+  getAllCategoriesAction,
+  getSubcategoriesAction,
+} from '../../store/action-creators';
 import { PRODUCTS_LIST_TYPES, JUMBOTRON_TEXTS } from '../../constants';
 
 const PRODUCTS_PER_PAGE = 3;
@@ -17,6 +22,8 @@ const HomePage = () => {
     products: bestsellingProducts,
     totalCount: bestsellingProductsTotalCount,
   } = useSelector(({ product: { bestselling } }) => bestselling);
+  const { categories } = useSelector((state) => state.category);
+  const { subcategories } = useSelector((state) => state.subcategory);
 
   const [latestProductsPage, setLatestProductsPage] = useState(1);
   const [bestsellingProductsPage, setBestsellingProductsPage] = useState(1);
@@ -44,6 +51,11 @@ const HomePage = () => {
       })
     );
   }, [dispatch, bestsellingProductsPage]);
+
+  useEffect(() => {
+    dispatch(getAllCategoriesAction());
+    dispatch(getSubcategoriesAction());
+  }, [dispatch]);
 
   const handleLatestPageChange = (_, value) => {
     setLatestProductsPage(value);
@@ -83,6 +95,14 @@ const HomePage = () => {
           totalCount={bestsellingProductsTotalCount}
           productsPerPage={PRODUCTS_PER_PAGE}
         />
+
+        <Box sx={{ padding: 2 }}>
+          <ChipsList listType='category' categories={categories} />
+        </Box>
+
+        <Box sx={{ padding: 2 }}>
+          <ChipsList listType='subcategory' categories={subcategories} />
+        </Box>
       </Box>
 
       <ApiCallLoader />
