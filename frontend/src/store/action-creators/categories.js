@@ -1,9 +1,11 @@
 import {
   getAllCategoriesCall,
+  getCategoryCall,
   createCategoryCall,
   updateCategoryCall,
   deleteCategoryCall,
   getCategorySubcategoriesCall,
+  getCategoryProductsCall,
 } from '../../api/categories';
 import { apiCallStartType, apiCallSuccessType, apiCallFailType } from './';
 import { actionType } from '../action-types';
@@ -11,6 +13,11 @@ import { actionType } from '../action-types';
 export const allCategoriesType = (categories) => ({
   type: actionType.GET_ALL_CATEGORIES,
   payload: categories,
+});
+
+export const getCategoryType = (category) => ({
+  type: actionType.GET_CATEGORY,
+  payload: category,
 });
 
 export const createCategoryType = (category) => ({
@@ -33,6 +40,11 @@ export const getCategorySubcategoriesType = (subcategories) => ({
   payload: subcategories,
 });
 
+export const getCategoryProductsType = (products) => ({
+  type: actionType.GET_CATEGORY_PRODUCTS,
+  payload: products,
+});
+
 export const getAllCategoriesAction = () => {
   return async (dispatch) => {
     dispatch(apiCallStartType());
@@ -44,6 +56,21 @@ export const getAllCategoriesAction = () => {
       dispatch(allCategoriesType(data.categories));
     } catch (error) {
       dispatch(apiCallFailType('Get all categories error'));
+    }
+  };
+};
+
+export const getCategoryAction = (categoryId) => {
+  return async (dispatch) => {
+    dispatch(apiCallStartType());
+
+    try {
+      const { data } = await getCategoryCall(categoryId);
+
+      dispatch(apiCallSuccessType());
+      dispatch(getCategoryType(data.category));
+    } catch (error) {
+      dispatch(apiCallFailType('Get category error'));
     }
   };
 };
@@ -104,6 +131,21 @@ export const getCategorySubcategoriesAction = (categoryId) => {
       dispatch(getCategorySubcategoriesType(data.subcategories));
     } catch (error) {
       dispatch(apiCallFailType('Get category subcategories error'));
+    }
+  };
+};
+
+export const getCategoryProductsAction = (categoryId) => {
+  return async (dispatch) => {
+    dispatch(apiCallStartType());
+
+    try {
+      const { data } = await getCategoryProductsCall(categoryId);
+
+      dispatch(apiCallSuccessType());
+      dispatch(getCategoryProductsType(data));
+    } catch (error) {
+      dispatch(apiCallFailType('Get category products error'));
     }
   };
 };

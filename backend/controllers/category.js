@@ -2,6 +2,7 @@ const status = require('http-status');
 const slugify = require('slugify');
 const Category = require('../models/category');
 const Subcategory = require('../models/subcategory');
+const Product = require('../models/product');
 const catchAsync = require('../middlewares/catch-async');
 const AppError = require('../utils/app-error');
 
@@ -61,4 +62,22 @@ exports.getCategorySubcategories = catchAsync(async (req, res, next) => {
   const subcategories = await Subcategory.find({ categoryId: req.params.id });
 
   res.status(status.OK).json({ success: true, subcategories });
+});
+
+exports.getCategoryProducts = catchAsync(async (req, res, next) => {
+  const { sortColumn = 'createdAt', order = 'desc', page, perPage } = req.query;
+
+  const pageNumber = parseInt(page || 1, 10);
+  const perPageNumber = parseInt(perPage || 12, 10);
+
+  const products = await Product.find({ category: req.params.id })
+    .skip((pageNumber - 1) * perPageNumber)
+    .limit(perPageNumber)
+    .populate('category')
+    .populate('subcategories')
+    .sort([[sortColumn, order]]);
+
+  const totalCount = await Product.find().estimatedDocumentCount();
+
+  res.status(status.OK).json({ success: true, products, totalCount });
 });
