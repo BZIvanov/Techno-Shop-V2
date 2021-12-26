@@ -4,6 +4,10 @@ export const getAllCategoriesCall = () => {
   return axios.get('/category');
 };
 
+export const getCategoryCall = (id) => {
+  return axios.get(`/category/${id}`);
+};
+
 export const createCategoryCall = (data, token) => {
   return axios.post('/category', data, {
     headers: { authorization: `Bearer ${token}` },
@@ -24,4 +28,8 @@ export const deleteCategoryCall = (id, token) => {
 
 export const getCategorySubcategoriesCall = (id) => {
   return axios.get(`/category/${id}/subcategory`);
+};
+
+export const getCategoryProductsCall = (id, params = {}) => {
+  return axios.get(`/category/${id}/products`, { params });
 };
