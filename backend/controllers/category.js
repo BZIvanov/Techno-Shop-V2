@@ -77,7 +77,9 @@ exports.getCategoryProducts = catchAsync(async (req, res, next) => {
     .populate('subcategories')
     .sort([[sortColumn, order]]);
 
-  const totalCount = await Product.find().estimatedDocumentCount();
+  const totalCount = await Product.countDocuments({
+    category: req.params.id,
+  });
 
   res.status(status.OK).json({ success: true, products, totalCount });
 });
