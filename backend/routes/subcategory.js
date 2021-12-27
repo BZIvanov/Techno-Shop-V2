@@ -5,6 +5,7 @@ const {
   createSubcategory,
   updateSubcategory,
   deleteSubcategory,
+  getSubcategoryProducts,
 } = require('../controllers/subcategory');
 const authenticate = require('../middlewares/authenticate');
 const authorize = require('../middlewares/authorize');
@@ -21,5 +22,7 @@ router
   .get(getSubcategory)
   .put(authenticate, authorize(admin), updateSubcategory)
   .delete(authenticate, authorize(admin), deleteSubcategory);
+
+router.route('/:id/products').get(getSubcategoryProducts);
 
 module.exports = router;
