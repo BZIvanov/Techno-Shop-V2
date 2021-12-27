@@ -135,12 +135,12 @@ export const getCategorySubcategoriesAction = (categoryId) => {
   };
 };
 
-export const getCategoryProductsAction = (categoryId) => {
+export const getCategoryProductsAction = (categoryId, params) => {
   return async (dispatch) => {
     dispatch(apiCallStartType());
 
     try {
-      const { data } = await getCategoryProductsCall(categoryId);
+      const { data } = await getCategoryProductsCall(categoryId, params);
 
       dispatch(apiCallSuccessType());
       dispatch(getCategoryProductsType(data));

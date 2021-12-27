@@ -1,6 +1,7 @@
 const status = require('http-status');
 const slugify = require('slugify');
 const Subcategory = require('../models/subcategory');
+const Product = require('../models/product');
 const catchAsync = require('../middlewares/catch-async');
 const AppError = require('../utils/app-error');
 
@@ -63,4 +64,26 @@ exports.deleteSubcategory = catchAsync(async (req, res, next) => {
   }
 
   res.status(status.NO_CONTENT).json();
+});
+
+exports.getSubcategoryProducts = catchAsync(async (req, res, next) => {
+  const { sortColumn = 'createdAt', order = 'desc', page, perPage } = req.query;
+
+  const pageNumber = parseInt(page || 1, 10);
+  const perPageNumber = parseInt(perPage || 12, 10);
+
+  const subcategory = await Subcategory.findById(req.params.id);
+
+  const products = await Product.find({ subcategories: subcategory })
+    .skip((pageNumber - 1) * perPageNumber)
+    .limit(perPageNumber)
+    .populate('category')
+    .populate('subcategories')
+    .sort([[sortColumn, order]]);
+
+  const totalCount = await Product.countDocuments({
+    subcategories: subcategory,
+  });
+
+  res.status(status.OK).json({ success: true, products, totalCount });
 });

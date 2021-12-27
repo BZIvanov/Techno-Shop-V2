@@ -8,6 +8,7 @@ import { LoginPage } from './pages/login-page';
 import { ResetPasswordPage } from './pages/reset-password-page';
 import { UserPage } from './pages/user-page';
 import { CategoryProductsPage } from './pages/category-products-page';
+import { SubcategoryProductsPage } from './pages/subcategory-products-page';
 import { ProductsCardsList } from './components/products-cards-list';
 import { ManageCategory } from './components/manage-category';
 import { ManageSubcategory } from './components/manage-subcategory';
@@ -69,7 +70,7 @@ const App = () => {
         </Route>
         <Route path='/product/:id' element={<ProductDetails />} />
         <Route path='/category/:id' element={<CategoryProductsPage />} />
-        <Route path='/subcategory/:id' element={<ProductDetails />} />
+        <Route path='/subcategory/:id' element={<SubcategoryProductsPage />} />
       </Routes>
     </>
   );
