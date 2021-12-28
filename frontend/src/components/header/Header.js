@@ -1,7 +1,13 @@
 import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { AppBar, Box, Toolbar, Grid, Typography } from '@mui/material';
-import { PersonAdd, Login, ExitToApp, Dashboard } from '@mui/icons-material';
+import {
+  PersonAdd,
+  Login,
+  ExitToApp,
+  Dashboard,
+  AddBusiness,
+} from '@mui/icons-material';
 import { HeaderNavLink } from '../header-nav-link';
 import logoImage from '../../assets/images/awesome-logo.png';
 import { logoutUserAction } from '../../store/action-creators';
@@ -45,17 +51,24 @@ const Header = () => {
           alignItems='center'
         >
           <Grid item={true}>
-            <Link to='/'>
-              <Box
-                component='img'
-                sx={{
-                  width: { xs: '80px', sm: '100px', md: '140px' },
-                  cursor: 'pointer',
-                }}
-                alt='app logo'
-                src={logoImage}
+            <Box sx={{ display: 'flex' }}>
+              <Link to='/'>
+                <Box
+                  component='img'
+                  sx={{
+                    width: { xs: '80px', sm: '100px', md: '140px' },
+                    cursor: 'pointer',
+                  }}
+                  alt='app logo'
+                  src={logoImage}
+                />
+              </Link>
+              <HeaderNavLink
+                toLink='/shop'
+                linkText='Shop'
+                Icon={AddBusiness}
               />
-            </Link>
+            </Box>
           </Grid>
           <Grid item={true}>
             <Box sx={{ display: 'flex' }}>

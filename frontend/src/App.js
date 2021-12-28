@@ -6,6 +6,7 @@ import { HomePage } from './pages/home-page';
 import { RegisterPage } from './pages/register-page';
 import { LoginPage } from './pages/login-page';
 import { ResetPasswordPage } from './pages/reset-password-page';
+import { ShopPage } from './pages/shop-page';
 import { UserPage } from './pages/user-page';
 import { CategoryProductsPage } from './pages/category-products-page';
 import { SubcategoryProductsPage } from './pages/subcategory-products-page';
@@ -68,6 +69,7 @@ const App = () => {
           <Route path='products-list' element={<ProductsCardsList />} />
           <Route path='password' element={<UserPasswordUpdate />} />
         </Route>
+        <Route path='/shop' element={<ShopPage />} />
         <Route path='/product/:id' element={<ProductDetails />} />
         <Route path='/category/:id' element={<CategoryProductsPage />} />
         <Route path='/subcategory/:id' element={<SubcategoryProductsPage />} />
