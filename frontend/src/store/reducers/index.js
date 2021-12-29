@@ -4,6 +4,7 @@ import { userReducer } from './user';
 import { categoryReducer } from './category';
 import { subcategoryReducer } from './subcategory';
 import { productReducer } from './product';
+import { filtersReducer } from './filters';
 
 const rootReducer = combineReducers({
   apiCall: apiCallReducer,
@@ -11,6 +12,7 @@ const rootReducer = combineReducers({
   category: categoryReducer,
   subcategory: subcategoryReducer,
   product: productReducer,
+  filters: filtersReducer,
 });
 
 export default rootReducer;
