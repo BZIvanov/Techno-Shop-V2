@@ -9,6 +9,7 @@ import {
   AddBusiness,
 } from '@mui/icons-material';
 import { HeaderNavLink } from '../header-nav-link';
+import { GlobalSearch } from '../global-search';
 import logoImage from '../../assets/images/awesome-logo.png';
 import { logoutUserAction } from '../../store/action-creators';
 
@@ -71,7 +72,9 @@ const Header = () => {
             </Box>
           </Grid>
           <Grid item={true}>
-            <Box sx={{ display: 'flex' }}>
+            <Box sx={{ display: 'flex', alignItems: 'center' }}>
+              <GlobalSearch />
+
               {!user ? (
                 noUserLinks.map((link) => (
                   <HeaderNavLink key={link.toLink} {...link} />
