@@ -12,6 +12,22 @@ cloudinary.config({
   api_secret: process.env.CLOUDINARY_API_SECRET,
 });
 
+const handleQueryParams = async (params) => {
+  const { text, price } = params;
+
+  const build = {
+    ...(text && { $text: { $search: text } }),
+    ...(price && {
+      price: {
+        $gte: parseInt(price.split(',')[0], 10),
+        $lte: parseInt(price.split(',')[1], 10),
+      },
+    }),
+  };
+
+  return build;
+};
+
 exports.getProducts = catchAsync(async (req, res) => {
   const {
     sortColumn = 'createdAt',
@@ -21,10 +37,12 @@ exports.getProducts = catchAsync(async (req, res) => {
     ...rest
   } = req.query;
 
+  const builder = await handleQueryParams(rest);
+
   const pageNumber = parseInt(page || 1, 10);
   const perPageNumber = parseInt(perPage || 12, 10);
 
-  const products = await Product.find()
+  const products = await Product.find(builder)
     .skip((pageNumber - 1) * perPageNumber)
     .limit(perPageNumber)
     .populate('category')
