@@ -1,6 +1,6 @@
 import { actionType } from '../action-types';
 
-const initialState = { text: '' };
+const initialState = { text: '', price: [0, 4999] };
 
 export const filtersReducer = (state = initialState, action) => {
   switch (action.type) {
