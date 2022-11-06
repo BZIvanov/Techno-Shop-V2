@@ -4,10 +4,10 @@ const User = require('../models/user');
 const Category = require('../models/category');
 const Subcategory = require('../models/subcategory');
 const Product = require('../models/product');
-const users = require('./users');
-const categories = require('./categories');
-const subcategories = require('./subcategories');
-const products = require('./products');
+const users = require('./users.json');
+const categories = require('./categories.json');
+const subcategories = require('./subcategories.json');
+const products = require('./products.json');
 
 mongoose.connect(process.env.DB_URI, {});
 
