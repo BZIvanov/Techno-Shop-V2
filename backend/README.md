@@ -1,9 +1,17 @@
+## Server setup
+
+Run `npm install` in the root folder (package.json) to install dependencies.
+
+Prerequisites:
+
+- MongoDB local installation
+
 ## Cloudinary setup
 
 1. Create your account [here](https://cloudinary.com/).
 2. In the Dashboard under account details you can get your cloud name, api key and secret.
 
-# Stripe setup
+## Stripe setup
 
 1. Create your account [here]('https://stripe.com/').
 2. Once logged in you can find your api keys after clicking _Developers_ on the left side panel and then _API keys_.
