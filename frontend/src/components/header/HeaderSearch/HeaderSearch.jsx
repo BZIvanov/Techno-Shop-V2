@@ -2,9 +2,9 @@ import { useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { Paper, InputBase, IconButton } from '@mui/material';
 import { Search } from '@mui/icons-material';
-import { filterAction } from '../../store/action-creators';
+import { filterAction } from '../../../store/action-creators';
 
-const GlobalSearch = () => {
+const HeaderSearch = () => {
   const { text } = useSelector((state) => state.filters);
 
   const navigate = useNavigate();
@@ -43,4 +43,4 @@ const GlobalSearch = () => {
   );
 };
 
-export default GlobalSearch;
+export default HeaderSearch;

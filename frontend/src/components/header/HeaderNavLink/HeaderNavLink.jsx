@@ -21,12 +21,13 @@ const HeaderNavLink = ({ toLink, Icon, linkText }) => {
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'center',
-          padding: '8px',
+          margin: '2px 8px',
+          padding: '2px 8px',
           cursor: 'pointer',
         }}
       >
-        <Icon fontSize='small' />
-        <Typography>{linkText}</Typography>
+        <Icon />
+        <Typography variant='caption'>{linkText}</Typography>
       </Box>
     </NavLink>
   );

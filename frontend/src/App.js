@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { Routes, Route } from 'react-router-dom';
-import { Header } from './components/header';
+import { Header } from './components/header/Header';
 import { HomePage } from './pages/home-page';
 import { RegisterPage } from './pages/register-page';
 import { LoginPage } from './pages/login-page';
