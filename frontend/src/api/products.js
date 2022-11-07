@@ -1,37 +1,37 @@
 import axios from './axios';
 
 export const getProductsCall = (params = {}) => {
-  return axios.get('/product', { params });
+  return axios.get('/products', { params });
 };
 
 export const getProductCall = (id) => {
-  return axios.get(`/product/${id}`);
+  return axios.get(`/products/${id}`);
 };
 
 export const createProductCall = (data, token) => {
-  return axios.post('/product', data, {
+  return axios.post('/products', data, {
     headers: { authorization: `Bearer ${token}` },
   });
 };
 
 export const updateProductCall = (data, token) => {
-  return axios.put(`/product/${data._id}`, data, {
+  return axios.put(`/products/${data._id}`, data, {
     headers: { authorization: `Bearer ${token}` },
   });
 };
 
 export const deleteProductCall = (id, token) => {
-  return axios.delete(`/product/${id}`, {
+  return axios.delete(`/products/${id}`, {
     headers: { authorization: `Bearer ${token}` },
   });
 };
 
 export const rateProductCall = (id, rating, token) => {
-  return axios.put(`/product/${id}/rate`, rating, {
+  return axios.put(`/products/${id}/rate`, rating, {
     headers: { authorization: `Bearer ${token}` },
   });
 };
 
 export const getSimilarProductsCall = (productId) => {
-  return axios.get(`/product/${productId}/similar`);
+  return axios.get(`/products/${productId}/similar`);
 };

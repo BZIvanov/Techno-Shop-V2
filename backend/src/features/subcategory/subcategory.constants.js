@@ -1,0 +1,3 @@
+exports.model = {
+  Subcategory: 'Subcategory',
+};

@@ -1,4 +1,4 @@
-const router = require('express').Router();
+const express = require('express');
 const {
   getSubcategories,
   getSubcategory,
@@ -6,12 +6,14 @@ const {
   updateSubcategory,
   deleteSubcategory,
   getSubcategoryProducts,
-} = require('../controllers/subcategory');
-const authenticate = require('../middlewares/authenticate');
-const authorize = require('../middlewares/authorize');
+} = require('./subcategory.controllers');
+const authenticate = require('../../middlewares/authenticate');
+const authorize = require('../../middlewares/authorize');
 const {
   userTypes: { admin },
-} = require('../constants');
+} = require('../user/user.constants');
+
+const router = express.Router();
 
 router
   .route('/')

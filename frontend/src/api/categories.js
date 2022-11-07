@@ -1,35 +1,35 @@
 import axios from './axios';
 
 export const getAllCategoriesCall = () => {
-  return axios.get('/category');
+  return axios.get('/categories');
 };
 
 export const getCategoryCall = (id) => {
-  return axios.get(`/category/${id}`);
+  return axios.get(`/categories/${id}`);
 };
 
 export const createCategoryCall = (data, token) => {
-  return axios.post('/category', data, {
+  return axios.post('/categories', data, {
     headers: { authorization: `Bearer ${token}` },
   });
 };
 
 export const updateCategoryCall = (data, token) => {
-  return axios.put(`/category/${data._id}`, data, {
+  return axios.put(`/categories/${data._id}`, data, {
     headers: { authorization: `Bearer ${token}` },
   });
 };
 
 export const deleteCategoryCall = (id, token) => {
-  return axios.delete(`/category/${id}`, {
+  return axios.delete(`/categories/${id}`, {
     headers: { authorization: `Bearer ${token}` },
   });
 };
 
 export const getCategorySubcategoriesCall = (id) => {
-  return axios.get(`/category/${id}/subcategory`);
+  return axios.get(`/categories/${id}/subcategories`);
 };
 
 export const getCategoryProductsCall = (id, params = {}) => {
-  return axios.get(`/category/${id}/products`, { params });
+  return axios.get(`/categories/${id}/products`, { params });
 };

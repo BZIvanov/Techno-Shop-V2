@@ -1,4 +1,4 @@
-const router = require('express').Router();
+const express = require('express');
 const {
   getAllCategories,
   getCategory,
@@ -7,12 +7,14 @@ const {
   deleteCategory,
   getCategorySubcategories,
   getCategoryProducts,
-} = require('../controllers/category');
-const authenticate = require('../middlewares/authenticate');
-const authorize = require('../middlewares/authorize');
+} = require('./category.controllers');
+const authenticate = require('../../middlewares/authenticate');
+const authorize = require('../../middlewares/authorize');
 const {
   userTypes: { admin },
-} = require('../constants');
+} = require('../user/user.constants');
+
+const router = express.Router();
 
 router
   .route('/')
@@ -23,7 +25,7 @@ router
   .get(getCategory)
   .put(authenticate, authorize(admin), updateCategory)
   .delete(authenticate, authorize(admin), deleteCategory);
-router.route('/:id/subcategory').get(getCategorySubcategories);
+router.route('/:id/subcategories').get(getCategorySubcategories);
 router.route('/:id/products').get(getCategoryProducts);
 
 module.exports = router;

@@ -1,8 +1,17 @@
 const { Schema, model } = require('mongoose');
 const {
-  models: { Product, Category, Subcategory, User },
+  model: { Product },
   yesNo,
-} = require('../constants');
+} = require('./product.constants');
+const {
+  model: { User },
+} = require('../user/user.constants');
+const {
+  model: { Category },
+} = require('../category/category.constants');
+const {
+  model: { Subcategory },
+} = require('../subcategory/subcategory.constants');
 
 const schema = new Schema(
   {
@@ -41,12 +50,16 @@ const schema = new Schema(
         ref: Subcategory,
       },
     ],
-    quantity: Number,
+    quantity: {
+      type: Number,
+    },
     sold: {
       type: Number,
       default: 0,
     },
-    images: { type: Array },
+    images: {
+      type: Array,
+    },
     shipping: {
       type: String,
       default: yesNo.yes,
@@ -60,8 +73,13 @@ const schema = new Schema(
     },
     ratings: [
       {
-        star: Number,
-        postedBy: { type: Schema.ObjectId, ref: User },
+        stars: {
+          type: Number,
+        },
+        postedBy: {
+          type: Schema.ObjectId,
+          ref: User,
+        },
       },
     ],
   },

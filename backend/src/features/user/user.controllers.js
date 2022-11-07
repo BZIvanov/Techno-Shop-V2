@@ -1,10 +1,10 @@
 const crypto = require('crypto');
 const status = require('http-status');
 const jwt = require('jsonwebtoken');
-const User = require('../models/user');
-const sendEmail = require('../src/providers/mailer');
-const AppError = require('../utils/app-error');
-const catchAsync = require('../middlewares/catch-async');
+const User = require('./user.model');
+const sendEmail = require('../../providers/mailer');
+const AppError = require('../../utils/app-error');
+const catchAsync = require('../../middlewares/catch-async');
 
 const sendTokenResponse = (user, statusCode, res) => {
   const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {

@@ -1,10 +1,10 @@
 const status = require('http-status');
 const slugify = require('slugify');
-const Category = require('../models/category');
-const Subcategory = require('../models/subcategory');
-const Product = require('../models/product');
-const catchAsync = require('../middlewares/catch-async');
-const AppError = require('../utils/app-error');
+const Category = require('./category.model');
+const Subcategory = require('../subcategory/subcategory.model');
+const Product = require('../product/product.model');
+const catchAsync = require('../../middlewares/catch-async');
+const AppError = require('../../utils/app-error');
 
 exports.getAllCategories = catchAsync(async (req, res) => {
   const categories = await Category.find().sort({ createdAt: -1 });

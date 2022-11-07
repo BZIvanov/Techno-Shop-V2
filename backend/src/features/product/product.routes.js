@@ -1,4 +1,4 @@
-const router = require('express').Router();
+const express = require('express');
 const {
   getProducts,
   getProduct,
@@ -7,12 +7,14 @@ const {
   deleteProduct,
   rateProduct,
   getSimilarProducts,
-} = require('../controllers/product');
-const authenticate = require('../middlewares/authenticate');
-const authorize = require('../middlewares/authorize');
+} = require('./product.controllers');
+const authenticate = require('../../middlewares/authenticate');
+const authorize = require('../../middlewares/authorize');
 const {
   userTypes: { admin },
-} = require('../constants');
+} = require('../user/user.constants');
+
+const router = express.Router();
 
 router
   .route('/')

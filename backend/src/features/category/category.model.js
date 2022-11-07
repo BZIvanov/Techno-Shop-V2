@@ -1,7 +1,7 @@
 const { Schema, model } = require('mongoose');
 const {
-  models: { Category },
-} = require('../constants');
+  model: { Category },
+} = require('./category.constants');
 
 const schema = new Schema(
   {

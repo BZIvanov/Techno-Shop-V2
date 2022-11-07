@@ -1,7 +1,10 @@
 const { Schema, model } = require('mongoose');
 const {
-  models: { Subcategory, Category },
-} = require('../constants');
+  model: { Category },
+} = require('../category/category.constants');
+const {
+  model: { Subcategory },
+} = require('./subcategory.constants');
 
 const schema = new Schema(
   {
@@ -18,7 +21,11 @@ const schema = new Schema(
       lowercase: true,
       index: true,
     },
-    categoryId: { type: Schema.ObjectId, ref: Category, required: true },
+    categoryId: {
+      type: Schema.ObjectId,
+      ref: Category,
+      required: true,
+    },
   },
   { timestamps: true }
 );
