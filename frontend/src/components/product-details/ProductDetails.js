@@ -78,7 +78,7 @@ const ProductDetails = () => {
           <Grid item={true} xs={12} sm={12} md={6} sx={{ padding: 2 }}>
             <Typography
               gutterBottom={true}
-              variant='h2'
+              variant='h4'
               sx={{
                 color: (theme) => theme.palette.common.white,
                 backgroundColor: (theme) => theme.palette.info.main,

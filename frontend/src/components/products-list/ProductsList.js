@@ -29,7 +29,7 @@ const ProductsList = ({
           backgroundColor: (theme) => theme.palette.grey[300],
         }}
       >
-        <Typography variant='h1' sx={{ textAlign: 'center' }}>
+        <Typography variant='h5' sx={{ textAlign: 'center' }}>
           {header}
         </Typography>
 

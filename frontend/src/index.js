@@ -1,23 +1,19 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { Provider } from 'react-redux';
-import { store } from './store';
-import { BrowserRouter } from 'react-router-dom';
-import { ThemeProvider } from '@mui/material/styles';
-import theme from './theme';
-import CssBaseline from '@mui/material/CssBaseline';
-import App from './App';
 import reportWebVitals from './reportWebVitals';
+import StoreProvider from './providers/store/StoreProvider';
+import BrowserRouterProvider from './providers/router/BrowserRouterProvider';
+import ThemeProvider from './providers/theme/ThemeProvider';
+import App from './App';
 
 ReactDOM.render(
-  <Provider store={store}>
-    <BrowserRouter>
-      <ThemeProvider theme={theme}>
-        <CssBaseline />
+  <StoreProvider>
+    <BrowserRouterProvider>
+      <ThemeProvider>
         <App />
       </ThemeProvider>
-    </BrowserRouter>
-  </Provider>,
+    </BrowserRouterProvider>
+  </StoreProvider>,
   document.getElementById('root')
 );
 

@@ -10,7 +10,7 @@ const ChipsList = ({ listType, categories }) => {
 
   return (
     <>
-      <Typography variant='h1' sx={{ textAlign: 'center', marginBottom: 1 }}>
+      <Typography variant='h5' sx={{ textAlign: 'center', marginBottom: 1 }}>
         {listType === 'category' ? 'Categories' : 'Subcategories'}
       </Typography>
 

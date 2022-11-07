@@ -1,7 +1,7 @@
-import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { AppBar, Box, Toolbar, Grid, Typography } from '@mui/material';
 import {
+  Home,
   PersonAdd,
   Login,
   ExitToApp,
@@ -10,7 +10,6 @@ import {
 } from '@mui/icons-material';
 import { HeaderNavLink } from '../header-nav-link';
 import { GlobalSearch } from '../global-search';
-import logoImage from '../../assets/images/awesome-logo.png';
 import { logoutUserAction } from '../../store/action-creators';
 
 const noUserLinks = [
@@ -53,17 +52,7 @@ const Header = () => {
         >
           <Grid item={true}>
             <Box sx={{ display: 'flex' }}>
-              <Link to='/'>
-                <Box
-                  component='img'
-                  sx={{
-                    width: { xs: '80px', sm: '100px', md: '140px' },
-                    cursor: 'pointer',
-                  }}
-                  alt='app logo'
-                  src={logoImage}
-                />
-              </Link>
+              <HeaderNavLink toLink='/' linkText='Home' Icon={Home} />
               <HeaderNavLink
                 toLink='/shop'
                 linkText='Shop'

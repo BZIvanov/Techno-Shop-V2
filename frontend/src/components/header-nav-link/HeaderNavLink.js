@@ -1,6 +1,5 @@
 import { NavLink } from 'react-router-dom';
 import { Box, Typography, useTheme } from '@mui/material';
-import { orange } from '@mui/material/colors';
 
 const HeaderNavLink = ({ toLink, Icon, linkText }) => {
   const theme = useTheme();
@@ -9,7 +8,9 @@ const HeaderNavLink = ({ toLink, Icon, linkText }) => {
     <NavLink
       style={({ isActive }) => {
         return {
-          color: isActive ? orange[200] : theme.palette.secondary.dark,
+          color: isActive
+            ? theme.palette.common.white
+            : theme.palette.common.black,
           textDecoration: 'none',
         };
       }}
