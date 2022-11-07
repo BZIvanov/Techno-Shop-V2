@@ -1,4 +1,4 @@
-const router = require('express').Router();
+const express = require('express');
 const {
   register,
   login,
@@ -7,8 +7,10 @@ const {
   updatePassword,
   forgotPassword,
   resetPassword,
-} = require('../controllers/user');
-const authenticate = require('../middlewares/authenticate');
+} = require('./user.controllers');
+const authenticate = require('../../middlewares/authenticate');
+
+const router = express.Router();
 
 router.route('/register').post(register);
 router.route('/login').post(login);

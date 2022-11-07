@@ -2,7 +2,7 @@ const status = require('http-status');
 const jwt = require('jsonwebtoken');
 const catchAsync = require('./catch-async');
 const AppError = require('../utils/app-error');
-const User = require('../models/user');
+const User = require('../features/user/user.model');
 
 module.exports = catchAsync(async (req, res, next) => {
   let token;

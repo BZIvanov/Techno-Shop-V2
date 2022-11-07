@@ -3,9 +3,9 @@ const { Schema, model } = require('mongoose');
 const bcrypt = require('bcryptjs');
 const validator = require('validator');
 const {
-  models: { User },
+  model: { User },
   userTypes,
-} = require('../constants');
+} = require('./user.constants');
 
 const schema = new Schema(
   {
@@ -26,14 +26,20 @@ const schema = new Schema(
       minLength: [6, 'Password must be at least 6 characters'],
       select: false,
     },
-    address: String,
+    address: {
+      type: String,
+    },
     role: {
       type: String,
       enum: Object.values(userTypes),
       default: userTypes.user,
     },
-    resetPasswordToken: String,
-    resetPasswordExpire: Date,
+    resetPasswordToken: {
+      type: String,
+    },
+    resetPasswordExpire: {
+      type: Date,
+    },
   },
   { timestamps: true }
 );

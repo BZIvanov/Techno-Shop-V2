@@ -2,9 +2,9 @@ const status = require('http-status');
 const cloudinary = require('cloudinary');
 const { v4: uuidv4 } = require('uuid');
 const slugify = require('slugify');
-const Product = require('../models/product');
-const catchAsync = require('../middlewares/catch-async');
-const AppError = require('../utils/app-error');
+const Product = require('./product.model');
+const catchAsync = require('../../middlewares/catch-async');
+const AppError = require('../../utils/app-error');
 
 cloudinary.config({
   cloud_name: process.env.CLOUDINARY_CLOUD_NAME,

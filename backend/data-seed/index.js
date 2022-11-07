@@ -1,9 +1,9 @@
 require('dotenv').config();
 const mongoose = require('mongoose');
-const User = require('../models/user');
-const Category = require('../models/category');
-const Subcategory = require('../models/subcategory');
-const Product = require('../models/product');
+const User = require('../src/features/user/user.model');
+const Category = require('../src/features/category/category.model');
+const Subcategory = require('../src/features/subcategory/subcategory.model');
+const Product = require('../src/features/product/product.model');
 const users = require('./users.json');
 const categories = require('./categories.json');
 const subcategories = require('./subcategories.json');
