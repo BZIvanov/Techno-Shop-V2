@@ -8,9 +8,9 @@ import {
   Dashboard,
   AddBusiness,
 } from '@mui/icons-material';
-import { HeaderNavLink } from '../header-nav-link';
-import { GlobalSearch } from '../global-search';
-import { logoutUserAction } from '../../store/action-creators';
+import { HeaderNavLink } from '../HeaderNavLink';
+import { HeaderSearch } from '../HeaderSearch';
+import { logoutUserAction } from '../../../store/action-creators';
 
 const noUserLinks = [
   {
@@ -62,7 +62,7 @@ const Header = () => {
           </Grid>
           <Grid item={true}>
             <Box sx={{ display: 'flex', alignItems: 'center' }}>
-              <GlobalSearch />
+              <HeaderSearch />
 
               {!user ? (
                 noUserLinks.map((link) => (
