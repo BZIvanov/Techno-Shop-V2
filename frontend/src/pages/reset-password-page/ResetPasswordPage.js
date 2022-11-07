@@ -48,7 +48,7 @@ const ResetPasswordPage = () => {
         marginTop: { xs: '10px', sm: '20px', md: '40px' },
       }}
     >
-      <Typography variant='h1'>Password Reset Form</Typography>
+      <Typography variant='h5'>Password Reset Form</Typography>
 
       <Box sx={{ width: { xs: '90%', sm: '290px' } }}>
         <form onSubmit={handleSubmit(handleFormSubmit)}>

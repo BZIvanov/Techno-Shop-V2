@@ -49,7 +49,7 @@ const ProductsCardsList = () => {
         marginTop: { xs: '10px', sm: '20px', md: '40px' },
       }}
     >
-      <Typography variant='h1'>Products List</Typography>
+      <Typography variant='h5'>Products List</Typography>
 
       <Paper sx={{ width: '100%', padding: 2 }}>
         {products.length > 0 ? (

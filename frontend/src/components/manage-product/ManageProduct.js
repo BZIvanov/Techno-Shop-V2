@@ -129,7 +129,7 @@ const ManageProduct = () => {
 
   return (
     <Box sx={{ padding: (theme) => theme.spacing(1) }}>
-      <Typography variant='h1'>Manage Products</Typography>
+      <Typography variant='h5'>Manage Products</Typography>
 
       <Box sx={{ width: '99%' }}>
         <form onSubmit={handleSubmit(handleProductSubmit)}>
