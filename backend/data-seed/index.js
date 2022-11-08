@@ -9,7 +9,7 @@ const categories = require('./categories.json');
 const subcategories = require('./subcategories.json');
 const products = require('./products.json');
 
-mongoose.connect(process.env.DB_URI, {});
+mongoose.connect(process.env.DATABASE_URI, {});
 
 const seedData = async () => {
   try {

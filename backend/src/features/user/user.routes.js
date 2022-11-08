@@ -8,11 +8,15 @@ const {
   forgotPassword,
   resetPassword,
 } = require('./user.controllers');
+const validateBodyData = require('../../middlewares/validate-body-data');
 const authenticate = require('../../middlewares/authenticate');
+const { registerValidationSchema } = require('./user.validationSchema');
 
 const router = express.Router();
 
-router.route('/register').post(register);
+router
+  .route('/register')
+  .post(validateBodyData(registerValidationSchema), register);
 router.route('/login').post(login);
 router.route('/logout').put(authenticate, logout);
 router.route('/current-user').get(authenticate, currentUser);

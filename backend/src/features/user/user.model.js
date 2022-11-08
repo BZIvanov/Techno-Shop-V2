@@ -1,7 +1,6 @@
 const crypto = require('crypto');
 const { Schema, model } = require('mongoose');
 const bcrypt = require('bcryptjs');
-const validator = require('validator');
 const {
   model: { User },
   userTypes,
@@ -18,7 +17,6 @@ const schema = new Schema(
       type: String,
       required: [true, 'Please provide an email'],
       unique: true,
-      validate: [validator.isEmail, 'Please provide a valid email'],
     },
     password: {
       type: String,

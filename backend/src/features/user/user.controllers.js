@@ -22,9 +22,9 @@ const sendTokenResponse = (user, statusCode, res) => {
 };
 
 exports.register = catchAsync(async (req, res) => {
-  const { username, email, password, address, role } = req.body;
+  const { username, email, password, address } = req.body;
 
-  const user = await User.create({ username, email, password, address, role });
+  const user = await User.create({ username, email, password, address });
 
   sendTokenResponse(user, status.CREATED, res);
 });
