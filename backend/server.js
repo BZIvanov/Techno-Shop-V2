@@ -9,11 +9,7 @@ const startServer = async () => {
   await mongoDbConnect();
 
   const PORT = process.env.PORT || 3100;
-  server.listen(PORT, () =>
-    console.log(
-      `Server running in ${process.env.NODE_ENV} mode on port ${PORT}`
-    )
-  );
+  server.listen(PORT, () => console.log(`Server running on port ${PORT}`));
 };
 
 startServer();

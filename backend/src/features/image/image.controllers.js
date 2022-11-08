@@ -1,14 +1,8 @@
 const status = require('http-status');
-const cloudinary = require('cloudinary');
 const { v4: uuidv4 } = require('uuid');
+const cloudinary = require('../../providers/cloudinary');
 const catchAsync = require('../../middlewares/catch-async');
 const AppError = require('../../utils/app-error');
-
-cloudinary.config({
-  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
-  api_key: process.env.CLOUDINARY_API_KEY,
-  api_secret: process.env.CLOUDINARY_API_SECRET,
-});
 
 exports.uploadImages = catchAsync(async (req, res) => {
   const image = await cloudinary.uploader.upload(req.body.image, {
