@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux';
 import { Routes, Route } from 'react-router-dom';
 import { Header } from './components/header/Header';
 import { HomePage } from './pages/home-page';
-import { RegisterPage } from './pages/register-page';
+import { RegisterForm } from './components/user/forms/RegisterForm';
 import { LoginPage } from './pages/login-page';
 import { ResetPasswordPage } from './pages/reset-password-page';
 import { ShopPage } from './pages/shop-page';
@@ -35,7 +35,7 @@ const App = () => {
       <Routes>
         <Route path='/' element={<HomePage />} />
         <Route path='/login' element={<LoginPage />} />
-        <Route path='/register' element={<RegisterPage />} />
+        <Route path='/register' element={<RegisterForm />} />
         <Route path='/reset-password/:token' element={<ResetPasswordPage />} />
         <Route
           path='user'

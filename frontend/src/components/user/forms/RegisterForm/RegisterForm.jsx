@@ -4,14 +4,14 @@ import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Box, Typography, Button } from '@mui/material';
 import { Face, Email } from '@mui/icons-material';
-import { TextFieldAdapter } from '../../components/text-field-adapter';
-import { PasswordTextFieldAdapter } from '../../components/password-text-field-adapter';
-import { ApiCallAlert } from '../../components/api-call-alert';
-import { ApiCallLoader } from '../../components/api-call-loader';
-import { registerUserAction } from '../../store/action-creators';
+import { TextFieldAdapter } from '../../../text-field-adapter';
+import { PasswordTextFieldAdapter } from '../../../password-text-field-adapter';
+import { ApiCallAlert } from '../../../common/async/ApiCallAlert';
+import { ApiCallLoader } from '../../../common/async/ApiCallLoader';
+import { registerUserAction } from '../../../../store/action-creators';
 import schema from './form-schema';
 
-const RegisterPage = () => {
+const RegisterForm = () => {
   const { user } = useSelector((state) => state.user);
   const { loading } = useSelector((state) => state.apiCall);
 
@@ -28,7 +28,8 @@ const RegisterPage = () => {
   });
 
   const handleFormSubmit = (values) => {
-    dispatch(registerUserAction(values));
+    const { username, email, password } = values;
+    dispatch(registerUserAction({ username, email, password }));
   };
 
   if (user) {
@@ -120,4 +121,4 @@ const RegisterPage = () => {
   );
 };
 
-export default RegisterPage;
+export default RegisterForm;

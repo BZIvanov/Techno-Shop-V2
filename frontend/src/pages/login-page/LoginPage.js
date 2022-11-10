@@ -8,8 +8,8 @@ import { Email } from '@mui/icons-material';
 import { TextFieldAdapter } from '../../components/text-field-adapter';
 import { PasswordTextFieldAdapter } from '../../components/password-text-field-adapter';
 import { ForgotPasswordDialog } from '../../components/forgot-password-dialog';
-import { ApiCallAlert } from '../../components/api-call-alert';
-import { ApiCallLoader } from '../../components/api-call-loader';
+import { ApiCallAlert } from '../../components/common/async/ApiCallAlert';
+import { ApiCallLoader } from '../../components/common/async/ApiCallLoader';
 import { loginUserAction } from '../../store/action-creators';
 import schema from './form-schema';
 

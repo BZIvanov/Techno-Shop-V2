@@ -1,6 +1,6 @@
 import { useSelector, useDispatch } from 'react-redux';
 import { Snackbar, Alert } from '@mui/material';
-import { apiCallResetType } from '../../store/action-creators';
+import { apiCallResetType } from '../../../../store/action-creators';
 
 const ApiCallAlert = () => {
   const { success, error } = useSelector((state) => state.apiCall);

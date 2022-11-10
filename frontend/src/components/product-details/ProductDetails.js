@@ -27,8 +27,8 @@ import {
   getSimilarProductsAction,
   rateProductAction,
 } from '../../store/action-creators';
-import { ApiCallAlert } from '../api-call-alert';
-import { ApiCallLoader } from '../api-call-loader';
+import { ApiCallAlert } from '../common/async/ApiCallAlert';
+import { ApiCallLoader } from '../common/async/ApiCallLoader';
 
 const ProductDetails = () => {
   const { user, token } = useSelector((state) => state.user);

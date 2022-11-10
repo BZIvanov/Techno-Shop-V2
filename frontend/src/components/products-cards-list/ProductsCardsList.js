@@ -5,8 +5,8 @@ import { Box, Typography, IconButton, Grid, Paper } from '@mui/material';
 import { Edit, Delete } from '@mui/icons-material';
 import { ConfirmDialog } from '../confirm-dialog';
 import { AverageRating } from '../average-rating';
-import { ApiCallAlert } from '../api-call-alert';
-import { ApiCallLoader } from '../api-call-loader';
+import { ApiCallAlert } from '../common/async/ApiCallAlert';
+import { ApiCallLoader } from '../common/async/ApiCallLoader';
 import {
   getProductsAction,
   deleteProductAction,

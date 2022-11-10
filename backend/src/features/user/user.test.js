@@ -58,5 +58,23 @@ describe('User routes', () => {
           '"username" length must be less than or equal to 30 characters long',
       });
     });
+
+    test('it should not allow to register with non schema props', async () => {
+      const response = await request(app)
+        .post('/v1/users/register')
+        .send({
+          username: 'Iva',
+          email: 'iva@mail.com',
+          password: '12345678',
+          role: 'admin', // joi will reject any key which is not part of the validation schema
+        })
+        .expect('Content-Type', /application\/json/)
+        .expect(400);
+
+      expect(response.body).toMatchObject({
+        success: false,
+        error: '"role" is not allowed',
+      });
+    });
   });
 });
