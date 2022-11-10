@@ -4,8 +4,8 @@ import { Box } from '@mui/material';
 import { Jumbotron } from '../../components/jumbotron';
 import { ProductsList } from '../../components/products-list';
 import { ChipsList } from '../../components/chips-list';
-import { ApiCallAlert } from '../../components/api-call-alert';
-import { ApiCallLoader } from '../../components/api-call-loader';
+import { ApiCallAlert } from '../../components/common/async/ApiCallAlert';
+import { ApiCallLoader } from '../../components/common/async/ApiCallLoader';
 import {
   getProductsAction,
   getAllCategoriesAction,

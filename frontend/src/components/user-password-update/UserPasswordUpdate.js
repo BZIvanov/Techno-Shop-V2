@@ -3,8 +3,8 @@ import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Box, Typography, Button } from '@mui/material';
 import { PasswordTextFieldAdapter } from '../../components/password-text-field-adapter';
-import { ApiCallAlert } from '../api-call-alert';
-import { ApiCallLoader } from '../api-call-loader';
+import { ApiCallAlert } from '../common/async/ApiCallAlert';
+import { ApiCallLoader } from '../common/async/ApiCallLoader';
 import { updatePasswordAction } from '../../store/action-creators';
 import schema from './form-schema';
 

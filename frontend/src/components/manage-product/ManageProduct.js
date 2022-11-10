@@ -17,8 +17,8 @@ import { TextFieldAdapter } from '../text-field-adapter';
 import { SelectDropdownAdapter } from '../select-dropdown-adapter';
 import { SelectDropdownMultichipAdapter } from '../select-dropdown-multichip-adapter';
 import { ImagesFieldAdapter } from '../images-field-adapter';
-import { ApiCallLoader } from '../api-call-loader';
-import { ApiCallAlert } from '../api-call-alert';
+import { ApiCallLoader } from '../common/async/ApiCallLoader';
+import { ApiCallAlert } from '../common/async/ApiCallAlert';
 import {
   getAllCategoriesAction,
   getCategorySubcategoriesAction,

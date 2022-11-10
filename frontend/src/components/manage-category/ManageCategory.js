@@ -20,8 +20,8 @@ import {
   updateCategoryAction,
   deleteCategoryAction,
 } from '../../store/action-creators';
-import { ApiCallAlert } from '../api-call-alert';
-import { ApiCallLoader } from '../api-call-loader';
+import { ApiCallAlert } from '../common/async/ApiCallAlert';
+import { ApiCallLoader } from '../common/async/ApiCallLoader';
 import schema from './form-schema';
 
 const ManageCategory = () => {
