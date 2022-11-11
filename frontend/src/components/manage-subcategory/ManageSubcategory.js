@@ -11,8 +11,8 @@ import {
   Chip,
   TextField,
 } from '@mui/material';
-import { SelectDropdownAdapter } from '../select-dropdown-adapter';
-import { TextFieldAdapter } from '../text-field-adapter';
+import { SelectDropdownAdapter } from '../common/forms/SelectDropdownAdapter';
+import { TextFieldAdapter } from '../common/forms/TextFieldAdapter';
 import { ListItem } from '../list-item';
 import { ConfirmDialog } from '../confirm-dialog';
 import {

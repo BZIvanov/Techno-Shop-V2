@@ -1,10 +1,5 @@
 import { Controller } from 'react-hook-form';
-import {
-  FormControl,
-  InputAdornment,
-  IconButton,
-  TextField,
-} from '@mui/material';
+import { FormControl, InputAdornment, TextField } from '@mui/material';
 
 const TextFieldAdapter = ({ name, control, label, type = 'text', Icon }) => {
   return (
@@ -24,10 +19,8 @@ const TextFieldAdapter = ({ name, control, label, type = 'text', Icon }) => {
                 Icon
                   ? {
                       endAdornment: (
-                        <InputAdornment position='end'>
-                          <IconButton>
-                            <Icon />
-                          </IconButton>
+                        <InputAdornment position='end' sx={{ padding: '8px' }}>
+                          <Icon />
                         </InputAdornment>
                       ),
                     }

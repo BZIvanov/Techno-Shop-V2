@@ -13,9 +13,9 @@ import {
   Avatar,
 } from '@mui/material';
 import { CloseOutlined } from '@mui/icons-material';
-import { TextFieldAdapter } from '../text-field-adapter';
-import { SelectDropdownAdapter } from '../select-dropdown-adapter';
-import { SelectDropdownMultichipAdapter } from '../select-dropdown-multichip-adapter';
+import { TextFieldAdapter } from '../common/forms/TextFieldAdapter';
+import { SelectDropdownAdapter } from '../common/forms/SelectDropdownAdapter';
+import { SelectDropdownMultichipAdapter } from '../common/forms/SelectDropdownMultichipAdapter';
 import { ImagesFieldAdapter } from '../images-field-adapter';
 import { ApiCallLoader } from '../common/async/ApiCallLoader';
 import { ApiCallAlert } from '../common/async/ApiCallAlert';

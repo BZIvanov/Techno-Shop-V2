@@ -2,7 +2,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Box, Typography, Button } from '@mui/material';
-import { PasswordTextFieldAdapter } from '../../components/password-text-field-adapter';
+import { PasswordTextFieldAdapter } from '../common/forms/PasswordTextFieldAdapter';
 import { ApiCallAlert } from '../common/async/ApiCallAlert';
 import { ApiCallLoader } from '../common/async/ApiCallLoader';
 import { updatePasswordAction } from '../../store/action-creators';
