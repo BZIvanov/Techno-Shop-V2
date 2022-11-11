@@ -11,7 +11,7 @@ import {
   Chip,
   TextField,
 } from '@mui/material';
-import { TextFieldAdapter } from '../text-field-adapter';
+import { TextFieldAdapter } from '../common/forms/TextFieldAdapter';
 import { ListItem } from '../list-item';
 import { ConfirmDialog } from '../confirm-dialog';
 import {

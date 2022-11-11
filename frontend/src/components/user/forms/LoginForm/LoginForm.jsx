@@ -5,15 +5,15 @@ import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Box, Typography, Button } from '@mui/material';
 import { Email } from '@mui/icons-material';
-import { TextFieldAdapter } from '../../components/text-field-adapter';
-import { PasswordTextFieldAdapter } from '../../components/password-text-field-adapter';
-import { ForgotPasswordDialog } from '../../components/forgot-password-dialog';
-import { ApiCallAlert } from '../../components/common/async/ApiCallAlert';
-import { ApiCallLoader } from '../../components/common/async/ApiCallLoader';
-import { loginUserAction } from '../../store/action-creators';
+import { TextFieldAdapter } from '../../../common/forms/TextFieldAdapter';
+import { PasswordTextFieldAdapter } from '../../../common/forms/PasswordTextFieldAdapter';
+import { ForgotPasswordDialog } from '../../../forgot-password-dialog';
+import { ApiCallAlert } from '../../../common/async/ApiCallAlert';
+import { ApiCallLoader } from '../../../common/async/ApiCallLoader';
+import { loginUserAction } from '../../../../store/action-creators';
 import schema from './form-schema';
 
-const LoginPage = () => {
+const LoginForm = () => {
   const [showForgotPasswordModal, setShowForgotPasswordModal] = useState(false);
 
   const { user } = useSelector((state) => state.user);
@@ -121,4 +121,4 @@ const LoginPage = () => {
   );
 };
 
-export default LoginPage;
+export default LoginForm;

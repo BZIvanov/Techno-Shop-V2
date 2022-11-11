@@ -10,7 +10,7 @@ import {
   DialogActions,
 } from '@mui/material';
 import { Email } from '@mui/icons-material';
-import { TextFieldAdapter } from '../../components/text-field-adapter';
+import { TextFieldAdapter } from '../common/forms/TextFieldAdapter';
 import { forgotPasswordAction } from '../../store/action-creators';
 import schema from './form-schema';
 

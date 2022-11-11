@@ -4,7 +4,7 @@ import { Routes, Route } from 'react-router-dom';
 import { Header } from './components/header/Header';
 import { HomePage } from './pages/home-page';
 import { RegisterForm } from './components/user/forms/RegisterForm';
-import { LoginPage } from './pages/login-page';
+import { LoginForm } from './components/user/forms/LoginForm';
 import { ResetPasswordPage } from './pages/reset-password-page';
 import { ShopPage } from './pages/shop-page';
 import { UserPage } from './pages/user-page';
@@ -34,7 +34,7 @@ const App = () => {
       <Header />
       <Routes>
         <Route path='/' element={<HomePage />} />
-        <Route path='/login' element={<LoginPage />} />
+        <Route path='/login' element={<LoginForm />} />
         <Route path='/register' element={<RegisterForm />} />
         <Route path='/reset-password/:token' element={<ResetPasswordPage />} />
         <Route
