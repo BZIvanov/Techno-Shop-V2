@@ -17,7 +17,7 @@ import { ManageProduct } from './components/manage-product';
 import { UserPasswordUpdate } from './components/user-password-update';
 import { ProductDetails } from './components/product-details';
 import { ProtectedRoute } from './components/protected-route';
-import { getCurrentUserAction } from './store/action-creators';
+import { getCurrentUserAction } from './store/features/user/userSlice';
 
 const App = () => {
   const dispatch = useDispatch();
@@ -25,7 +25,7 @@ const App = () => {
   useEffect(() => {
     const token = window.localStorage.getItem('userToken');
     if (token) {
-      dispatch(getCurrentUserAction(token.replace(/"/g, '')));
+      dispatch(getCurrentUserAction(token));
     }
   }, [dispatch]);
 

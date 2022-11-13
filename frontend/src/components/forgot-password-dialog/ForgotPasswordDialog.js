@@ -11,7 +11,7 @@ import {
 } from '@mui/material';
 import { Email } from '@mui/icons-material';
 import { TextFieldAdapter } from '../common/forms/TextFieldAdapter';
-import { forgotPasswordAction } from '../../store/action-creators';
+import { forgotPasswordAction } from '../../store/features/user/userSlice';
 import schema from './form-schema';
 
 const ForgotPasswordDialog = ({

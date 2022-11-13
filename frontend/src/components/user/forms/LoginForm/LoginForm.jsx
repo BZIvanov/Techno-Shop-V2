@@ -10,7 +10,7 @@ import { PasswordTextFieldAdapter } from '../../../common/forms/PasswordTextFiel
 import { ForgotPasswordDialog } from '../../../forgot-password-dialog';
 import { ApiCallAlert } from '../../../common/async/ApiCallAlert';
 import { ApiCallLoader } from '../../../common/async/ApiCallLoader';
-import { loginUserAction } from '../../../../store/action-creators';
+import { loginUserAction } from '../../../../store/features/user/userSlice';
 import schema from './form-schema';
 
 const LoginForm = () => {

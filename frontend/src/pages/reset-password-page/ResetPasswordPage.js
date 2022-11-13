@@ -1,18 +1,20 @@
 import { useSelector, useDispatch } from 'react-redux';
-import { Navigate, useParams } from 'react-router-dom';
+import { Navigate, useParams, useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Box, Typography, Button } from '@mui/material';
 import { PasswordTextFieldAdapter } from '../../components/common/forms/PasswordTextFieldAdapter';
 import { ApiCallAlert } from '../../components/common/async/ApiCallAlert';
 import { ApiCallLoader } from '../../components/common/async/ApiCallLoader';
-import { resetPasswordAction } from '../../store/action-creators';
-import { RESET_PASSWORD_CODE } from '../../store/action-creators/api-call';
+import { apiCallFailType } from '../../store/action-creators';
+import { resetPasswordAction } from '../../store/features/user/userSlice';
 import schema from './form-schema';
 
 const ResetPasswordPage = () => {
+  const navigate = useNavigate();
+
   const { user } = useSelector((state) => state.user);
-  const { loading, callCode } = useSelector((state) => state.apiCall);
+  const { loading } = useSelector((state) => state.apiCall);
 
   const dispatch = useDispatch();
 
@@ -26,16 +28,17 @@ const ResetPasswordPage = () => {
     resolver: yupResolver(schema),
   });
 
-  const handleFormSubmit = (values) => {
-    dispatch(resetPasswordAction({ ...values, token }));
+  const handleFormSubmit = async (values) => {
+    try {
+      await dispatch(resetPasswordAction({ ...values, token }));
+      navigate('/login');
+    } catch (error) {
+      dispatch(apiCallFailType(error.message));
+    }
   };
 
   if (user) {
     return <Navigate to='/' />;
-  }
-
-  if (callCode && callCode === RESET_PASSWORD_CODE) {
-    return <Navigate to='/login' />;
   }
 
   return (
@@ -89,7 +92,7 @@ const ResetPasswordPage = () => {
               type='submit'
               disabled={formState.submitting || loading}
             >
-              Register
+              Reset Password
             </Button>
           </Box>
         </form>

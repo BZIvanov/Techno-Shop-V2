@@ -10,7 +10,7 @@ import {
 } from '@mui/icons-material';
 import { HeaderNavLink } from '../HeaderNavLink';
 import { HeaderSearch } from '../HeaderSearch';
-import { logoutUserAction } from '../../../store/action-creators';
+import { logoutUserAction } from '../../../store/features/user/userSlice';
 
 const noUserLinks = [
   {
