@@ -5,7 +5,7 @@ import { Box, Typography, Button } from '@mui/material';
 import { PasswordTextFieldAdapter } from '../common/forms/PasswordTextFieldAdapter';
 import { ApiCallAlert } from '../common/async/ApiCallAlert';
 import { ApiCallLoader } from '../common/async/ApiCallLoader';
-import { updatePasswordAction } from '../../store/action-creators';
+import { updatePasswordAction } from '../../store/features/user/userSlice';
 import schema from './form-schema';
 
 const UserPasswordUpdate = () => {

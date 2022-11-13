@@ -8,7 +8,7 @@ import { TextFieldAdapter } from '../../../common/forms/TextFieldAdapter';
 import { PasswordTextFieldAdapter } from '../../../common/forms/PasswordTextFieldAdapter';
 import { ApiCallAlert } from '../../../common/async/ApiCallAlert';
 import { ApiCallLoader } from '../../../common/async/ApiCallLoader';
-import { registerUserAction } from '../../../../store/action-creators';
+import { registerUserAction } from '../../../../store/features/user/userSlice';
 import schema from './form-schema';
 
 const RegisterForm = () => {
