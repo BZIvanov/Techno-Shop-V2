@@ -8,12 +8,11 @@ import {
   forgotPasswordCall,
   resetPasswordCall,
 } from '../../../api/users';
-
 import {
-  apiCallStartType,
-  apiCallSuccessType,
-  apiCallFailType,
-} from '../../action-creators';
+  apiCallStartAction,
+  apiCallSuccessAction,
+  apiCallFailAction,
+} from '../api-call/apiCallSlice';
 
 const initialState = {
   token: null,
@@ -24,16 +23,16 @@ export const registerUserAction = createAsyncThunk(
   'user/loginUser',
   async (values, { dispatch, rejectWithValue }) => {
     try {
-      dispatch(apiCallStartType());
+      dispatch(apiCallStartAction());
 
       const { data } = await registerUserCall(values);
 
-      dispatch(apiCallSuccessType());
+      dispatch(apiCallSuccessAction());
 
       return data;
     } catch (error) {
       // axios will return the error in response data, the last .error is the error from the backend
-      dispatch(apiCallFailType(error.response.data.error));
+      dispatch(apiCallFailAction(error.response.data.error));
 
       return rejectWithValue(error.response.data.error);
     }
@@ -44,15 +43,15 @@ export const loginUserAction = createAsyncThunk(
   'user/loginUser',
   async (values, { dispatch, rejectWithValue }) => {
     try {
-      dispatch(apiCallStartType());
+      dispatch(apiCallStartAction());
 
       const { data } = await loginUserCall(values);
 
-      dispatch(apiCallSuccessType());
+      dispatch(apiCallSuccessAction('Login success'));
 
       return data;
     } catch (error) {
-      dispatch(apiCallFailType(error.response.data.error));
+      dispatch(apiCallFailAction(error.response.data.error));
 
       return rejectWithValue(error.response.data.error);
     }
@@ -63,15 +62,15 @@ export const getCurrentUserAction = createAsyncThunk(
   'user/loginUser',
   async (token, { dispatch, rejectWithValue }) => {
     try {
-      dispatch(apiCallStartType());
+      dispatch(apiCallStartAction());
 
       const { data } = await getCurrentUserCall(token);
 
-      dispatch(apiCallSuccessType());
+      dispatch(apiCallSuccessAction());
 
       return { ...data, token };
     } catch (error) {
-      dispatch(apiCallFailType(error.response.data.error));
+      dispatch(apiCallFailAction(error.response.data.error));
 
       return rejectWithValue(error.response.data.error);
     }
@@ -82,16 +81,16 @@ export const logoutUserAction = createAsyncThunk(
   'user/logoutUser',
   async (_, { dispatch, rejectWithValue, getState }) => {
     try {
-      dispatch(apiCallStartType());
+      dispatch(apiCallStartAction());
 
       const { user } = getState();
       await logoutUserCall(user.token);
 
-      dispatch(apiCallSuccessType());
+      dispatch(apiCallSuccessAction());
 
       return;
     } catch (error) {
-      dispatch(apiCallFailType(error.response.data.error));
+      dispatch(apiCallFailAction(error.response.data.error));
 
       return rejectWithValue(error.response.data.error);
     }
@@ -102,16 +101,16 @@ export const updatePasswordAction = createAsyncThunk(
   'user/updateUserPassword',
   async (values, { dispatch, rejectWithValue, getState }) => {
     try {
-      dispatch(apiCallStartType());
+      dispatch(apiCallStartAction());
 
       const { user } = getState();
       await updatePasswordCall(values, user.token);
 
-      dispatch(apiCallSuccessType('Password updated'));
+      dispatch(apiCallSuccessAction('Password updated'));
 
       return;
     } catch (error) {
-      dispatch(apiCallFailType(error.response.data.error));
+      dispatch(apiCallFailAction(error.response.data.error));
 
       return rejectWithValue(error.response.data.error);
     }
@@ -122,15 +121,15 @@ export const forgotPasswordAction = createAsyncThunk(
   'user/forgotPasswordAction',
   async (values, { dispatch, rejectWithValue }) => {
     try {
-      dispatch(apiCallStartType());
+      dispatch(apiCallStartAction());
 
       await forgotPasswordCall(values);
 
-      dispatch(apiCallSuccessType(`Reset email sent to: ${values.email}`));
+      dispatch(apiCallSuccessAction(`Reset email sent to: ${values.email}`));
 
       return;
     } catch (error) {
-      dispatch(apiCallFailType(error.response.data.error));
+      dispatch(apiCallFailAction(error.response.data.error));
 
       return rejectWithValue(error.response.data.error);
     }
@@ -141,15 +140,15 @@ export const resetPasswordAction = createAsyncThunk(
   'user/resetPasswordAction',
   async (values, { dispatch, rejectWithValue }) => {
     try {
-      dispatch(apiCallStartType());
+      dispatch(apiCallStartAction());
 
       await resetPasswordCall(values);
 
-      dispatch(apiCallSuccessType());
+      dispatch(apiCallSuccessAction());
 
       return;
     } catch (error) {
-      dispatch(apiCallFailType(error.response.data.error));
+      dispatch(apiCallFailAction(error.response.data.error));
 
       return rejectWithValue(error.response.data.error);
     }
