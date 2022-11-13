@@ -6,7 +6,6 @@ import { Box, Typography, Button } from '@mui/material';
 import { PasswordTextFieldAdapter } from '../../components/common/forms/PasswordTextFieldAdapter';
 import { ApiCallAlert } from '../../components/common/async/ApiCallAlert';
 import { ApiCallLoader } from '../../components/common/async/ApiCallLoader';
-import { apiCallFailType } from '../../store/action-creators';
 import { resetPasswordAction } from '../../store/features/user/userSlice';
 import schema from './form-schema';
 
@@ -29,12 +28,8 @@ const ResetPasswordPage = () => {
   });
 
   const handleFormSubmit = async (values) => {
-    try {
-      await dispatch(resetPasswordAction({ ...values, token }));
-      navigate('/login');
-    } catch (error) {
-      dispatch(apiCallFailType(error.message));
-    }
+    await dispatch(resetPasswordAction({ ...values, token }));
+    navigate('/login');
   };
 
   if (user) {

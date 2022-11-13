@@ -1,6 +1,6 @@
 import { useSelector, useDispatch } from 'react-redux';
 import { Snackbar, Alert } from '@mui/material';
-import { apiCallResetType } from '../../../../store/action-creators';
+import { apiCallResetAction } from '../../../../store/features/api-call/apiCallSlice';
 
 const ApiCallAlert = () => {
   const { success, error } = useSelector((state) => state.apiCall);
@@ -10,7 +10,7 @@ const ApiCallAlert = () => {
   const shouldShow = Boolean(success) || Boolean(error);
 
   const handleCloseSnackbar = () => {
-    dispatch(apiCallResetType());
+    dispatch(apiCallResetAction());
   };
 
   return (

@@ -7,7 +7,11 @@ import {
   rateProductCall,
   getSimilarProductsCall,
 } from '../../api/products';
-import { apiCallStartType, apiCallSuccessType, apiCallFailType } from './';
+import {
+  apiCallStartAction,
+  apiCallSuccessAction,
+  apiCallFailAction,
+} from '../features/api-call/apiCallSlice';
 import { actionType } from '../action-types';
 import imageResizer from '../../utils/image-resizer';
 import { PRODUCTS_LIST_TYPES } from '../../constants';
@@ -53,37 +57,37 @@ export const deleteProductType = (productId) => ({
 
 export const getProductsAction = ({ productsType, ...rest }) => {
   return async (dispatch) => {
-    dispatch(apiCallStartType());
+    dispatch(apiCallStartAction());
 
     try {
       const { data } = await getProductsCall(rest);
 
-      dispatch(apiCallSuccessType());
+      dispatch(apiCallSuccessAction());
       dispatch(getProductsType(data, productsType));
     } catch (error) {
-      dispatch(apiCallFailType('Get products error'));
+      dispatch(apiCallFailAction('Get products error'));
     }
   };
 };
 
 export const getProductAction = (id) => {
   return async (dispatch) => {
-    dispatch(apiCallStartType());
+    dispatch(apiCallStartAction());
 
     try {
       const { data } = await getProductCall(id);
 
-      dispatch(apiCallSuccessType());
+      dispatch(apiCallSuccessAction());
       dispatch(getProductType(data.product));
     } catch (error) {
-      dispatch(apiCallFailType('Get product error'));
+      dispatch(apiCallFailAction('Get product error'));
     }
   };
 };
 
 export const createProductAction = (product, token) => {
   return async (dispatch) => {
-    dispatch(apiCallStartType());
+    dispatch(apiCallStartAction());
 
     try {
       const base64Images = await Promise.all(
@@ -95,70 +99,70 @@ export const createProductAction = (product, token) => {
         token
       );
 
-      dispatch(apiCallSuccessType(`Product '${data.product.title}' created`));
+      dispatch(apiCallSuccessAction(`Product '${data.product.title}' created`));
       dispatch(createProductType(data.product));
     } catch (error) {
-      dispatch(apiCallFailType('Create product error'));
+      dispatch(apiCallFailAction('Create product error'));
     }
   };
 };
 
 export const updateProductAction = (product, token) => {
   return async (dispatch) => {
-    dispatch(apiCallStartType());
+    dispatch(apiCallStartAction());
 
     try {
       const { data } = await updateProductCall(product, token);
 
-      dispatch(apiCallSuccessType(`Product '${data.product.name}' updated`));
+      dispatch(apiCallSuccessAction(`Product '${data.product.name}' updated`));
       dispatch(updateProductType(data.product));
     } catch (error) {
-      dispatch(apiCallFailType('Update product error'));
+      dispatch(apiCallFailAction('Update product error'));
     }
   };
 };
 
 export const deleteProductAction = (productId, token) => {
   return async (dispatch) => {
-    dispatch(apiCallStartType());
+    dispatch(apiCallStartAction());
 
     try {
       await deleteProductCall(productId, token);
 
-      dispatch(apiCallSuccessType('Product deleted'));
+      dispatch(apiCallSuccessAction('Product deleted'));
       dispatch(deleteProductType(productId));
     } catch (error) {
-      dispatch(apiCallFailType('Delete product error'));
+      dispatch(apiCallFailAction('Delete product error'));
     }
   };
 };
 
 export const rateProductAction = (productId, rating, token) => {
   return async (dispatch) => {
-    dispatch(apiCallStartType());
+    dispatch(apiCallStartAction());
 
     try {
       const { data } = await rateProductCall(productId, rating, token);
 
-      dispatch(apiCallSuccessType(`Product '${data.product.title}' rated`));
+      dispatch(apiCallSuccessAction(`Product '${data.product.title}' rated`));
       dispatch(getProductType(data.product));
     } catch (error) {
-      dispatch(apiCallFailType('Rate product error'));
+      dispatch(apiCallFailAction('Rate product error'));
     }
   };
 };
 
 export const getSimilarProductsAction = (productId) => {
   return async (dispatch) => {
-    dispatch(apiCallStartType());
+    dispatch(apiCallStartAction());
 
     try {
       const { data } = await getSimilarProductsCall(productId);
 
-      dispatch(apiCallSuccessType());
+      dispatch(apiCallSuccessAction());
       dispatch(getSimilarProductsType(data.products));
     } catch (error) {
-      dispatch(apiCallFailType('Get similar products error'));
+      dispatch(apiCallFailAction('Get similar products error'));
     }
   };
 };
