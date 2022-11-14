@@ -6,7 +6,7 @@ import { ProductsList } from '../../components/products-list';
 import {
   getCategoryAction,
   getCategoryProductsAction,
-} from '../../store/action-creators';
+} from '../../store/features/category/categorySlice';
 
 const CategoryProductsPage = () => {
   const category = useSelector(
@@ -27,7 +27,7 @@ const CategoryProductsPage = () => {
   }, [dispatch, id]);
 
   useEffect(() => {
-    dispatch(getCategoryProductsAction(id, { page }));
+    dispatch(getCategoryProductsAction({ categoryId: id, params: { page } }));
   }, [dispatch, id, page]);
 
   const handlePageChange = (_, value) => {

@@ -6,9 +6,9 @@ import { ProductsList } from '../../components/products-list';
 import { ChipsList } from '../../components/chips-list';
 import { ApiCallAlert } from '../../components/common/async/ApiCallAlert';
 import { ApiCallLoader } from '../../components/common/async/ApiCallLoader';
+import { getAllCategoriesAction } from '../../store/features/category/categorySlice';
 import {
   getProductsAction,
-  getAllCategoriesAction,
   getSubcategoriesAction,
 } from '../../store/action-creators';
 import { PRODUCTS_LIST_TYPES, JUMBOTRON_TEXTS } from '../../constants';

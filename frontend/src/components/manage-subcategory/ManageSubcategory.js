@@ -15,8 +15,8 @@ import { SelectDropdownAdapter } from '../common/forms/SelectDropdownAdapter';
 import { TextFieldAdapter } from '../common/forms/TextFieldAdapter';
 import { ListItem } from '../list-item';
 import { ConfirmDialog } from '../confirm-dialog';
+import { getAllCategoriesAction } from '../../store/features/category/categorySlice';
 import {
-  getAllCategoriesAction,
   getSubcategoriesAction,
   createSubcategoryAction,
   updateSubcategoryAction,

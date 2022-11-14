@@ -22,6 +22,8 @@ import { ApiCallAlert } from '../common/async/ApiCallAlert';
 import {
   getAllCategoriesAction,
   getCategorySubcategoriesAction,
+} from '../../store/features/category/categorySlice';
+import {
   getProductAction,
   createProductAction,
   updateProductAction,

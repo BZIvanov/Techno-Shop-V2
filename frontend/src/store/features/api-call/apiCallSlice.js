@@ -6,7 +6,7 @@ const initialState = {
   error: '',
 };
 
-const userSlice = createSlice({
+const apiCallSlice = createSlice({
   name: 'apiCall',
   initialState,
   reducers: {
@@ -36,6 +36,6 @@ export const {
   apiCallStartAction,
   apiCallSuccessAction,
   apiCallFailAction,
-} = userSlice.actions;
+} = apiCallSlice.actions;
 
-export default userSlice.reducer;
+export default apiCallSlice.reducer;
