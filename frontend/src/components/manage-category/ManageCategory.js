@@ -19,7 +19,7 @@ import {
   createCategoryAction,
   updateCategoryAction,
   deleteCategoryAction,
-} from '../../store/action-creators';
+} from '../../store/features/category/categorySlice';
 import { ApiCallAlert } from '../common/async/ApiCallAlert';
 import { ApiCallLoader } from '../common/async/ApiCallLoader';
 import schema from './form-schema';
