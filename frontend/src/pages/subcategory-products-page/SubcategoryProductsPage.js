@@ -6,7 +6,7 @@ import { ProductsList } from '../../components/products-list';
 import {
   getSubcategoryAction,
   getSubcategoryProductsAction,
-} from '../../store/action-creators';
+} from '../../store/features/subcategory/subcategorySlice';
 
 const SubcategoryProductsPage = () => {
   const subcategory = useSelector(
@@ -28,7 +28,9 @@ const SubcategoryProductsPage = () => {
   }, [dispatch, id]);
 
   useEffect(() => {
-    dispatch(getSubcategoryProductsAction(id, { page }));
+    dispatch(
+      getSubcategoryProductsAction({ subcategoryId: id, params: { page } })
+    );
   }, [dispatch, id, page]);
 
   const handlePageChange = (_, value) => {

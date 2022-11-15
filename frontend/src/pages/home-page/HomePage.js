@@ -7,10 +7,8 @@ import { ChipsList } from '../../components/chips-list';
 import { ApiCallAlert } from '../../components/common/async/ApiCallAlert';
 import { ApiCallLoader } from '../../components/common/async/ApiCallLoader';
 import { getAllCategoriesAction } from '../../store/features/category/categorySlice';
-import {
-  getProductsAction,
-  getSubcategoriesAction,
-} from '../../store/action-creators';
+import { getSubcategoriesAction } from '../../store/features/subcategory/subcategorySlice';
+import { getProductsAction } from '../../store/action-creators';
 import { PRODUCTS_LIST_TYPES, JUMBOTRON_TEXTS } from '../../constants';
 
 const PRODUCTS_PER_PAGE = 3;
