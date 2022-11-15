@@ -21,7 +21,7 @@ import {
   createSubcategoryAction,
   updateSubcategoryAction,
   deleteSubcategoryAction,
-} from '../../store/action-creators';
+} from '../../store/features/subcategory/subcategorySlice';
 import { ApiCallAlert } from '../common/async/ApiCallAlert';
 import { ApiCallLoader } from '../common/async/ApiCallLoader';
 import schema from './form-schema';
