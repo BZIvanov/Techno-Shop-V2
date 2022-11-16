@@ -10,7 +10,7 @@ import { ApiCallLoader } from '../common/async/ApiCallLoader';
 import {
   getProductsAction,
   deleteProductAction,
-} from '../../store/action-creators';
+} from '../../store/features/product/productSlice';
 import { ProductCard } from '../product-card';
 import { PRODUCTS_LIST_TYPES } from '../../constants';
 

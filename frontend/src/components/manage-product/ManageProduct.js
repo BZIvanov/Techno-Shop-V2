@@ -27,7 +27,7 @@ import {
   getProductAction,
   createProductAction,
   updateProductAction,
-} from '../../store/action-creators';
+} from '../../store/features/product/productSlice';
 import schema from './form-schema';
 
 const ManageProduct = () => {

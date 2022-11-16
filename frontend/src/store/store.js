@@ -3,9 +3,9 @@ import apiCallReducer from './features/api-call/apiCallSlice';
 import userReducer from './features/user/userSlice';
 import categoryReducer from './features/category/categorySlice';
 import subcategoryReducer from './features/subcategory/subcategorySlice';
+import productReducer from './features/product/productSlice';
 
 // DEPRECATED reducers
-import { productReducer } from './reducers/product';
 import { filtersReducer } from './reducers/filters';
 
 export const store = configureStore({
@@ -14,8 +14,8 @@ export const store = configureStore({
     user: userReducer,
     category: categoryReducer,
     subcategory: subcategoryReducer,
-    // Deprecated reducers
     product: productReducer,
+    // Deprecated reducers
     filters: filtersReducer,
   },
 });
