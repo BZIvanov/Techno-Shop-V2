@@ -3,7 +3,9 @@ import { useSelector, useDispatch } from 'react-redux';
 import { Box, List, Slider } from '@mui/material';
 import { ProductsList } from '../../components/products-list';
 import { FilterListItem } from '../../components/filter-list-item';
-import { getProductsAction, filterAction } from '../../store/action-creators';
+import { getProductsAction } from '../../store/features/product/productSlice';
+import { filterAction } from '../../store/action-creators';
+import { PRODUCTS_LIST_TYPES } from '../../constants';
 
 const ShopPage = () => {
   const { products, totalCount } = useSelector(({ product: { all } }) => all);
@@ -15,7 +17,14 @@ const ShopPage = () => {
 
   useEffect(() => {
     const throttle = setTimeout(() => {
-      dispatch(getProductsAction({ page, text, price: price.join() }));
+      dispatch(
+        getProductsAction({
+          productsType: PRODUCTS_LIST_TYPES.all,
+          page,
+          text,
+          price: price.join(),
+        })
+      );
     }, 1000);
 
     return () => clearTimeout(throttle);

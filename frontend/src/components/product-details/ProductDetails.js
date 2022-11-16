@@ -26,7 +26,7 @@ import {
   getProductAction,
   getSimilarProductsAction,
   rateProductAction,
-} from '../../store/action-creators';
+} from '../../store/features/product/productSlice';
 import { ApiCallAlert } from '../common/async/ApiCallAlert';
 import { ApiCallLoader } from '../common/async/ApiCallLoader';
 
