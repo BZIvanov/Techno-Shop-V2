@@ -15,11 +15,11 @@ const PRODUCTS_PER_PAGE = 3;
 
 const HomePage = () => {
   const { products: newestProducts, totalCount: newestProductsTotalCount } =
-    useSelector(({ product: { newest } }) => newest);
+    useSelector((state) => state.product.newest);
   const {
     products: bestsellingProducts,
     totalCount: bestsellingProductsTotalCount,
-  } = useSelector(({ product: { bestselling } }) => bestselling);
+  } = useSelector((state) => state.product.bestselling);
   const { categories } = useSelector((state) => state.category);
   const { subcategories } = useSelector((state) => state.subcategory);
 

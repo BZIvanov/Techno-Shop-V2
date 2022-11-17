@@ -2,10 +2,10 @@ import { useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { Paper, InputBase, IconButton } from '@mui/material';
 import { Search } from '@mui/icons-material';
-import { filterAction } from '../../../store/action-creators';
+import { filterAction } from '../../../store/features/products-filter/productsFilterSlice';
 
 const HeaderSearch = () => {
-  const { text } = useSelector((state) => state.filters);
+  const { text } = useSelector((state) => state.productsFilter);
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
