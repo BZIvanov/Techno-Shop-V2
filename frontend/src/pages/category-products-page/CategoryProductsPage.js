@@ -9,11 +9,9 @@ import {
 } from '../../store/features/category/categorySlice';
 
 const CategoryProductsPage = () => {
-  const category = useSelector(
-    ({ category: { selectedCategory } }) => selectedCategory
-  );
+  const category = useSelector((state) => state.category.selectedCategory);
   const { products, totalCount } = useSelector(
-    ({ category: { selectedCategoryProducts } }) => selectedCategoryProducts
+    (state) => state.category.selectedCategoryProducts
   );
 
   const [page, setPage] = useState(1);

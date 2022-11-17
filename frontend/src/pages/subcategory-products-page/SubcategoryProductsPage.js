@@ -10,11 +10,10 @@ import {
 
 const SubcategoryProductsPage = () => {
   const subcategory = useSelector(
-    ({ subcategory: { selectedSubcategory } }) => selectedSubcategory
+    (state) => state.subcategory.selectedSubcategory
   );
   const { products, totalCount } = useSelector(
-    ({ subcategory: { selectedSubcategoryProducts } }) =>
-      selectedSubcategoryProducts
+    (state) => state.subcategory.selectedSubcategoryProducts
   );
 
   const [page, setPage] = useState(1);

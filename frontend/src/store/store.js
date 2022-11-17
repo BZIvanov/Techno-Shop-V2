@@ -4,9 +4,7 @@ import userReducer from './features/user/userSlice';
 import categoryReducer from './features/category/categorySlice';
 import subcategoryReducer from './features/subcategory/subcategorySlice';
 import productReducer from './features/product/productSlice';
-
-// DEPRECATED reducers
-import { filtersReducer } from './reducers/filters';
+import productsFilterReducer from './features/products-filter/productsFilterSlice';
 
 export const store = configureStore({
   reducer: {
@@ -15,7 +13,6 @@ export const store = configureStore({
     category: categoryReducer,
     subcategory: subcategoryReducer,
     product: productReducer,
-    // Deprecated reducers
-    filters: filtersReducer,
+    productsFilter: productsFilterReducer,
   },
 });

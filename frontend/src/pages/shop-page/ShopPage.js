@@ -4,12 +4,12 @@ import { Box, List, Slider } from '@mui/material';
 import { ProductsList } from '../../components/products-list';
 import { FilterListItem } from '../../components/filter-list-item';
 import { getProductsAction } from '../../store/features/product/productSlice';
-import { filterAction } from '../../store/action-creators';
+import { filterAction } from '../../store/features/products-filter/productsFilterSlice';
 import { PRODUCTS_LIST_TYPES } from '../../constants';
 
 const ShopPage = () => {
-  const { products, totalCount } = useSelector(({ product: { all } }) => all);
-  const { text, price } = useSelector(({ filters }) => filters);
+  const { products, totalCount } = useSelector((state) => state.product.all);
+  const { text, price } = useSelector((state) => state.productsFilter);
 
   const [page, setPage] = useState(1);
 
