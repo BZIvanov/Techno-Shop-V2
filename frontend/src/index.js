@@ -1,20 +1,14 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import reportWebVitals from './reportWebVitals';
-import StoreProvider from './providers/store/StoreProvider';
-import BrowserRouterProvider from './providers/router/BrowserRouterProvider';
-import ThemeProvider from './providers/theme/ThemeProvider';
+import AppProviders from './providers/AppProviders';
 import App from './App';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  <StoreProvider>
-    <BrowserRouterProvider>
-      <ThemeProvider>
-        <App />
-      </ThemeProvider>
-    </BrowserRouterProvider>
-  </StoreProvider>
+  <AppProviders>
+    <App />
+  </AppProviders>
 );
 
 // If you want to start measuring performance in your app, pass a function
