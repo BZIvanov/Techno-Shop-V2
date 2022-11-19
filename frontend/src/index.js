@@ -1,20 +1,20 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
+import ReactDOM from 'react-dom/client';
 import reportWebVitals from './reportWebVitals';
 import StoreProvider from './providers/store/StoreProvider';
 import BrowserRouterProvider from './providers/router/BrowserRouterProvider';
 import ThemeProvider from './providers/theme/ThemeProvider';
 import App from './App';
 
-ReactDOM.render(
+const root = ReactDOM.createRoot(document.getElementById('root'));
+root.render(
   <StoreProvider>
     <BrowserRouterProvider>
       <ThemeProvider>
         <App />
       </ThemeProvider>
     </BrowserRouterProvider>
-  </StoreProvider>,
-  document.getElementById('root')
+  </StoreProvider>
 );
 
 // If you want to start measuring performance in your app, pass a function
