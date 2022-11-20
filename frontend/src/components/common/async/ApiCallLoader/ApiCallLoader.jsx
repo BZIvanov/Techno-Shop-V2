@@ -1,4 +1,4 @@
-import { useSelector } from 'react-redux';
+import { useSelector } from '../../../../store/hooks';
 import { Backdrop, CircularProgress } from '@mui/material';
 
 const ApiCallLoader = () => {

@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from '../../store/hooks';
 import { Box } from '@mui/material';
 import { Jumbotron } from '../../components/jumbotron';
 import { ProductsList } from '../../components/products-list';

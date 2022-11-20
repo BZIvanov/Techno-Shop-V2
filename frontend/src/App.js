@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch } from './store/hooks';
 import { Header } from './components/header/Header';
 import AppRoutes from './routes/AppRoutes';
 import { getCurrentUserAction } from './store/features/user/userSlice';
