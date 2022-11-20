@@ -4,7 +4,7 @@ import RegisterForm from './RegisterForm';
 
 describe('RegisterForm component', () => {
   describe('Renders form elements successfully', () => {
-    test('renders the form title', () => {
+    test('renders the form title with correct styles', () => {
       render(<RegisterForm />);
 
       // with the below debug example we can print the whole text content. If undefined is first parameter, it will take the whole body and second parameter is characters length of the printed content
@@ -12,6 +12,11 @@ describe('RegisterForm component', () => {
 
       const formTitleElement = screen.getByText(/register form/i);
       expect(formTitleElement).toBeInTheDocument();
+      expect(formTitleElement).toHaveStyle({
+        'font-family': 'Roboto,Helvetica,sans-serif',
+        'font-size': '1.5rem',
+        'font-weight': 400,
+      });
     });
 
     test('renders the form fields', () => {
