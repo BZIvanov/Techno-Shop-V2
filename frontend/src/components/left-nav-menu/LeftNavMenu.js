@@ -1,4 +1,4 @@
-import { useSelector } from 'react-redux';
+import { useSelector } from '../../store/hooks';
 import { Divider, MenuList } from '@mui/material';
 import {
   Dashboard,

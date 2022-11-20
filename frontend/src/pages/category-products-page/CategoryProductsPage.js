@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from '../../store/hooks';
 import { useParams } from 'react-router-dom';
 import { Box } from '@mui/material';
 import { ProductsList } from '../../components/products-list';

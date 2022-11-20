@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from '../../store/hooks';
 import { Box, List, Slider } from '@mui/material';
 import { ProductsList } from '../../components/products-list';
 import { FilterListItem } from '../../components/filter-list-item';
