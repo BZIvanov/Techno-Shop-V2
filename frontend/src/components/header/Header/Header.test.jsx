@@ -41,4 +41,17 @@ describe('Header component', () => {
       expect(shopLinkElement).toHaveStyle({ color: 'rgb(255, 255, 255)' });
     });
   });
+
+  describe('Logged in user navigation links', () => {
+    test('render dashboard and logout links if user in the state', async () => {
+      const preloadedState = {
+        user: { token: null, user: { name: 'Iva' } },
+      };
+
+      render(<Header />, { preloadedState });
+
+      screen.getByRole('link', { name: /dashboard/i });
+      screen.getByRole('link', { name: /logout/i });
+    });
+  });
 });
