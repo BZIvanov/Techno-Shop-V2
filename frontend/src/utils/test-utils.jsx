@@ -4,21 +4,24 @@ import StoreProvider from '../providers/store/StoreProvider';
 import BrowserRouterProvider from '../providers/router/BrowserRouterProvider';
 import ThemeProvider from '../providers/theme/ThemeProvider';
 
-const AllTheProviders = ({ children }) => {
-  return (
-    <StoreProvider>
-      <BrowserRouterProvider>
-        <ThemeProvider>{children}</ThemeProvider>
-      </BrowserRouterProvider>
-    </StoreProvider>
-  );
-};
+// ui is the rendered component
+const customRender = (ui, options) => {
+  const { preloadedState, renderOptions } = options || {};
 
-const customRender = (ui, options) =>
-  render(ui, { wrapper: AllTheProviders, ...options });
+  const AllTheProviders = ({ children }) => {
+    return (
+      <StoreProvider preloadedState={preloadedState}>
+        <BrowserRouterProvider>
+          <ThemeProvider>{children}</ThemeProvider>
+        </BrowserRouterProvider>
+      </StoreProvider>
+    );
+  };
+
+  render(ui, { wrapper: AllTheProviders, ...renderOptions });
+};
 
 // re-export everything
 export * from '@testing-library/react';
-
 // override render method
 export { customRender as render };

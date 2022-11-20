@@ -84,18 +84,19 @@ const Header = () => {
                     );
                   })}
                   <Box
+                    role='link' // used for the tests
                     onClick={logoutUser}
                     sx={{
                       display: 'flex',
                       flexDirection: 'column',
                       alignItems: 'center',
-                      padding: '8px',
+                      padding: '2px 16px',
                       cursor: 'pointer',
-                      color: (theme) => theme.palette.secondary.dark,
+                      color: (theme) => theme.palette.common.black,
                     }}
                   >
-                    <ExitToApp fontSize='small' />
-                    <Typography>Logout</Typography>
+                    <ExitToApp />
+                    <Typography variant='caption'>Logout</Typography>
                   </Box>
                 </>
               )}
