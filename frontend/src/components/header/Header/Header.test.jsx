@@ -1,6 +1,20 @@
 import userEvent from '@testing-library/user-event';
-import { render, screen } from '../../../utils/test-utils';
+import { rest } from 'msw';
+import { setupServer } from 'msw/node';
+import { render, screen, waitFor } from '../../../utils/test-utils';
 import Header from './Header';
+
+// handler for mocking the logout request, which will be called if the logout button is clicked
+const handlers = [
+  rest.put(`${process.env.REACT_APP_API}/users/logout`, (req, res, ctx) => {
+    return res(
+      ctx.json({ success: true, user: { token: '123' } }),
+      ctx.delay(100)
+    );
+  }),
+];
+
+const server = setupServer(...handlers);
 
 describe('Header component', () => {
   describe('Renders elements successfully', () => {
@@ -52,6 +66,30 @@ describe('Header component', () => {
 
       screen.getByRole('link', { name: /dashboard/i });
       screen.getByRole('link', { name: /logout/i });
+    });
+  });
+
+  describe('Logout user', () => {
+    beforeAll(() => server.listen());
+
+    afterEach(() => server.resetHandlers());
+
+    afterAll(() => server.close());
+
+    test('render non user links after user logs out', async () => {
+      const preloadedState = {
+        user: { token: null, user: { name: 'Iva' } },
+      };
+
+      render(<Header />, { preloadedState });
+
+      const logoutLink = screen.getByRole('link', { name: /logout/i });
+
+      await userEvent.click(logoutLink);
+
+      await waitFor(() => {
+        screen.getByRole('link', { name: /login/i });
+      });
     });
   });
 });

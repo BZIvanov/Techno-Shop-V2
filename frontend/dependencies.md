@@ -1,4 +1,4 @@
-## React
+### React
 
 ##### React
 
@@ -13,7 +13,13 @@
 - `@testing-library/jest-dom`
 - `@testing-library/user-event`
 
-## Styling library
+### More testing libraries
+
+##### API mocking
+
+- `msw` - for mocking API requests. Whereever we dispatch api async calls, we can mock the returned response with this library
+
+### Styling library
 
 ##### Material-UI
 
@@ -23,7 +29,7 @@
 - `@mui/icons-material` - icons
 - `@mui/lab` - additional experimental components
 
-## Forms
+### Forms
 
 ##### React hook form
 
@@ -38,22 +44,22 @@
 
 - `react-dropzone` - for working with files form fields
 
-## State management
+### State management
 
 ##### Redux
 
 - `react-redux` - react redux
-- `@reduxjs/toolkit` - redux
+- `@reduxjs/toolkit` - redux toolkit containing all the utilities we need
 
-## API calls
+### API calls
 
 - `axios` - for making api calls
 
-## Routing
+### Routing
 
 - `react-router-dom` - for url routes
 
-## Other
+### Other
 
 - `react-responsive-carousel` - carousel for displaying images in a slider
 - `react-image-file-resizer` - for manipulating image files
