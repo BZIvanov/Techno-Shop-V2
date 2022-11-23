@@ -36,7 +36,11 @@ const HeaderSearch = () => {
         value={text}
         onChange={handleSearchChange}
       />
-      <IconButton type='submit' sx={{ p: '5px' }}>
+      <IconButton
+        type='submit'
+        aria-label='product search' // this is needed for the tests to target icon button
+        sx={{ p: '5px' }}
+      >
         <Search />
       </IconButton>
     </Paper>
