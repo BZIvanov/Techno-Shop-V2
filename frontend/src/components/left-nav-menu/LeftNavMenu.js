@@ -8,7 +8,7 @@ import {
   AutoAwesomeMosaic,
   Gradient,
   PhoneAndroid,
-} from '@mui/icons-material';
+} from '../mui/Icons';
 import { LeftNavLink } from '../left-nav-link';
 
 const userLinks = [

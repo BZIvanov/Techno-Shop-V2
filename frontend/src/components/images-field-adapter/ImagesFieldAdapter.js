@@ -1,7 +1,7 @@
 import Dropzone from 'react-dropzone';
 import { Controller } from 'react-hook-form';
 import { FormControl, Paper, Typography, FormHelperText } from '@mui/material';
-import { CloudUpload } from '@mui/icons-material';
+import { CloudUpload } from '../mui/Icons';
 import { amber } from '@mui/material/colors';
 
 const ImagesFieldAdapter = ({ name, control }) => {

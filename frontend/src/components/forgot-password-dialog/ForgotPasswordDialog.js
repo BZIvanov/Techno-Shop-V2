@@ -9,7 +9,7 @@ import {
   DialogContentText,
   DialogActions,
 } from '@mui/material';
-import { Email } from '@mui/icons-material';
+import { Email } from '../mui/Icons';
 import { TextFieldAdapter } from '../common/forms/TextFieldAdapter';
 import { forgotPasswordAction } from '../../store/features/user/userSlice';
 import schema from './form-schema';

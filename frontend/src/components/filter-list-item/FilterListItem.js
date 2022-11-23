@@ -5,7 +5,7 @@ import {
   ListItemText,
   Collapse,
 } from '@mui/material';
-import { ExpandLess, ExpandMore, AttachMoney } from '@mui/icons-material';
+import { ExpandLess, ExpandMore, AttachMoney } from '../mui/Icons';
 
 const FilterListItem = ({ title, children }) => {
   const [open, setOpen] = useState(true);

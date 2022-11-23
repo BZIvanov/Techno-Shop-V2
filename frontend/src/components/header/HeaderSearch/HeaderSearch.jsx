@@ -1,7 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from '../../../store/hooks';
 import { Paper, InputBase, IconButton } from '@mui/material';
-import { Search } from '@mui/icons-material';
+import { Search } from '../../mui/Icons';
 import { filterAction } from '../../../store/features/products-filter/productsFilterSlice';
 
 const HeaderSearch = () => {

@@ -8,7 +8,7 @@ import {
   Stack,
   Pagination,
 } from '@mui/material';
-import { AddShoppingCart, Preview } from '@mui/icons-material';
+import { AddShoppingCart, Preview } from '../mui/Icons';
 import { ProductCard } from '../../components/product-card';
 import { AverageRating } from '../average-rating';
 
