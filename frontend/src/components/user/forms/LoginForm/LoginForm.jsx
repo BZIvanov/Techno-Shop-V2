@@ -104,7 +104,7 @@ const LoginForm = () => {
             color='warning'
             onClick={() => setShowForgotPasswordModal(true)}
           >
-            <Typography variant='body2'>Forgot Password?</Typography>
+            Forgot Password?
           </Button>
         </Box>
       </Box>
