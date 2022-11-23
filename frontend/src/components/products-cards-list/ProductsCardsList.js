@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from '../../store/hooks';
 import { Link } from 'react-router-dom';
 import { Box, Typography, IconButton, Grid, Paper } from '@mui/material';
-import { Edit, Delete } from '@mui/icons-material';
+import { Edit, Delete } from '../mui/Icons';
 import { ConfirmDialog } from '../confirm-dialog';
 import { AverageRating } from '../average-rating';
 import { ApiCallAlert } from '../common/async/ApiCallAlert';

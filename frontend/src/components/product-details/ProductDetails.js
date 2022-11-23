@@ -16,7 +16,7 @@ import {
   Favorite,
   Star,
   StarBorderOutlined,
-} from '@mui/icons-material';
+} from '../mui/Icons';
 import { ImagesCarousel } from '../images-carousel';
 import { RatingDialog } from '../rating-dialog';
 import { AverageRating } from '../average-rating';

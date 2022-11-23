@@ -12,7 +12,7 @@ import {
   Badge,
   Avatar,
 } from '@mui/material';
-import { CloseOutlined } from '@mui/icons-material';
+import { CloseOutlined } from '../mui/Icons';
 import { TextFieldAdapter } from '../common/forms/TextFieldAdapter';
 import { SelectDropdownAdapter } from '../common/forms/SelectDropdownAdapter';
 import { SelectDropdownMultichipAdapter } from '../common/forms/SelectDropdownMultichipAdapter';

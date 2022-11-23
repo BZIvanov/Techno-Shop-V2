@@ -3,7 +3,7 @@ import { Navigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Box, Typography, Button } from '@mui/material';
-import { Face, Email } from '@mui/icons-material';
+import { Face, Email } from '../../../mui/Icons';
 import { TextFieldAdapter } from '../../../common/forms/TextFieldAdapter';
 import { PasswordTextFieldAdapter } from '../../../common/forms/PasswordTextFieldAdapter';
 import { ApiCallAlert } from '../../../common/async/ApiCallAlert';

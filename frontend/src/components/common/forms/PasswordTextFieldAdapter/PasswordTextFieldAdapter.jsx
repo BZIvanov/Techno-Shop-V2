@@ -6,7 +6,7 @@ import {
   IconButton,
   TextField,
 } from '@mui/material';
-import { Visibility, VisibilityOff } from '@mui/icons-material';
+import { Visibility, VisibilityOff } from '../../../mui/Icons';
 
 const PasswordTextFieldAdapter = ({ name, control, label }) => {
   const [showPassword, setShowPassword] = useState(false);

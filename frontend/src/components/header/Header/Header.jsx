@@ -7,7 +7,7 @@ import {
   ExitToApp,
   Dashboard,
   AddBusiness,
-} from '@mui/icons-material';
+} from '../../mui/Icons';
 import { HeaderNavLink } from '../HeaderNavLink';
 import { HeaderSearch } from '../HeaderSearch';
 import { logoutUserAction } from '../../../store/features/user/userSlice';
