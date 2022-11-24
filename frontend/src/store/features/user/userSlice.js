@@ -19,6 +19,7 @@ const initialState = {
   user: null,
 };
 
+// will result in dispatched action -> user/loginUser/pending | user/loginUser/fulfilled | user/loginUser/rejected
 export const registerUserAction = createAsyncThunk(
   'user/loginUser',
   async (values, { dispatch, rejectWithValue }) => {
@@ -28,6 +29,8 @@ export const registerUserAction = createAsyncThunk(
       const { data } = await registerUserCall(values);
 
       dispatch(apiCallSuccessAction());
+
+      window.localStorage.setItem('userToken', data.token);
 
       return data;
     } catch (error) {
@@ -48,6 +51,8 @@ export const loginUserAction = createAsyncThunk(
       const { data } = await loginUserCall(values);
 
       dispatch(apiCallSuccessAction('Login success'));
+
+      window.localStorage.setItem('userToken', data.token);
 
       return data;
     } catch (error) {
@@ -87,6 +92,8 @@ export const logoutUserAction = createAsyncThunk(
       await logoutUserCall(user.token);
 
       dispatch(apiCallSuccessAction());
+
+      window.localStorage.removeItem('userToken');
 
       return;
     } catch (error) {
@@ -161,8 +168,6 @@ const userSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(registerUserAction.fulfilled, (state, action) => {
-        window.localStorage.setItem('userToken', action.payload.token);
-
         state.token = action.payload.token;
         state.user = action.payload.user;
       })
@@ -171,8 +176,6 @@ const userSlice = createSlice({
         state.user = null;
       })
       .addCase(logoutUserAction.fulfilled, (state) => {
-        window.localStorage.removeItem('userToken');
-
         state.token = null;
         state.user = null;
       });
