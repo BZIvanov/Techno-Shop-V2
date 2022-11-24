@@ -10,14 +10,17 @@ const {
 } = require('./user.controllers');
 const validateBodyData = require('../../middlewares/validate-body-data');
 const authenticate = require('../../middlewares/authenticate');
-const { registerValidationSchema } = require('./user.validationSchema');
+const {
+  registerValidationSchema,
+  loginValidationSchema,
+} = require('./user.validationSchema');
 
 const router = express.Router();
 
 router
   .route('/register')
   .post(validateBodyData(registerValidationSchema), register);
-router.route('/login').post(login);
+router.route('/login').post(validateBodyData(loginValidationSchema), login);
 router.route('/logout').put(authenticate, logout);
 router.route('/current-user').get(authenticate, currentUser);
 router.route('/update-password').put(authenticate, updatePassword);

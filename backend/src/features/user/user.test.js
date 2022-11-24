@@ -77,4 +77,105 @@ describe('User routes', () => {
       });
     });
   });
+
+  describe('Login user controller', () => {
+    test('it should login an user successfully', async () => {
+      const response = await request(app)
+        .post('/v1/users/login')
+        // we will have this user from the register tests
+        .send({ email: 'ivo@mail.com', password: '12345678' })
+        .expect('Content-Type', /application\/json/)
+        .expect('Authorization', /Bearer [A-Za-z0-9.-]+/)
+        .expect(200);
+
+      expect(response.body).toHaveProperty('success', true);
+      expect(response.body).toHaveProperty('token');
+      expect(response.body).toHaveProperty('user');
+      expect(response.body).not.toHaveProperty('email');
+      expect(response.body).toHaveProperty('user.username', 'Ivo');
+      expect(response.body).not.toHaveProperty('user.password');
+    });
+
+    test('it should not allow to login with invalid email', async () => {
+      const response = await request(app)
+        .post('/v1/users/login')
+        .send({ email: 'iva21@mail', password: '12345678' })
+        .expect('Content-Type', /application\/json/)
+        .expect(400);
+
+      expect(response.body).toMatchObject({
+        success: false,
+        error: '"email" must be a valid email',
+      });
+    });
+
+    test('it should not allow to login with not exisiting email', async () => {
+      const response = await request(app)
+        .post('/v1/users/login')
+        .send({ email: 'iva21@mail.com', password: '12345678' })
+        .expect(401);
+
+      expect(response.body).toMatchObject({
+        success: false,
+        error: 'Invalid credentials',
+      });
+    });
+  });
+
+  describe('Logout user controller', () => {
+    let userResponse;
+    beforeAll(async () => {
+      userResponse = await request(app)
+        .post('/v1/users/login')
+        .send({ email: 'ivo@mail.com', password: '12345678' });
+    });
+
+    test('it should logout an user successfully', async () => {
+      const response = await request(app)
+        .put('/v1/users/logout')
+        .set('Authorization', userResponse.headers.authorization)
+        .expect('Content-Type', /application\/json/)
+        .expect('Authorization', /Bearer [A-Za-z0-9.-]+/)
+        .expect(200);
+
+      expect(response.body).toHaveProperty('success', true);
+      expect(response.body).toHaveProperty('token');
+      expect(response.body).toHaveProperty('user', null);
+    });
+
+    test('it should return error message if authorization header is not provided', async () => {
+      const response = await request(app)
+        .put('/v1/users/logout')
+        .expect('Content-Type', /application\/json/)
+        .expect(401);
+
+      expect(response.body).toHaveProperty('success', false);
+      expect(response.body).toHaveProperty('error', 'You are not logged in');
+    });
+  });
+
+  describe('Current user controller', () => {
+    let userResponse;
+    beforeAll(async () => {
+      userResponse = await request(app)
+        .post('/v1/users/login')
+        .send({ email: 'ivo@mail.com', password: '12345678' });
+    });
+
+    test('it should get the current user based on the authorization header', async () => {
+      const response = await request(app)
+        .get('/v1/users/current-user')
+        .set('Authorization', userResponse.headers.authorization)
+        .expect('Content-Type', /application\/json/)
+        .expect(200);
+
+      expect(response.body).toHaveProperty('success', true);
+      expect(response.body).toHaveProperty(
+        'user._id',
+        userResponse.body.user._id
+      );
+      expect(response.body).toHaveProperty('user.username', 'Ivo');
+      expect(response.body).toHaveProperty('user.role', 'user');
+    });
+  });
 });

@@ -59,7 +59,7 @@ exports.logout = catchAsync(async (req, res, next) => {
   res
     .header('Authorization', `Bearer ${token}`)
     .status(status.OK)
-    .json({ success: true, user: { token } });
+    .json({ success: true, token, user: null });
 });
 
 exports.currentUser = catchAsync(async (req, res, next) => {
