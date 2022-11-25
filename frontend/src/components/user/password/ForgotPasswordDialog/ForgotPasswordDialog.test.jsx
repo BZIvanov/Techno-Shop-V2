@@ -1,7 +1,7 @@
 import { rest } from 'msw';
 import { setupServer } from 'msw/node';
 import userEvent from '@testing-library/user-event';
-import { render, screen } from '../../../../utils/test-utils';
+import { render, screen, waitFor } from '../../../../utils/test-utils';
 import ForgotPasswordDialog from './ForgotPasswordDialog';
 
 const handlers = [
@@ -30,6 +30,39 @@ describe('ForgotPasswordDialog component', () => {
     });
   });
 
+  describe('Visibility of the modal', () => {
+    test('should not be visible if show modal is false', async () => {
+      const { rerender } = render(
+        <ForgotPasswordDialog showForgotPasswordModal={true} />
+      );
+
+      screen.getByText('Forgot Password');
+
+      rerender(<ForgotPasswordDialog showForgotPasswordModal={false} />);
+
+      await waitFor(() => {
+        const dialogTitle = screen.queryByText('Forgot Password');
+        expect(dialogTitle).not.toBeInTheDocument();
+      });
+    });
+
+    test('should call close modal function if cancel is clicked', async () => {
+      const handleShowForgotModal = jest.fn();
+
+      render(
+        <ForgotPasswordDialog
+          showForgotPasswordModal={true}
+          handleShowForgotModal={handleShowForgotModal}
+        />
+      );
+
+      const cancelButton = screen.getByRole('button', { name: /cancel/i });
+      await userEvent.click(cancelButton);
+
+      expect(handleShowForgotModal).toHaveBeenCalledTimes(1);
+    });
+  });
+
   describe('Submit the dialog form', () => {
     beforeAll(() => server.listen());
 
@@ -38,12 +71,12 @@ describe('ForgotPasswordDialog component', () => {
     afterAll(() => server.close());
 
     test('send email', async () => {
-      const setShowForgotPasswordModal = jest.fn();
+      const handleShowForgotModal = jest.fn();
 
       render(
         <ForgotPasswordDialog
           showForgotPasswordModal={true}
-          setShowForgotPasswordModal={setShowForgotPasswordModal}
+          handleShowForgotModal={handleShowForgotModal}
         />
       );
 

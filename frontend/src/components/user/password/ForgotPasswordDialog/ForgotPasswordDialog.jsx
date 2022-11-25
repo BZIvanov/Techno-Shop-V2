@@ -16,7 +16,7 @@ import schema from './form-schema';
 
 const ForgotPasswordDialog = ({
   showForgotPasswordModal,
-  setShowForgotPasswordModal,
+  handleShowForgotModal,
 }) => {
   const { loading } = useSelector((state) => state.apiCall);
 
@@ -29,13 +29,13 @@ const ForgotPasswordDialog = ({
 
   const handleFormSubmit = (values) => {
     dispatch(forgotPasswordAction(values));
-    setShowForgotPasswordModal(false);
+    handleShowForgotModal(false);
   };
 
   return (
     <Dialog
       open={showForgotPasswordModal}
-      onClose={() => setShowForgotPasswordModal(false)}
+      onClose={() => handleShowForgotModal(false)}
     >
       <form onSubmit={handleSubmit(handleFormSubmit)}>
         <DialogTitle>Forgot Password</DialogTitle>
@@ -55,7 +55,7 @@ const ForgotPasswordDialog = ({
           <Button
             color='secondary'
             type='button'
-            onClick={() => setShowForgotPasswordModal(false)}
+            onClick={() => handleShowForgotModal(false)}
           >
             Cancel
           </Button>
