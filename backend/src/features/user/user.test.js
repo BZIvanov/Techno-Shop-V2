@@ -178,4 +178,41 @@ describe('User routes', () => {
       expect(response.body).toHaveProperty('user.role', 'user');
     });
   });
+
+  describe('Forgot password controller', () => {
+    test('it should return success response for not existing email', async () => {
+      const response = await request(app)
+        .post('/v1/users/forgot-password')
+        .send({ email: 'not-existing@mail.com' })
+        .expect('Content-Type', /application\/json/)
+        .expect(200);
+
+      expect(response.body).toHaveProperty('success', true);
+      expect(response.body).toHaveProperty(
+        'message',
+        'You will soon receive an email, if the provided email was valid.'
+      );
+    });
+
+    test('it should return error if email is not provided', async () => {
+      const response = await request(app)
+        .post('/v1/users/forgot-password')
+        .expect('Content-Type', /application\/json/)
+        .expect(400);
+
+      expect(response.body).toHaveProperty('success', false);
+      expect(response.body).toHaveProperty('error', '"email" is required');
+    });
+
+    test('it should return error if additional keys are provided', async () => {
+      const response = await request(app)
+        .post('/v1/users/forgot-password')
+        .send({ email: 'ivo@mail.com', text: 'Test text' })
+        .expect('Content-Type', /application\/json/)
+        .expect(400);
+
+      expect(response.body).toHaveProperty('success', false);
+      expect(response.body).toHaveProperty('error', '"text" is not allowed');
+    });
+  });
 });

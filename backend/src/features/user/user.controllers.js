@@ -98,9 +98,11 @@ exports.forgotPassword = catchAsync(async (req, res, next) => {
   const user = await User.findOne({ email: req.body.email });
 
   if (!user) {
-    return next(
-      new AppError('There is no user with that e-mail', status.NOT_FOUND)
-    );
+    return res.status(status.OK).json({
+      success: true,
+      message:
+        'You will soon receive an email, if the provided email was valid.',
+    });
   }
 
   const resetToken = user.getResetPasswordToken();
@@ -126,7 +128,10 @@ exports.forgotPassword = catchAsync(async (req, res, next) => {
     );
   }
 
-  res.status(status.OK).json({ success: true });
+  res.status(status.OK).json({
+    success: true,
+    message: 'You will soon receive an email, if the provided email was valid.',
+  });
 });
 
 exports.resetPassword = catchAsync(async (req, res, next) => {

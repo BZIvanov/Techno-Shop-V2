@@ -1,5 +1,5 @@
 import userEvent from '@testing-library/user-event';
-import { render, screen } from '../../../../utils/test-utils';
+import { render, screen, waitFor } from '../../../../utils/test-utils';
 import LoginForm from './LoginForm';
 
 describe('LoginForm component', () => {
@@ -44,6 +44,34 @@ describe('LoginForm component', () => {
       await userEvent.click(passwordTextHiddenIcon);
 
       expect(passwordField).toHaveAttribute('type', 'text');
+    });
+  });
+
+  describe('Forgot password', () => {
+    test('clicking forgot password should open a dialog', async () => {
+      render(<LoginForm />);
+
+      const forgotPasswordButton = screen.getByRole('button', {
+        name: /forgot password\?/i,
+      });
+      await userEvent.click(forgotPasswordButton);
+
+      screen.getByRole('heading', { name: 'Forgot Password' });
+      screen.getByText(
+        'To reset your password provide your e-mail for reset password link.'
+      );
+
+      const dialogCancelButton = screen.getByRole('button', {
+        name: /cancel/i,
+      });
+      await userEvent.click(dialogCancelButton);
+
+      await waitFor(() => {
+        const forgotPasswordDialogTitle = screen.queryByRole('heading', {
+          name: 'Forgot Password',
+        });
+        expect(forgotPasswordDialogTitle).not.toBeInTheDocument();
+      });
     });
   });
 });
