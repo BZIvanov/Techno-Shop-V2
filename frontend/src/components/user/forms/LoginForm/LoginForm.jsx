@@ -34,6 +34,10 @@ const LoginForm = () => {
     dispatch(loginUserAction(values));
   };
 
+  const handleShowForgotModal = (shouldShow) => {
+    setShowForgotPasswordModal(shouldShow);
+  };
+
   if (user) {
     // if the user was trying to rate a product while not logged in, redirect him back to the product page
     const productId = location.state && location.state.productId;
@@ -100,10 +104,7 @@ const LoginForm = () => {
             textAlign: 'right',
           }}
         >
-          <Button
-            color='warning'
-            onClick={() => setShowForgotPasswordModal(true)}
-          >
+          <Button color='warning' onClick={() => handleShowForgotModal(true)}>
             Forgot Password?
           </Button>
         </Box>
@@ -111,7 +112,7 @@ const LoginForm = () => {
 
       <ForgotPasswordDialog
         showForgotPasswordModal={showForgotPasswordModal}
-        setShowForgotPasswordModal={setShowForgotPasswordModal}
+        handleShowForgotModal={handleShowForgotModal}
       />
 
       <ApiCallLoader />

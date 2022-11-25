@@ -18,7 +18,8 @@ const customRender = (ui, options) => {
     );
   };
 
-  render(ui, { wrapper: AllTheProviders, ...renderOptions });
+  // return also the methods provided by render
+  return render(ui, { wrapper: AllTheProviders, ...renderOptions });
 };
 
 // re-export everything
