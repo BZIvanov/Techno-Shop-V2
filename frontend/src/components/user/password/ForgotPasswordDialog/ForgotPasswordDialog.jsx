@@ -1,4 +1,4 @@
-import { useSelector, useDispatch } from '../../store/hooks';
+import { useSelector, useDispatch } from '../../../../store/hooks';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import {
@@ -9,9 +9,9 @@ import {
   DialogContentText,
   DialogActions,
 } from '@mui/material';
-import { Email } from '../mui/Icons';
-import { TextFieldAdapter } from '../common/forms/TextFieldAdapter';
-import { forgotPasswordAction } from '../../store/features/user/userSlice';
+import { Email } from '../../../mui/Icons';
+import { TextFieldAdapter } from '../../../common/forms/TextFieldAdapter';
+import { forgotPasswordAction } from '../../../../store/features/user/userSlice';
 import schema from './form-schema';
 
 const ForgotPasswordDialog = ({

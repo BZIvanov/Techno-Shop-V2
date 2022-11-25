@@ -7,7 +7,7 @@ import { Box, Typography, Button } from '@mui/material';
 import { Email } from '../../../mui/Icons';
 import { TextFieldAdapter } from '../../../common/forms/TextFieldAdapter';
 import { PasswordTextFieldAdapter } from '../../../common/forms/PasswordTextFieldAdapter';
-import { ForgotPasswordDialog } from '../../../forgot-password-dialog';
+import { ForgotPasswordDialog } from '../../password/ForgotPasswordDialog';
 import { ApiCallAlert } from '../../../common/async/ApiCallAlert';
 import { ApiCallLoader } from '../../../common/async/ApiCallLoader';
 import { loginUserAction } from '../../../../store/features/user/userSlice';
