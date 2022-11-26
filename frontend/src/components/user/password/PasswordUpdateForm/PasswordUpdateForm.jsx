@@ -1,43 +1,31 @@
 import { useSelector, useDispatch } from '../../../../store/hooks';
-import { Navigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Box, Typography, Button } from '@mui/material';
-import { Face, Email } from '../../../mui/Icons';
-import { TextFieldAdapter } from '../../../common/forms/TextFieldAdapter';
 import { PasswordTextFieldAdapter } from '../../../common/forms/PasswordTextFieldAdapter';
 import { ApiCallAlert } from '../../../common/async/ApiCallAlert';
 import { ApiCallLoader } from '../../../common/async/ApiCallLoader';
-import { registerUserAction } from '../../../../store/features/user/userSlice';
+import { updatePasswordAction } from '../../../../store/features/user/userSlice';
 import schema from './form-schema';
 
-const RegisterForm = () => {
-  const { user } = useSelector((state) => state.user);
+const PasswordUpdate = () => {
   const { loading } = useSelector((state) => state.apiCall);
 
   const dispatch = useDispatch();
 
   const { control, handleSubmit, formState, reset } = useForm({
     defaultValues: {
-      username: '',
-      email: '',
-      password: '',
-      confirmPassword: '',
+      oldPassword: '',
+      newPassword: '',
+      confirmNewPassword: '',
     },
     resolver: yupResolver(schema),
   });
 
   const handleFormSubmit = (values) => {
-    const { username, email, password } = values;
-    dispatch(registerUserAction({ username, email, password }));
+    dispatch(updatePasswordAction(values));
+    reset();
   };
-
-  if (user) {
-    if (user.role === 'admin') {
-      return <Navigate to='/admin/dashboard' />;
-    }
-    return <Navigate to='/user/dashboard' />;
-  }
 
   return (
     <Box
@@ -49,41 +37,31 @@ const RegisterForm = () => {
         marginTop: { xs: '10px', sm: '20px', md: '40px' },
       }}
     >
-      <Typography variant='h5'>Register Form</Typography>
+      <Typography variant='h5'>Password Update Form</Typography>
 
       <Box sx={{ width: { xs: '90%', sm: '290px' } }}>
         <form onSubmit={handleSubmit(handleFormSubmit)}>
           <Box my={1}>
-            <TextFieldAdapter
+            <PasswordTextFieldAdapter
               control={control}
-              name='username'
-              label='Username'
-              Icon={Face}
-            />
-          </Box>
-
-          <Box my={1}>
-            <TextFieldAdapter
-              control={control}
-              name='email'
-              label='Email'
-              Icon={Email}
+              name='oldPassword'
+              label='Old Password'
             />
           </Box>
 
           <Box my={1}>
             <PasswordTextFieldAdapter
               control={control}
-              name='password'
-              label='Password'
+              name='newPassword'
+              label='New Password'
             />
           </Box>
 
           <Box my={1}>
             <PasswordTextFieldAdapter
               control={control}
-              name='confirmPassword'
-              label='Confirm Password'
+              name='confirmNewPassword'
+              label='Confirm New Password'
             />
           </Box>
 
@@ -108,7 +86,7 @@ const RegisterForm = () => {
               type='submit'
               disabled={formState.submitting || loading}
             >
-              Register
+              Submit
             </Button>
           </Box>
         </form>
@@ -121,4 +99,4 @@ const RegisterForm = () => {
   );
 };
 
-export default RegisterForm;
+export default PasswordUpdate;

@@ -240,8 +240,11 @@ const ProductDetails = () => {
                     if (user) {
                       setShowRatingModal(true);
                     } else {
+                      // if the user was trying to rate a product while not logged in, redirect him back to the product page after login
                       navigate('/login', {
-                        state: { productId: product._id },
+                        state: {
+                          customNavigateTo: `/product/${product._id}`,
+                        },
                       });
                     }
                   }}

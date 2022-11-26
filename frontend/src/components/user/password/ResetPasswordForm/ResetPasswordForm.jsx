@@ -1,18 +1,17 @@
-import { useSelector, useDispatch } from '../../store/hooks';
-import { Navigate, useParams, useNavigate } from 'react-router-dom';
+import { useSelector, useDispatch } from '../../../../store/hooks';
+import { useParams, useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Box, Typography, Button } from '@mui/material';
-import { PasswordTextFieldAdapter } from '../../components/common/forms/PasswordTextFieldAdapter';
-import { ApiCallAlert } from '../../components/common/async/ApiCallAlert';
-import { ApiCallLoader } from '../../components/common/async/ApiCallLoader';
-import { resetPasswordAction } from '../../store/features/user/userSlice';
+import { PasswordTextFieldAdapter } from '../../../common/forms/PasswordTextFieldAdapter';
+import { ApiCallAlert } from '../../../common/async/ApiCallAlert';
+import { ApiCallLoader } from '../../../common/async/ApiCallLoader';
+import { resetPasswordAction } from '../../../../store/features/user/userSlice';
 import schema from './form-schema';
 
-const ResetPasswordPage = () => {
+const ResetPasswordForm = () => {
   const navigate = useNavigate();
 
-  const { user } = useSelector((state) => state.user);
   const { loading } = useSelector((state) => state.apiCall);
 
   const dispatch = useDispatch();
@@ -29,12 +28,8 @@ const ResetPasswordPage = () => {
 
   const handleFormSubmit = async (values) => {
     await dispatch(resetPasswordAction({ ...values, token }));
-    navigate('/login');
+    navigate('/login'); // TODO don't navigate if error
   };
-
-  if (user) {
-    return <Navigate to='/' />;
-  }
 
   return (
     <Box
@@ -100,4 +95,4 @@ const ResetPasswordPage = () => {
   );
 };
 
-export default ResetPasswordPage;
+export default ResetPasswordForm;
