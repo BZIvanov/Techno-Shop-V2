@@ -76,15 +76,6 @@ exports.updatePassword = catchAsync(async (req, res, next) => {
 
   const { oldPassword, newPassword } = req.body;
 
-  if (!oldPassword || !newPassword) {
-    return next(
-      new AppError(
-        'Both current and new passwords are required',
-        status.BAD_REQUEST
-      )
-    );
-  }
-
   if (!(await user.comparePassword(oldPassword))) {
     return next(new AppError('Incorrect password', status.UNAUTHORIZED));
   }
@@ -110,7 +101,6 @@ exports.forgotPassword = catchAsync(async (req, res, next) => {
   await user.save({ validateBeforeSave: false });
 
   const resetUrl = `http://localhost:3000/reset-password/${resetToken}`;
-
   const text = `Here is your password reset URL:\n\n${resetUrl}`;
 
   try {

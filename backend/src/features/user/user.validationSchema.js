@@ -16,8 +16,14 @@ const forgotPasswordValidationSchema = Joi.object({
   email: Joi.string().max(100).required().email(),
 });
 
+const updatePasswordValidationSchema = Joi.object({
+  oldPassword: Joi.string().min(5).max(50).required(),
+  newPassword: Joi.string().min(5).max(50).required(),
+});
+
 module.exports = {
   registerValidationSchema,
   loginValidationSchema,
   forgotPasswordValidationSchema,
+  updatePasswordValidationSchema,
 };

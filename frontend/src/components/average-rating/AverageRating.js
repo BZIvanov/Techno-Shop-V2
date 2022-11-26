@@ -5,7 +5,7 @@ const AverageRating = ({ ratings = [], size = 'large' }) => {
     .map((rating) => rating.star)
     .reduce((total, star) => total + star, 0);
 
-  const average = allStarsSum / ratings.length;
+  const averageRating = allStarsSum / ratings.length;
 
   return (
     <Box
@@ -20,7 +20,7 @@ const AverageRating = ({ ratings = [], size = 'large' }) => {
       {ratings.length > 0 ? (
         <>
           <Rating
-            value={average}
+            value={averageRating}
             precision={0.5}
             size={size}
             max={10}

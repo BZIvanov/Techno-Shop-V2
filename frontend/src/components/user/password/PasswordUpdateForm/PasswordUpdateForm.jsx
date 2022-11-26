@@ -8,7 +8,7 @@ import { ApiCallLoader } from '../../../common/async/ApiCallLoader';
 import { updatePasswordAction } from '../../../../store/features/user/userSlice';
 import schema from './form-schema';
 
-const PasswordUpdate = () => {
+const PasswordUpdateForm = () => {
   const { loading } = useSelector((state) => state.apiCall);
 
   const dispatch = useDispatch();
@@ -99,4 +99,4 @@ const PasswordUpdate = () => {
   );
 };
 
-export default PasswordUpdate;
+export default PasswordUpdateForm;

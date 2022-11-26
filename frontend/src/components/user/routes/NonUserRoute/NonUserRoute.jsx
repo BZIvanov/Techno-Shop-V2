@@ -1,21 +1,26 @@
-import { Navigate, useLocation } from 'react-router-dom';
+import { useEffect } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { useSelector } from '../../../../store/hooks';
 
 const NonUserRoute = ({ children }) => {
   const location = useLocation();
+  const navigate = useNavigate();
   const { user } = useSelector((state) => state.user);
 
-  if (user) {
-    const customNavigateTo = location.state && location.state.customNavigateTo;
-    if (customNavigateTo) {
-      return <Navigate to={customNavigateTo} />;
-    }
+  useEffect(() => {
+    if (user) {
+      const customNavigateTo =
+        location.state && location.state.customNavigateTo;
+      if (customNavigateTo) {
+        return navigate(customNavigateTo);
+      }
 
-    if (user.role === 'admin') {
-      return <Navigate to='/admin/dashboard' />;
+      if (user.role === 'admin') {
+        return navigate('/admin/dashboard');
+      }
+      return navigate('/user/dashboard');
     }
-    return <Navigate to='/user/dashboard' />;
-  }
+  }, [location, navigate, user]);
 
   return children;
 };
