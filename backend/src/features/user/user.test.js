@@ -215,4 +215,62 @@ describe('User routes', () => {
       expect(response.body).toHaveProperty('error', '"text" is not allowed');
     });
   });
+
+  describe('Update password controller', () => {
+    let userResponse;
+    beforeAll(async () => {
+      userResponse = await request(app)
+        .post('/v1/users/register')
+        .send({ username: 'Ema', email: 'ema@mail.com', password: '12345678' });
+    });
+
+    test('it should return success for correct request', async () => {
+      const response = await request(app)
+        .put('/v1/users/update-password')
+        .set('Authorization', userResponse.headers.authorization)
+        .send({ oldPassword: '12345678', newPassword: '123456789' })
+        .expect('Content-Type', /application\/json/)
+        .expect(200);
+
+      expect(response.body).toHaveProperty('success', true);
+    });
+
+    test('it should return error if the old password is incorrect', async () => {
+      const response = await request(app)
+        .put('/v1/users/update-password')
+        .set('Authorization', userResponse.headers.authorization)
+        .send({ oldPassword: 'test1234', newPassword: '123456789' })
+        .expect('Content-Type', /application\/json/)
+        .expect(401);
+
+      expect(response.body).toHaveProperty('success', false);
+      expect(response.body).toHaveProperty('error', 'Incorrect password');
+    });
+
+    test('it should return error if one of the passwords is not provided', async () => {
+      const response = await request(app)
+        .put('/v1/users/update-password')
+        .set('Authorization', userResponse.headers.authorization)
+        .send({ newPassword: '123456789' })
+        .expect('Content-Type', /application\/json/)
+        .expect(400);
+
+      expect(response.body).toHaveProperty('success', false);
+      expect(response.body).toHaveProperty(
+        'error',
+        '"oldPassword" is required'
+      );
+    });
+
+    test('it should return error if authentication header is not provided', async () => {
+      const response = await request(app)
+        .put('/v1/users/update-password')
+        .send({ oldPassword: '123456789', newPassword: '1234567890' })
+        .expect('Content-Type', /application\/json/)
+        .expect(401);
+
+      expect(response.body).toHaveProperty('success', false);
+      expect(response.body).toHaveProperty('error', 'You are not logged in');
+    });
+  });
 });

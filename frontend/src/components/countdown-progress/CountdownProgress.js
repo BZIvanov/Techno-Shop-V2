@@ -1,10 +1,12 @@
 import { useState, useEffect } from 'react';
-import { Navigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { CircularProgress, Typography, Box, Backdrop } from '@mui/material';
 
 const SECONDS = 3;
 
 const CountdownProgress = ({ redirectTo }) => {
+  const navigate = useNavigate();
+
   const [progress, setProgress] = useState(SECONDS);
 
   useEffect(() => {
@@ -19,9 +21,11 @@ const CountdownProgress = ({ redirectTo }) => {
     };
   }, []);
 
-  if (progress === 0) {
-    return <Navigate to={redirectTo} />;
-  }
+  useEffect(() => {
+    if (progress === 0) {
+      return navigate(redirectTo);
+    }
+  }, [navigate, redirectTo, progress]);
 
   return (
     <Backdrop
