@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from '../../store/hooks';
 import { Box } from '@mui/material';
-import { Jumbotron } from '../../components/jumbotron';
+import { TypeWriterText } from '../../components/common/texts/TypeWriter';
 import { ProductsList } from '../../components/products-list';
 import { ChipsList } from '../../components/chips-list';
 import { ApiCallAlert } from '../../components/common/async/ApiCallAlert';
@@ -9,7 +9,7 @@ import { ApiCallLoader } from '../../components/common/async/ApiCallLoader';
 import { getAllCategoriesAction } from '../../store/features/category/categorySlice';
 import { getSubcategoriesAction } from '../../store/features/subcategory/subcategorySlice';
 import { getProductsAction } from '../../store/features/product/productSlice';
-import { PRODUCTS_LIST_TYPES, JUMBOTRON_TEXTS } from '../../constants';
+import { PRODUCTS_LIST_TYPES, TYPEWRITER_TEXTS } from '../../constants';
 
 const PRODUCTS_PER_PAGE = 3;
 
@@ -65,7 +65,7 @@ const HomePage = () => {
 
   return (
     <>
-      <Jumbotron texts={JUMBOTRON_TEXTS} />
+      <TypeWriterText texts={TYPEWRITER_TEXTS} />
 
       <Box
         sx={{
@@ -77,7 +77,7 @@ const HomePage = () => {
         }}
       >
         <ProductsList
-          header={JUMBOTRON_TEXTS[0]}
+          header={TYPEWRITER_TEXTS[0]}
           products={newestProducts}
           page={latestProductsPage}
           handlePageChange={handleLatestPageChange}
@@ -86,7 +86,7 @@ const HomePage = () => {
         />
 
         <ProductsList
-          header={JUMBOTRON_TEXTS[1]}
+          header={TYPEWRITER_TEXTS[1]}
           products={bestsellingProducts}
           page={bestsellingProductsPage}
           handlePageChange={handleBestsellingPageChange}

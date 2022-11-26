@@ -1,8 +1,7 @@
 import Dropzone from 'react-dropzone';
 import { Controller } from 'react-hook-form';
 import { FormControl, Paper, Typography, FormHelperText } from '@mui/material';
-import { CloudUpload } from '../mui/Icons';
-import { amber } from '@mui/material/colors';
+import { CloudUpload } from '../../../mui/Icons';
 
 const ImagesFieldAdapter = ({ name, control }) => {
   return (
@@ -28,7 +27,7 @@ const ImagesFieldAdapter = ({ name, control }) => {
                   <Paper
                     variant='outlined'
                     sx={{
-                      backgroundColor: amber['200'],
+                      backgroundColor: (theme) => theme.palette.grey[200],
                       textAlign: 'center',
                       cursor: 'pointer',
                       color: (theme) => theme.palette.text.secondary,

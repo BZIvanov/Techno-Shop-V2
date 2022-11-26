@@ -4,7 +4,7 @@ export const PRODUCTS_LIST_TYPES = {
   bestselling: 'bestselling',
 };
 
-export const JUMBOTRON_TEXTS = [
+export const TYPEWRITER_TEXTS = [
   'Latest Products',
   'Best Sellers',
   'Amazing deals',
