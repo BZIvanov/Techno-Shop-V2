@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import { useSelector, useDispatch } from '../../../../store/hooks';
-import { Navigate, useLocation } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Box, Typography, Button } from '@mui/material';
@@ -16,11 +15,9 @@ import schema from './form-schema';
 const LoginForm = () => {
   const [showForgotPasswordModal, setShowForgotPasswordModal] = useState(false);
 
-  const { user } = useSelector((state) => state.user);
   const { loading } = useSelector((state) => state.apiCall);
 
   const dispatch = useDispatch();
-  const location = useLocation();
 
   const { control, handleSubmit, formState } = useForm({
     defaultValues: {
@@ -37,19 +34,6 @@ const LoginForm = () => {
   const handleShowForgotModal = (shouldShow) => {
     setShowForgotPasswordModal(shouldShow);
   };
-
-  if (user) {
-    // if the user was trying to rate a product while not logged in, redirect him back to the product page
-    const productId = location.state && location.state.productId;
-    if (productId) {
-      return <Navigate to={`/product/${productId}`} />;
-    }
-
-    if (user.role === 'admin') {
-      return <Navigate to='/admin/dashboard' />;
-    }
-    return <Navigate to='/user/dashboard' />;
-  }
 
   return (
     <Box
