@@ -1,19 +1,19 @@
 import { Routes, Route } from 'react-router-dom';
-import { HomePage } from '../pages/home-page';
-import { RegisterForm } from '../components/user/forms/RegisterForm';
-import { LoginForm } from '../components/user/forms/LoginForm';
-import { ResetPasswordPage } from '../pages/reset-password-page';
-import { ShopPage } from '../pages/shop-page';
-import { UserPage } from '../pages/user-page';
-import { CategoryProductsPage } from '../pages/category-products-page';
-import { SubcategoryProductsPage } from '../pages/subcategory-products-page';
-import { ProductsCardsList } from '../components/products-cards-list';
-import { ManageCategory } from '../components/manage-category';
-import { ManageSubcategory } from '../components/manage-subcategory';
-import { ManageProduct } from '../components/manage-product';
-import { UserPasswordUpdate } from '../components/user-password-update';
-import { ProductDetails } from '../components/product-details';
-import { ProtectedRoute } from '../components/protected-route';
+import { HomePage } from '../../pages/home-page';
+import { RegisterForm } from '../../components/user/forms/RegisterForm';
+import { LoginForm } from '../../components/user/forms/LoginForm';
+import { ResetPasswordPage } from '../../pages/reset-password-page';
+import { ShopPage } from '../../pages/shop-page';
+import { UserPage } from '../../pages/user-page';
+import { CategoryProductsPage } from '../../pages/category-products-page';
+import { SubcategoryProductsPage } from '../../pages/subcategory-products-page';
+import { ProductsCardsList } from '../../components/products-cards-list';
+import { ManageCategory } from '../../components/manage-category';
+import { ManageSubcategory } from '../../components/manage-subcategory';
+import { ManageProduct } from '../../components/manage-product';
+import { UserPasswordUpdate } from '../../components/user-password-update';
+import { ProductDetails } from '../../components/product-details';
+import { ProtectedRoute } from '../../components/protected-route';
 
 const AppRoutes = () => {
   return (

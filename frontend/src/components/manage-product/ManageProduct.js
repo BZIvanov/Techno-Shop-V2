@@ -16,7 +16,7 @@ import { CloseOutlined } from '../mui/Icons';
 import { TextFieldAdapter } from '../common/forms/TextFieldAdapter';
 import { SelectDropdownAdapter } from '../common/forms/SelectDropdownAdapter';
 import { SelectDropdownMultichipAdapter } from '../common/forms/SelectDropdownMultichipAdapter';
-import { ImagesFieldAdapter } from '../images-field-adapter';
+import { ImagesFieldAdapter } from '../common/forms/ImagesFieldAdapter';
 import { ApiCallLoader } from '../common/async/ApiCallLoader';
 import { ApiCallAlert } from '../common/async/ApiCallAlert';
 import {
