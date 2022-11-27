@@ -1,11 +1,12 @@
 import { Outlet } from 'react-router-dom';
 import { Box } from '@mui/material';
-import { LeftNavMenu } from '../../components/left-nav-menu';
+import { SidebarMenu } from '../../left-sidebar/SidebarMenu';
 
-const UserPage = () => {
+const NavigationLayout = () => {
   return (
     <Box sx={{ display: 'flex' }}>
-      <LeftNavMenu />
+      <SidebarMenu />
+
       <Box sx={{ flexGrow: 1 }}>
         <Outlet />
       </Box>
@@ -13,4 +14,4 @@ const UserPage = () => {
   );
 };
 
-export default UserPage;
+export default NavigationLayout;

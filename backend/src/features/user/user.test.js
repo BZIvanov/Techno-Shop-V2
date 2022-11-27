@@ -96,6 +96,13 @@ describe('User routes', () => {
       expect(response.body).not.toHaveProperty('user.password');
     });
 
+    test('it should send cors headers', async () => {
+      await request(app)
+        .post('/v1/users/login')
+        .send({ email: 'ivo@mail.com', password: '12345678' })
+        .expect('access-control-allow-origin', '*');
+    });
+
     test('it should not allow to login with invalid email', async () => {
       const response = await request(app)
         .post('/v1/users/login')

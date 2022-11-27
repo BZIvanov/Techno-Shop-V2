@@ -1,4 +1,4 @@
-import { useSelector } from '../../store/hooks';
+import { useSelector } from '../../../../store/hooks';
 import { Divider, MenuList } from '@mui/material';
 import {
   Dashboard,
@@ -8,8 +8,8 @@ import {
   AutoAwesomeMosaic,
   Gradient,
   PhoneAndroid,
-} from '../mui/Icons';
-import { LeftNavLink } from '../left-nav-link';
+} from '../../../mui/Icons';
+import { SidebarMenuLink } from '../SidebarMenuLink';
 
 const userLinks = [
   {
@@ -62,7 +62,7 @@ const adminLinks = [
   },
 ];
 
-const LeftNavMenu = () => {
+const NavMenu = () => {
   const { user } = useSelector((state) => state.user);
 
   const links = user.role === 'admin' ? adminLinks : userLinks;
@@ -70,11 +70,11 @@ const LeftNavMenu = () => {
   return (
     <MenuList sx={{ width: 240, maxWidth: '100%', marginRight: 2 }}>
       {links.map((link) => [
-        <LeftNavLink key={link.toLink} {...link} />,
+        <SidebarMenuLink key={link.toLink} {...link} />,
         <Divider sx={{ margin: '8px 0' }} />,
       ])}
     </MenuList>
   );
 };
 
-export default LeftNavMenu;
+export default NavMenu;

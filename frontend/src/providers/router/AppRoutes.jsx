@@ -5,7 +5,7 @@ import { LoginForm } from '../../components/user/auth/LoginForm';
 import { PasswordUpdateForm } from '../../components/user/password/PasswordUpdateForm';
 import { ResetPasswordForm } from '../../components/user/password/ResetPasswordForm';
 import { ShopPage } from '../../pages/shop-page';
-import { UserPage } from '../../pages/user-page';
+import { NavigationLayout } from '../../components/user/layouts/NavigationLayout';
 import { CategoryProductsPage } from '../../pages/category-products-page';
 import { SubcategoryProductsPage } from '../../pages/subcategory-products-page';
 import { ProductsCardsList } from '../../components/products-cards-list';
@@ -48,7 +48,7 @@ const AppRoutes = () => {
         path='user'
         element={
           <ProtectedRoute authRedirectTo='/login'>
-            <UserPage />
+            <NavigationLayout />
           </ProtectedRoute>
         }
       >
@@ -64,7 +64,7 @@ const AppRoutes = () => {
             roleRedirectTo='/'
             roles={['admin']}
           >
-            <UserPage />
+            <NavigationLayout />
           </ProtectedRoute>
         }
       >
