@@ -2,24 +2,22 @@ import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { CircularProgress, Typography, Box, Backdrop } from '@mui/material';
 
-const SECONDS = 3;
-
-const CountdownProgress = ({ redirectTo }) => {
+const CountdownProgress = ({ redirectTo, seconds = 3 }) => {
   const navigate = useNavigate();
 
-  const [progress, setProgress] = useState(SECONDS);
+  const [progress, setProgress] = useState(seconds);
 
   useEffect(() => {
     const timer = setInterval(() => {
       setProgress((prevProgress) =>
-        prevProgress < 1 ? SECONDS : prevProgress - 1
+        prevProgress < 1 ? seconds : prevProgress - 1
       );
     }, 1000);
 
     return () => {
       clearInterval(timer);
     };
-  }, []);
+  }, [seconds]);
 
   useEffect(() => {
     if (progress === 0) {
@@ -36,7 +34,10 @@ const CountdownProgress = ({ redirectTo }) => {
         sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}
       >
         <Box sx={{ position: 'relative' }}>
-          <CircularProgress variant='determinate' value={progress * 20} />
+          <CircularProgress
+            variant='determinate'
+            value={(100 / seconds) * progress}
+          />
           <Box
             sx={{
               top: 0,

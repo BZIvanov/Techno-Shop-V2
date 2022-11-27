@@ -1,22 +1,23 @@
 import { NavLink } from 'react-router-dom';
 import { MenuItem, ListItemText, ListItemIcon, useTheme } from '@mui/material';
-import { orange } from '@mui/material/colors';
 
-const LeftNavLink = ({ toLink, Icon, linkText }) => {
+const SidebarMenuLink = ({ toLink, Icon, linkText }) => {
   const theme = useTheme();
 
   return (
     <NavLink
       style={({ isActive }) => {
         return {
-          color: isActive ? orange[200] : theme.palette.secondary.dark,
+          color: isActive
+            ? theme.palette.primary.main
+            : theme.palette.common.black,
           textDecoration: 'none',
         };
       }}
       to={toLink}
     >
       <MenuItem>
-        <ListItemIcon>
+        <ListItemIcon sx={{ color: 'inherit' }}>
           <Icon fontSize='small' />
         </ListItemIcon>
         <ListItemText>{linkText}</ListItemText>
@@ -25,4 +26,4 @@ const LeftNavLink = ({ toLink, Icon, linkText }) => {
   );
 };
 
-export default LeftNavLink;
+export default SidebarMenuLink;
