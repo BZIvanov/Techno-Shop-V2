@@ -23,7 +23,8 @@ const PasswordUpdateForm = () => {
   });
 
   const handleFormSubmit = (values) => {
-    dispatch(updatePasswordAction(values));
+    const { newPassword, oldPassword } = values;
+    dispatch(updatePasswordAction({ newPassword, oldPassword }));
     reset();
   };
 
