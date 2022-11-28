@@ -5,28 +5,22 @@ const User = require('./user.model');
 const sendEmail = require('../../providers/mailer');
 const AppError = require('../../utils/app-error');
 const catchAsync = require('../../middlewares/catch-async');
-
-const sendTokenResponse = (user, statusCode, res) => {
-  const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
-    expiresIn: '1d',
-  });
-
-  res
-    .header('Authorization', `Bearer ${token}`)
-    .status(statusCode)
-    .json({
-      success: true,
-      token,
-      user: { _id: user._id, username: user.username, role: user.role },
-    });
-};
+const signJwtToken = require('./utils/signJwtToken');
 
 exports.register = catchAsync(async (req, res) => {
   const { username, email, password, address } = req.body;
 
   const user = await User.create({ username, email, password, address });
 
-  sendTokenResponse(user, status.CREATED, res);
+  const token = signJwtToken(user._id);
+  res
+    .header('Authorization', `Bearer ${token}`)
+    .status(status.CREATED)
+    .json({
+      success: true,
+      token,
+      user: { _id: user._id, username: user.username, role: user.role },
+    });
 });
 
 exports.login = catchAsync(async (req, res, next) => {
@@ -48,7 +42,15 @@ exports.login = catchAsync(async (req, res, next) => {
     return next(new AppError('Invalid credentials', status.UNAUTHORIZED));
   }
 
-  sendTokenResponse(user, status.OK, res);
+  const token = signJwtToken(user._id);
+  res
+    .header('Authorization', `Bearer ${token}`)
+    .status(status.OK)
+    .json({
+      success: true,
+      token,
+      user: { _id: user._id, username: user.username, role: user.role },
+    });
 });
 
 exports.logout = catchAsync(async (req, res, next) => {
@@ -146,5 +148,13 @@ exports.resetPassword = catchAsync(async (req, res, next) => {
   user.resetPasswordExpire = undefined;
   await user.save();
 
-  sendTokenResponse(user, status.OK, res);
+  const jwtToken = signJwtToken(user._id);
+  res
+    .header('Authorization', `Bearer ${token}`)
+    .status(status.OK)
+    .json({
+      success: true,
+      token: jwtToken,
+      user: { _id: user._id, username: user.username, role: user.role },
+    });
 });

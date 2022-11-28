@@ -8,18 +8,27 @@ const {
   getCategorySubcategories,
   getCategoryProducts,
 } = require('./category.controllers');
+const validateBodyData = require('../../middlewares/validate-body-data');
 const authenticate = require('../../middlewares/authenticate');
 const authorize = require('../../middlewares/authorize');
 const {
   userTypes: { admin },
 } = require('../user/user.constants');
+const {
+  createCategoryValidationSchema,
+} = require('./category.validationSchema');
 
 const router = express.Router();
 
 router
   .route('/')
   .get(getAllCategories)
-  .post(authenticate, authorize(admin), createCategory);
+  .post(
+    validateBodyData(createCategoryValidationSchema),
+    authenticate,
+    authorize(admin),
+    createCategory
+  );
 router
   .route('/:id')
   .get(getCategory)
