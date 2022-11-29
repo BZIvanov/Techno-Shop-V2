@@ -75,6 +75,11 @@ export const getCurrentUserAction = createAsyncThunk(
 
       return { ...data, token };
     } catch (error) {
+      // remove the token from local storage, if it already expired, so we don't attempt to dispatch this action
+      if (error.response.data.error === 'jwt expired') {
+        window.localStorage.removeItem('userToken');
+      }
+
       dispatch(apiCallFailAction(error.response.data.error));
 
       return rejectWithValue(error.response.data.error);

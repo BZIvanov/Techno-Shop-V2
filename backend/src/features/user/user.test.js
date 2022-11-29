@@ -1,6 +1,7 @@
 const request = require('supertest');
 const { mongoDbConnect, mongoDbDisconnect } = require('../../db/mongo');
 const app = require('../../app/express');
+const signJwtToken = require('./utils/signJwtToken');
 
 describe('User routes', () => {
   beforeAll(async () => {
@@ -183,6 +184,24 @@ describe('User routes', () => {
       );
       expect(response.body).toHaveProperty('user.username', 'Ivo');
       expect(response.body).toHaveProperty('user.role', 'user');
+    });
+
+    test('it should return error if the token expired', async () => {
+      const token = signJwtToken('6171c360168d11250b4e15d9', '1s');
+
+      // wait a second and a half for the token to expire
+      await new Promise((resolve) => {
+        setTimeout(resolve, 1500);
+      });
+
+      const response = await request(app)
+        .get('/v1/users/current-user')
+        .set('Authorization', `Bearer ${token}`)
+        .expect('Content-Type', /application\/json/)
+        .expect(401);
+
+      expect(response.body).toHaveProperty('success', false);
+      expect(response.body).toHaveProperty('error', 'jwt expired');
     });
   });
 
