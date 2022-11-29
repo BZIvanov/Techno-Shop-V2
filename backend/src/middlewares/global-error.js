@@ -19,6 +19,11 @@ module.exports = (err, req, res, next) => {
     error = new AppError(message, status.BAD_REQUEST);
   }
 
+  // jsonwebtoken error
+  if (err.name === 'TokenExpiredError') {
+    error = new AppError(error.message, status.UNAUTHORIZED);
+  }
+
   res
     .status(error.statusCode || status.INTERNAL_SERVER_ERROR)
     .json({ success: false, error: error.message || 'Server error' });
