@@ -15,7 +15,7 @@ const {
   userTypes: { admin },
 } = require('../user/user.constants');
 const {
-  createCategoryValidationSchema,
+  upsertCategoryValidationSchema,
 } = require('./category.validationSchema');
 
 const router = express.Router();
@@ -24,7 +24,7 @@ router
   .route('/')
   .get(getAllCategories)
   .post(
-    validateBodyData(createCategoryValidationSchema),
+    validateBodyData(upsertCategoryValidationSchema),
     authenticate,
     authorize(admin),
     createCategory
@@ -32,7 +32,12 @@ router
 router
   .route('/:id')
   .get(getCategory)
-  .put(authenticate, authorize(admin), updateCategory)
+  .put(
+    validateBodyData(upsertCategoryValidationSchema),
+    authenticate,
+    authorize(admin),
+    updateCategory
+  )
   .delete(authenticate, authorize(admin), deleteCategory);
 router.route('/:id/subcategories').get(getCategorySubcategories);
 router.route('/:id/products').get(getCategoryProducts);
