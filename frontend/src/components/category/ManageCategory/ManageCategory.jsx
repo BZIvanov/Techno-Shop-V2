@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { useSelector, useDispatch } from '../../store/hooks';
+import { useSelector, useDispatch } from '../../../store/hooks';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import {
@@ -10,23 +10,23 @@ import {
   Paper,
   Chip,
   TextField,
+  FormControl,
 } from '@mui/material';
-import { TextFieldAdapter } from '../common/forms/TextFieldAdapter';
-import { ListItem } from '../list-item';
-import { ConfirmDialog } from '../confirm-dialog';
+import { TextFieldAdapter } from '../../common/forms/TextFieldAdapter';
+import { ListItem } from '../../list-item';
+import { ConfirmDialog } from '../../confirm-dialog';
 import {
   getAllCategoriesAction,
   createCategoryAction,
   updateCategoryAction,
   deleteCategoryAction,
-} from '../../store/features/category/categorySlice';
-import { ApiCallAlert } from '../common/async/ApiCallAlert';
-import { ApiCallLoader } from '../common/async/ApiCallLoader';
+} from '../../../store/features/category/categorySlice';
+import { ApiCallAlert } from '../../common/async/ApiCallAlert';
+import { ApiCallLoader } from '../../common/async/ApiCallLoader';
 import schema from './form-schema';
 
 const ManageCategory = () => {
   const { loading } = useSelector((state) => state.apiCall);
-  const { token } = useSelector((state) => state.user);
   const { categories } = useSelector((state) => state.category);
 
   const [selectedCategory, setSelectedCategory] = useState(null);
@@ -51,13 +51,10 @@ const ManageCategory = () => {
   const handleCategorySubmit = ({ category }) => {
     if (selectedCategory) {
       dispatch(
-        updateCategoryAction(
-          { _id: selectedCategory._id, name: category },
-          token
-        )
+        updateCategoryAction({ _id: selectedCategory._id, name: category })
       );
     } else {
-      dispatch(createCategoryAction({ name: category }, token));
+      dispatch(createCategoryAction({ name: category }));
     }
 
     reset();
@@ -71,7 +68,7 @@ const ManageCategory = () => {
       text: '',
       onConfirm: () => {},
     });
-    dispatch(deleteCategoryAction(categoryId, token));
+    dispatch(deleteCategoryAction(categoryId));
     setSelectedCategory(null);
   };
 
@@ -117,13 +114,16 @@ const ManageCategory = () => {
       <Divider style={{ margin: '20px 0' }} />
 
       <Box sx={{ marginBottom: 2 }}>
-        <TextField
-          label='Search'
-          variant='standard'
-          value={filterCategoryText}
-          onChange={(e) => setFilterCategoryText(e.target.value)}
-        />
+        <FormControl sx={{ width: '100%' }}>
+          <TextField
+            label='Search'
+            variant='standard'
+            value={filterCategoryText}
+            onChange={(e) => setFilterCategoryText(e.target.value)}
+          />
+        </FormControl>
       </Box>
+
       <Paper
         sx={{
           display: 'flex',

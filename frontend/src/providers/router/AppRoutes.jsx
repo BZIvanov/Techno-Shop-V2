@@ -9,7 +9,7 @@ import { NavigationLayout } from '../../components/user/layouts/NavigationLayout
 import { CategoryProductsPage } from '../../pages/category-products-page';
 import { SubcategoryProductsPage } from '../../pages/subcategory-products-page';
 import { ProductsCardsList } from '../../components/products-cards-list';
-import { ManageCategory } from '../../components/manage-category';
+import { ManageCategory } from '../../components/category/ManageCategory';
 import { ManageSubcategory } from '../../components/manage-subcategory';
 import { ManageProduct } from '../../components/manage-product';
 import { ProductDetails } from '../../components/product-details';
