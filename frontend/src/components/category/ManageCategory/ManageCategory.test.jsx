@@ -28,6 +28,12 @@ const handlers = [
 const server = setupServer(...handlers);
 
 describe('ManageCategory component', () => {
+  beforeAll(() => server.listen());
+
+  afterEach(() => server.resetHandlers());
+
+  afterAll(() => server.close());
+
   describe('Title element', () => {
     test('render the title with correct text and styles', () => {
       render(<ManageCategory />);
@@ -43,12 +49,6 @@ describe('ManageCategory component', () => {
   });
 
   describe('Create category form', () => {
-    beforeAll(() => server.listen());
-
-    afterEach(() => server.resetHandlers());
-
-    afterAll(() => server.close());
-
     test('render the form field and the buttons', () => {
       render(<ManageCategory />);
 
@@ -94,6 +94,35 @@ describe('ManageCategory component', () => {
       render(<ManageCategory />);
 
       screen.getByRole('textbox', { name: /search/i });
+    });
+
+    test('should display only the searched categories', async () => {
+      // with use method we can override the above get categories handler, which is returning empty list
+      server.use(
+        rest.get(`${process.env.REACT_APP_API}/categories`, (req, res, ctx) => {
+          return res(
+            ctx.json({
+              success: true,
+              categories: [
+                { _id: '123', name: 'Shoes', slug: 'shoes' },
+                { _id: '124', name: 'Laptops', slug: 'laptops' },
+              ],
+            }),
+            ctx.delay(100)
+          );
+        })
+      );
+
+      render(<ManageCategory />);
+
+      const searchField = screen.getByRole('textbox', { name: /search/i });
+      await userEvent.type(searchField, 'sho');
+
+      await waitFor(() => {
+        screen.getByRole('button', { name: 'Shoes' });
+        const laptopsChip = screen.queryByRole('button', { name: 'Laptops' });
+        expect(laptopsChip).not.toBeInTheDocument();
+      });
     });
   });
 
