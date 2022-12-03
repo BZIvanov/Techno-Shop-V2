@@ -10,79 +10,101 @@ import {
   Paper,
   Chip,
   TextField,
-  FormControl,
 } from '@mui/material';
+import { SelectDropdownAdapter } from '../../common/forms/SelectDropdownAdapter';
 import { TextFieldAdapter } from '../../common/forms/TextFieldAdapter';
 import { ListItem } from '../../common/lists/ListItem';
 import { ConfirmDialog } from '../../common/dialogs/ConfirmDialog';
+import { getAllCategoriesAction } from '../../../store/features/category/categorySlice';
 import {
-  getAllCategoriesAction,
-  createCategoryAction,
-  updateCategoryAction,
-  deleteCategoryAction,
-} from '../../../store/features/category/categorySlice';
+  getSubcategoriesAction,
+  createSubcategoryAction,
+  updateSubcategoryAction,
+  deleteSubcategoryAction,
+} from '../../../store/features/subcategory/subcategorySlice';
 import { ApiCallAlert } from '../../common/async/ApiCallAlert';
 import { ApiCallLoader } from '../../common/async/ApiCallLoader';
 import schema from './form-schema';
 
-const ManageCategory = () => {
+const ManageSubcategory = () => {
   const { loading } = useSelector((state) => state.apiCall);
+  const { token } = useSelector((state) => state.user);
   const { categories } = useSelector((state) => state.category);
+  const { subcategories } = useSelector((state) => state.subcategory);
 
-  const [selectedCategory, setSelectedCategory] = useState(null);
-  const [removeCategoryDialog, setRemoveCategoryDialog] = useState({
+  const [selectedSubcategory, setSelectedSubcategory] = useState(null);
+  const [removeSubcategoryDialog, setRemoveSubcategoryDialog] = useState({
     open: false,
     text: '',
     onConfirm: () => {},
   });
-  const [filterCategoryText, setFilterCategoryText] = useState('');
+  const [filterSubcategoryText, setFilterSubcategoryText] = useState('');
 
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(getAllCategoriesAction());
+    dispatch(getSubcategoriesAction());
   }, [dispatch]);
 
   const { control, handleSubmit, formState, reset, setValue } = useForm({
-    defaultValues: { category: '' },
+    defaultValues: { categoryId: '', subcategoryName: '' },
     resolver: yupResolver(schema),
   });
 
-  const handleCategorySubmit = ({ category }) => {
-    if (selectedCategory) {
+  const handleSubcategorySubmit = ({ categoryId, subcategoryName }) => {
+    if (selectedSubcategory) {
       dispatch(
-        updateCategoryAction({ _id: selectedCategory._id, name: category })
+        updateSubcategoryAction(
+          {
+            _id: selectedSubcategory._id,
+            name: subcategoryName,
+            categoryId,
+          },
+          token
+        )
       );
     } else {
-      dispatch(createCategoryAction({ name: category }));
+      dispatch(
+        createSubcategoryAction({ name: subcategoryName, categoryId }, token)
+      );
     }
 
     reset();
 
-    setSelectedCategory(null);
+    setSelectedSubcategory(null);
   };
 
-  const handleCategoryDeleteClick = (categoryId) => () => {
-    setRemoveCategoryDialog({
+  const handleSubcategoryDeleteClick = (subcategoryId) => () => {
+    setRemoveSubcategoryDialog({
       open: false,
       text: '',
       onConfirm: () => {},
     });
-    dispatch(deleteCategoryAction(categoryId));
-    setSelectedCategory(null);
+    dispatch(deleteSubcategoryAction(subcategoryId, token));
+    setSelectedSubcategory(null);
   };
 
   return (
     <Box sx={{ padding: (theme) => theme.spacing(1) }}>
-      <Typography variant='h5'>Manage Categories</Typography>
+      <Typography variant='h5'>Manage Subcategories</Typography>
 
-      <Box sx={{ width: '99%' }}>
-        <form onSubmit={handleSubmit(handleCategorySubmit)}>
+      <Box sx={{ width: '90%' }}>
+        <form onSubmit={handleSubmit(handleSubcategorySubmit)}>
+          <Box my={1}>
+            <SelectDropdownAdapter
+              control={control}
+              name='categoryId'
+              label='Category'
+              options={categories}
+            />
+          </Box>
+
           <Box my={1}>
             <TextFieldAdapter
               control={control}
-              name='category'
-              label='Category Name'
+              name='subcategoryName'
+              label='Subcategory'
             />
           </Box>
 
@@ -92,7 +114,7 @@ const ManageCategory = () => {
               color='secondary'
               type='button'
               onClick={() => {
-                setSelectedCategory(null);
+                setSelectedSubcategory(null);
                 reset();
               }}
               disabled={formState.submitting || loading}
@@ -105,7 +127,7 @@ const ManageCategory = () => {
               type='submit'
               disabled={formState.submitting || loading}
             >
-              {selectedCategory ? 'Update' : 'Create'}
+              {selectedSubcategory ? 'Update' : 'Create'}
             </Button>
           </Box>
         </form>
@@ -114,16 +136,13 @@ const ManageCategory = () => {
       <Divider style={{ margin: '20px 0' }} />
 
       <Box sx={{ marginBottom: 2 }}>
-        <FormControl sx={{ width: '100%' }}>
-          <TextField
-            label='Search'
-            variant='standard'
-            value={filterCategoryText}
-            onChange={(e) => setFilterCategoryText(e.target.value)}
-          />
-        </FormControl>
+        <TextField
+          label='Search'
+          variant='standard'
+          value={filterSubcategoryText}
+          onChange={(e) => setFilterSubcategoryText(e.target.value)}
+        />
       </Box>
-
       <Paper
         sx={{
           display: 'flex',
@@ -134,12 +153,12 @@ const ManageCategory = () => {
         }}
         component='ul'
       >
-        {categories.length ? (
-          categories
+        {subcategories.length ? (
+          subcategories
             .filter(({ name }) =>
-              name.toLowerCase().includes(filterCategoryText.toLowerCase())
+              name.toLowerCase().includes(filterSubcategoryText.toLowerCase())
             )
-            .map(({ _id, name }) => {
+            .map(({ _id, name, categoryId }) => {
               return (
                 <ListItem key={_id}>
                   <Chip
@@ -147,14 +166,15 @@ const ManageCategory = () => {
                     icon={undefined}
                     label={name}
                     onClick={() => {
-                      setValue('category', name);
-                      setSelectedCategory({ _id, name });
+                      setValue('categoryId', categoryId._id);
+                      setValue('subcategoryName', name);
+                      setSelectedSubcategory({ _id, name, categoryId });
                     }}
                     onDelete={() =>
-                      setRemoveCategoryDialog({
+                      setRemoveSubcategoryDialog({
                         open: true,
-                        text: 'Are you sure you want to delete this category?',
-                        onConfirm: handleCategoryDeleteClick(_id),
+                        text: 'Are you sure you want to delete this subcategory?',
+                        onConfirm: handleSubcategoryDeleteClick(_id),
                       })
                     }
                   />
@@ -163,14 +183,14 @@ const ManageCategory = () => {
             })
         ) : (
           <Typography variant='subtitle2'>
-            No categories. Use the form above to create some.
+            No subcategories. Use the form above to create some.
           </Typography>
         )}
       </Paper>
 
       <ConfirmDialog
-        dialogConfig={removeCategoryDialog}
-        setDialogConfig={setRemoveCategoryDialog}
+        dialogConfig={removeSubcategoryDialog}
+        setDialogConfig={setRemoveSubcategoryDialog}
       />
 
       <ApiCallLoader />
@@ -180,4 +200,4 @@ const ManageCategory = () => {
   );
 };
 
-export default ManageCategory;
+export default ManageSubcategory;
