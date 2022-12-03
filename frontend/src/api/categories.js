@@ -15,9 +15,15 @@ export const createCategoryCall = (data, token) => {
 };
 
 export const updateCategoryCall = (data, token) => {
-  return axios.put(`/categories/${data._id}`, data, {
-    headers: { authorization: `Bearer ${token}` },
-  });
+  const { id, name } = data;
+
+  return axios.put(
+    `/categories/${id}`,
+    { name },
+    {
+      headers: { authorization: `Bearer ${token}` },
+    }
+  );
 };
 
 export const deleteCategoryCall = (id, token) => {
