@@ -1,25 +1,25 @@
 import { Routes, Route } from 'react-router-dom';
-import { HomePage } from '../../pages/home-page';
+import { Home } from '../../components/home/Home';
 import { RegisterForm } from '../../components/user/auth/RegisterForm';
 import { LoginForm } from '../../components/user/auth/LoginForm';
 import { PasswordUpdateForm } from '../../components/user/password/PasswordUpdateForm';
 import { ResetPasswordForm } from '../../components/user/password/ResetPasswordForm';
-import { ShopPage } from '../../pages/shop-page';
+import { Shop } from '../../components/shop/Shop';
 import { NavigationLayout } from '../../components/user/layouts/NavigationLayout';
-import { CategoryProductsPage } from '../../pages/category-products-page';
-import { SubcategoryProductsPage } from '../../pages/subcategory-products-page';
-import { ProductsCardsList } from '../../components/products-cards-list';
+import { CategoryProducts } from '../../components/category/CategoryProducts';
+import { SubcategoryProducts } from '../../components/subcategory/SubcategoryProducts';
+import { ProductsCardsList } from '../../components/product/ProductsCardsList';
 import { ManageCategory } from '../../components/category/ManageCategory';
-import { ManageSubcategory } from '../../components/manage-subcategory';
-import { ManageProduct } from '../../components/manage-product';
-import { ProductDetails } from '../../components/product-details';
+import { ManageSubcategory } from '../../components/subcategory/ManageSubcategory';
+import { ManageProduct } from '../../components/product/ManageProduct';
+import { ProductDetails } from '../../components/product/ProductDetails';
 import { ProtectedRoute } from '../../components/user/routes/ProtectedRoute';
 import { NonUserRoute } from '../../components/user/routes/NonUserRoute';
 
 const AppRoutes = () => {
   return (
     <Routes>
-      <Route path='/' element={<HomePage />} />
+      <Route path='/' element={<Home />} />
       <Route
         path='/login'
         element={
@@ -76,10 +76,10 @@ const AppRoutes = () => {
         <Route path='products-list' element={<ProductsCardsList />} />
         <Route path='password' element={<PasswordUpdateForm />} />
       </Route>
-      <Route path='/shop' element={<ShopPage />} />
+      <Route path='/shop' element={<Shop />} />
       <Route path='/product/:id' element={<ProductDetails />} />
-      <Route path='/category/:id' element={<CategoryProductsPage />} />
-      <Route path='/subcategory/:id' element={<SubcategoryProductsPage />} />
+      <Route path='/category/:id' element={<CategoryProducts />} />
+      <Route path='/subcategory/:id' element={<SubcategoryProducts />} />
     </Routes>
   );
 };
