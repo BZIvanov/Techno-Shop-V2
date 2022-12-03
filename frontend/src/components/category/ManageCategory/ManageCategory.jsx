@@ -76,7 +76,7 @@ const ManageCategory = () => {
     <Box sx={{ padding: (theme) => theme.spacing(1) }}>
       <Typography variant='h5'>Manage Categories</Typography>
 
-      <Box sx={{ width: '99%' }}>
+      <Box>
         <form onSubmit={handleSubmit(handleCategorySubmit)}>
           <Box my={1}>
             <TextFieldAdapter
