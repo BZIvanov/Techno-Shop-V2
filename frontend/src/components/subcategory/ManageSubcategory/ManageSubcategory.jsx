@@ -10,6 +10,7 @@ import {
   Paper,
   Chip,
   TextField,
+  FormControl,
 } from '@mui/material';
 import { SelectDropdownAdapter } from '../../common/forms/SelectDropdownAdapter';
 import { TextFieldAdapter } from '../../common/forms/TextFieldAdapter';
@@ -89,7 +90,7 @@ const ManageSubcategory = () => {
     <Box sx={{ padding: (theme) => theme.spacing(1) }}>
       <Typography variant='h5'>Manage Subcategories</Typography>
 
-      <Box sx={{ width: '90%' }}>
+      <Box>
         <form onSubmit={handleSubmit(handleSubcategorySubmit)}>
           <Box my={1}>
             <SelectDropdownAdapter
@@ -136,12 +137,14 @@ const ManageSubcategory = () => {
       <Divider style={{ margin: '20px 0' }} />
 
       <Box sx={{ marginBottom: 2 }}>
-        <TextField
-          label='Search'
-          variant='standard'
-          value={filterSubcategoryText}
-          onChange={(e) => setFilterSubcategoryText(e.target.value)}
-        />
+        <FormControl sx={{ width: '100%' }}>
+          <TextField
+            label='Search'
+            variant='standard'
+            value={filterSubcategoryText}
+            onChange={(e) => setFilterSubcategoryText(e.target.value)}
+          />
+        </FormControl>
       </Box>
       <Paper
         sx={{
