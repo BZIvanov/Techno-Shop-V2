@@ -61,6 +61,12 @@ describe('ManageCategory component', () => {
         'font-weight': '400',
       });
     });
+
+    test('render no categroies text, if no available categories', () => {
+      render(<ManageCategory />);
+
+      screen.getByText('No categories. Use the form above to create some.');
+    });
   });
 
   describe('Create category form', () => {

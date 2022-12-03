@@ -12,19 +12,32 @@ const authorize = require('../../middlewares/authorize');
 const {
   userTypes: { admin },
 } = require('../user/user.constants');
+const validateBodyData = require('../../middlewares/validate-body-data');
+const {
+  upsertSubcategoryValidationSchema,
+} = require('./subcategory.validationSchema');
 
 const router = express.Router();
 
 router
   .route('/')
   .get(getSubcategories)
-  .post(authenticate, authorize(admin), createSubcategory);
+  .post(
+    validateBodyData(upsertSubcategoryValidationSchema),
+    authenticate,
+    authorize(admin),
+    createSubcategory
+  );
 router
   .route('/:id')
   .get(getSubcategory)
-  .put(authenticate, authorize(admin), updateSubcategory)
+  .put(
+    validateBodyData(upsertSubcategoryValidationSchema),
+    authenticate,
+    authorize(admin),
+    updateSubcategory
+  )
   .delete(authenticate, authorize(admin), deleteSubcategory);
-
 router.route('/:id/products').get(getSubcategoryProducts);
 
 module.exports = router;

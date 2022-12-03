@@ -51,7 +51,7 @@ const ManageCategory = () => {
   const handleCategorySubmit = ({ category }) => {
     if (selectedCategory) {
       dispatch(
-        updateCategoryAction({ _id: selectedCategory._id, name: category })
+        updateCategoryAction({ id: selectedCategory._id, name: category })
       );
     } else {
       dispatch(createCategoryAction({ name: category }));
