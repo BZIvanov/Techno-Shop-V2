@@ -29,7 +29,6 @@ import schema from './form-schema';
 
 const ManageSubcategory = () => {
   const { loading } = useSelector((state) => state.apiCall);
-  const { token } = useSelector((state) => state.user);
   const { categories } = useSelector((state) => state.category);
   const { subcategories } = useSelector((state) => state.subcategory);
 
@@ -56,19 +55,14 @@ const ManageSubcategory = () => {
   const handleSubcategorySubmit = ({ categoryId, subcategoryName }) => {
     if (selectedSubcategory) {
       dispatch(
-        updateSubcategoryAction(
-          {
-            _id: selectedSubcategory._id,
-            name: subcategoryName,
-            categoryId,
-          },
-          token
-        )
+        updateSubcategoryAction({
+          _id: selectedSubcategory._id,
+          name: subcategoryName,
+          categoryId,
+        })
       );
     } else {
-      dispatch(
-        createSubcategoryAction({ name: subcategoryName, categoryId }, token)
-      );
+      dispatch(createSubcategoryAction({ name: subcategoryName, categoryId }));
     }
 
     reset();
@@ -82,7 +76,7 @@ const ManageSubcategory = () => {
       text: '',
       onConfirm: () => {},
     });
-    dispatch(deleteSubcategoryAction(subcategoryId, token));
+    dispatch(deleteSubcategoryAction(subcategoryId));
     setSelectedSubcategory(null);
   };
 

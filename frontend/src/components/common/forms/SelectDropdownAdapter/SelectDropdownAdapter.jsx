@@ -24,7 +24,7 @@ const SelectDropdownAdapter = ({ name, control, label, options }) => {
             disabled={loading}
           >
             <InputLabel>{label}</InputLabel>
-            <Select {...field}>
+            <Select data-testid={name} {...field}>
               {options.map((option) => {
                 if (typeof option === 'string') {
                   return (
