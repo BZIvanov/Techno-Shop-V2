@@ -7,8 +7,11 @@ import {
   MenuItem,
   FormHelperText,
 } from '@mui/material';
+import { useFormContext } from '../../../../providers/form/hooks';
 
-const SelectDropdownAdapter = ({ name, control, label, options }) => {
+const SelectDropdownAdapter = ({ name, label, options }) => {
+  const { control } = useFormContext();
+
   const { loading } = useSelector((state) => state.apiCall);
 
   return (

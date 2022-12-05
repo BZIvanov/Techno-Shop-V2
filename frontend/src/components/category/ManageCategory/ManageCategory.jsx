@@ -22,7 +22,8 @@ import {
 import { ApiCallAlert } from '../../common/async/ApiCallAlert';
 import { ApiCallLoader } from '../../common/async/ApiCallLoader';
 import { formConfig } from './form-schema';
-import useForm from '../../../providers/form/hooks/useForm';
+import { useForm } from '../../../providers/form/hooks';
+import FormProvider from '../../../providers/form/FormProvider';
 
 const ManageCategory = () => {
   const { loading } = useSelector((state) => state.apiCall);
@@ -42,8 +43,8 @@ const ManageCategory = () => {
     dispatch(getAllCategoriesAction());
   }, [dispatch]);
 
-  const { control, handleSubmit, formState, reset, setValue } =
-    useForm(formConfig);
+  const formMethods = useForm(formConfig);
+  const { formState, reset, setValue } = formMethods;
 
   const handleCategorySubmit = ({ category }) => {
     if (selectedCategory) {
@@ -74,13 +75,9 @@ const ManageCategory = () => {
       <Typography variant='h5'>Manage Categories</Typography>
 
       <Box>
-        <form onSubmit={handleSubmit(handleCategorySubmit)}>
+        <FormProvider onSubmit={handleCategorySubmit} methods={formMethods}>
           <Box my={1}>
-            <TextFieldAdapter
-              control={control}
-              name='category'
-              label='Category Name'
-            />
+            <TextFieldAdapter name='category' label='Category Name' />
           </Box>
 
           <Box mt={2} ml={1}>
@@ -105,7 +102,7 @@ const ManageCategory = () => {
               {selectedCategory ? 'Update' : 'Create'}
             </Button>
           </Box>
-        </form>
+        </FormProvider>
       </Box>
 
       <Divider style={{ margin: '20px 0' }} />

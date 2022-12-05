@@ -11,7 +11,8 @@ import { Email } from '../../../mui/Icons';
 import { TextFieldAdapter } from '../../../common/forms/TextFieldAdapter';
 import { forgotPasswordAction } from '../../../../store/features/user/userSlice';
 import { formConfig } from './form-schema';
-import useForm from '../../../../providers/form/hooks/useForm';
+import { useForm } from '../../../../providers/form/hooks';
+import FormProvider from '../../../../providers/form/FormProvider';
 
 const ForgotPasswordDialog = ({
   showForgotPasswordModal,
@@ -21,7 +22,8 @@ const ForgotPasswordDialog = ({
 
   const dispatch = useDispatch();
 
-  const { control, handleSubmit, formState } = useForm(formConfig);
+  const formMethods = useForm(formConfig);
+  const { formState } = formMethods;
 
   const handleFormSubmit = (values) => {
     dispatch(forgotPasswordAction(values));
@@ -33,19 +35,14 @@ const ForgotPasswordDialog = ({
       open={showForgotPasswordModal}
       onClose={() => handleShowForgotModal(false)}
     >
-      <form onSubmit={handleSubmit(handleFormSubmit)}>
+      <FormProvider onSubmit={handleFormSubmit} methods={formMethods}>
         <DialogTitle>Forgot Password</DialogTitle>
         <DialogContent>
           <DialogContentText>
             To reset your password provide your e-mail for reset password link.
           </DialogContentText>
 
-          <TextFieldAdapter
-            control={control}
-            name='email'
-            label='Email'
-            Icon={Email}
-          />
+          <TextFieldAdapter name='email' label='Email' Icon={Email} />
         </DialogContent>
         <DialogActions>
           <Button
@@ -63,7 +60,7 @@ const ForgotPasswordDialog = ({
             Send
           </Button>
         </DialogActions>
-      </form>
+      </FormProvider>
     </Dialog>
   );
 };

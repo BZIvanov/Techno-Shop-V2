@@ -10,6 +10,7 @@ import {
   Box,
   Chip,
 } from '@mui/material';
+import { useFormContext } from '../../../../providers/form/hooks';
 
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
@@ -22,7 +23,9 @@ const MenuProps = {
   },
 };
 
-const SelectDropdownMultichipAdapter = ({ name, control, label, options }) => {
+const SelectDropdownMultichipAdapter = ({ name, label, options }) => {
+  const { control } = useFormContext();
+
   const { loading } = useSelector((state) => state.apiCall);
 
   return (

@@ -7,8 +7,11 @@ import {
   TextField,
 } from '@mui/material';
 import { Visibility, VisibilityOff } from '../../../mui/Icons';
+import { useFormContext } from '../../../../providers/form/hooks';
 
-const PasswordTextFieldAdapter = ({ name, control, label }) => {
+const PasswordTextFieldAdapter = ({ name, label }) => {
+  const { control } = useFormContext();
+
   const [showPassword, setShowPassword] = useState(false);
 
   const handleClickShowPassword = () => {

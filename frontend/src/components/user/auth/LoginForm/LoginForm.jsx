@@ -9,7 +9,8 @@ import { ApiCallAlert } from '../../../common/async/ApiCallAlert';
 import { ApiCallLoader } from '../../../common/async/ApiCallLoader';
 import { loginUserAction } from '../../../../store/features/user/userSlice';
 import { formConfig } from './form-schema';
-import useForm from '../../../../providers/form/hooks/useForm';
+import { useForm } from '../../../../providers/form/hooks';
+import FormProvider from '../../../../providers/form/FormProvider';
 
 const LoginForm = () => {
   const [showForgotPasswordModal, setShowForgotPasswordModal] = useState(false);
@@ -18,7 +19,8 @@ const LoginForm = () => {
 
   const dispatch = useDispatch();
 
-  const { control, handleSubmit, formState } = useForm(formConfig);
+  const formMethods = useForm(formConfig);
+  const { formState } = formMethods;
 
   const handleFormSubmit = (values) => {
     dispatch(loginUserAction(values));
@@ -41,22 +43,13 @@ const LoginForm = () => {
       <Typography variant='h5'>Login Form</Typography>
 
       <Box sx={{ width: { xs: '90%', sm: '290px' } }}>
-        <form onSubmit={handleSubmit(handleFormSubmit)}>
+        <FormProvider onSubmit={handleFormSubmit} methods={formMethods}>
           <Box my={1}>
-            <TextFieldAdapter
-              control={control}
-              name='email'
-              label='Email'
-              Icon={Email}
-            />
+            <TextFieldAdapter name='email' label='Email' Icon={Email} />
           </Box>
 
           <Box my={1}>
-            <PasswordTextFieldAdapter
-              control={control}
-              name='password'
-              label='Password'
-            />
+            <PasswordTextFieldAdapter name='password' label='Password' />
           </Box>
 
           <Box
@@ -73,7 +66,7 @@ const LoginForm = () => {
               Login
             </Button>
           </Box>
-        </form>
+        </FormProvider>
 
         <Box
           sx={{

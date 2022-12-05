@@ -7,14 +7,16 @@ import { ApiCallAlert } from '../../../common/async/ApiCallAlert';
 import { ApiCallLoader } from '../../../common/async/ApiCallLoader';
 import { registerUserAction } from '../../../../store/features/user/userSlice';
 import { formConfig } from './form-schema';
-import useForm from '../../../../providers/form/hooks/useForm';
+import { useForm } from '../../../../providers/form/hooks';
+import FormProvider from '../../../../providers/form/FormProvider';
 
 const RegisterForm = () => {
   const { loading } = useSelector((state) => state.apiCall);
 
   const dispatch = useDispatch();
 
-  const { control, handleSubmit, formState, reset } = useForm(formConfig);
+  const formMethods = useForm(formConfig);
+  const { formState, reset } = formMethods;
 
   const handleFormSubmit = (values) => {
     const { username, email, password } = values;
@@ -34,36 +36,21 @@ const RegisterForm = () => {
       <Typography variant='h5'>Register Form</Typography>
 
       <Box sx={{ width: { xs: '90%', sm: '290px' } }}>
-        <form onSubmit={handleSubmit(handleFormSubmit)}>
+        <FormProvider onSubmit={handleFormSubmit} methods={formMethods}>
           <Box my={1}>
-            <TextFieldAdapter
-              control={control}
-              name='username'
-              label='Username'
-              Icon={Face}
-            />
+            <TextFieldAdapter name='username' label='Username' Icon={Face} />
           </Box>
 
           <Box my={1}>
-            <TextFieldAdapter
-              control={control}
-              name='email'
-              label='Email'
-              Icon={Email}
-            />
+            <TextFieldAdapter name='email' label='Email' Icon={Email} />
+          </Box>
+
+          <Box my={1}>
+            <PasswordTextFieldAdapter name='password' label='Password' />
           </Box>
 
           <Box my={1}>
             <PasswordTextFieldAdapter
-              control={control}
-              name='password'
-              label='Password'
-            />
-          </Box>
-
-          <Box my={1}>
-            <PasswordTextFieldAdapter
-              control={control}
               name='confirmPassword'
               label='Confirm Password'
             />
@@ -93,7 +80,7 @@ const RegisterForm = () => {
               Register
             </Button>
           </Box>
-        </form>
+        </FormProvider>
       </Box>
 
       <ApiCallLoader />

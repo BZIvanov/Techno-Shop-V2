@@ -27,7 +27,8 @@ import {
   updateProductAction,
 } from '../../../store/features/product/productSlice';
 import { formConfig } from './form-schema';
-import useForm from '../../../providers/form/hooks/useForm';
+import { useForm } from '../../../providers/form/hooks';
+import FormProvider from '../../../providers/form/FormProvider';
 
 const ManageProduct = () => {
   const { loading } = useSelector((state) => state.apiCall);
@@ -58,8 +59,8 @@ const ManageProduct = () => {
     }
   }, [dispatch, product]);
 
-  const { control, handleSubmit, formState, reset, watch, setValue } =
-    useForm(formConfig);
+  const formMethods = useForm(formConfig);
+  const { formState, reset, watch, setValue } = formMethods;
 
   const handleProductSubmit = (values) => {
     if (id) {
@@ -120,50 +121,34 @@ const ManageProduct = () => {
       <Typography variant='h5'>Manage Products</Typography>
 
       <Box sx={{ width: '99%' }}>
-        <form onSubmit={handleSubmit(handleProductSubmit)}>
+        <FormProvider onSubmit={handleProductSubmit} methods={formMethods}>
           <Box my={1}>
-            <TextFieldAdapter control={control} name='title' label='Title' />
+            <TextFieldAdapter name='title' label='Title' />
           </Box>
           <Box my={1}>
-            <TextFieldAdapter
-              control={control}
-              name='description'
-              label='Description'
-            />
+            <TextFieldAdapter name='description' label='Description' />
           </Box>
           <Box my={1}>
-            <TextFieldAdapter
-              control={control}
-              name='price'
-              label='Price'
-              type='number'
-            />
+            <TextFieldAdapter name='price' label='Price' type='number' />
           </Box>
           <Box my={1}>
             <SelectDropdownAdapter
-              control={control}
               name='shipping'
               label='Shipping'
               options={['Yes', 'No']}
             />
           </Box>
           <Box my={1}>
-            <TextFieldAdapter
-              control={control}
-              name='quantity'
-              label='Quantity'
-              type='number'
-            />
+            <TextFieldAdapter name='quantity' label='Quantity' type='number' />
           </Box>
           <Box my={1}>
-            <TextFieldAdapter control={control} name='color' label='Color' />
+            <TextFieldAdapter name='color' label='Color' />
           </Box>
           <Box my={1}>
-            <TextFieldAdapter control={control} name='brand' label='Brand' />
+            <TextFieldAdapter name='brand' label='Brand' />
           </Box>
           <Box my={1}>
             <SelectDropdownAdapter
-              control={control}
               name='category'
               label='Category'
               options={categories}
@@ -171,7 +156,6 @@ const ManageProduct = () => {
           </Box>
           <Box>
             <SelectDropdownMultichipAdapter
-              control={control}
               name='subcategories'
               label='Subcategory'
               options={selectedCategorySubcategories}
@@ -180,7 +164,7 @@ const ManageProduct = () => {
 
           <Divider sx={{ margin: '8px 0' }} />
           <Box>
-            <ImagesFieldAdapter control={control} name='images' />
+            <ImagesFieldAdapter name='images' />
           </Box>
 
           <Stack sx={{ marginTop: 3 }} spacing={2} direction='row'>
@@ -232,7 +216,7 @@ const ManageProduct = () => {
               {id ? 'Update' : 'Create'}
             </Button>
           </Box>
-        </form>
+        </FormProvider>
       </Box>
 
       <ApiCallLoader />

@@ -6,7 +6,8 @@ import { ApiCallAlert } from '../../../common/async/ApiCallAlert';
 import { ApiCallLoader } from '../../../common/async/ApiCallLoader';
 import { resetPasswordAction } from '../../../../store/features/user/userSlice';
 import { formConfig } from './form-schema';
-import useForm from '../../../../providers/form/hooks/useForm';
+import { useForm } from '../../../../providers/form/hooks';
+import FormProvider from '../../../../providers/form/FormProvider';
 
 const ResetPasswordForm = () => {
   const navigate = useNavigate();
@@ -17,7 +18,8 @@ const ResetPasswordForm = () => {
 
   const { token } = useParams();
 
-  const { control, handleSubmit, formState, reset } = useForm(formConfig);
+  const formMethods = useForm(formConfig);
+  const { formState, reset } = formMethods;
 
   const handleFormSubmit = async (values) => {
     await dispatch(resetPasswordAction({ ...values, token }));
@@ -37,18 +39,13 @@ const ResetPasswordForm = () => {
       <Typography variant='h5'>Password Reset Form</Typography>
 
       <Box sx={{ width: { xs: '90%', sm: '290px' } }}>
-        <form onSubmit={handleSubmit(handleFormSubmit)}>
+        <FormProvider onSubmit={handleFormSubmit} methods={formMethods}>
           <Box my={1}>
-            <PasswordTextFieldAdapter
-              control={control}
-              name='newPassword'
-              label='New Password'
-            />
+            <PasswordTextFieldAdapter name='newPassword' label='New Password' />
           </Box>
 
           <Box my={1}>
             <PasswordTextFieldAdapter
-              control={control}
               name='confirmNewPassword'
               label='Confirm New Password'
             />
@@ -78,7 +75,7 @@ const ResetPasswordForm = () => {
               Reset Password
             </Button>
           </Box>
-        </form>
+        </FormProvider>
       </Box>
 
       <ApiCallLoader />

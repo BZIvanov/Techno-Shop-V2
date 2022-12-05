@@ -2,8 +2,11 @@ import Dropzone from 'react-dropzone';
 import { Controller } from 'react-hook-form';
 import { FormControl, Paper, Typography, FormHelperText } from '@mui/material';
 import { CloudUpload } from '../../../mui/Icons';
+import { useFormContext } from '../../../../providers/form/hooks';
 
-const ImagesFieldAdapter = ({ name, control }) => {
+const ImagesFieldAdapter = ({ name }) => {
+  const { control } = useFormContext();
+
   return (
     <Controller
       control={control}
