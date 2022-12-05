@@ -1,13 +1,12 @@
 import { useSelector, useDispatch } from '../../../../store/hooks';
 import { useParams, useNavigate } from 'react-router-dom';
-import { useForm } from 'react-hook-form';
-import { yupResolver } from '@hookform/resolvers/yup';
 import { Box, Typography, Button } from '@mui/material';
 import { PasswordTextFieldAdapter } from '../../../common/forms/PasswordTextFieldAdapter';
 import { ApiCallAlert } from '../../../common/async/ApiCallAlert';
 import { ApiCallLoader } from '../../../common/async/ApiCallLoader';
 import { resetPasswordAction } from '../../../../store/features/user/userSlice';
-import schema from './form-schema';
+import { formConfig } from './form-schema';
+import useForm from '../../../../providers/form/hooks/useForm';
 
 const ResetPasswordForm = () => {
   const navigate = useNavigate();
@@ -18,13 +17,7 @@ const ResetPasswordForm = () => {
 
   const { token } = useParams();
 
-  const { control, handleSubmit, formState, reset } = useForm({
-    defaultValues: {
-      newPassword: '',
-      confirmNewPassword: '',
-    },
-    resolver: yupResolver(schema),
-  });
+  const { control, handleSubmit, formState, reset } = useForm(formConfig);
 
   const handleFormSubmit = async (values) => {
     await dispatch(resetPasswordAction({ ...values, token }));

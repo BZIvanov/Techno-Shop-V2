@@ -7,4 +7,9 @@ const schema = yup
   })
   .required();
 
-export default schema;
+const defaultValues = {
+  email: '',
+  password: '',
+};
+
+export const formConfig = { schema, defaultValues };

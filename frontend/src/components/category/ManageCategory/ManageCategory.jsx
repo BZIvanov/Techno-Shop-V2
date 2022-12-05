@@ -1,7 +1,5 @@
 import { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from '../../../store/hooks';
-import { useForm } from 'react-hook-form';
-import { yupResolver } from '@hookform/resolvers/yup';
 import {
   Box,
   Typography,
@@ -23,7 +21,8 @@ import {
 } from '../../../store/features/category/categorySlice';
 import { ApiCallAlert } from '../../common/async/ApiCallAlert';
 import { ApiCallLoader } from '../../common/async/ApiCallLoader';
-import schema from './form-schema';
+import { formConfig } from './form-schema';
+import useForm from '../../../providers/form/hooks/useForm';
 
 const ManageCategory = () => {
   const { loading } = useSelector((state) => state.apiCall);
@@ -43,10 +42,8 @@ const ManageCategory = () => {
     dispatch(getAllCategoriesAction());
   }, [dispatch]);
 
-  const { control, handleSubmit, formState, reset, setValue } = useForm({
-    defaultValues: { category: '' },
-    resolver: yupResolver(schema),
-  });
+  const { control, handleSubmit, formState, reset, setValue } =
+    useForm(formConfig);
 
   const handleCategorySubmit = ({ category }) => {
     if (selectedCategory) {

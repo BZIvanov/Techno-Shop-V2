@@ -1,6 +1,4 @@
 import { useSelector, useDispatch } from '../../../../store/hooks';
-import { useForm } from 'react-hook-form';
-import { yupResolver } from '@hookform/resolvers/yup';
 import { Box, Typography, Button } from '@mui/material';
 import { Face, Email } from '../../../mui/Icons';
 import { TextFieldAdapter } from '../../../common/forms/TextFieldAdapter';
@@ -8,22 +6,15 @@ import { PasswordTextFieldAdapter } from '../../../common/forms/PasswordTextFiel
 import { ApiCallAlert } from '../../../common/async/ApiCallAlert';
 import { ApiCallLoader } from '../../../common/async/ApiCallLoader';
 import { registerUserAction } from '../../../../store/features/user/userSlice';
-import schema from './form-schema';
+import { formConfig } from './form-schema';
+import useForm from '../../../../providers/form/hooks/useForm';
 
 const RegisterForm = () => {
   const { loading } = useSelector((state) => state.apiCall);
 
   const dispatch = useDispatch();
 
-  const { control, handleSubmit, formState, reset } = useForm({
-    defaultValues: {
-      username: '',
-      email: '',
-      password: '',
-      confirmPassword: '',
-    },
-    resolver: yupResolver(schema),
-  });
+  const { control, handleSubmit, formState, reset } = useForm(formConfig);
 
   const handleFormSubmit = (values) => {
     const { username, email, password } = values;

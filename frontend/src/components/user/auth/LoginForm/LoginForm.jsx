@@ -1,7 +1,5 @@
 import { useState } from 'react';
 import { useSelector, useDispatch } from '../../../../store/hooks';
-import { useForm } from 'react-hook-form';
-import { yupResolver } from '@hookform/resolvers/yup';
 import { Box, Typography, Button } from '@mui/material';
 import { Email } from '../../../mui/Icons';
 import { TextFieldAdapter } from '../../../common/forms/TextFieldAdapter';
@@ -10,7 +8,8 @@ import { ForgotPasswordDialog } from '../../password/ForgotPasswordDialog';
 import { ApiCallAlert } from '../../../common/async/ApiCallAlert';
 import { ApiCallLoader } from '../../../common/async/ApiCallLoader';
 import { loginUserAction } from '../../../../store/features/user/userSlice';
-import schema from './form-schema';
+import { formConfig } from './form-schema';
+import useForm from '../../../../providers/form/hooks/useForm';
 
 const LoginForm = () => {
   const [showForgotPasswordModal, setShowForgotPasswordModal] = useState(false);
@@ -19,13 +18,7 @@ const LoginForm = () => {
 
   const dispatch = useDispatch();
 
-  const { control, handleSubmit, formState } = useForm({
-    defaultValues: {
-      email: '',
-      password: '',
-    },
-    resolver: yupResolver(schema),
-  });
+  const { control, handleSubmit, formState } = useForm(formConfig);
 
   const handleFormSubmit = (values) => {
     dispatch(loginUserAction(values));

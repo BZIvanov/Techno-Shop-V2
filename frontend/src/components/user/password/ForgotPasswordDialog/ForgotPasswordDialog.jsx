@@ -1,6 +1,4 @@
 import { useSelector, useDispatch } from '../../../../store/hooks';
-import { useForm } from 'react-hook-form';
-import { yupResolver } from '@hookform/resolvers/yup';
 import {
   Button,
   Dialog,
@@ -12,7 +10,8 @@ import {
 import { Email } from '../../../mui/Icons';
 import { TextFieldAdapter } from '../../../common/forms/TextFieldAdapter';
 import { forgotPasswordAction } from '../../../../store/features/user/userSlice';
-import schema from './form-schema';
+import { formConfig } from './form-schema';
+import useForm from '../../../../providers/form/hooks/useForm';
 
 const ForgotPasswordDialog = ({
   showForgotPasswordModal,
@@ -22,10 +21,7 @@ const ForgotPasswordDialog = ({
 
   const dispatch = useDispatch();
 
-  const { control, handleSubmit, formState } = useForm({
-    defaultValues: { email: '' },
-    resolver: yupResolver(schema),
-  });
+  const { control, handleSubmit, formState } = useForm(formConfig);
 
   const handleFormSubmit = (values) => {
     dispatch(forgotPasswordAction(values));
