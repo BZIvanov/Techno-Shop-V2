@@ -5,14 +5,16 @@ import { ApiCallAlert } from '../../../common/async/ApiCallAlert';
 import { ApiCallLoader } from '../../../common/async/ApiCallLoader';
 import { updatePasswordAction } from '../../../../store/features/user/userSlice';
 import { formConfig } from './form-schema';
-import useForm from '../../../../providers/form/hooks/useForm';
+import { useForm } from '../../../../providers/form/hooks';
+import FormProvider from '../../../../providers/form/FormProvider';
 
 const PasswordUpdateForm = () => {
   const { loading } = useSelector((state) => state.apiCall);
 
   const dispatch = useDispatch();
 
-  const { control, handleSubmit, formState, reset } = useForm(formConfig);
+  const formMethods = useForm(formConfig);
+  const { formState, reset } = formMethods;
 
   const handleFormSubmit = (values) => {
     const { newPassword, oldPassword } = values;
@@ -33,26 +35,17 @@ const PasswordUpdateForm = () => {
       <Typography variant='h5'>Password Update Form</Typography>
 
       <Box sx={{ width: { xs: '90%', sm: '290px' } }}>
-        <form onSubmit={handleSubmit(handleFormSubmit)}>
+        <FormProvider onSubmit={handleFormSubmit} methods={formMethods}>
           <Box my={1}>
-            <PasswordTextFieldAdapter
-              control={control}
-              name='oldPassword'
-              label='Old Password'
-            />
+            <PasswordTextFieldAdapter name='oldPassword' label='Old Password' />
+          </Box>
+
+          <Box my={1}>
+            <PasswordTextFieldAdapter name='newPassword' label='New Password' />
           </Box>
 
           <Box my={1}>
             <PasswordTextFieldAdapter
-              control={control}
-              name='newPassword'
-              label='New Password'
-            />
-          </Box>
-
-          <Box my={1}>
-            <PasswordTextFieldAdapter
-              control={control}
               name='confirmNewPassword'
               label='Confirm New Password'
             />
@@ -82,7 +75,7 @@ const PasswordUpdateForm = () => {
               Submit
             </Button>
           </Box>
-        </form>
+        </FormProvider>
       </Box>
 
       <ApiCallLoader />

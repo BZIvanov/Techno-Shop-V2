@@ -1,7 +1,11 @@
 import { Controller } from 'react-hook-form';
 import { FormControl, InputAdornment, TextField } from '@mui/material';
+import { useFormContext } from '../../../../providers/form/hooks';
 
-const TextFieldAdapter = ({ name, control, label, type = 'text', Icon }) => {
+const TextFieldAdapter = ({ name, label, type = 'text', Icon }) => {
+  // After we provided the form methods to the FormProvider, we can now get them from the context
+  const { control } = useFormContext();
+
   return (
     <Controller
       name={name}

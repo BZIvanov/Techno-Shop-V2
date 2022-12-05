@@ -24,7 +24,8 @@ import {
 import { ApiCallAlert } from '../../common/async/ApiCallAlert';
 import { ApiCallLoader } from '../../common/async/ApiCallLoader';
 import { formConfig } from './form-schema';
-import useForm from '../../../providers/form/hooks/useForm';
+import { useForm } from '../../../providers/form/hooks';
+import FormProvider from '../../../providers/form/FormProvider';
 
 const ManageSubcategory = () => {
   const { loading } = useSelector((state) => state.apiCall);
@@ -46,8 +47,8 @@ const ManageSubcategory = () => {
     dispatch(getSubcategoriesAction());
   }, [dispatch]);
 
-  const { control, handleSubmit, formState, reset, setValue } =
-    useForm(formConfig);
+  const formMethods = useForm(formConfig);
+  const { formState, reset, setValue } = formMethods;
 
   const handleSubcategorySubmit = ({ categoryId, subcategoryName }) => {
     if (selectedSubcategory) {
@@ -82,10 +83,9 @@ const ManageSubcategory = () => {
       <Typography variant='h5'>Manage Subcategories</Typography>
 
       <Box>
-        <form onSubmit={handleSubmit(handleSubcategorySubmit)}>
+        <FormProvider onSubmit={handleSubcategorySubmit} methods={formMethods}>
           <Box my={1}>
             <SelectDropdownAdapter
-              control={control}
               name='categoryId'
               label='Category'
               options={categories}
@@ -93,11 +93,7 @@ const ManageSubcategory = () => {
           </Box>
 
           <Box my={1}>
-            <TextFieldAdapter
-              control={control}
-              name='subcategoryName'
-              label='Subcategory'
-            />
+            <TextFieldAdapter name='subcategoryName' label='Subcategory' />
           </Box>
 
           <Box mt={2} ml={1}>
@@ -122,7 +118,7 @@ const ManageSubcategory = () => {
               {selectedSubcategory ? 'Update' : 'Create'}
             </Button>
           </Box>
-        </form>
+        </FormProvider>
       </Box>
 
       <Divider style={{ margin: '20px 0' }} />
