@@ -6,4 +6,6 @@ const schema = yup
   })
   .required();
 
-export default schema;
+const defaultValues = { category: '' };
+
+export const formConfig = { schema, defaultValues };

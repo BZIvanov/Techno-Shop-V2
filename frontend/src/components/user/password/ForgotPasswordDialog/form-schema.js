@@ -4,4 +4,6 @@ const schema = yup
   .object({ email: yup.string().email().required('Email is required') })
   .required();
 
-export default schema;
+const defaultValues = { email: '' };
+
+export const formConfig = { schema, defaultValues };

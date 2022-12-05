@@ -15,4 +15,17 @@ const schema = yup
   })
   .required();
 
-export default schema;
+const defaultValues = {
+  title: '',
+  description: '',
+  price: '',
+  shipping: 'Yes',
+  quantity: '',
+  color: '',
+  brand: '',
+  category: '',
+  subcategories: [],
+  images: [],
+};
+
+export const formConfig = { schema, defaultValues };

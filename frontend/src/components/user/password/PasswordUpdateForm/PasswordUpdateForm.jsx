@@ -1,26 +1,18 @@
 import { useSelector, useDispatch } from '../../../../store/hooks';
-import { useForm } from 'react-hook-form';
-import { yupResolver } from '@hookform/resolvers/yup';
 import { Box, Typography, Button } from '@mui/material';
 import { PasswordTextFieldAdapter } from '../../../common/forms/PasswordTextFieldAdapter';
 import { ApiCallAlert } from '../../../common/async/ApiCallAlert';
 import { ApiCallLoader } from '../../../common/async/ApiCallLoader';
 import { updatePasswordAction } from '../../../../store/features/user/userSlice';
-import schema from './form-schema';
+import { formConfig } from './form-schema';
+import useForm from '../../../../providers/form/hooks/useForm';
 
 const PasswordUpdateForm = () => {
   const { loading } = useSelector((state) => state.apiCall);
 
   const dispatch = useDispatch();
 
-  const { control, handleSubmit, formState, reset } = useForm({
-    defaultValues: {
-      oldPassword: '',
-      newPassword: '',
-      confirmNewPassword: '',
-    },
-    resolver: yupResolver(schema),
-  });
+  const { control, handleSubmit, formState, reset } = useForm(formConfig);
 
   const handleFormSubmit = (values) => {
     const { newPassword, oldPassword } = values;

@@ -1,8 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from '../../../store/hooks';
 import { useParams } from 'react-router-dom';
-import { useForm } from 'react-hook-form';
-import { yupResolver } from '@hookform/resolvers/yup';
 import {
   Box,
   Typography,
@@ -28,7 +26,8 @@ import {
   createProductAction,
   updateProductAction,
 } from '../../../store/features/product/productSlice';
-import schema from './form-schema';
+import { formConfig } from './form-schema';
+import useForm from '../../../providers/form/hooks/useForm';
 
 const ManageProduct = () => {
   const { loading } = useSelector((state) => state.apiCall);
@@ -59,21 +58,8 @@ const ManageProduct = () => {
     }
   }, [dispatch, product]);
 
-  const { control, handleSubmit, formState, reset, watch, setValue } = useForm({
-    defaultValues: {
-      title: '',
-      description: '',
-      price: '',
-      shipping: 'Yes',
-      quantity: '',
-      color: '',
-      brand: '',
-      category: '',
-      subcategories: [],
-      images: [],
-    },
-    resolver: yupResolver(schema),
-  });
+  const { control, handleSubmit, formState, reset, watch, setValue } =
+    useForm(formConfig);
 
   const handleProductSubmit = (values) => {
     if (id) {
