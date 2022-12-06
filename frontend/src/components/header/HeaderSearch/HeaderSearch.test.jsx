@@ -1,4 +1,4 @@
-import { render, screen } from '../../../utils/test-utils';
+import { render, screen } from '../../../test-utils/test-utils';
 import HeaderSearch from './HeaderSearch';
 
 describe('HeaderSearch component', () => {

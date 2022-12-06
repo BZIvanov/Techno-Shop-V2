@@ -1,4 +1,4 @@
-import { render, screen } from '../../../utils/test-utils';
+import { render, screen } from '../../../test-utils/test-utils';
 import HeaderNavLink from './HeaderNavLink';
 import { Home } from '../../mui/Icons';
 

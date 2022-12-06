@@ -1,4 +1,4 @@
-import { render, screen } from '../../../../utils/test-utils';
+import { render, screen } from '../../../../test-utils/test-utils';
 import CountdownProgress from './CountdownProgress';
 
 describe('CountdownProgress component', () => {

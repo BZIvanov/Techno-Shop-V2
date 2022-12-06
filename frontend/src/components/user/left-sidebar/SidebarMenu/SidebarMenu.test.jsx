@@ -1,4 +1,4 @@
-import { render, screen, within } from '../../../../utils/test-utils';
+import { render, screen, within } from '../../../../test-utils/test-utils';
 import SidebarMenu from './SidebarMenu';
 
 describe('SidebarMenu component', () => {

@@ -1,6 +1,6 @@
 import { rest } from 'msw';
 import { setupServer } from 'msw/node';
-import { render, screen, within } from '../../../utils/test-utils';
+import { render, screen, within } from '../../../test-utils/test-utils';
 import ManageSubcategory from './ManageSubcategory';
 
 // set the api calls which will be called after the component renders initially
