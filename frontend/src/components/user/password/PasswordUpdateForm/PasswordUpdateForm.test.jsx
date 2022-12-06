@@ -1,7 +1,7 @@
 import userEvent from '@testing-library/user-event';
 import { rest } from 'msw';
 import { setupServer } from 'msw/node';
-import { render, screen, waitFor } from '../../../../utils/test-utils';
+import { render, screen, waitFor } from '../../../../test-utils/test-utils';
 import PasswordUpdateForm from './PasswordUpdateForm';
 
 const handlers = [

@@ -1,7 +1,7 @@
 import { rest } from 'msw';
 import { setupServer } from 'msw/node';
 import userEvent from '@testing-library/user-event';
-import { render, screen, waitFor } from '../../../../utils/test-utils';
+import { render, screen, waitFor } from '../../../../test-utils/test-utils';
 import ForgotPasswordDialog from './ForgotPasswordDialog';
 
 const handlers = [

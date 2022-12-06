@@ -1,5 +1,5 @@
 import userEvent from '@testing-library/user-event';
-import { render, screen, waitFor } from '../../../../utils/test-utils';
+import { render, screen, waitFor } from '../../../../test-utils/test-utils';
 import RegisterForm from './RegisterForm';
 
 describe('RegisterForm component', () => {

@@ -1,7 +1,12 @@
 import userEvent from '@testing-library/user-event';
 import { rest } from 'msw';
 import { setupServer } from 'msw/node';
-import { render, screen, waitFor, within } from '../../../utils/test-utils';
+import {
+  render,
+  screen,
+  waitFor,
+  within,
+} from '../../../test-utils/test-utils';
 import ManageCategory from './ManageCategory';
 
 const handlers = [
