@@ -27,6 +27,7 @@ const SelectDropdownAdapter = ({ name, label, options }) => {
             disabled={loading}
           >
             <InputLabel>{label}</InputLabel>
+
             <Select data-testid={name} {...field}>
               {options.map((option) => {
                 if (typeof option === 'string') {
@@ -44,6 +45,7 @@ const SelectDropdownAdapter = ({ name, label, options }) => {
                 );
               })}
             </Select>
+
             {fieldState.error && (
               <FormHelperText>{fieldState.error.message}</FormHelperText>
             )}

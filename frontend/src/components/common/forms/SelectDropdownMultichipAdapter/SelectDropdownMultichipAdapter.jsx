@@ -41,6 +41,7 @@ const SelectDropdownMultichipAdapter = ({ name, label, options }) => {
           >
             <InputLabel>{label}</InputLabel>
             <Select
+              data-testid={name}
               {...field}
               multiple={true}
               input={<OutlinedInput label={label} />}

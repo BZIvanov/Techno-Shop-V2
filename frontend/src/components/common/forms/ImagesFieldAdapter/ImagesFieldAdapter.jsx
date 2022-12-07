@@ -43,6 +43,7 @@ const ImagesFieldAdapter = ({ name }) => {
                       fontSize='large'
                     />
                     <input
+                      data-testid='input-file'
                       {...getInputProps()}
                       name={name}
                       onBlur={onBlur}
@@ -55,6 +56,7 @@ const ImagesFieldAdapter = ({ name }) => {
                 );
               }}
             </Dropzone>
+
             {fieldState.error && (
               <FormHelperText
                 sx={{ margin: 0 }}
