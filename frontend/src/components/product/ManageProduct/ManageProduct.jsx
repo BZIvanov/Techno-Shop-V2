@@ -23,26 +23,26 @@ import FormProvider from '../../../providers/form/FormProvider';
 import { PreviewImageAvatar } from '../../common/avatars/PreviewImageAvatar';
 
 const ManageProduct = () => {
+  const dispatch = useDispatch();
+
+  const { productId } = useParams();
+
   const { loading } = useSelector((state) => state.apiCall);
   const { categories, selectedCategorySubcategories } = useSelector(
     (state) => state.category
   );
   const { product } = useSelector((state) => state.product.selectedProduct);
 
-  const { id } = useParams();
-
   const [previewImages, setPreviewImages] = useState([]);
-
-  const dispatch = useDispatch();
 
   useEffect(() => {
     // if product id is found in the url, we are editing a product
-    if (id) {
-      dispatch(getProductAction(id));
+    if (productId) {
+      dispatch(getProductAction(productId));
     }
 
     dispatch(getAllCategoriesAction());
-  }, [dispatch, id]);
+  }, [dispatch, productId]);
 
   useEffect(() => {
     if (product) {
@@ -54,11 +54,11 @@ const ManageProduct = () => {
   const { formState, reset, watch, setValue } = formMethods;
 
   const handleProductSubmit = (values) => {
-    if (id) {
+    if (productId) {
       const { images, ...rest } = values;
       dispatch(
         updateProductAction({
-          _id: id,
+          productId,
           images: images.length > 0 ? images : undefined,
           ...rest,
         })
@@ -75,7 +75,7 @@ const ManageProduct = () => {
 
   useEffect(() => {
     if (
-      id &&
+      productId &&
       product &&
       categories.length > 0 &&
       selectedCategorySubcategories.length > 0
@@ -93,7 +93,7 @@ const ManageProduct = () => {
         product.subcategories.map((subcategory) => subcategory._id)
       );
     }
-  }, [setValue, id, product, categories, selectedCategorySubcategories]);
+  }, [setValue, productId, product, categories, selectedCategorySubcategories]);
 
   // reset selected subcategories and fetch subcategories for the selected category, when category changes
   useEffect(() => {
@@ -196,7 +196,7 @@ const ManageProduct = () => {
               type='submit'
               disabled={formState.submitting || loading}
             >
-              {id ? 'Update' : 'Create'}
+              {productId ? 'Update' : 'Create'}
             </Button>
           </Box>
         </FormProvider>
