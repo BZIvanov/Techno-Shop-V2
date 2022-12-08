@@ -13,7 +13,7 @@ import {
   apiCallSuccessAction,
   apiCallFailAction,
 } from '../api-call/apiCallSlice';
-import imageResizer from '../../../utils/image-resizer';
+import { resizeImage } from '../../../utils/image-resizer';
 
 export const getProductsAction = createAsyncThunk(
   'product/getProductsAction',
@@ -62,7 +62,7 @@ export const createProductAction = createAsyncThunk(
       dispatch(apiCallStartAction());
 
       const base64Images = await Promise.all(
-        values.images.map((imageData) => imageResizer(imageData))
+        values.images.map((imageData) => resizeImage(imageData))
       );
 
       const { data } = await createProductCall(

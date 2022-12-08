@@ -72,7 +72,7 @@ const AppRoutes = () => {
         <Route path='category' element={<ManageCategory />} />
         <Route path='subcategory' element={<ManageSubcategory />} />
         <Route path='product' element={<ManageProduct />} />
-        <Route path='product/:id' element={<ManageProduct />} />
+        <Route path='product/:productId' element={<ManageProduct />} />
         <Route path='products-list' element={<ProductsCardsList />} />
         <Route path='password' element={<PasswordUpdateForm />} />
       </Route>
