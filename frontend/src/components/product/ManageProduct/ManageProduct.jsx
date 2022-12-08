@@ -1,16 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from '../../../store/hooks';
 import { useParams } from 'react-router-dom';
-import {
-  Box,
-  Typography,
-  Button,
-  Divider,
-  Stack,
-  Badge,
-  Avatar,
-} from '@mui/material';
-import { CloseOutlined } from '../../mui/Icons';
+import { Box, Typography, Button, Divider, Stack } from '@mui/material';
 import { TextFieldAdapter } from '../../common/forms/TextFieldAdapter';
 import { SelectDropdownAdapter } from '../../common/forms/SelectDropdownAdapter';
 import { SelectDropdownMultichipAdapter } from '../../common/forms/SelectDropdownMultichipAdapter';
@@ -29,10 +20,10 @@ import {
 import { formConfig } from './form-schema';
 import { useForm } from '../../../providers/form/hooks';
 import FormProvider from '../../../providers/form/FormProvider';
+import { PreviewImageAvatar } from '../../common/avatars/PreviewImageAvatar';
 
 const ManageProduct = () => {
   const { loading } = useSelector((state) => state.apiCall);
-  const { token } = useSelector((state) => state.user);
   const { categories, selectedCategorySubcategories } = useSelector(
     (state) => state.category
   );
@@ -66,13 +57,14 @@ const ManageProduct = () => {
     if (id) {
       const { images, ...rest } = values;
       dispatch(
-        updateProductAction(
-          { _id: id, images: images.length > 0 ? images : undefined, ...rest },
-          token
-        )
+        updateProductAction({
+          _id: id,
+          images: images.length > 0 ? images : undefined,
+          ...rest,
+        })
       );
     } else {
-      dispatch(createProductAction(values, token));
+      dispatch(createProductAction(values));
     }
 
     reset();
@@ -115,6 +107,13 @@ const ManageProduct = () => {
   useEffect(() => {
     setPreviewImages(selectedFormImages);
   }, [selectedFormImages]);
+
+  const removeImage = (imageName) => {
+    setValue(
+      'images',
+      previewImages.filter((previewImage) => previewImage.name !== imageName)
+    );
+  };
 
   return (
     <Box sx={{ padding: (theme) => theme.spacing(1) }}>
@@ -168,31 +167,15 @@ const ManageProduct = () => {
           </Box>
 
           <Stack sx={{ marginTop: 3 }} spacing={2} direction='row'>
-            {previewImages.map((previewImg) => (
-              <Badge
-                key={previewImg.name}
-                badgeContent={
-                  <CloseOutlined
-                    sx={{ cursor: 'pointer' }}
-                    htmlColor={'red'}
-                    onClick={() => {
-                      setValue(
-                        'images',
-                        previewImages.filter(
-                          (pi) => pi.name !== previewImg.name
-                        )
-                      );
-                    }}
-                  />
-                }
-              >
-                <Avatar
-                  alt='product preview'
-                  src={previewImg.preview}
-                  sx={{ width: 90, height: 90 }}
+            {previewImages.map((previewImage) => {
+              return (
+                <PreviewImageAvatar
+                  key={previewImage.path}
+                  image={previewImage}
+                  handleRemoveImage={removeImage}
                 />
-              </Badge>
-            ))}
+              );
+            })}
           </Stack>
 
           <Box mt={2} ml={1}>

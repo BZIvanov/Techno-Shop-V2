@@ -13,13 +13,7 @@ const ImagesFieldAdapter = ({ name }) => {
       name={name}
       render={({ field: { name, onChange, onBlur }, fieldState }) => {
         const onChangeDroppedImages = (files) => {
-          const images = files.map((file) =>
-            Object.assign(file, {
-              preview: URL.createObjectURL(file),
-            })
-          );
-
-          onChange(images);
+          onChange(files);
         };
 
         return (
