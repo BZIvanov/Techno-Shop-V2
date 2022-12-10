@@ -14,7 +14,7 @@ const ProductCard = ({ product: { title, description, images }, children }) => (
       <CardMedia
         component='img'
         height='140'
-        image={images.length > 0 ? images[0].url : productImage}
+        image={images.length > 0 ? images[0].imageUrl : productImage}
         alt='app product'
       />
       <CardContent>

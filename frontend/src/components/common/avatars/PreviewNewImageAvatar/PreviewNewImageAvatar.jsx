@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { Badge, Avatar } from '@mui/material';
 import { CloseOutlined } from '../../../mui/Icons';
 
-const PreviewImageAvatar = ({ image, handleRemoveImage }) => {
+const PreviewNewImageAvatar = ({ image, handleRemoveImage }) => {
   const [preview, setPreview] = useState();
 
   useEffect(() => {
@@ -21,7 +21,6 @@ const PreviewImageAvatar = ({ image, handleRemoveImage }) => {
           sx={{ cursor: 'pointer' }}
           htmlColor={'red'}
           onClick={() => {
-            URL.revokeObjectURL(preview);
             handleRemoveImage(image.name);
           }}
         />
@@ -36,4 +35,4 @@ const PreviewImageAvatar = ({ image, handleRemoveImage }) => {
   );
 };
 
-export default PreviewImageAvatar;
+export default PreviewNewImageAvatar;

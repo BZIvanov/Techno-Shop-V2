@@ -6,8 +6,8 @@ const ImagesCarousel = ({ images = [] }) => {
   return (
     <Carousel showArrows={true} autoPlay={true} infiniteLoop={true}>
       {images.length > 0 ? (
-        images.map(({ publicId, url }) => (
-          <img src={url} key={publicId} alt='product-preview' />
+        images.map(({ publicId, imageUrl }) => (
+          <img src={imageUrl} key={publicId} alt='product-preview' />
         ))
       ) : (
         <img src={productImage} alt='product-preview' />
