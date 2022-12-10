@@ -57,9 +57,16 @@ const schema = new Schema(
       type: Number,
       default: 0,
     },
-    images: {
-      type: Array,
-    },
+    images: [
+      {
+        publicId: {
+          type: String,
+        },
+        imageUrl: {
+          type: String,
+        },
+      },
+    ],
     shipping: {
       type: String,
       default: yesNo.yes,

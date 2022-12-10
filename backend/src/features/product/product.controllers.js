@@ -1,6 +1,5 @@
 const status = require('http-status');
 const cloudinary = require('cloudinary');
-const { v4: uuidv4 } = require('uuid');
 const slugify = require('slugify');
 const Product = require('./product.model');
 const catchAsync = require('../../middlewares/catch-async');
@@ -67,24 +66,9 @@ exports.getProduct = catchAsync(async (req, res, next) => {
 });
 
 exports.createProduct = catchAsync(async (req, res) => {
-  const { images, ...rest } = req.body;
-  rest.slug = slugify(rest.title);
+  req.body.slug = slugify(req.body.title);
 
-  const uploadedImagesInfo = await Promise.all(
-    images.map((image) =>
-      cloudinary.uploader.upload(image, {
-        public_id: uuidv4(),
-        resource_type: 'auto', // jpeg, png
-      })
-    )
-  );
-
-  rest.images = uploadedImagesInfo.map((image) => ({
-    publicId: image.public_id,
-    url: image.secure_url,
-  }));
-
-  const product = await Product.create(rest);
+  const product = await Product.create(req.body);
 
   res.status(status.CREATED).json({ success: true, product });
 });

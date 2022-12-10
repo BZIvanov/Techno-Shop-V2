@@ -8,6 +8,7 @@ import {
   rateProductCall,
   getSimilarProductsCall,
 } from '../../../api/products';
+import { uploadImageCall } from '../../../api/images';
 import {
   apiCallStartAction,
   apiCallSuccessAction,
@@ -62,13 +63,25 @@ export const createProductAction = createAsyncThunk(
       dispatch(apiCallStartAction());
 
       const base64Images = await Promise.all(
-        values.images.map((imageData) => resizeImage(imageData))
+        values.images.map((image) => resizeImage(image))
       );
+      const imagePromises = base64Images.map((image) => {
+        return uploadImageCall({ image }, user.token);
+      });
+      const uploadedImagesData = await Promise.allSettled(imagePromises);
+      // replace the values images with the response for each uploaded image, which is what will be stored in the database
+      values.images = uploadedImagesData
+        .filter((uploadedImage) => {
+          return uploadedImage.status === 'fulfilled';
+        })
+        .map((uploadedImage) => {
+          return {
+            publicId: uploadedImage.value.data.publicId,
+            imageUrl: uploadedImage.value.data.imageUrl,
+          };
+        });
 
-      const { data } = await createProductCall(
-        { ...values, images: base64Images },
-        user.token
-      );
+      const { data } = await createProductCall(values, user.token);
 
       dispatch(apiCallSuccessAction(`Product '${data.product.title}' created`));
 
@@ -89,9 +102,29 @@ export const updateProductAction = createAsyncThunk(
 
       dispatch(apiCallStartAction());
 
-      const { data } = await updateProductCall(values, user.token);
+      const base64Images = await Promise.all(
+        values.images.map((image) => resizeImage(image))
+      );
+      const imagePromises = base64Images.map((image) => {
+        return uploadImageCall({ image }, user.token);
+      });
+      const uploadedImagesData = await Promise.allSettled(imagePromises);
+      values.images = uploadedImagesData
+        .filter((uploadedImage) => {
+          return uploadedImage.status === 'fulfilled';
+        })
+        .map((uploadedImage) => {
+          return {
+            publicId: uploadedImage.value.data.publicId,
+            imageUrl: uploadedImage.value.data.imageUrl,
+          };
+        })
+        .concat(values.existingImages);
+      const { existingImages, ...rest } = values;
 
-      dispatch(apiCallSuccessAction(`Product '${data.product.name}' updated`));
+      const { data } = await updateProductCall(rest, user.token);
+
+      dispatch(apiCallSuccessAction(`Product '${data.product.title}' updated`));
 
       return data.product;
     } catch (error) {

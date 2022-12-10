@@ -12,8 +12,8 @@ exports.uploadImages = catchAsync(async (req, res) => {
 
   res.status(status.OK).json({
     success: true,
-    public_id: image.public_id,
-    url: image.secure_url,
+    publicId: image.public_id,
+    imageUrl: image.secure_url,
   });
 });
 

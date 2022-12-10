@@ -20,7 +20,8 @@ import {
 import { formConfig } from './form-schema';
 import { useForm } from '../../../providers/form/hooks';
 import FormProvider from '../../../providers/form/FormProvider';
-import { PreviewImageAvatar } from '../../common/avatars/PreviewImageAvatar';
+import PreviewNewImageAvatar from '../../common/avatars/PreviewNewImageAvatar/PreviewNewImageAvatar';
+import PreviewExistingImageAvatar from '../../common/avatars/PreviewExistingImageAvatar/PreviewExistingImageAvatar';
 
 const ManageProduct = () => {
   const dispatch = useDispatch();
@@ -33,7 +34,8 @@ const ManageProduct = () => {
   );
   const { product } = useSelector((state) => state.product.selectedProduct);
 
-  const [previewImages, setPreviewImages] = useState([]);
+  const [newImages, setNewImages] = useState([]);
+  const [existingImages, setExistingImages] = useState([]); // we will have these, when editing a product
 
   useEffect(() => {
     // if product id is found in the url, we are editing a product
@@ -55,12 +57,11 @@ const ManageProduct = () => {
 
   const handleProductSubmit = (values) => {
     if (productId) {
-      const { images, ...rest } = values;
       dispatch(
         updateProductAction({
           productId,
-          images: images.length > 0 ? images : undefined,
-          ...rest,
+          existingImages,
+          ...values,
         })
       );
     } else {
@@ -68,6 +69,7 @@ const ManageProduct = () => {
     }
 
     reset();
+    setExistingImages([]);
   };
 
   const selectedFormCategoryId = watch('category');
@@ -92,6 +94,7 @@ const ManageProduct = () => {
         'subcategories',
         product.subcategories.map((subcategory) => subcategory._id)
       );
+      setExistingImages(product.images);
     }
   }, [setValue, productId, product, categories, selectedCategorySubcategories]);
 
@@ -105,14 +108,21 @@ const ManageProduct = () => {
 
   // watch images
   useEffect(() => {
-    setPreviewImages(selectedFormImages);
+    setNewImages(selectedFormImages);
   }, [selectedFormImages]);
 
-  const removeImage = (imageName) => {
+  const removeNewImage = (imageName) => {
     setValue(
       'images',
-      previewImages.filter((previewImage) => previewImage.name !== imageName)
+      newImages.filter((previewImage) => previewImage.name !== imageName)
     );
+  };
+
+  const removeExistingImage = (imageId) => {
+    const filteredImages = existingImages.filter((existingImage) => {
+      return existingImage.publicId !== imageId;
+    });
+    setExistingImages(filteredImages);
   };
 
   return (
@@ -167,12 +177,23 @@ const ManageProduct = () => {
           </Box>
 
           <Stack sx={{ marginTop: 3 }} spacing={2} direction='row'>
-            {previewImages.map((previewImage) => {
+            {/* Newly uploaded images */}
+            {newImages.map((previewImage) => {
               return (
-                <PreviewImageAvatar
+                <PreviewNewImageAvatar
                   key={previewImage.path}
                   image={previewImage}
-                  handleRemoveImage={removeImage}
+                  handleRemoveImage={removeNewImage}
+                />
+              );
+            })}
+            {/* Previosuly uploaded images, when editing a product */}
+            {existingImages.map((previewImage) => {
+              return (
+                <PreviewExistingImageAvatar
+                  key={previewImage.publicId}
+                  image={previewImage}
+                  handleRemoveImage={removeExistingImage}
                 />
               );
             })}
