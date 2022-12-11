@@ -6,10 +6,12 @@ module.exports = (err, req, res, next) => {
   let error = { ...err };
   error.message = err.message;
 
+  // mongoose error, for example invalid _id value type
   if (err.name === 'CastError') {
     error = new AppError('Resource not found', status.NOT_FOUND);
   }
 
+  // mongoose error
   if (err.code === 11000) {
     error = new AppError('Duplicate field value', status.BAD_REQUEST);
   }
