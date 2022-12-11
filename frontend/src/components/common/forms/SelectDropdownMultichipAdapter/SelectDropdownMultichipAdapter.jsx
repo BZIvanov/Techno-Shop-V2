@@ -6,7 +6,6 @@ import {
   Select,
   MenuItem,
   FormHelperText,
-  OutlinedInput,
   Box,
   Chip,
 } from '@mui/material';
@@ -38,13 +37,14 @@ const SelectDropdownMultichipAdapter = ({ name, label, options }) => {
             sx={{ width: '100%' }}
             error={Boolean(fieldState.error)}
             disabled={loading || options.length < 1}
+            variant='standard'
           >
             <InputLabel>{label}</InputLabel>
+
             <Select
               data-testid={name}
               {...field}
               multiple={true}
-              input={<OutlinedInput label={label} />}
               renderValue={(selected) => {
                 return (
                   <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
@@ -66,6 +66,7 @@ const SelectDropdownMultichipAdapter = ({ name, label, options }) => {
                 );
               })}
             </Select>
+
             {fieldState.error && (
               <FormHelperText>{fieldState.error.message}</FormHelperText>
             )}
