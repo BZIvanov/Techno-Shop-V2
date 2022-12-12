@@ -6,7 +6,11 @@ const catchAsync = require('../../middlewares/catch-async');
 const AppError = require('../../utils/app-error');
 
 exports.getSubcategories = catchAsync(async (req, res) => {
-  const subcategories = await Subcategory.find()
+  const { categoryId } = req.params;
+
+  const subcategories = await Subcategory.find({
+    ...(categoryId && { categoryId }),
+  })
     .populate('categoryId')
     .sort({ createdAt: -1 });
 

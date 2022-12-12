@@ -36,6 +36,79 @@ describe('Subcategory routes', () => {
     await mongoDbDisconnect();
   });
 
+  describe('Get subcategories controller', () => {
+    test('it should get subcategories with populated category data', async () => {
+      const response = await request(app)
+        .get('/v1/subcategories')
+        .expect('Content-Type', /application\/json/)
+        .expect(200);
+
+      expect(response.body).toHaveProperty('success', true);
+      expect(response.body).toHaveProperty('subcategories');
+      expect(response.body.subcategories[0]).toHaveProperty('_id');
+      expect(response.body.subcategories[0]).toHaveProperty('name');
+      expect(response.body.subcategories[0]).toHaveProperty('slug');
+      expect(response.body.subcategories[0]).toHaveProperty('categoryId._id');
+      expect(response.body.subcategories[0]).toHaveProperty('categoryId.name');
+    });
+
+    test('get only subcategories for specific category', async () => {
+      const response = await request(app)
+        .get(`/v1/categories/${categories[0]._id}/subcategories`)
+        .expect('Content-Type', /application\/json/)
+        .expect(200);
+
+      expect(response.body).toHaveProperty('success', true);
+      expect(response.body.subcategories.length).toBe(1);
+      expect(response.body.subcategories[0]).toHaveProperty(
+        'categoryId.name',
+        'Laptops'
+      );
+    });
+
+    test('should get empty list of subcategories for not existing category', async () => {
+      const response = await request(app)
+        .get('/v1/categories/5199574c65bcf37b80cfe46e/subcategories')
+        .expect('Content-Type', /application\/json/)
+        .expect(200);
+
+      expect(response.body).toHaveProperty('success', true);
+      expect(response.body.subcategories.length).toBe(0);
+    });
+  });
+
+  describe('Get subcategory controller', () => {
+    test('it should get a subcategory successfully', async () => {
+      const subcategoryId = subcategories[0]._id;
+      const response = await request(app)
+        .get(`/v1/subcategories/${subcategoryId}`)
+        .expect('Content-Type', /application\/json/)
+        .expect(200);
+
+      expect(response.body).toHaveProperty('success', true);
+      expect(response.body).toHaveProperty('subcategory._id', subcategoryId);
+      expect(response.body).toHaveProperty(
+        'subcategory.name',
+        subcategories[0].name
+      );
+      expect(response.body).toHaveProperty(
+        'subcategory.slug',
+        subcategories[0].slug
+      );
+    });
+
+    test('it should return not found for invalid id', async () => {
+      const subcategoryId = '1199473165bcf27b81cae571';
+      const response = await request(app)
+        .get(`/v1/subcategories/${subcategoryId}`)
+        .expect('Content-Type', /application\/json/)
+        .expect(404);
+
+      expect(response.body).toHaveProperty('success', false);
+      expect(response.body).toHaveProperty('error', 'Subcategory not found');
+    });
+  });
+
   describe('Create subcategory controller', () => {
     test('it should create a subcategory successfully', async () => {
       const response = await request(app)
@@ -82,55 +155,6 @@ describe('Subcategory routes', () => {
         'error',
         '"categoryId" with value "12345" fails to match the Invalid id pattern'
       );
-    });
-  });
-
-  describe('Get subcategories controller', () => {
-    test('it should get subcategories with populated category data', async () => {
-      const response = await request(app)
-        .get('/v1/subcategories')
-        .expect('Content-Type', /application\/json/)
-        .expect(200);
-
-      expect(response.body).toHaveProperty('success', true);
-      expect(response.body).toHaveProperty('subcategories');
-      expect(response.body.subcategories[0]).toHaveProperty('_id');
-      expect(response.body.subcategories[0]).toHaveProperty('name');
-      expect(response.body.subcategories[0]).toHaveProperty('slug');
-      expect(response.body.subcategories[0]).toHaveProperty('categoryId._id');
-      expect(response.body.subcategories[0]).toHaveProperty('categoryId.name');
-    });
-  });
-
-  describe('Get subcategory controller', () => {
-    test('it should get a subcategory successfully', async () => {
-      const subcategoryId = subcategories[0]._id;
-      const response = await request(app)
-        .get(`/v1/subcategories/${subcategoryId}`)
-        .expect('Content-Type', /application\/json/)
-        .expect(200);
-
-      expect(response.body).toHaveProperty('success', true);
-      expect(response.body).toHaveProperty('subcategory._id', subcategoryId);
-      expect(response.body).toHaveProperty(
-        'subcategory.name',
-        subcategories[0].name
-      );
-      expect(response.body).toHaveProperty(
-        'subcategory.slug',
-        subcategories[0].slug
-      );
-    });
-
-    test('it should return not found for invalid id', async () => {
-      const subcategoryId = '1199473165bcf27b81cae571';
-      const response = await request(app)
-        .get(`/v1/subcategories/${subcategoryId}`)
-        .expect('Content-Type', /application\/json/)
-        .expect(404);
-
-      expect(response.body).toHaveProperty('success', false);
-      expect(response.body).toHaveProperty('error', 'Subcategory not found');
     });
   });
 
