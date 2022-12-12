@@ -5,7 +5,6 @@ const {
   createCategory,
   updateCategory,
   deleteCategory,
-  getCategorySubcategories,
   getCategoryProducts,
 } = require('./category.controllers');
 const validateBodyData = require('../../middlewares/validate-body-data');
@@ -17,8 +16,12 @@ const {
 const {
   upsertCategoryValidationSchema,
 } = require('./category.validationSchema');
+const subcategoryRoutes = require('../subcategory/subcategory.routes');
 
 const router = express.Router();
+
+// /api/categories/:categoryId/subcategories => this will go to subcategories router where it will be just '/' with the same method
+router.use('/:categoryId/subcategories', subcategoryRoutes);
 
 router
   .route('/')
@@ -39,7 +42,6 @@ router
     updateCategory
   )
   .delete(authenticate, authorize(admin), deleteCategory);
-router.route('/:id/subcategories').get(getCategorySubcategories);
 router.route('/:id/products').get(getCategoryProducts);
 
 module.exports = router;

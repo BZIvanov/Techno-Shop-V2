@@ -17,7 +17,8 @@ const {
   upsertSubcategoryValidationSchema,
 } = require('./subcategory.validationSchema');
 
-const router = express.Router();
+// set mergeParams to true to receive the params from the category router
+const router = express.Router({ mergeParams: true });
 
 router
   .route('/')
