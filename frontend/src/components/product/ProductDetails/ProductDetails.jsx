@@ -31,7 +31,7 @@ import { ApiCallAlert } from '../../common/async/ApiCallAlert';
 import { ApiCallLoader } from '../../common/async/ApiCallLoader';
 
 const ProductDetails = () => {
-  const { user, token } = useSelector((state) => state.user);
+  const { user } = useSelector((state) => state.user);
   const { product, similarProducts } = useSelector(
     (state) => state.product.selectedProduct
   );
@@ -61,7 +61,7 @@ const ProductDetails = () => {
   }, [product, user]);
 
   const rateProduct = () => {
-    dispatch(rateProductAction(product._id, { rating }, token));
+    dispatch(rateProductAction({ productId: product._id, rating }));
   };
 
   return (

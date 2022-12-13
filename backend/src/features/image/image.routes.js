@@ -1,5 +1,5 @@
 const express = require('express');
-const { uploadImages, removeImage } = require('./image.controllers');
+const { uploadImage, removeImage } = require('./image.controllers');
 const authenticate = require('../../middlewares/authenticate');
 const authorize = require('../../middlewares/authorize');
 const {
@@ -8,7 +8,7 @@ const {
 
 const router = express.Router();
 
-router.route('/upload').post(authenticate, authorize(admin), uploadImages);
+router.route('/upload').post(authenticate, authorize(admin), uploadImage);
 router.route('/remove').post(authenticate, authorize(admin), removeImage);
 
 module.exports = router;

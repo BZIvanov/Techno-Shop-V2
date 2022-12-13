@@ -15,7 +15,6 @@ import { ProductCard } from '../../product/ProductCard';
 import { PRODUCTS_LIST_TYPES } from '../../../constants';
 
 const ProductsCardsList = () => {
-  const { token } = useSelector((state) => state.user);
   const { products } = useSelector((state) => state.product.all);
 
   const dispatch = useDispatch();
@@ -36,7 +35,7 @@ const ProductsCardsList = () => {
       text: '',
       onConfirm: () => {},
     });
-    dispatch(deleteProductAction(productId, token));
+    dispatch(deleteProductAction(productId));
   };
 
   return (
@@ -67,29 +66,27 @@ const ProductsCardsList = () => {
                 <AverageRating ratings={product.ratings} size='small' />
 
                 <ProductCard product={product}>
-                  <>
-                    <IconButton
-                      component={Link}
-                      to={`/admin/product/${product._id}`}
-                      size='medium'
-                      color='warning'
-                    >
-                      <Edit />
-                    </IconButton>
-                    <IconButton
-                      size='medium'
-                      color='warning'
-                      onClick={() =>
-                        setRemoveProductDialog({
-                          open: true,
-                          text: 'Are you sure you want to delete this product?',
-                          onConfirm: handleProductDeleteClick(product._id),
-                        })
-                      }
-                    >
-                      <Delete />
-                    </IconButton>
-                  </>
+                  <IconButton
+                    component={Link}
+                    to={`/admin/product/${product._id}`}
+                    size='medium'
+                    color='warning'
+                  >
+                    <Edit />
+                  </IconButton>
+                  <IconButton
+                    size='medium'
+                    color='warning'
+                    onClick={() =>
+                      setRemoveProductDialog({
+                        open: true,
+                        text: 'Are you sure you want to delete this product?',
+                        onConfirm: handleProductDeleteClick(product._id),
+                      })
+                    }
+                  >
+                    <Delete />
+                  </IconButton>
                 </ProductCard>
               </Grid>
             ))}
