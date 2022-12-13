@@ -166,11 +166,11 @@ export const rateProductAction = createAsyncThunk(
 
       const { data } = await rateProductCall(
         values.productId,
-        values.rating,
+        { rating: values.rating },
         user.token
       );
 
-      dispatch(rateProductCall(`Product '${data.product.title}' rated`));
+      dispatch(apiCallSuccessAction(`Product '${data.product.title}' rated`));
 
       return data.product;
     } catch (error) {
