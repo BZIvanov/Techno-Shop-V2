@@ -2,8 +2,8 @@ import { Box, Rating, Typography } from '@mui/material';
 
 const AverageRating = ({ ratings = [], size = 'large' }) => {
   const allStarsSum = ratings
-    .map((rating) => rating.star)
-    .reduce((total, star) => total + star, 0);
+    .map((rating) => rating.stars)
+    .reduce((total, stars) => total + stars, 0);
 
   const averageRating = allStarsSum / ratings.length;
 
