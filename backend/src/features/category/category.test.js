@@ -119,15 +119,24 @@ describe('Category routes', () => {
       expect(response.body).toHaveProperty('category.slug', categories[0].slug);
     });
 
-    test('it should return not found for invalid id', async () => {
-      const categoryId = '5199473165bcf27b81cae571';
+    test('it should return product not found for not existing id', async () => {
       const response = await request(app)
-        .get(`/v1/categories/${categoryId}`)
+        .get('/v1/categories/5199473165bcf27b81cae571')
         .expect('Content-Type', /application\/json/)
         .expect(404);
 
       expect(response.body).toHaveProperty('success', false);
       expect(response.body).toHaveProperty('error', 'Category not found');
+    });
+
+    test('it should return resource not found for not invalid id', async () => {
+      const response = await request(app)
+        .get('/v1/categories/hello')
+        .expect('Content-Type', /application\/json/)
+        .expect(404);
+
+      expect(response.body).toHaveProperty('success', false);
+      expect(response.body).toHaveProperty('error', 'Resource not found');
     });
   });
 

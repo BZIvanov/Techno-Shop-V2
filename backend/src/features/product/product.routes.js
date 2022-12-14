@@ -13,7 +13,7 @@ const authorize = require('../../middlewares/authorize');
 const {
   userTypes: { admin },
 } = require('../user/user.constants');
-const validateBodyData = require('../../middlewares/validate-body-data');
+const validateRequestBody = require('../../middlewares/validate-request-body');
 const { productValidationSchema } = require('./product.validationSchema');
 
 const router = express.Router();
@@ -22,7 +22,7 @@ router
   .route('/')
   .get(getProducts)
   .post(
-    validateBodyData(productValidationSchema),
+    validateRequestBody(productValidationSchema),
     authenticate,
     authorize(admin),
     createProduct
