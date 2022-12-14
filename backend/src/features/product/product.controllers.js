@@ -100,7 +100,7 @@ exports.deleteProduct = catchAsync(async (req, res, next) => {
   res.status(status.NO_CONTENT).json();
 });
 
-exports.rateProduct = async (req, res) => {
+exports.rateProduct = catchAsync(async (req, res) => {
   const { rating: userRating } = req.body;
 
   const product = await Product.findById(req.params.id);
@@ -114,14 +114,14 @@ exports.rateProduct = async (req, res) => {
       {
         ratings: { $elemMatch: existingRatingObject },
       },
-      { $set: { 'ratings.$.star': userRating } },
+      { $set: { 'ratings.$.stars': userRating } },
       { new: true }
     );
   } else {
     await Product.findByIdAndUpdate(
       product._id,
       {
-        $push: { ratings: { star: userRating, postedBy: req.user._id } },
+        $push: { ratings: { stars: userRating, postedBy: req.user._id } },
       },
       { new: true }
     );
@@ -132,9 +132,9 @@ exports.rateProduct = async (req, res) => {
     .populate('subcategories');
 
   res.status(status.OK).json({ success: true, product: updatedProduct });
-};
+});
 
-exports.getSimilarProducts = async (req, res, next) => {
+exports.getSimilarProducts = catchAsync(async (req, res, next) => {
   const product = await Product.findById(req.params.id);
 
   if (!product) {
@@ -156,4 +156,4 @@ exports.getSimilarProducts = async (req, res, next) => {
     products: similarProducts,
     totalCount: similarProducts.length,
   });
-};
+});

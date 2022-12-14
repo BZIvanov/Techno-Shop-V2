@@ -12,7 +12,7 @@ const authorize = require('../../middlewares/authorize');
 const {
   userTypes: { admin },
 } = require('../user/user.constants');
-const validateBodyData = require('../../middlewares/validate-body-data');
+const validateRequestBody = require('../../middlewares/validate-request-body');
 const {
   upsertSubcategoryValidationSchema,
 } = require('./subcategory.validationSchema');
@@ -24,7 +24,7 @@ router
   .route('/')
   .get(getSubcategories)
   .post(
-    validateBodyData(upsertSubcategoryValidationSchema),
+    validateRequestBody(upsertSubcategoryValidationSchema),
     authenticate,
     authorize(admin),
     createSubcategory
@@ -33,7 +33,7 @@ router
   .route('/:id')
   .get(getSubcategory)
   .put(
-    validateBodyData(upsertSubcategoryValidationSchema),
+    validateRequestBody(upsertSubcategoryValidationSchema),
     authenticate,
     authorize(admin),
     updateSubcategory

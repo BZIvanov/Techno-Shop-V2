@@ -8,7 +8,7 @@ const {
   forgotPassword,
   resetPassword,
 } = require('./user.controllers');
-const validateBodyData = require('../../middlewares/validate-body-data');
+const validateRequestBody = require('../../middlewares/validate-request-body');
 const authenticate = require('../../middlewares/authenticate');
 const {
   registerValidationSchema,
@@ -21,20 +21,20 @@ const router = express.Router();
 
 router
   .route('/register')
-  .post(validateBodyData(registerValidationSchema), register);
-router.route('/login').post(validateBodyData(loginValidationSchema), login);
+  .post(validateRequestBody(registerValidationSchema), register);
+router.route('/login').post(validateRequestBody(loginValidationSchema), login);
 router.route('/logout').put(authenticate, logout);
 router.route('/current-user').get(authenticate, currentUser);
 router
   .route('/update-password')
   .put(
-    validateBodyData(updatePasswordValidationSchema),
+    validateRequestBody(updatePasswordValidationSchema),
     authenticate,
     updatePassword
   );
 router
   .route('/forgot-password')
-  .post(validateBodyData(forgotPasswordValidationSchema), forgotPassword);
+  .post(validateRequestBody(forgotPasswordValidationSchema), forgotPassword);
 router.route('/reset-password').post(resetPassword);
 
 module.exports = router;
