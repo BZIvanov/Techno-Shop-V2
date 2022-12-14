@@ -1,7 +1,15 @@
 import { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from '../../../store/hooks';
 import { Link } from 'react-router-dom';
-import { Box, Typography, IconButton, Grid, Paper } from '@mui/material';
+import {
+  Box,
+  Typography,
+  IconButton,
+  Grid,
+  Paper,
+  Stack,
+  Pagination,
+} from '@mui/material';
 import { Edit, Delete } from '../../mui/Icons';
 import { ConfirmDialog } from '../../common/dialogs/ConfirmDialog';
 import { AverageRating } from '../../common/rating/AverageRating';
@@ -14,14 +22,24 @@ import {
 import { ProductCard } from '../../product/ProductCard';
 import { PRODUCTS_LIST_TYPES } from '../../../constants';
 
-const ProductsCardsList = () => {
-  const { products } = useSelector((state) => state.product.all);
+const PRODUCTS_PER_PAGE = 12;
 
+const ProductsCardsList = () => {
   const dispatch = useDispatch();
 
+  const { products, totalCount } = useSelector((state) => state.product.all);
+
+  const [page, setPage] = useState(1);
+
   useEffect(() => {
-    dispatch(getProductsAction({ productsType: PRODUCTS_LIST_TYPES.all }));
-  }, [dispatch]);
+    dispatch(
+      getProductsAction({
+        productsType: PRODUCTS_LIST_TYPES.all,
+        page,
+        perPage: PRODUCTS_PER_PAGE,
+      })
+    );
+  }, [dispatch, page]);
 
   const [removeProductDialog, setRemoveProductDialog] = useState({
     open: false,
@@ -95,6 +113,19 @@ const ProductsCardsList = () => {
           <Typography variant='subtitle2'>
             No Products found. Use the form above to create some.
           </Typography>
+        )}
+
+        {totalCount > PRODUCTS_PER_PAGE && (
+          <Stack sx={{ margin: 2, display: 'flex', alignItems: 'center' }}>
+            <Pagination
+              page={page}
+              onChange={(_, value) => setPage(value)}
+              count={Math.ceil(totalCount / PRODUCTS_PER_PAGE)}
+              boundaryCount={2}
+              showFirstButton={true}
+              showLastButton={true}
+            />
+          </Stack>
         )}
       </Paper>
 
