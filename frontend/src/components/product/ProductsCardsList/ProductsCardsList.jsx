@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import {
   Box,
   Typography,
-  IconButton,
+  Button,
   Grid,
   Paper,
   Stack,
@@ -63,7 +63,7 @@ const ProductsCardsList = () => {
         flexDirection: 'column',
         justifyContent: 'center',
         alignItems: 'center',
-        marginTop: { xs: '10px', sm: '20px', md: '40px' },
+        marginTop: { xs: '10px', sm: '20px' },
       }}
     >
       <Typography variant='h5'>Products List</Typography>
@@ -84,17 +84,15 @@ const ProductsCardsList = () => {
                 <AverageRating ratings={product.ratings} size='small' />
 
                 <ProductCard product={product}>
-                  <IconButton
+                  <Button
                     component={Link}
                     to={`/admin/product/${product._id}`}
-                    size='medium'
-                    color='warning'
+                    sx={{ display: 'flex', flexDirection: 'column' }}
                   >
                     <Edit />
-                  </IconButton>
-                  <IconButton
-                    size='medium'
-                    color='warning'
+                    <Typography variant='caption'>Edit</Typography>
+                  </Button>
+                  <Button
                     onClick={() =>
                       setRemoveProductDialog({
                         open: true,
@@ -102,9 +100,11 @@ const ProductsCardsList = () => {
                         onConfirm: handleProductDeleteClick(product._id),
                       })
                     }
+                    sx={{ display: 'flex', flexDirection: 'column' }}
                   >
                     <Delete />
-                  </IconButton>
+                    <Typography variant='caption'>Delete</Typography>
+                  </Button>
                 </ProductCard>
               </Grid>
             ))}

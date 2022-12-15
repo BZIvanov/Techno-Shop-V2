@@ -24,8 +24,8 @@ const ProductCard = ({
           image={images.length > 0 ? images[0].imageUrl : productImage}
           alt='app product'
         />
-        <CardContent>
-          <Typography gutterBottom={true} variant='h5'>
+        <CardContent sx={{ paddingBlock: '8px' }}>
+          <Typography gutterBottom={true} variant='body1'>
             {title}
           </Typography>
           <Typography variant='body2' color='text.secondary'>

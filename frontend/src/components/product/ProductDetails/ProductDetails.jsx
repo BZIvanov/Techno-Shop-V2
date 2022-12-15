@@ -7,7 +7,7 @@ import {
   Card,
   CardContent,
   CardActions,
-  IconButton,
+  Button,
   Chip,
   Box,
 } from '@mui/material';
@@ -54,7 +54,7 @@ const ProductDetails = () => {
       const userRating = product.ratings.find(
         (rating) => rating.postedBy === user._id
       );
-      userRating && setRating(userRating.star);
+      userRating && setRating(userRating.stars);
     }
 
     return () => setRating(0);
@@ -69,13 +69,16 @@ const ProductDetails = () => {
       {product && (
         <Grid
           container={true}
-          sx={{ '& .slide img': { maxHeight: '390px', objectFit: 'cover' } }}
+          sx={{
+            '& .slide img': { maxHeight: '390px', objectFit: 'cover' },
+            padding: 2,
+          }}
         >
           <Grid item={true} sm={12} md={6}>
             <ImagesCarousel images={product.images} />
           </Grid>
 
-          <Grid item={true} xs={12} sm={12} md={6} sx={{ padding: 2 }}>
+          <Grid item={true} xs={12} sm={12} md={6} sx={{ paddingLeft: 1 }}>
             <Typography
               gutterBottom={true}
               variant='h4'
@@ -207,35 +210,21 @@ const ProductDetails = () => {
               </CardContent>
 
               <CardActions>
-                <IconButton
-                  size='medium'
-                  color='warning'
+                <Button
                   onClick={() => console.log('works')}
-                  sx={{
-                    display: 'flex',
-                    flexDirection: 'column',
-                    padding: '5px 12px',
-                  }}
+                  sx={{ display: 'flex', flexDirection: 'column' }}
                 >
                   <AddShoppingCart />
                   <Typography variant='caption'>Add to cart</Typography>
-                </IconButton>
-                <IconButton
-                  size='medium'
-                  color='warning'
+                </Button>
+                <Button
                   onClick={() => console.log('works')}
-                  sx={{
-                    display: 'flex',
-                    flexDirection: 'column',
-                    padding: '5px 12px',
-                  }}
+                  sx={{ display: 'flex', flexDirection: 'column' }}
                 >
                   <Favorite />
                   <Typography variant='caption'>Add to wishlist</Typography>
-                </IconButton>
-                <IconButton
-                  size='medium'
-                  color='warning'
+                </Button>
+                <Button
                   onClick={() => {
                     if (user) {
                       setShowRatingModal(true);
@@ -248,17 +237,13 @@ const ProductDetails = () => {
                       });
                     }
                   }}
-                  sx={{
-                    display: 'flex',
-                    flexDirection: 'column',
-                    padding: '5px 12px',
-                  }}
+                  sx={{ display: 'flex', flexDirection: 'column' }}
                 >
                   {rating > 0 ? <Star /> : <StarBorderOutlined />}
                   <Typography variant='caption'>
                     {user ? 'Leave rating' : 'Login to leave rating'}
                   </Typography>
-                </IconButton>
+                </Button>
               </CardActions>
             </Card>
           </Grid>
