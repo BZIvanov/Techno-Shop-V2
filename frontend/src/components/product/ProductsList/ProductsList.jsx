@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom';
 import {
   Box,
   Typography,
-  IconButton,
+  Button,
   Grid,
   Paper,
   Stack,
@@ -48,33 +48,21 @@ const ProductsList = ({
                 <AverageRating ratings={product.ratings} size='small' />
 
                 <ProductCard product={product}>
-                  <IconButton
+                  <Button
                     component={Link}
                     to={`/product/${product._id}`}
-                    size='medium'
-                    color='warning'
-                    sx={{
-                      display: 'flex',
-                      flexDirection: 'column',
-                      padding: '5px 12px',
-                    }}
+                    sx={{ display: 'flex', flexDirection: 'column' }}
                   >
                     <Preview />
                     <Typography variant='caption'>Details</Typography>
-                  </IconButton>
-                  <IconButton
-                    size='medium'
-                    color='warning'
+                  </Button>
+                  <Button
                     onClick={() => console.log('works')}
-                    sx={{
-                      display: 'flex',
-                      flexDirection: 'column',
-                      padding: '5px 12px',
-                    }}
+                    sx={{ display: 'flex', flexDirection: 'column' }}
                   >
                     <AddShoppingCart />
                     <Typography variant='caption'>Add to cart</Typography>
-                  </IconButton>
+                  </Button>
                 </ProductCard>
               </Grid>
             ))}
