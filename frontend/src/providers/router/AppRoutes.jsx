@@ -8,7 +8,7 @@ import { Shop } from '../../components/shop/Shop';
 import { NavigationLayout } from '../../components/user/layouts/NavigationLayout';
 import { CategoryProducts } from '../../components/category/CategoryProducts';
 import { SubcategoryProducts } from '../../components/subcategory/SubcategoryProducts';
-import { ProductsCardsList } from '../../components/product/ProductsCardsList';
+import ProductsCardsList from '../../components/product/ProductsCardsList/ProductsCardsList';
 import { ManageCategory } from '../../components/category/ManageCategory';
 import { ManageSubcategory } from '../../components/subcategory/ManageSubcategory';
 import { ManageProduct } from '../../components/product/ManageProduct';

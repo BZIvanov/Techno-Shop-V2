@@ -110,8 +110,8 @@ const ProductsCardsList = () => {
             ))}
           </Grid>
         ) : (
-          <Typography variant='subtitle2'>
-            No Products found. Use the form above to create some.
+          <Typography variant='body2' sx={{ textAlign: 'center' }}>
+            No products found
           </Typography>
         )}
 
