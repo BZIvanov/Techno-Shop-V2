@@ -19,7 +19,7 @@ import {
   getProductsAction,
   deleteProductAction,
 } from '../../../store/features/product/productSlice';
-import { ProductCard } from '../../product/ProductCard';
+import ProductCard from '../../product/ProductCard/ProductCard';
 import { PRODUCTS_LIST_TYPES } from '../../../constants';
 
 const PRODUCTS_PER_PAGE = 12;

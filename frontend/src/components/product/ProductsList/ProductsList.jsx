@@ -9,7 +9,7 @@ import {
   Pagination,
 } from '@mui/material';
 import { AddShoppingCart, Preview } from '../../mui/Icons';
-import { ProductCard } from '../ProductCard';
+import ProductCard from '../ProductCard/ProductCard';
 import { AverageRating } from '../../common/rating/AverageRating';
 
 const ProductsList = ({
