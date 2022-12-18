@@ -38,7 +38,6 @@ const schema = new Schema(
     price: {
       type: Number,
       required: true,
-      maxlength: 32, // TODO check this
     },
     category: {
       type: Schema.ObjectId,
