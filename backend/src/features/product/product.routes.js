@@ -14,7 +14,10 @@ const {
   userTypes: { admin },
 } = require('../user/user.constants');
 const validateRequestBody = require('../../middlewares/validate-request-body');
-const { productValidationSchema } = require('./product.validationSchema');
+const {
+  productCreateValidationSchema,
+  productUpdateValidationSchema,
+} = require('./product.validationSchema');
 
 const router = express.Router();
 
@@ -22,7 +25,7 @@ router
   .route('/')
   .get(getProducts)
   .post(
-    validateRequestBody(productValidationSchema),
+    validateRequestBody(productCreateValidationSchema),
     authenticate,
     authorize(admin),
     createProduct
@@ -31,7 +34,12 @@ router
 router
   .route('/:id')
   .get(getProduct)
-  .put(authenticate, authorize(admin), updateProduct)
+  .put(
+    validateRequestBody(productUpdateValidationSchema),
+    authenticate,
+    authorize(admin),
+    updateProduct
+  )
   .delete(authenticate, authorize(admin), deleteProduct);
 
 router.route('/:id/rate').put(authenticate, rateProduct);

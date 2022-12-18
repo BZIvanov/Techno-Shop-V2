@@ -168,6 +168,37 @@ describe('Subcategory routes', () => {
         'User is not authorized to access this route'
       );
     });
+
+    test('it should return error subcategories are at least 1 subcategory is not provided', async () => {
+      const response = await request(app)
+        .post('/v1/products')
+        .set('Authorization', `Bearer ${signJwtToken(adminUser._id)}`)
+        .send({
+          title: 'Winter jacket',
+          description: 'Very nice jacket',
+          price: 234.99,
+          quantity: 12,
+          shipping: 'Yes',
+          color: 'Brown',
+          brand: 'Cool Clothes',
+          images: [
+            {
+              publicId: '12345',
+              imageUrl: 'https://cool-images.com/winter/jackets',
+            },
+          ],
+          category: categories[1]._id,
+          subcategories: [],
+        })
+        .expect('Content-Type', /application\/json/)
+        .expect(400);
+
+      expect(response.body).toHaveProperty('success', false);
+      expect(response.body).toHaveProperty(
+        'error',
+        '"subcategories" does not contain 1 required value(s)'
+      );
+    });
   });
 
   describe('Update product controller', () => {
@@ -182,6 +213,54 @@ describe('Subcategory routes', () => {
       expect(products[0]).toHaveProperty('title', 'Milky Chocolate');
       expect(response.body).toHaveProperty('product.title', 'Dark Chocolate');
       expect(response.body).toHaveProperty('product.price', 3.45);
+    });
+
+    test('it should return error if the title is too long', async () => {
+      const response = await request(app)
+        .put(`/v1/products/${products[0]._id}`)
+        .set('Authorization', `Bearer ${signJwtToken(adminUser._id)}`)
+        .send({
+          title:
+            'Some very long testing title with length more than 32 characters',
+        })
+        .expect('Content-Type', /application\/json/)
+        .expect(400);
+
+      expect(response.body).toHaveProperty('success', false);
+      expect(response.body).toHaveProperty(
+        'error',
+        '"title" length must be less than or equal to 32 characters long'
+      );
+    });
+
+    test('it should return error if we are updating category with invalid id type', async () => {
+      const response = await request(app)
+        .put(`/v1/products/${products[0]._id}`)
+        .set('Authorization', `Bearer ${signJwtToken(adminUser._id)}`)
+        .send({ title: 'New cool title', category: 'invalid-id' })
+        .expect('Content-Type', /application\/json/)
+        .expect(400);
+
+      expect(response.body).toHaveProperty('success', false);
+      expect(response.body).toHaveProperty(
+        'error',
+        '"category" with value "invalid-id" fails to match the Invalid id pattern'
+      );
+    });
+
+    test('it should return error for too high price', async () => {
+      const response = await request(app)
+        .put(`/v1/products/${products[0]._id}`)
+        .set('Authorization', `Bearer ${signJwtToken(adminUser._id)}`)
+        .send({ price: 100000 })
+        .expect('Content-Type', /application\/json/)
+        .expect(400);
+
+      expect(response.body).toHaveProperty('success', false);
+      expect(response.body).toHaveProperty(
+        'error',
+        '"price" must be less than or equal to 99999'
+      );
     });
 
     test('it should return error if the user is not admin', async () => {
