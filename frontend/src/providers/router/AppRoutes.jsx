@@ -11,7 +11,7 @@ import { SubcategoryProducts } from '../../components/subcategory/SubcategoryPro
 import ProductsCardsList from '../../components/product/ProductsCardsList/ProductsCardsList';
 import { ManageCategory } from '../../components/category/ManageCategory';
 import { ManageSubcategory } from '../../components/subcategory/ManageSubcategory';
-import { ManageProduct } from '../../components/product/ManageProduct';
+import ManageProduct from '../../components/product/ManageProduct/ManageProduct';
 import { ProductDetails } from '../../components/product/ProductDetails';
 import { ProtectedRoute } from '../../components/user/routes/ProtectedRoute';
 import { NonUserRoute } from '../../components/user/routes/NonUserRoute';

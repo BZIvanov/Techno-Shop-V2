@@ -127,11 +127,11 @@ describe('ProductsCardsList component', () => {
     test('renders the title', () => {
       render(<ProductsCardsList />);
 
-      const homeLinkElement = screen.getByRole('heading', {
+      const listTitle = screen.getByRole('heading', {
         name: /products list/i,
       });
 
-      expect(homeLinkElement).toHaveStyle({ 'font-weight': 400 });
+      expect(listTitle).toHaveStyle({ 'font-weight': 400 });
     });
   });
 
