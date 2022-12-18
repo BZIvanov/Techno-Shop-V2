@@ -9,7 +9,7 @@ import {
 } from '@mui/material';
 import { useFormContext } from '../../../../providers/form/hooks';
 
-const SelectDropdownAdapter = ({ name, label, options }) => {
+const SelectDropdownAdapter = ({ name, label, options, extendedOnChange }) => {
   const { control } = useFormContext();
 
   const { loading } = useSelector((state) => state.apiCall);
@@ -19,6 +19,13 @@ const SelectDropdownAdapter = ({ name, label, options }) => {
       name={name}
       control={control}
       render={({ field, fieldState }) => {
+        const { onChange, ...rest } = field;
+
+        const handleOnChange = (event) => {
+          onChange(event);
+          extendedOnChange && extendedOnChange(event);
+        };
+
         return (
           <FormControl
             sx={{ width: '100%' }}
@@ -28,7 +35,7 @@ const SelectDropdownAdapter = ({ name, label, options }) => {
           >
             <InputLabel>{label}</InputLabel>
 
-            <Select data-testid={name} {...field}>
+            <Select data-testid={name} {...rest} onChange={handleOnChange}>
               {options.map((option) => {
                 if (typeof option === 'string') {
                   return (

@@ -14,13 +14,6 @@ import {
   apiCallFailAction,
 } from '../api-call/apiCallSlice';
 
-const initialState = {
-  categories: [],
-  selectedCategory: null,
-  selectedCategorySubcategories: [],
-  selectedCategoryProducts: { products: [], totalCount: 0 },
-};
-
 export const getAllCategoriesAction = createAsyncThunk(
   'category/getAllCategories',
   async (_, { dispatch, rejectWithValue }) => {
@@ -162,9 +155,24 @@ export const getCategoryProductsAction = createAsyncThunk(
   }
 );
 
+const initialState = {
+  categories: [],
+  selectedCategory: null,
+  selectedCategorySubcategories: [],
+  selectedCategoryProducts: { products: [], totalCount: 0 },
+};
+
 const categorySlice = createSlice({
   name: 'category',
   initialState,
+  reducers: {
+    resetCategories: (state) => {
+      state.categories = [];
+    },
+    resetSelectedCategorySubcategories: (state) => {
+      state.selectedCategorySubcategories = [];
+    },
+  },
   extraReducers: (builder) => {
     builder.addCase(getAllCategoriesAction.fulfilled, (state, action) => {
       state.categories = action.payload;
@@ -199,5 +207,8 @@ const categorySlice = createSlice({
     });
   },
 });
+
+export const { resetCategories, resetSelectedCategorySubcategories } =
+  categorySlice.actions;
 
 export default categorySlice.reducer;

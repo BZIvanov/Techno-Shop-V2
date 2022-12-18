@@ -11,6 +11,8 @@ import { ApiCallAlert } from '../../common/async/ApiCallAlert';
 import {
   getAllCategoriesAction,
   getCategorySubcategoriesAction,
+  resetCategories,
+  resetSelectedCategorySubcategories,
 } from '../../../store/features/category/categorySlice';
 import {
   getProductAction,
@@ -32,28 +34,46 @@ const ManageProduct = () => {
   const { categories, selectedCategorySubcategories } = useSelector(
     (state) => state.category
   );
-  const { product } = useSelector((state) => state.product.selectedProduct);
 
   const [newImages, setNewImages] = useState([]);
   const [existingImages, setExistingImages] = useState([]); // we will have these, when editing a product
 
-  useEffect(() => {
-    // if product id is found in the url, we are editing a product
-    if (productId) {
-      dispatch(getProductAction(productId));
-    }
-
-    dispatch(getAllCategoriesAction());
-  }, [dispatch, productId]);
-
-  useEffect(() => {
-    if (product) {
-      dispatch(getCategorySubcategoriesAction(product.category._id));
-    }
-  }, [dispatch, product]);
-
   const formMethods = useForm(formConfig);
   const { formState, reset, watch, setValue } = formMethods;
+
+  useEffect(() => {
+    const loadData = async () => {
+      await dispatch(getAllCategoriesAction());
+
+      // if product id is found in the url, we are editing a product
+      if (productId) {
+        const { payload } = await dispatch(getProductAction(productId));
+        await dispatch(getCategorySubcategoriesAction(payload.category._id));
+
+        // setValues after categories and subcategories are loaded to correctly populate the dropdowns
+        setValue('title', payload.title);
+        setValue('description', payload.description);
+        setValue('price', payload.price);
+        setValue('shipping', payload.shipping);
+        setValue('quantity', payload.quantity);
+        setValue('color', payload.color);
+        setValue('brand', payload.brand);
+        setValue('category', payload.category._id);
+        setValue(
+          'subcategories',
+          payload.subcategories.map((subcategory) => subcategory._id)
+        );
+        setExistingImages(payload.images);
+      }
+    };
+    loadData();
+
+    return () => {
+      reset();
+      dispatch(resetCategories());
+      dispatch(resetSelectedCategorySubcategories());
+    };
+  }, [dispatch, setValue, reset, productId]);
 
   const handleProductSubmit = (values) => {
     if (productId) {
@@ -72,41 +92,7 @@ const ManageProduct = () => {
     setExistingImages([]);
   };
 
-  const selectedFormCategoryId = watch('category');
   const selectedFormImages = watch('images');
-
-  useEffect(() => {
-    if (
-      productId &&
-      product &&
-      categories.length > 0 &&
-      selectedCategorySubcategories.length > 0
-    ) {
-      setValue('title', product.title);
-      setValue('description', product.description);
-      setValue('price', product.price);
-      setValue('shipping', product.shipping);
-      setValue('quantity', product.quantity);
-      setValue('color', product.color);
-      setValue('brand', product.brand);
-      setValue('category', product.category._id);
-      setValue(
-        'subcategories',
-        product.subcategories.map((subcategory) => subcategory._id)
-      );
-      setExistingImages(product.images);
-    }
-  }, [setValue, productId, product, categories, selectedCategorySubcategories]);
-
-  // reset selected subcategories and fetch subcategories for the selected category, when category changes
-  useEffect(() => {
-    if (selectedFormCategoryId) {
-      setValue('subcategories', []);
-      dispatch(getCategorySubcategoriesAction(selectedFormCategoryId));
-    }
-  }, [dispatch, setValue, selectedFormCategoryId]);
-
-  // watch images
   useEffect(() => {
     setNewImages(selectedFormImages);
   }, [selectedFormImages]);
@@ -161,6 +147,10 @@ const ManageProduct = () => {
               name='category'
               label='Category'
               options={categories}
+              extendedOnChange={(event) => {
+                setValue('subcategories', []);
+                dispatch(getCategorySubcategoriesAction(event.target.value));
+              }}
             />
           </Box>
           <Box>
