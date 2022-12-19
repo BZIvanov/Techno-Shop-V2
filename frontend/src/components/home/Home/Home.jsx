@@ -96,7 +96,7 @@ const HomePage = () => {
 
         <Box sx={{ padding: 2 }}>
           <ChipsList
-            title='Category'
+            title='Categories'
             parameter='category'
             chipsList={categories}
           />
@@ -104,7 +104,7 @@ const HomePage = () => {
 
         <Box sx={{ padding: 2 }}>
           <ChipsList
-            title='Subategory'
+            title='Subcategories'
             parameter='subcategory'
             chipsList={subcategories}
           />
