@@ -12,7 +12,7 @@ import ProductsCardsList from '../../components/product/ProductsCardsList/Produc
 import { ManageCategory } from '../../components/category/ManageCategory';
 import { ManageSubcategory } from '../../components/subcategory/ManageSubcategory';
 import ManageProduct from '../../components/product/ManageProduct/ManageProduct';
-import { ProductDetails } from '../../components/product/ProductDetails';
+import ProductDetails from '../../components/product/ProductDetails/ProductDetails';
 import { ProtectedRoute } from '../../components/user/routes/ProtectedRoute';
 import { NonUserRoute } from '../../components/user/routes/NonUserRoute';
 

@@ -67,24 +67,23 @@ const ProductDetails = () => {
   return (
     <>
       {product && (
-        <Grid
-          container={true}
-          sx={{
-            '& .slide img': { maxHeight: '390px', objectFit: 'cover' },
-            padding: 2,
-          }}
-        >
-          <Grid item={true} sm={12} md={6}>
+        <Grid container={true} sx={{ padding: 2 }}>
+          <Grid
+            item={true}
+            sm={12}
+            md={6}
+            sx={{ '& .slide img': { maxHeight: '390px', objectFit: 'cover' } }}
+          >
             <ImagesCarousel images={product.images} />
           </Grid>
 
           <Grid item={true} xs={12} sm={12} md={6} sx={{ paddingLeft: 1 }}>
             <Typography
               gutterBottom={true}
-              variant='h4'
+              variant='h5'
               sx={{
                 color: (theme) => theme.palette.common.white,
-                backgroundColor: (theme) => theme.palette.info.main,
+                backgroundColor: (theme) => theme.palette.primary.main,
                 padding: 1,
               }}
             >
