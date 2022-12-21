@@ -1,5 +1,6 @@
 import { rest } from 'msw';
 import { setupServer } from 'msw/node';
+import { Routes, Route } from 'react-router-dom';
 import { render, screen } from '../../../test-utils/test-utils';
 import ProductDetails from './ProductDetails';
 
@@ -24,13 +25,13 @@ const product = {
 
 const handlers = [
   rest.get(
-    `${process.env.REACT_APP_API}/products/undefined`, // TODO extend the router in test utils to be able to handle url params
+    `${process.env.REACT_APP_API}/products/${product._id}`,
     (req, res, ctx) => {
       return res(ctx.json({ success: true, product }), ctx.delay(100));
     }
   ),
   rest.get(
-    `${process.env.REACT_APP_API}/products/undefined/similar`,
+    `${process.env.REACT_APP_API}/products/${product._id}/similar`,
     (req, res, ctx) => {
       return res(
         ctx.json({ success: true, totalCount: 0, products: [] }),
@@ -42,6 +43,14 @@ const handlers = [
 
 const server = setupServer(...handlers);
 
+const TestRoutes = ({ children }) => {
+  return (
+    <Routes>
+      <Route path='/product/:productId' element={children} />
+    </Routes>
+  );
+};
+
 describe('ProductDetails component', () => {
   beforeAll(() => server.listen());
 
@@ -51,7 +60,9 @@ describe('ProductDetails component', () => {
 
   describe('Product info', () => {
     test('renders the product title', async () => {
-      render(<ProductDetails />);
+      const initialEntries = [`/product/${product._id}`];
+
+      render(<ProductDetails />, { initialEntries, TestRoutes });
 
       await screen.findByText(product.title, {}, { timeout: 1000 });
     });

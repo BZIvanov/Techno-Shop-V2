@@ -77,7 +77,7 @@ const AppRoutes = () => {
         <Route path='password' element={<PasswordUpdateForm />} />
       </Route>
       <Route path='/shop' element={<Shop />} />
-      <Route path='/product/:id' element={<ProductDetails />} />
+      <Route path='/product/:productId' element={<ProductDetails />} />
       <Route path='/category/:id' element={<CategoryProducts />} />
       <Route path='/subcategory/:id' element={<SubcategoryProducts />} />
     </Routes>

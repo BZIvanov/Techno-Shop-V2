@@ -1,6 +1,7 @@
 import userEvent from '@testing-library/user-event';
 import { rest } from 'msw';
 import { setupServer } from 'msw/node';
+import { Routes, Route } from 'react-router-dom';
 import { render, screen, waitFor } from '../../../test-utils/test-utils';
 import Header from './Header';
 
@@ -15,6 +16,16 @@ const handlers = [
 ];
 
 const server = setupServer(...handlers);
+
+const TestRoutes = ({ children }) => {
+  return (
+    <Routes>
+      <Route path='/' element={children} />
+      <Route path='/shop' element={children} />
+      <Route path='/user/login' element={children} />
+    </Routes>
+  );
+};
 
 describe('Header component', () => {
   describe('Renders elements successfully', () => {
@@ -44,7 +55,9 @@ describe('Header component', () => {
 
   describe('Navigation links', () => {
     test('shop becomes current active link after clicked', async () => {
-      render(<Header />);
+      const initialEntries = [`/`];
+
+      render(<Header />, { initialEntries, TestRoutes });
 
       const homeLinkElement = screen.getByRole('link', { name: /home/i });
       const shopLinkElement = screen.getByRole('link', { name: /shop/i });

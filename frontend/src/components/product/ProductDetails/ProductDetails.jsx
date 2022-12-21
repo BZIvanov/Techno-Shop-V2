@@ -40,14 +40,14 @@ const ProductDetails = () => {
   const [showRatingModal, setShowRatingModal] = useState(false);
 
   const navigate = useNavigate();
-  const { id } = useParams();
+  const { productId } = useParams();
 
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(getProductAction(id));
-    dispatch(getSimilarProductsAction(id));
-  }, [dispatch, id]);
+    dispatch(getProductAction(productId));
+    dispatch(getSimilarProductsAction(productId));
+  }, [dispatch, productId]);
 
   useEffect(() => {
     if (product && user) {
