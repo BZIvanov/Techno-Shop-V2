@@ -41,23 +41,25 @@ describe('ManageProduct component', () => {
     test('click once submit with empty title will focus the title, clicking submit second time will display an error message', async () => {
       render(<ManageProduct />);
 
+      const user = userEvent.setup();
+
       const titleField = screen.getByRole('textbox', { name: /title/i });
 
-      // wait for the loading backdrop to disapear
-      await waitFor(
-        async () => {
-          const createButton = screen.getByRole('button', { name: /create/i });
-          await userEvent.click(createButton);
-          expect(titleField).toHaveFocus();
-        },
-        { timeout: 1000 }
-      );
+      const createButton = await screen.findByRole('button', {
+        name: /create/i,
+      });
+
+      // waitFor the button click, because initially it will be disabled, because of the loading state
+      await waitFor(async () => {
+        await user.click(createButton);
+      });
+
+      expect(titleField).toHaveFocus();
 
       const noErrorText = screen.queryByText(/title is required/i);
       expect(noErrorText).not.toBeInTheDocument();
 
-      const createButton = screen.getByRole('button', { name: /create/i });
-      await userEvent.click(createButton);
+      await user.click(createButton);
 
       const errorText = screen.queryByText(/title is required/i);
       expect(errorText).toBeInTheDocument();
