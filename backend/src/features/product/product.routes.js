@@ -17,6 +17,7 @@ const validateRequestBody = require('../../middlewares/validate-request-body');
 const {
   productCreateValidationSchema,
   productUpdateValidationSchema,
+  productRateValidationSchema,
 } = require('./product.validationSchema');
 
 const router = express.Router();
@@ -32,7 +33,7 @@ router
   );
 
 router
-  .route('/:id')
+  .route('/:productId')
   .get(getProduct)
   .put(
     validateRequestBody(productUpdateValidationSchema),
@@ -42,8 +43,14 @@ router
   )
   .delete(authenticate, authorize(admin), deleteProduct);
 
-router.route('/:id/rate').put(authenticate, rateProduct);
+router
+  .route('/:productId/rate')
+  .put(
+    validateRequestBody(productRateValidationSchema),
+    authenticate,
+    rateProduct
+  );
 
-router.route('/:id/similar').get(getSimilarProducts);
+router.route('/:productId/similar').get(getSimilarProducts);
 
 module.exports = router;

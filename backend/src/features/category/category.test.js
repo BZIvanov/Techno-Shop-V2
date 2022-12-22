@@ -4,29 +4,15 @@ const app = require('../../app/express');
 const User = require('../user/user.model');
 const Category = require('./category.model');
 const signJwtToken = require('../user/utils/signJwtToken');
+const users = require('../../../data-seed/users.json');
 const categories = require('../../../data-seed/categories.json');
 
 describe('Category routes', () => {
-  let adminUser;
-  let regularUser;
   beforeAll(async () => {
     await mongoDbConnect();
 
+    await User.create(users);
     await Category.create(categories);
-
-    adminUser = await User.create({
-      username: 'admin',
-      email: 'admin@mail.com',
-      password: '12345678',
-      role: 'admin',
-    });
-
-    regularUser = await User.create({
-      username: 'Iva',
-      email: 'iva@mail.com',
-      password: '12345678',
-      role: 'user',
-    });
   });
 
   afterAll(async () => {
@@ -37,7 +23,7 @@ describe('Category routes', () => {
     test('it should create a category successfully', async () => {
       const response = await request(app)
         .post('/v1/categories')
-        .set('Authorization', `Bearer ${signJwtToken(adminUser._id)}`)
+        .set('Authorization', `Bearer ${signJwtToken(users[0]._id)}`)
         .send({ name: 'Shoes' })
         .expect('Content-Type', /application\/json/)
         .expect(201);
@@ -50,7 +36,7 @@ describe('Category routes', () => {
     test('it should return error if the user is not admin', async () => {
       const response = await request(app)
         .post('/v1/categories')
-        .set('Authorization', `Bearer ${signJwtToken(regularUser._id)}`)
+        .set('Authorization', `Bearer ${signJwtToken(users[1]._id)}`)
         .send({ name: 'Dresses' })
         .expect('Content-Type', /application\/json/)
         .expect(403);
@@ -65,7 +51,7 @@ describe('Category routes', () => {
     test('it should return error if extra keys are provided', async () => {
       const response = await request(app)
         .post('/v1/categories')
-        .set('Authorization', `Bearer ${signJwtToken(adminUser._id)}`)
+        .set('Authorization', `Bearer ${signJwtToken(users[0]._id)}`)
         .send({ name: 'Laptops', slug: 'laptops' })
         .expect(400);
 
@@ -76,7 +62,7 @@ describe('Category routes', () => {
     test('it should return error if too long category name is provided', async () => {
       const response = await request(app)
         .post('/v1/categories')
-        .set('Authorization', `Bearer ${signJwtToken(adminUser._id)}`)
+        .set('Authorization', `Bearer ${signJwtToken(users[0]._id)}`)
         .send({ name: 'Summer clothes for the hot summer' })
         .expect(400);
 
@@ -146,7 +132,7 @@ describe('Category routes', () => {
       const response = await request(app)
         .put(`/v1/categories/${categoryId}`)
         .send({ name: 'Updated Name' })
-        .set('Authorization', `Bearer ${signJwtToken(adminUser._id)}`)
+        .set('Authorization', `Bearer ${signJwtToken(users[0]._id)}`)
         .expect('Content-Type', /application\/json/)
         .expect(200);
 
@@ -160,7 +146,7 @@ describe('Category routes', () => {
       const categoryId = '5199473165bcf27b81cae571';
       const response = await request(app)
         .put(`/v1/categories/${categoryId}`)
-        .set('Authorization', `Bearer ${signJwtToken(adminUser._id)}`)
+        .set('Authorization', `Bearer ${signJwtToken(users[0]._id)}`)
         .send({ name: 'My new name' })
         .expect('Content-Type', /application\/json/)
         .expect(404);
@@ -185,7 +171,7 @@ describe('Category routes', () => {
       const categoryId = '5199473165bcf27b81cae571';
       const response = await request(app)
         .put(`/v1/categories/${categoryId}`)
-        .set('Authorization', `Bearer ${signJwtToken(adminUser._id)}`)
+        .set('Authorization', `Bearer ${signJwtToken(users[0]._id)}`)
         .expect('Content-Type', /application\/json/)
         .expect(400);
 
@@ -197,7 +183,7 @@ describe('Category routes', () => {
       const categoryId = categories[0]._id;
       const response = await request(app)
         .put(`/v1/categories/${categoryId}`)
-        .set('Authorization', `Bearer ${signJwtToken(adminUser._id)}`)
+        .set('Authorization', `Bearer ${signJwtToken(users[0]._id)}`)
         .expect('Content-Type', /application\/json/)
         .expect(400);
 
@@ -211,7 +197,7 @@ describe('Category routes', () => {
       const categoryId = categories[0]._id;
       await request(app)
         .delete(`/v1/categories/${categoryId}`)
-        .set('Authorization', `Bearer ${signJwtToken(adminUser._id)}`)
+        .set('Authorization', `Bearer ${signJwtToken(users[0]._id)}`)
         .expect(204);
     });
 
@@ -219,7 +205,7 @@ describe('Category routes', () => {
       const categoryId = '5199473165bcf27b81cae571';
       const response = await request(app)
         .delete(`/v1/categories/${categoryId}`)
-        .set('Authorization', `Bearer ${signJwtToken(adminUser._id)}`)
+        .set('Authorization', `Bearer ${signJwtToken(users[0]._id)}`)
         .expect('Content-Type', /application\/json/)
         .expect(404);
 
@@ -242,7 +228,7 @@ describe('Category routes', () => {
       const categoryId = '5199473165bcf27b81cae571';
       const response = await request(app)
         .delete(`/v1/categories/${categoryId}`)
-        .set('Authorization', `Bearer ${signJwtToken(regularUser._id)}`)
+        .set('Authorization', `Bearer ${signJwtToken(users[1]._id)}`)
         .expect('Content-Type', /application\/json/)
         .expect(403);
 

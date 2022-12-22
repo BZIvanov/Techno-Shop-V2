@@ -54,7 +54,7 @@ module.exports.getProducts = catchAsync(async (req, res) => {
 });
 
 module.exports.getProduct = catchAsync(async (req, res, next) => {
-  const product = await Product.findById(req.params.id)
+  const product = await Product.findById(req.params.productId)
     .populate('category')
     .populate('subcategories');
 
@@ -74,10 +74,14 @@ module.exports.createProduct = catchAsync(async (req, res) => {
 });
 
 module.exports.updateProduct = catchAsync(async (req, res, next) => {
-  const product = await Product.findByIdAndUpdate(req.params.id, req.body, {
-    new: true,
-    runValidators: true,
-  });
+  const product = await Product.findByIdAndUpdate(
+    req.params.productId,
+    req.body,
+    {
+      new: true,
+      runValidators: true,
+    }
+  );
 
   if (!product) {
     return next(new AppError('Product not found', status.NOT_FOUND));
@@ -87,7 +91,7 @@ module.exports.updateProduct = catchAsync(async (req, res, next) => {
 });
 
 module.exports.deleteProduct = catchAsync(async (req, res, next) => {
-  const product = await Product.findByIdAndDelete(req.params.id);
+  const product = await Product.findByIdAndDelete(req.params.productId);
 
   if (!product) {
     return next(new AppError('Product not found', status.NOT_FOUND));
@@ -103,7 +107,7 @@ module.exports.deleteProduct = catchAsync(async (req, res, next) => {
 module.exports.rateProduct = catchAsync(async (req, res) => {
   const { rating: userRating } = req.body;
 
-  const product = await Product.findById(req.params.id);
+  const product = await Product.findById(req.params.productId);
 
   const existingRatingObject = product.ratings.find(
     (rating) => rating.postedBy.toString() === req.user._id.toString()
@@ -127,7 +131,7 @@ module.exports.rateProduct = catchAsync(async (req, res) => {
     );
   }
 
-  const updatedProduct = await Product.findById(req.params.id)
+  const updatedProduct = await Product.findById(req.params.productId)
     .populate('category')
     .populate('subcategories');
 
@@ -135,7 +139,7 @@ module.exports.rateProduct = catchAsync(async (req, res) => {
 });
 
 module.exports.getSimilarProducts = catchAsync(async (req, res, next) => {
-  const product = await Product.findById(req.params.id);
+  const product = await Product.findById(req.params.productId);
 
   if (!product) {
     return next(new AppError('Product not found', status.NOT_FOUND));

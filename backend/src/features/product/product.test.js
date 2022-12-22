@@ -6,33 +6,19 @@ const Category = require('../category/category.model');
 const Subcategory = require('../subcategory/subcategory.model');
 const Product = require('./product.model');
 const signJwtToken = require('../user/utils/signJwtToken');
+const users = require('../../../data-seed/users.json');
 const categories = require('../../../data-seed/categories.json');
 const subcategories = require('../../../data-seed/subcategories.json');
 const products = require('../../../data-seed/products.json');
 
 describe('Subcategory routes', () => {
-  let adminUser;
-  let regularUser;
   beforeAll(async () => {
     await mongoDbConnect();
 
+    await User.create(users);
     await Category.create(categories);
     await Subcategory.create(subcategories);
     await Product.create(products);
-
-    adminUser = await User.create({
-      username: 'admin',
-      email: 'admin@mail.com',
-      password: '12345678',
-      role: 'admin',
-    });
-
-    regularUser = await User.create({
-      username: 'Iva',
-      email: 'iva@mail.com',
-      password: '12345678',
-      role: 'user',
-    });
   });
 
   afterAll(async () => {
@@ -119,7 +105,7 @@ describe('Subcategory routes', () => {
     test('it should create a product successfully', async () => {
       const response = await request(app)
         .post('/v1/products')
-        .set('Authorization', `Bearer ${signJwtToken(adminUser._id)}`)
+        .set('Authorization', `Bearer ${signJwtToken(users[0]._id)}`)
         .send({
           title: 'Blue jeans',
           description: 'Very nice jeans',
@@ -146,7 +132,7 @@ describe('Subcategory routes', () => {
     test('it should return error if the user is not admin', async () => {
       const response = await request(app)
         .post('/v1/products')
-        .set('Authorization', `Bearer ${signJwtToken(regularUser._id)}`)
+        .set('Authorization', `Bearer ${signJwtToken(users[1]._id)}`)
         .send({
           title: 'Blue jeans',
           description: 'Very nice jeans',
@@ -172,7 +158,7 @@ describe('Subcategory routes', () => {
     test('it should return error subcategories are at least 1 subcategory is not provided', async () => {
       const response = await request(app)
         .post('/v1/products')
-        .set('Authorization', `Bearer ${signJwtToken(adminUser._id)}`)
+        .set('Authorization', `Bearer ${signJwtToken(users[0]._id)}`)
         .send({
           title: 'Winter jacket',
           description: 'Very nice jacket',
@@ -205,7 +191,7 @@ describe('Subcategory routes', () => {
     test('it should update the title, rest properties should stay the same', async () => {
       const response = await request(app)
         .put(`/v1/products/${products[0]._id}`)
-        .set('Authorization', `Bearer ${signJwtToken(adminUser._id)}`)
+        .set('Authorization', `Bearer ${signJwtToken(users[0]._id)}`)
         .send({ title: 'Dark Chocolate' })
         .expect('Content-Type', /application\/json/)
         .expect(200);
@@ -218,7 +204,7 @@ describe('Subcategory routes', () => {
     test('it should return error if the title is too long', async () => {
       const response = await request(app)
         .put(`/v1/products/${products[0]._id}`)
-        .set('Authorization', `Bearer ${signJwtToken(adminUser._id)}`)
+        .set('Authorization', `Bearer ${signJwtToken(users[0]._id)}`)
         .send({
           title:
             'Some very long testing title with length more than 32 characters',
@@ -236,7 +222,7 @@ describe('Subcategory routes', () => {
     test('it should return error if we are updating category with invalid id type', async () => {
       const response = await request(app)
         .put(`/v1/products/${products[0]._id}`)
-        .set('Authorization', `Bearer ${signJwtToken(adminUser._id)}`)
+        .set('Authorization', `Bearer ${signJwtToken(users[0]._id)}`)
         .send({ title: 'New cool title', category: 'invalid-id' })
         .expect('Content-Type', /application\/json/)
         .expect(400);
@@ -251,7 +237,7 @@ describe('Subcategory routes', () => {
     test('it should return error for too high price', async () => {
       const response = await request(app)
         .put(`/v1/products/${products[0]._id}`)
-        .set('Authorization', `Bearer ${signJwtToken(adminUser._id)}`)
+        .set('Authorization', `Bearer ${signJwtToken(users[0]._id)}`)
         .send({ price: 100000 })
         .expect('Content-Type', /application\/json/)
         .expect(400);
@@ -266,7 +252,7 @@ describe('Subcategory routes', () => {
     test('it should return error if the user is not admin', async () => {
       const response = await request(app)
         .put(`/v1/products/${products[0]._id}`)
-        .set('Authorization', `Bearer ${signJwtToken(regularUser._id)}`)
+        .set('Authorization', `Bearer ${signJwtToken(users[1]._id)}`)
         .send({ title: 'Dark Chocolate' })
         .expect('Content-Type', /application\/json/)
         .expect(403);
@@ -281,7 +267,7 @@ describe('Subcategory routes', () => {
     test('it should return error for not existing product id', async () => {
       const response = await request(app)
         .put('/v1/products/21b280ee8cbd2875f54ed9ab')
-        .set('Authorization', `Bearer ${signJwtToken(adminUser._id)}`)
+        .set('Authorization', `Bearer ${signJwtToken(users[0]._id)}`)
         .send({ title: 'Dark Chocolate' })
         .expect('Content-Type', /application\/json/)
         .expect(404);
@@ -295,8 +281,70 @@ describe('Subcategory routes', () => {
     test('it should delete the product', async () => {
       await request(app)
         .delete(`/v1/products/${products[0]._id}`)
-        .set('Authorization', `Bearer ${signJwtToken(adminUser._id)}`)
+        .set('Authorization', `Bearer ${signJwtToken(users[0]._id)}`)
         .expect(204);
+    });
+  });
+
+  describe('Rate product controller', () => {
+    test('it should rate the product', async () => {
+      const response = await request(app)
+        .put(`/v1/products/${products[4]._id}/rate`)
+        .set('Authorization', `Bearer ${signJwtToken(users[1]._id)}`)
+        .send({ rating: 2 })
+        .expect('Content-Type', /application\/json/)
+        .expect(200);
+
+      expect(response.body).toHaveProperty('success', true);
+      expect(response.body.product.ratings[0]).toHaveProperty('stars', 2);
+      expect(response.body.product.ratings.length).toBe(1);
+    });
+
+    test('if the same user rates twice the latest rate overrides the previous', async () => {
+      await request(app)
+        .put(`/v1/products/${products[5]._id}/rate`)
+        .set('Authorization', `Bearer ${signJwtToken(users[1]._id)}`)
+        .send({ rating: 3 });
+
+      const response = await request(app)
+        .put(`/v1/products/${products[5]._id}/rate`)
+        .set('Authorization', `Bearer ${signJwtToken(users[1]._id)}`)
+        .send({ rating: 4 });
+
+      expect(response.body).toHaveProperty('success', true);
+      expect(response.body.product.ratings[0]).toHaveProperty('stars', 4);
+      expect(response.body.product.ratings[0].postedBy).toBe(users[1]._id);
+      expect(response.body.product.ratings.length).toBe(1);
+    });
+
+    test('if 2 different users are rating a product, both rates are saved', async () => {
+      await request(app)
+        .put(`/v1/products/${products[6]._id}/rate`)
+        .set('Authorization', `Bearer ${signJwtToken(users[1]._id)}`)
+        .send({ rating: 1.5 });
+
+      const response = await request(app)
+        .put(`/v1/products/${products[6]._id}/rate`)
+        .set('Authorization', `Bearer ${signJwtToken(users[2]._id)}`)
+        .send({ rating: 2 });
+
+      expect(response.body).toHaveProperty('success', true);
+      expect(response.body.product.ratings.length).toBe(2);
+    });
+
+    test('should return error if the rating is not a valid number', async () => {
+      const response = await request(app)
+        .put(`/v1/products/${products[6]._id}/rate`)
+        .set('Authorization', `Bearer ${signJwtToken(users[2]._id)}`)
+        .send({ rating: 'two' })
+        .expect('Content-Type', /application\/json/)
+        .expect(400);
+
+      expect(response.body).toHaveProperty('success', false);
+      expect(response.body).toHaveProperty(
+        'error',
+        '"rating" must be a number'
+      );
     });
   });
 });

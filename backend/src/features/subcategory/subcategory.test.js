@@ -5,31 +5,17 @@ const User = require('../user/user.model');
 const Category = require('../category/category.model');
 const Subcategory = require('./subcategory.model');
 const signJwtToken = require('../user/utils/signJwtToken');
+const users = require('../../../data-seed/users.json');
 const categories = require('../../../data-seed/categories.json');
 const subcategories = require('../../../data-seed/subcategories.json');
 
 describe('Subcategory routes', () => {
-  let adminUser;
-  let regularUser;
   beforeAll(async () => {
     await mongoDbConnect();
 
+    await User.create(users);
     await Category.create(categories);
     await Subcategory.create(subcategories);
-
-    adminUser = await User.create({
-      username: 'admin',
-      email: 'admin@mail.com',
-      password: '12345678',
-      role: 'admin',
-    });
-
-    regularUser = await User.create({
-      username: 'Iva',
-      email: 'iva@mail.com',
-      password: '12345678',
-      role: 'user',
-    });
   });
 
   afterAll(async () => {
@@ -113,7 +99,7 @@ describe('Subcategory routes', () => {
     test('it should create a subcategory successfully', async () => {
       const response = await request(app)
         .post('/v1/subcategories')
-        .set('Authorization', `Bearer ${signJwtToken(adminUser._id)}`)
+        .set('Authorization', `Bearer ${signJwtToken(users[0]._id)}`)
         .send({ name: 'Sandals', categoryId: categories[0]._id })
         .expect('Content-Type', /application\/json/)
         .expect(201);
@@ -130,7 +116,7 @@ describe('Subcategory routes', () => {
     test('it should return error if the user is not admin', async () => {
       const response = await request(app)
         .post('/v1/subcategories')
-        .set('Authorization', `Bearer ${signJwtToken(regularUser._id)}`)
+        .set('Authorization', `Bearer ${signJwtToken(users[1]._id)}`)
         .send({ name: 'Dresses', categoryId: categories[0]._id })
         .expect('Content-Type', /application\/json/)
         .expect(403);
@@ -145,7 +131,7 @@ describe('Subcategory routes', () => {
     test('it should return error for invalid id', async () => {
       const response = await request(app)
         .post('/v1/subcategories')
-        .set('Authorization', `Bearer ${signJwtToken(regularUser._id)}`)
+        .set('Authorization', `Bearer ${signJwtToken(users[1]._id)}`)
         .send({ name: 'Dresses', categoryId: '12345' })
         .expect('Content-Type', /application\/json/)
         .expect(400);
@@ -167,7 +153,7 @@ describe('Subcategory routes', () => {
           name: 'New subcat name',
           categoryId: subcategories[0].categoryId,
         })
-        .set('Authorization', `Bearer ${signJwtToken(adminUser._id)}`)
+        .set('Authorization', `Bearer ${signJwtToken(users[0]._id)}`)
         .expect('Content-Type', /application\/json/)
         .expect(200);
 
@@ -189,7 +175,7 @@ describe('Subcategory routes', () => {
       const subcategoryId = subcategories[0]._id;
       await request(app)
         .delete(`/v1/subcategories/${subcategoryId}`)
-        .set('Authorization', `Bearer ${signJwtToken(adminUser._id)}`)
+        .set('Authorization', `Bearer ${signJwtToken(users[0]._id)}`)
         .expect(204);
     });
   });
