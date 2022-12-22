@@ -5,7 +5,7 @@ const Product = require('../product/product.model');
 const catchAsync = require('../../middlewares/catch-async');
 const AppError = require('../../utils/app-error');
 
-exports.getSubcategories = catchAsync(async (req, res) => {
+module.exports.getSubcategories = catchAsync(async (req, res) => {
   const { categoryId } = req.params;
 
   const subcategories = await Subcategory.find({
@@ -17,7 +17,7 @@ exports.getSubcategories = catchAsync(async (req, res) => {
   res.status(status.OK).json({ success: true, subcategories });
 });
 
-exports.getSubcategory = catchAsync(async (req, res, next) => {
+module.exports.getSubcategory = catchAsync(async (req, res, next) => {
   const subcategory = await Subcategory.findById(req.params.id);
 
   if (!subcategory) {
@@ -27,7 +27,7 @@ exports.getSubcategory = catchAsync(async (req, res, next) => {
   res.status(status.OK).json({ success: true, subcategory });
 });
 
-exports.createSubcategory = catchAsync(async (req, res) => {
+module.exports.createSubcategory = catchAsync(async (req, res) => {
   const { name, categoryId } = req.body;
   let subcategory = await Subcategory.create({
     name,
@@ -41,7 +41,7 @@ exports.createSubcategory = catchAsync(async (req, res) => {
   res.status(status.CREATED).json({ success: true, subcategory });
 });
 
-exports.updateSubcategory = catchAsync(async (req, res, next) => {
+module.exports.updateSubcategory = catchAsync(async (req, res, next) => {
   const { name, categoryId } = req.body;
 
   const subcategory = await Subcategory.findByIdAndUpdate(
@@ -60,7 +60,7 @@ exports.updateSubcategory = catchAsync(async (req, res, next) => {
   res.status(status.OK).json({ success: true, subcategory });
 });
 
-exports.deleteSubcategory = catchAsync(async (req, res, next) => {
+module.exports.deleteSubcategory = catchAsync(async (req, res, next) => {
   const subcategory = await Subcategory.findByIdAndDelete(req.params.id);
 
   if (!subcategory) {
@@ -70,7 +70,7 @@ exports.deleteSubcategory = catchAsync(async (req, res, next) => {
   res.status(status.NO_CONTENT).json();
 });
 
-exports.getSubcategoryProducts = catchAsync(async (req, res, next) => {
+module.exports.getSubcategoryProducts = catchAsync(async (req, res, next) => {
   const { sortColumn = 'createdAt', order = 'desc', page, perPage } = req.query;
 
   const pageNumber = parseInt(page || 1, 10);

@@ -1,8 +1,8 @@
-exports.model = {
+module.exports.model = {
   User: 'User',
 };
 
-exports.userTypes = {
+module.exports.userTypes = {
   user: 'user',
   admin: 'admin',
 };
