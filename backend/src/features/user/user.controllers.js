@@ -7,7 +7,7 @@ const AppError = require('../../utils/app-error');
 const catchAsync = require('../../middlewares/catch-async');
 const signJwtToken = require('./utils/signJwtToken');
 
-exports.register = catchAsync(async (req, res) => {
+module.exports.register = catchAsync(async (req, res) => {
   const { username, email, password, address } = req.body;
 
   const user = await User.create({ username, email, password, address });
@@ -23,7 +23,7 @@ exports.register = catchAsync(async (req, res) => {
     });
 });
 
-exports.login = catchAsync(async (req, res, next) => {
+module.exports.login = catchAsync(async (req, res, next) => {
   const { email, password } = req.body;
 
   if (!email || !password) {
@@ -53,7 +53,7 @@ exports.login = catchAsync(async (req, res, next) => {
     });
 });
 
-exports.logout = catchAsync(async (req, res, next) => {
+module.exports.logout = catchAsync(async (req, res, next) => {
   const token = jwt.sign({ id: '' }, process.env.JWT_SECRET, {
     expiresIn: 1, // 1second
   });
@@ -64,7 +64,7 @@ exports.logout = catchAsync(async (req, res, next) => {
     .json({ success: true, token, user: null });
 });
 
-exports.currentUser = catchAsync(async (req, res, next) => {
+module.exports.currentUser = catchAsync(async (req, res, next) => {
   const user = await User.findById(req.user.id);
 
   res.status(status.OK).json({
@@ -73,7 +73,7 @@ exports.currentUser = catchAsync(async (req, res, next) => {
   });
 });
 
-exports.updatePassword = catchAsync(async (req, res, next) => {
+module.exports.updatePassword = catchAsync(async (req, res, next) => {
   const user = await User.findById(req.user._id).select('+password');
 
   const { oldPassword, newPassword } = req.body;
@@ -87,7 +87,7 @@ exports.updatePassword = catchAsync(async (req, res, next) => {
   res.status(status.OK).json({ success: true });
 });
 
-exports.forgotPassword = catchAsync(async (req, res, next) => {
+module.exports.forgotPassword = catchAsync(async (req, res, next) => {
   const user = await User.findOne({ email: req.body.email });
 
   if (!user) {
@@ -126,7 +126,7 @@ exports.forgotPassword = catchAsync(async (req, res, next) => {
   });
 });
 
-exports.resetPassword = catchAsync(async (req, res, next) => {
+module.exports.resetPassword = catchAsync(async (req, res, next) => {
   const { token, newPassword } = req.body;
 
   const resetPasswordToken = crypto

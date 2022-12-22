@@ -27,7 +27,7 @@ const handleQueryParams = async (params) => {
   return build;
 };
 
-exports.getProducts = catchAsync(async (req, res) => {
+module.exports.getProducts = catchAsync(async (req, res) => {
   const {
     sortColumn = 'createdAt',
     order = 'desc',
@@ -53,7 +53,7 @@ exports.getProducts = catchAsync(async (req, res) => {
   res.status(status.OK).json({ success: true, products, totalCount });
 });
 
-exports.getProduct = catchAsync(async (req, res, next) => {
+module.exports.getProduct = catchAsync(async (req, res, next) => {
   const product = await Product.findById(req.params.id)
     .populate('category')
     .populate('subcategories');
@@ -65,7 +65,7 @@ exports.getProduct = catchAsync(async (req, res, next) => {
   res.status(status.OK).json({ success: true, product });
 });
 
-exports.createProduct = catchAsync(async (req, res) => {
+module.exports.createProduct = catchAsync(async (req, res) => {
   req.body.slug = slugify(req.body.title);
 
   const product = await Product.create(req.body);
@@ -73,7 +73,7 @@ exports.createProduct = catchAsync(async (req, res) => {
   res.status(status.CREATED).json({ success: true, product });
 });
 
-exports.updateProduct = catchAsync(async (req, res, next) => {
+module.exports.updateProduct = catchAsync(async (req, res, next) => {
   const product = await Product.findByIdAndUpdate(req.params.id, req.body, {
     new: true,
     runValidators: true,
@@ -86,7 +86,7 @@ exports.updateProduct = catchAsync(async (req, res, next) => {
   res.status(status.OK).json({ success: true, product });
 });
 
-exports.deleteProduct = catchAsync(async (req, res, next) => {
+module.exports.deleteProduct = catchAsync(async (req, res, next) => {
   const product = await Product.findByIdAndDelete(req.params.id);
 
   if (!product) {
@@ -100,7 +100,7 @@ exports.deleteProduct = catchAsync(async (req, res, next) => {
   res.status(status.NO_CONTENT).json();
 });
 
-exports.rateProduct = catchAsync(async (req, res) => {
+module.exports.rateProduct = catchAsync(async (req, res) => {
   const { rating: userRating } = req.body;
 
   const product = await Product.findById(req.params.id);
@@ -134,7 +134,7 @@ exports.rateProduct = catchAsync(async (req, res) => {
   res.status(status.OK).json({ success: true, product: updatedProduct });
 });
 
-exports.getSimilarProducts = catchAsync(async (req, res, next) => {
+module.exports.getSimilarProducts = catchAsync(async (req, res, next) => {
   const product = await Product.findById(req.params.id);
 
   if (!product) {

@@ -1,8 +1,8 @@
-exports.model = {
+module.exports.model = {
   Product: 'Product',
 };
 
-exports.yesNo = {
+module.exports.yesNo = {
   yes: 'Yes',
   no: 'No',
 };

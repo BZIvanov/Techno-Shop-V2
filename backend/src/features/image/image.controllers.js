@@ -4,7 +4,7 @@ const cloudinary = require('../../providers/cloudinary');
 const catchAsync = require('../../middlewares/catch-async');
 const AppError = require('../../utils/app-error');
 
-exports.uploadImage = catchAsync(async (req, res) => {
+module.exports.uploadImage = catchAsync(async (req, res) => {
   const image = await cloudinary.uploader.upload(req.body.image, {
     public_id: uuidv4(),
     resource_type: 'auto', // jpeg, png
@@ -17,7 +17,7 @@ exports.uploadImage = catchAsync(async (req, res) => {
   });
 });
 
-exports.removeImage = catchAsync(async (req, res, next) => {
+module.exports.removeImage = catchAsync(async (req, res, next) => {
   const { result } = await cloudinary.uploader.destroy(req.body.publicId);
 
   if (result !== 'ok') {

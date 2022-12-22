@@ -1,3 +1,3 @@
-exports.model = {
+module.exports.model = {
   Subcategory: 'Subcategory',
 };
