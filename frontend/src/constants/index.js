@@ -9,3 +9,5 @@ export const TYPEWRITER_TEXTS = [
   'Best Sellers',
   'Amazing deals',
 ];
+
+export const MAX_RATING_VALUE = 5;
