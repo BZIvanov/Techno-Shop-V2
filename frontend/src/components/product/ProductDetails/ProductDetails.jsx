@@ -18,8 +18,8 @@ import {
   StarBorderOutlined,
 } from '../../mui/Icons';
 import { ImagesCarousel } from '../../common/images/ImagesCarousel';
-import { RatingDialog } from '../../common/dialogs/RatingDialog';
-import { AverageRating } from '../../common/rating/AverageRating';
+import RatingDialog from '../../common/dialogs/RatingDialog/RatingDialog';
+import AverageRating from '../../common/rating/AverageRating/AverageRating';
 import { ProductInfoTabs } from '../ProductInfoTabs';
 import { ProductsList } from '../ProductsList';
 import {

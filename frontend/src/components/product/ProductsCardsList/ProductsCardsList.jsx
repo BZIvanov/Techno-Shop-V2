@@ -12,7 +12,7 @@ import {
 } from '@mui/material';
 import { Edit, Delete } from '../../mui/Icons';
 import { ConfirmDialog } from '../../common/dialogs/ConfirmDialog';
-import { AverageRating } from '../../common/rating/AverageRating';
+import AverageRating from '../../common/rating/AverageRating/AverageRating';
 import { ApiCallAlert } from '../../common/async/ApiCallAlert';
 import { ApiCallLoader } from '../../common/async/ApiCallLoader';
 import {

@@ -1,4 +1,5 @@
 import { Box, Rating, Typography } from '@mui/material';
+import { MAX_RATING_VALUE } from '../../../../constants';
 
 const AverageRating = ({ ratings = [], size = 'large' }) => {
   const allStarsSum = ratings
@@ -23,7 +24,7 @@ const AverageRating = ({ ratings = [], size = 'large' }) => {
             value={averageRating}
             precision={0.5}
             size={size}
-            max={10}
+            max={MAX_RATING_VALUE}
             disabled={true}
           />
           <Typography variant='body2' ml={1}>

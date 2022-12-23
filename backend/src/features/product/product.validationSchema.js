@@ -47,7 +47,7 @@ const productUpdateValidationSchema = Joi.object({
 });
 
 const productRateValidationSchema = Joi.object({
-  rating: Joi.number().positive().min(0).max(10),
+  rating: Joi.number().positive().min(0).max(5),
 });
 
 module.exports = {

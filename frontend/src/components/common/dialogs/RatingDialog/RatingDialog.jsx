@@ -6,6 +6,7 @@ import {
   DialogActions,
   Rating,
 } from '@mui/material';
+import { MAX_RATING_VALUE } from '../../../../constants';
 
 const RatingDialog = ({
   showRatingModal,
@@ -17,6 +18,7 @@ const RatingDialog = ({
   return (
     <Dialog open={showRatingModal} onClose={() => setShowRatingModal(false)}>
       <DialogTitle>Leave your rating</DialogTitle>
+
       <DialogContent>
         <Rating
           value={rating}
@@ -25,19 +27,16 @@ const RatingDialog = ({
           }}
           precision={0.5}
           size='large'
-          max={10}
+          max={MAX_RATING_VALUE}
         />
       </DialogContent>
+
       <DialogActions>
-        <Button
-          color='secondary'
-          type='button'
-          onClick={() => setShowRatingModal(false)}
-        >
+        <Button type='button' onClick={() => setShowRatingModal(false)}>
           Cancel
         </Button>
+
         <Button
-          color='secondary'
           type='submit'
           onClick={() => {
             setShowRatingModal(false);
