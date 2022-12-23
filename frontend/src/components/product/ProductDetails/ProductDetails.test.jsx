@@ -1,3 +1,4 @@
+import userEvent from '@testing-library/user-event';
 import { rest } from 'msw';
 import { setupServer } from 'msw/node';
 import { Routes, Route } from 'react-router-dom';
@@ -76,6 +77,14 @@ const TestRoutes = ({ children }) => {
   return (
     <Routes>
       <Route path='/product/:productId' element={children} />
+      <Route
+        path='/login'
+        element={
+          <div>
+            <h1>Login Form</h1>
+          </div>
+        }
+      />
     </Routes>
   );
 };
@@ -131,6 +140,24 @@ describe('ProductDetails component', () => {
       await screen.findByText(/add to cart/i, {}, { timeout: 1000 });
       screen.getByText(/add to wishlist/i);
       screen.getByText(/^login to leave rating$/i);
+    });
+
+    test('if not logged in user trying to rate a product, redirect it to login form', async () => {
+      const initialEntries = [`/product/${products[0]._id}`];
+
+      render(<ProductDetails />, { initialEntries, TestRoutes });
+
+      const productRateButton = await screen.findByText(
+        /^login to leave rating$/i,
+        {},
+        { timeout: 1000 }
+      );
+      const user = userEvent.setup();
+
+      await user.click(productRateButton);
+
+      screen.getByText('Login Form');
+      expect(productRateButton).not.toBeInTheDocument();
     });
 
     test('renders correct buttons for logged in user', async () => {

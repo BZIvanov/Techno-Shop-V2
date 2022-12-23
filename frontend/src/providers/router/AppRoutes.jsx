@@ -1,7 +1,7 @@
 import { Routes, Route } from 'react-router-dom';
 import { Home } from '../../components/home/Home';
 import { RegisterForm } from '../../components/user/auth/RegisterForm';
-import { LoginForm } from '../../components/user/auth/LoginForm';
+import LoginForm from '../../components/user/auth/LoginForm/LoginForm';
 import { PasswordUpdateForm } from '../../components/user/password/PasswordUpdateForm';
 import { ResetPasswordForm } from '../../components/user/password/ResetPasswordForm';
 import { Shop } from '../../components/shop/Shop';
