@@ -78,8 +78,11 @@ const AppRoutes = () => {
       </Route>
       <Route path='/shop' element={<Shop />} />
       <Route path='/product/:productId' element={<ProductDetails />} />
-      <Route path='/category/:id' element={<CategoryProducts />} />
-      <Route path='/subcategory/:id' element={<SubcategoryProducts />} />
+      <Route path='/category/:categoryId' element={<CategoryProducts />} />
+      <Route
+        path='/subcategory/:subcategoryId'
+        element={<SubcategoryProducts />}
+      />
     </Routes>
   );
 };
