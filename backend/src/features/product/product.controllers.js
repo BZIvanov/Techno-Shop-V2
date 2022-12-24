@@ -4,6 +4,8 @@ const slugify = require('slugify');
 const Product = require('./product.model');
 const catchAsync = require('../../middlewares/catch-async');
 const AppError = require('../../utils/app-error');
+const Category = require('../category/category.model');
+const Subcategory = require('../subcategory/subcategory.model');
 
 cloudinary.config({
   cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
@@ -12,9 +14,11 @@ cloudinary.config({
 });
 
 const handleQueryParams = async (params) => {
-  const { text, price } = params;
+  const { category, subcategory, text, price } = params;
 
   const build = {
+    ...(category && { category }),
+    ...(subcategory && { subcategories: subcategory }),
     ...(text && { $text: { $search: text } }),
     ...(price && {
       price: {
@@ -28,6 +32,16 @@ const handleQueryParams = async (params) => {
 };
 
 module.exports.getProducts = catchAsync(async (req, res) => {
+  const { categoryId, subcategoryId } = req.params;
+  let category;
+  if (categoryId) {
+    category = await Category.findById(categoryId).exec();
+  }
+  let subcategory;
+  if (subcategoryId) {
+    subcategory = await Subcategory.findById(subcategoryId).exec();
+  }
+
   const {
     sortColumn = 'createdAt',
     order = 'desc',
@@ -36,7 +50,7 @@ module.exports.getProducts = catchAsync(async (req, res) => {
     ...rest
   } = req.query;
 
-  const builder = await handleQueryParams(rest);
+  const builder = await handleQueryParams({ category, subcategory, ...rest });
 
   const pageNumber = parseInt(page || 1, 10);
   const perPageNumber = parseInt(perPage || 12, 10);
@@ -48,7 +62,8 @@ module.exports.getProducts = catchAsync(async (req, res) => {
     .populate('subcategories')
     .sort([[sortColumn, order]]);
 
-  const totalCount = await Product.find().estimatedDocumentCount();
+  const totalCountBuilder = await handleQueryParams({ category, subcategory });
+  const totalCount = await Product.where(totalCountBuilder).countDocuments();
 
   res.status(status.OK).json({ success: true, products, totalCount });
 });

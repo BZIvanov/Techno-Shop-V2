@@ -55,6 +55,7 @@ describe('Product routes', () => {
         .expect('Content-Type', /application\/json/)
         .expect(200);
 
+      expect(response.body).toHaveProperty('totalCount', 7);
       expect(response.body.products.length).toBe(0);
     });
 
@@ -65,6 +66,7 @@ describe('Product routes', () => {
         .expect('Content-Type', /application\/json/)
         .expect(200);
 
+      expect(response.body).toHaveProperty('totalCount', 7);
       expect(response.body.products.length).toBe(1);
       expect(response.body.products[0].price).toBe(18.88);
     });
