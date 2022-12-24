@@ -5,7 +5,6 @@ const {
   createSubcategory,
   updateSubcategory,
   deleteSubcategory,
-  getSubcategoryProducts,
 } = require('./subcategory.controllers');
 const authenticate = require('../../middlewares/authenticate');
 const authorize = require('../../middlewares/authorize');
@@ -16,9 +15,12 @@ const validateRequestBody = require('../../middlewares/validate-request-body');
 const {
   upsertSubcategoryValidationSchema,
 } = require('./subcategory.validationSchema');
+const productRoutes = require('../product/product.routes');
 
 // set mergeParams to true to receive the params from the category router
 const router = express.Router({ mergeParams: true });
+
+router.use('/:subcategoryId/products', productRoutes);
 
 router
   .route('/')
@@ -39,6 +41,5 @@ router
     updateSubcategory
   )
   .delete(authenticate, authorize(admin), deleteSubcategory);
-router.route('/:id/products').get(getSubcategoryProducts);
 
 module.exports = router;
