@@ -18,15 +18,15 @@ const CategoryProductsPage = () => {
 
   const dispatch = useDispatch();
 
-  const { id } = useParams();
+  const { categoryId } = useParams();
 
   useEffect(() => {
-    dispatch(getCategoryAction(id));
-  }, [dispatch, id]);
+    dispatch(getCategoryAction(categoryId));
+  }, [dispatch, categoryId]);
 
   useEffect(() => {
-    dispatch(getCategoryProductsAction({ categoryId: id, params: { page } }));
-  }, [dispatch, id, page]);
+    dispatch(getCategoryProductsAction({ categoryId, params: { page } }));
+  }, [dispatch, categoryId, page]);
 
   const handlePageChange = (_, value) => {
     setPage(value);
@@ -36,7 +36,7 @@ const CategoryProductsPage = () => {
     <Box>
       {category && (
         <ProductsList
-          header={`${products.length} Products in ${category.name} category`}
+          header={`${totalCount} products in ${category.name} category`}
           products={products}
           page={page}
           handlePageChange={handlePageChange}

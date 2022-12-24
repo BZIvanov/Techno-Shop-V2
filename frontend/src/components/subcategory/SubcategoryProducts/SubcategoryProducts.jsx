@@ -20,17 +20,15 @@ const SubcategoryProductsPage = () => {
 
   const dispatch = useDispatch();
 
-  const { id } = useParams();
+  const { subcategoryId } = useParams();
 
   useEffect(() => {
-    dispatch(getSubcategoryAction(id));
-  }, [dispatch, id]);
+    dispatch(getSubcategoryAction(subcategoryId));
+  }, [dispatch, subcategoryId]);
 
   useEffect(() => {
-    dispatch(
-      getSubcategoryProductsAction({ subcategoryId: id, params: { page } })
-    );
-  }, [dispatch, id, page]);
+    dispatch(getSubcategoryProductsAction({ subcategoryId, params: { page } }));
+  }, [dispatch, subcategoryId, page]);
 
   const handlePageChange = (_, value) => {
     setPage(value);
@@ -40,7 +38,7 @@ const SubcategoryProductsPage = () => {
     <Box>
       {subcategory && (
         <ProductsList
-          header={`${products.length} Products in ${subcategory.name} subcategory`}
+          header={`${totalCount} products in ${subcategory.name} subcategory`}
           products={products}
           page={page}
           handlePageChange={handlePageChange}

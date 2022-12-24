@@ -11,7 +11,7 @@ const categories = require('../../../data-seed/categories.json');
 const subcategories = require('../../../data-seed/subcategories.json');
 const products = require('../../../data-seed/products.json');
 
-describe('Subcategory routes', () => {
+describe('Product routes', () => {
   beforeAll(async () => {
     await mongoDbConnect();
 
@@ -345,6 +345,37 @@ describe('Subcategory routes', () => {
         'error',
         '"rating" must be a number'
       );
+    });
+  });
+
+  describe('Get similar products controller', () => {
+    test('it should return products with the same category as the selected product', async () => {
+      const response = await request(app)
+        .get(`/v1/products/${products[4]._id}/similar`)
+        .expect('Content-Type', /application\/json/)
+        .expect(200);
+
+      expect(response.body).toHaveProperty('success', true);
+      expect(response.body).toHaveProperty('totalCount', 2);
+
+      const productsCategories = response.body.products.map(
+        (product) => product.category._id
+      );
+      const uniqueCategories = new Set(productsCategories);
+      expect(uniqueCategories.size).toBe(1);
+    });
+
+    test('the selected product should not be in the returned products', async () => {
+      const selectedProductId = products[4]._id;
+      const response = await request(app)
+        .get(`/v1/products/${selectedProductId}/similar`)
+        .expect('Content-Type', /application\/json/)
+        .expect(200);
+
+      const productsIds = response.body.products
+        .map((product) => product._id)
+        .filter((productId) => productId === selectedProductId);
+      expect(productsIds.length).toBe(0);
     });
   });
 });

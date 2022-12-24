@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from '../../../store/hooks';
 import { Box } from '@mui/material';
 import { TypeWriterText } from '../../common/texts/TypeWriter';
 import { ProductsList } from '../../product/ProductsList';
-import { ChipsList } from '../../common/lists/ChipsList';
+import ChipsList from '../../common/lists/ChipsList/ChipsList';
 import { ApiCallAlert } from '../../common/async/ApiCallAlert';
 import { ApiCallLoader } from '../../common/async/ApiCallLoader';
 import { getAllCategoriesAction } from '../../../store/features/category/categorySlice';
