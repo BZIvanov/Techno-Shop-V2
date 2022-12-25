@@ -4,6 +4,7 @@ import ProductCard from './ProductCard';
 const commonProduct = {
   _id: '123',
   title: 'Winter Trousers',
+  price: 12.4,
   description: 'Comfy and wamry clothes for the cold winter months.',
   images: [],
 };
@@ -11,6 +12,7 @@ const commonProduct = {
 const longDescProduct = {
   _id: '124',
   title: 'Summer glasses',
+  price: 345.11,
   description:
     'Amaizng looking glasses, best choice, best price. Limited eddition and wide choice of colors',
   images: [],
@@ -33,6 +35,13 @@ describe('ProductCard component', () => {
         'line-height': 1.43,
         color: 'rgba(0, 0, 0, 0.6)',
       });
+    });
+
+    test('the price should be formatted to 2 decimal places', () => {
+      render(<ProductCard product={commonProduct} />);
+
+      screen.getByText('Winter Trousers');
+      screen.getByText('$12.40');
     });
 
     test('long description text is displayed as ellipsis', () => {

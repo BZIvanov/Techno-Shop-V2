@@ -22,17 +22,18 @@ const ProductsList = ({
   showPagination = true,
 }) => {
   return (
-    <Box
-      sx={{
-        width: '100%',
-        backgroundColor: (theme) => theme.palette.grey[300],
-      }}
-    >
-      <Typography variant='h5' sx={{ textAlign: 'center' }}>
+    <Box sx={{ width: '100%' }}>
+      <Typography
+        variant='h5'
+        sx={{
+          textAlign: 'center',
+          backgroundColor: (theme) => theme.palette.grey[300],
+        }}
+      >
         {header}
       </Typography>
 
-      <Paper sx={{ width: '100%', padding: 2 }}>
+      <Paper sx={{ padding: 2 }}>
         {products.length > 0 ? (
           <Grid container={true} spacing={3}>
             {products.map((product) => (

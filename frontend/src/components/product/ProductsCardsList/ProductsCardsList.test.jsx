@@ -8,6 +8,7 @@ const products = [
   {
     _id: '123',
     title: 'First product',
+    price: 123.45,
     description: 'First Description',
     images: [],
     ratings: [{ postedBy: '211', stars: 4 }],
@@ -15,6 +16,7 @@ const products = [
   {
     _id: '124',
     title: 'Second product',
+    price: 11,
     description: 'Second description',
     images: [],
     ratings: [],
@@ -22,6 +24,7 @@ const products = [
   {
     _id: '125',
     title: 'Third product',
+    price: 10.99,
     description: 'Third description',
     images: [],
     ratings: [{ postedBy: '211', stars: 5 }],
@@ -29,6 +32,7 @@ const products = [
   {
     _id: '126',
     title: 'Fourth product',
+    price: 2500.99,
     description: 'Fourth description',
     images: [],
     ratings: [{ postedBy: '212', stars: 3 }],
@@ -36,6 +40,7 @@ const products = [
   {
     _id: '127',
     title: 'Fifth product',
+    price: 3999.5,
     description: 'Fifth description',
     images: [],
     ratings: [{ postedBy: '212', stars: 3 }],
@@ -43,6 +48,7 @@ const products = [
   {
     _id: '128',
     title: 'Sixth product',
+    price: 78.79,
     description: 'Sixth description',
     images: [],
     ratings: [],
@@ -50,6 +56,7 @@ const products = [
   {
     _id: '129',
     title: 'Seventh product',
+    price: 563.9,
     description: 'Seventh description',
     images: [],
     ratings: [],
@@ -57,6 +64,7 @@ const products = [
   {
     _id: '130',
     title: 'Eight product',
+    price: 300,
     description: 'Eight description',
     images: [],
     ratings: [],
@@ -64,6 +72,7 @@ const products = [
   {
     _id: '131',
     title: 'Ninth product',
+    price: 1200.0,
     description: 'Ninth description',
     images: [],
     ratings: [],
@@ -71,6 +80,7 @@ const products = [
   {
     _id: '132',
     title: 'Ten product',
+    price: 2600.0,
     description: 'Ten description',
     images: [],
     ratings: [],
@@ -78,6 +88,7 @@ const products = [
   {
     _id: '133',
     title: 'Eleven product',
+    price: 1800,
     description: 'Eleven description',
     images: [],
     ratings: [],
@@ -85,6 +96,7 @@ const products = [
   {
     _id: '134',
     title: 'Twelve product',
+    price: 1600,
     description: 'Twelve description',
     images: [],
     ratings: [],
@@ -92,6 +104,7 @@ const products = [
   {
     _id: '135',
     title: 'Thirteen product',
+    price: 1530.55,
     description: 'Thirteen description',
     images: [],
     ratings: [],
@@ -99,6 +112,7 @@ const products = [
   {
     _id: '136',
     title: 'Fourteen product',
+    price: 3333.33,
     description: 'Fourteen description',
     images: [],
     ratings: [{ postedBy: '214', stars: 1.5 }],

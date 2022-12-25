@@ -1,6 +1,7 @@
 import { Fragment } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
+  Box,
   Typography,
   Card,
   CardContent,
@@ -13,7 +14,7 @@ import { useSelector } from '../../../store/hooks';
 import productImage from '../../../assets/images/product.png';
 
 const ProductCard = ({
-  product: { _id, title, description, images },
+  product: { _id, title, price, description, images },
   children,
 }) => {
   const navigate = useNavigate();
@@ -55,9 +56,14 @@ const ProductCard = ({
             </Fragment>
           ) : (
             <Fragment>
-              <Typography gutterBottom={true} variant='body1'>
-                {title}
-              </Typography>
+              <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
+                <Typography gutterBottom={true} variant='body1' noWrap={true}>
+                  {title}
+                </Typography>
+                <Typography gutterBottom={true} variant='body1'>
+                  <strong>${price.toFixed(2)}</strong>
+                </Typography>
+              </Box>
               <Typography variant='body2' color='text.secondary'>
                 {description.length > 80
                   ? description.substring(0, 80) + '...'

@@ -19,7 +19,7 @@ const handleQueryParams = async (params) => {
   const build = {
     ...(category && { category }),
     ...(subcategory && { subcategories: subcategory }),
-    ...(text && { $text: { $search: text } }),
+    ...(text && { $text: { $search: text } }), // this will work on fields with text property in the model
     ...(price && {
       price: {
         $gte: parseInt(price.split(',')[0], 10),
