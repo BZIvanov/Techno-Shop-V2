@@ -12,6 +12,7 @@ const ShopPage = () => {
   const { text, price } = useSelector((state) => state.productsFilter);
 
   const [page, setPage] = useState(1);
+  const [localPrice, setLocalPrice] = useState(price);
 
   const dispatch = useDispatch();
 
@@ -25,31 +26,40 @@ const ShopPage = () => {
           price: price.join(),
         })
       );
-    }, 1000);
+    }, 500);
 
     return () => clearTimeout(throttle);
   }, [dispatch, page, text, price]);
 
-  const handlePriceChange = (event, newValue) => {
+  // change the price, when the user is sliding
+  const handleLocalPriceChange = (event, newValue) => {
+    setLocalPrice(newValue);
+  };
+  // change the price in the store, when the user is done sliding, which will then trigger api call with the updated store price value
+  const handleStorePriceChange = (event, newValue) => {
     dispatch(filterAction({ price: newValue }));
   };
 
   return (
     <Box sx={{ display: 'flex' }}>
-      <Box>
-        <List sx={{ minWidth: '260px', bgcolor: 'background.paper' }}>
-          <FilterListItem title={`Price (${price[0]}-${price[1]})`}>
-            <Slider
-              value={price}
-              onChange={handlePriceChange}
-              valueLabelDisplay='auto'
-              disableSwap={true}
-              step={100}
-              max={4999}
-            />
-          </FilterListItem>
-        </List>
-      </Box>
+      <List
+        dense={true}
+        sx={{ minWidth: '260px', bgcolor: 'background.paper' }}
+      >
+        <FilterListItem title={`Price (${price[0]}-${price[1]})`}>
+          <Slider
+            value={localPrice}
+            onChange={handleLocalPriceChange}
+            onChangeCommitted={handleStorePriceChange}
+            valueLabelDisplay='auto'
+            disableSwap={true}
+            step={100}
+            max={4999}
+            valueLabelFormat={(value) => `$ ${value}`}
+            size='small'
+          />
+        </FilterListItem>
+      </List>
 
       <Box sx={{ flexGrow: 1 }}>
         <ProductsList
