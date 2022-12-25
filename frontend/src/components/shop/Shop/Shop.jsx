@@ -44,6 +44,7 @@ const ShopPage = () => {
               onChange={handlePriceChange}
               valueLabelDisplay='auto'
               disableSwap={true}
+              step={100}
               max={4999}
             />
           </FilterListItem>
