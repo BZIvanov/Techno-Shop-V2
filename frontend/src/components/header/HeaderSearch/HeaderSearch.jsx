@@ -5,7 +5,7 @@ import { Search } from '../../mui/Icons';
 import { filterAction } from '../../../store/features/products-filter/productsFilterSlice';
 
 const HeaderSearch = () => {
-  const { text } = useSelector((state) => state.productsFilter);
+  const text = useSelector((state) => state.productsFilter.text);
 
   const navigate = useNavigate();
   const dispatch = useDispatch();

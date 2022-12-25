@@ -10,9 +10,7 @@ const productsFilterSlice = createSlice({
   initialState,
   reducers: {
     filterAction: (state, action) => {
-      const filterName = Object.keys(action.payload)[0];
-      const filterValue = action.payload[filterName];
-      state[filterName] = filterValue;
+      return { ...state, ...action.payload };
     },
   },
 });

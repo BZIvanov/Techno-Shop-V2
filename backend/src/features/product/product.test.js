@@ -70,6 +70,36 @@ describe('Product routes', () => {
       expect(response.body.products.length).toBe(1);
       expect(response.body.products[0].price).toBe(18.88);
     });
+
+    test('it should get products for specific category', async () => {
+      const response = await request(app).get(
+        `/v1/categories/${products[2].category}/products`
+      );
+
+      expect(response.body).toHaveProperty('totalCount', 2);
+      const productsCategoriesIds = response.body.products.map(
+        (product) => product.category._id
+      );
+      const uniqueCategoriesIds = new Set(productsCategoriesIds);
+      expect(uniqueCategoriesIds.size).toBe(1);
+    });
+
+    test('it should get products for specific subcategory', async () => {
+      const subcategoryId = products[3].subcategories[1];
+      const response = await request(app).get(
+        `/v1/subcategories/${subcategoryId}/products`
+      );
+
+      expect(response.body).toHaveProperty('totalCount', 2);
+      response.body.products.forEach((product) => {
+        const productSubcategoriesIds = product.subcategories.map(
+          (subcategory) => subcategory._id
+        );
+
+        expect(productSubcategoriesIds.includes(subcategoryId)).toBe(true);
+      });
+      expect(response.body.products.length).toBe(2);
+    });
   });
 
   describe('Get product controller', () => {
