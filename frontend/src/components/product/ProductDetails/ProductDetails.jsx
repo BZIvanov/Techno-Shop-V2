@@ -103,7 +103,9 @@ const ProductDetails = () => {
                     }}
                   >
                     <Typography variant='body1'>Price:</Typography>
-                    <Typography variant='body1'>{`$ ${product.price}`}</Typography>
+                    <Typography variant='body1'>{`$ ${product.price.toFixed(
+                      2
+                    )}`}</Typography>
                   </Box>
 
                   <Box

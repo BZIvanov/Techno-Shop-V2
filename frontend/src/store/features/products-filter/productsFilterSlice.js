@@ -3,6 +3,7 @@ import { createSlice } from '@reduxjs/toolkit';
 const initialState = {
   text: '',
   price: [0, 4999],
+  categories: [],
 };
 
 const productsFilterSlice = createSlice({

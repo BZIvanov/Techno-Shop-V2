@@ -4,7 +4,6 @@ const slugify = require('slugify');
 const Product = require('./product.model');
 const catchAsync = require('../../middlewares/catch-async');
 const AppError = require('../../utils/app-error');
-const Category = require('../category/category.model');
 const Subcategory = require('../subcategory/subcategory.model');
 
 cloudinary.config({
@@ -14,11 +13,9 @@ cloudinary.config({
 });
 
 const handleQueryParams = async (params) => {
-  const { category, subcategory, text, price } = params;
+  const { text, price, categories, category, subcategory } = params;
 
   const build = {
-    ...(category && { category }),
-    ...(subcategory && { subcategories: subcategory }),
     ...(text && { $text: { $search: text } }), // this will work on fields with text property in the model
     ...(price && {
       price: {
@@ -26,6 +23,9 @@ const handleQueryParams = async (params) => {
         $lte: parseInt(price.split(',')[1], 10),
       },
     }),
+    ...(categories && { category: categories.split(',') }),
+    ...(category && { category }), // category from params will override categories from query
+    ...(subcategory && { subcategories: subcategory }),
   };
 
   return build;
@@ -33,10 +33,7 @@ const handleQueryParams = async (params) => {
 
 module.exports.getProducts = catchAsync(async (req, res) => {
   const { categoryId, subcategoryId } = req.params;
-  let category;
-  if (categoryId) {
-    category = await Category.findById(categoryId).exec();
-  }
+
   let subcategory;
   if (subcategoryId) {
     subcategory = await Subcategory.findById(subcategoryId).exec();
@@ -50,7 +47,11 @@ module.exports.getProducts = catchAsync(async (req, res) => {
     ...rest
   } = req.query;
 
-  const builder = await handleQueryParams({ category, subcategory, ...rest });
+  const builder = await handleQueryParams({
+    category: categoryId,
+    subcategory,
+    ...rest,
+  });
 
   const pageNumber = parseInt(page || 1, 10);
   const perPageNumber = parseInt(perPage || 12, 10);
@@ -62,8 +63,7 @@ module.exports.getProducts = catchAsync(async (req, res) => {
     .populate('subcategories')
     .sort([[sortColumn, order]]);
 
-  const totalCountBuilder = await handleQueryParams({ category, subcategory });
-  const totalCount = await Product.where(totalCountBuilder).countDocuments();
+  const totalCount = await Product.where(builder).countDocuments();
 
   res.status(status.OK).json({ success: true, products, totalCount });
 });

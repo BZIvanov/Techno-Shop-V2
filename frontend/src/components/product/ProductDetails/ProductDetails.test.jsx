@@ -16,7 +16,7 @@ const products = [
     title: 'My cool product',
     slug: 'my-cool-product',
     description: 'Some very cool product',
-    price: 123.45,
+    price: 123.4,
     category: { _id: '125', name: 'Clothes', slug: 'clothes' },
     subcategories: [
       { _id: '126', name: 'Shirts', slug: 'shirts', categoryId: '125' },
@@ -111,7 +111,7 @@ describe('ProductDetails component', () => {
       render(<ProductDetails />, { initialEntries, TestRoutes });
 
       // await the first query to make sure the data was loaded
-      await screen.findByText('$ 123.45', {}, { timeout: 1000 });
+      await screen.findByText('$ 123.40', {}, { timeout: 1000 });
       screen.getByText('Not rated yet');
       screen.getByRole('button', { name: 'Clothes' });
       screen.getByRole('button', { name: 'Shirts' });
