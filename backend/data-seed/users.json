@@ -27,5 +27,19 @@
     "email": "dimo@mail.bg",
     "password": "12345678",
     "address": "Plovidv, ul Svoboda 21"
+  },
+  {
+    "_id": "63ac935cf2bb507ce39da8a2",
+    "username": "Pepi",
+    "email": "pepi@mail.bg",
+    "password": "12345678",
+    "address": "Sofia, blvd Sofia 129"
+  },
+  {
+    "_id": "63ac93eeb6693b670ebb1e6c",
+    "username": "Misho",
+    "email": "misho@mail.bg",
+    "password": "12345678",
+    "address": "Sofia, blvd Sofia 151"
   }
 ]
