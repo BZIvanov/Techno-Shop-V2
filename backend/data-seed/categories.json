@@ -23,5 +23,10 @@
     "_id": "619a5b86aabbae42fc6b8253",
     "name": "Clothes",
     "slug": "clothes"
+  },
+  {
+    "_id": "63ac94c1cdc1fa5f101c139d",
+    "name": "Cameras",
+    "slug": "cameras"
   }
 ]

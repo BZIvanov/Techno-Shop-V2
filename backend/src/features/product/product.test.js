@@ -33,7 +33,7 @@ describe('Product routes', () => {
         .expect(200);
 
       expect(response.body).toHaveProperty('success', true);
-      expect(response.body).toHaveProperty('totalCount', 7);
+      expect(response.body).toHaveProperty('totalCount', 14);
       expect(response.body.products[0]).toHaveProperty('title');
     });
 
@@ -44,7 +44,7 @@ describe('Product routes', () => {
         .expect('Content-Type', /application\/json/)
         .expect(200);
 
-      expect(response.body).toHaveProperty('totalCount', 7);
+      expect(response.body).toHaveProperty('totalCount', 14);
       expect(response.body.products.length).toBe(2);
     });
 
@@ -55,7 +55,7 @@ describe('Product routes', () => {
         .expect('Content-Type', /application\/json/)
         .expect(200);
 
-      expect(response.body).toHaveProperty('totalCount', 7);
+      expect(response.body).toHaveProperty('totalCount', 14);
       expect(response.body.products.length).toBe(0);
     });
 
@@ -76,7 +76,7 @@ describe('Product routes', () => {
         `/v1/categories/${products[2].category}/products`
       );
 
-      expect(response.body).toHaveProperty('totalCount', 2);
+      expect(response.body).toHaveProperty('totalCount', 3);
       const productsCategoriesIds = response.body.products.map(
         (product) => product.category._id
       );
@@ -405,7 +405,7 @@ describe('Product routes', () => {
         .expect(200);
 
       expect(response.body).toHaveProperty('success', true);
-      expect(response.body).toHaveProperty('totalCount', 2);
+      expect(response.body).toHaveProperty('totalCount', 3);
 
       const productsCategories = response.body.products.map(
         (product) => product.category._id

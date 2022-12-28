@@ -66,6 +66,12 @@
     "categoryId": "619a5b86aabbae42fc6b8253"
   },
   {
+    "_id": "63ac8c84a5ea72fd475748ab",
+    "name": "Other clothes",
+    "slug": "other-clothes",
+    "categoryId": "619a5b86aabbae42fc6b8253"
+  },
+  {
     "_id": "61b27f568c18d90664b9b802",
     "name": "Parfums",
     "slug": "parfums",
@@ -94,5 +100,23 @@
     "name": "High-Tech",
     "slug": "high-tech",
     "categoryId": "6199474c65bcf27b80cfe56e"
+  },
+  {
+    "_id": "63ac83fec7d4970364449974",
+    "name": "Personal laptops",
+    "slug": "personal-laptops",
+    "categoryId": "6199474c65bcf27b80cfe56e"
+  },
+  {
+    "_id": "63ac95020fc52bfb9ff5910f",
+    "name": "Web cameras",
+    "slug": "web-cameras",
+    "categoryId": "63ac94c1cdc1fa5f101c139d"
+  },
+  {
+    "_id": "63ac9521e08d67c60a6ea76c",
+    "name": "Surveillance cameras",
+    "slug": "surveillance-cameras",
+    "categoryId": "63ac94c1cdc1fa5f101c139d"
   }
 ]
