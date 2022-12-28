@@ -12,8 +12,23 @@ cloudinary.config({
   api_secret: process.env.CLOUDINARY_API_SECRET,
 });
 
+const handleRating = (rating) =>
+  Product.aggregate([
+    {
+      $project: {
+        document: '$$ROOT',
+        ceiledAverage: {
+          $ceil: { $avg: '$ratings.stars' }, // calculate the average for all the product's ratings and store the value in prop ceiledAverage
+        },
+      },
+    },
+    { $match: { ceiledAverage: parseInt(rating, 10) } },
+  ]);
+
 const handleQueryParams = async (params) => {
-  const { text, price, categories, category, subcategory } = params;
+  const { text, price, categories, rating, category, subcategory } = params;
+
+  const aggregates = rating && (await handleRating(rating));
 
   const build = {
     ...(text && { $text: { $search: text } }), // this will work on fields with text property in the model
@@ -24,6 +39,7 @@ const handleQueryParams = async (params) => {
       },
     }),
     ...(categories && { category: categories.split(',') }),
+    ...(rating && { _id: aggregates }),
     ...(category && { category }), // category from params will override categories from query
     ...(subcategory && { subcategories: subcategory }),
   };

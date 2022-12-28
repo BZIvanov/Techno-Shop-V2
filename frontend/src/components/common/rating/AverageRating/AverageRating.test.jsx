@@ -12,16 +12,16 @@ describe('AverageRating component', () => {
 
   describe('With user ratings', () => {
     test('renders the ratings for 1 user rated', async () => {
-      render(<AverageRating ratings={[{ stars: 3.5 }]} />);
+      render(<AverageRating ratings={[{ stars: 4 }]} />);
 
       const noRatingsText = screen.queryByText('Not rated yet');
       expect(noRatingsText).not.toBeInTheDocument();
 
       screen.getByText('(1)');
       const filledStars = screen.getAllByTestId('StarIcon');
-      expect(filledStars.length).toBe(7);
+      expect(filledStars.length).toBe(4);
       const emptyStars = screen.getAllByTestId('StarBorderIcon');
-      expect(emptyStars.length).toBe(3);
+      expect(emptyStars.length).toBe(1);
     });
 
     test('renders average calculated rating for multiple ratings', async () => {
@@ -32,33 +32,28 @@ describe('AverageRating component', () => {
 
       screen.getByText('(2)');
       const filledStars = screen.getAllByTestId('StarIcon');
-      expect(filledStars.length).toBe(6);
+      expect(filledStars.length).toBe(3);
       const emptyStars = screen.getAllByTestId('StarBorderIcon');
-      expect(emptyStars.length).toBe(4);
+      expect(emptyStars.length).toBe(2);
     });
 
     test('renders average calculated rating for ratings not rounding to round number', async () => {
-      render(<AverageRating ratings={[{ stars: 2 }, { stars: 3.5 }]} />);
+      render(<AverageRating ratings={[{ stars: 2 }, { stars: 3 }]} />);
 
       const noRatingsText = screen.queryByText('Not rated yet');
       expect(noRatingsText).not.toBeInTheDocument();
 
       screen.getByText('(2)');
       const filledStars = screen.getAllByTestId('StarIcon');
-      expect(filledStars.length).toBe(6);
+      expect(filledStars.length).toBe(3);
       const emptyStars = screen.getAllByTestId('StarBorderIcon');
-      expect(emptyStars.length).toBe(4);
+      expect(emptyStars.length).toBe(2);
     });
 
     test('renders average calculated rating for many ratings', async () => {
       render(
         <AverageRating
-          ratings={[
-            { stars: 1.5 },
-            { stars: 1 },
-            { stars: 3.5 },
-            { stars: 0.5 },
-          ]}
+          ratings={[{ stars: 1 }, { stars: 2 }, { stars: 3 }, { stars: 1 }]}
         />
       );
 
@@ -67,9 +62,9 @@ describe('AverageRating component', () => {
 
       screen.getByText('(4)');
       const filledStars = screen.getAllByTestId('StarIcon');
-      expect(filledStars.length).toBe(3);
+      expect(filledStars.length).toBe(2);
       const emptyStars = screen.getAllByTestId('StarBorderIcon');
-      expect(emptyStars.length).toBe(7);
+      expect(emptyStars.length).toBe(3);
     });
   });
 });

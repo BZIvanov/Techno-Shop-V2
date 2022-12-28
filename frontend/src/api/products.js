@@ -14,8 +14,8 @@ export const createProductCall = (data, token) => {
   });
 };
 
-export const updateProductCall = (data, token) => {
-  return axios.put(`/products/${data.productId}`, data, {
+export const updateProductCall = (productId, data, token) => {
+  return axios.put(`/products/${productId}`, data, {
     headers: { authorization: `Bearer ${token}` },
   });
 };

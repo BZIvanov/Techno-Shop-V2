@@ -353,12 +353,14 @@ describe('Product routes', () => {
       await request(app)
         .put(`/v1/products/${products[6]._id}/rate`)
         .set('Authorization', `Bearer ${signJwtToken(users[1]._id)}`)
-        .send({ rating: 1.5 });
+        .send({ rating: 1 })
+        .expect(200);
 
       const response = await request(app)
         .put(`/v1/products/${products[6]._id}/rate`)
         .set('Authorization', `Bearer ${signJwtToken(users[2]._id)}`)
-        .send({ rating: 2 });
+        .send({ rating: 2 })
+        .expect(200);
 
       expect(response.body).toHaveProperty('success', true);
       expect(response.body.product.ratings.length).toBe(2);
@@ -376,6 +378,21 @@ describe('Product routes', () => {
       expect(response.body).toHaveProperty(
         'error',
         '"rating" must be a number'
+      );
+    });
+
+    test('should return error if the rating is not an integer', async () => {
+      const response = await request(app)
+        .put(`/v1/products/${products[6]._id}/rate`)
+        .set('Authorization', `Bearer ${signJwtToken(users[2]._id)}`)
+        .send({ rating: 1.5 })
+        .expect('Content-Type', /application\/json/)
+        .expect(400);
+
+      expect(response.body).toHaveProperty('success', false);
+      expect(response.body).toHaveProperty(
+        'error',
+        '"rating" must be an integer'
       );
     });
   });

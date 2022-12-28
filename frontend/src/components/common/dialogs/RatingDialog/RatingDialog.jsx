@@ -25,7 +25,7 @@ const RatingDialog = ({
           onChange={(event, newValue) => {
             setRating(newValue);
           }}
-          precision={0.5}
+          precision={1}
           size='large'
           max={MAX_RATING_VALUE}
         />

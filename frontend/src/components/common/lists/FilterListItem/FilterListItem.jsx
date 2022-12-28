@@ -12,7 +12,7 @@ const FilterListItem = ({ title, children }) => {
   const [open, setOpen] = useState(true);
 
   return (
-    <Box sx={{ width: '100%' }}>
+    <Box sx={{ width: '100%', marginTop: '5px' }}>
       <ListItemButton onClick={() => setOpen((prevValue) => !prevValue)}>
         <ListItemIcon sx={{ minWidth: 0 }}>
           <AttachMoney fontSize='small' />

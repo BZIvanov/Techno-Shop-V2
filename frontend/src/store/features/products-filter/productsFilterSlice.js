@@ -4,6 +4,7 @@ const initialState = {
   text: '',
   price: [0, 4999],
   categories: [],
+  rating: null,
 };
 
 const productsFilterSlice = createSlice({

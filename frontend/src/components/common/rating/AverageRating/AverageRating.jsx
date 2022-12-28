@@ -22,7 +22,7 @@ const AverageRating = ({ ratings = [], size = 'large' }) => {
         <>
           <Rating
             value={averageRating}
-            precision={0.5}
+            precision={1}
             size={size}
             max={MAX_RATING_VALUE}
             disabled={true}

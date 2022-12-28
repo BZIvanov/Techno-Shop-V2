@@ -120,9 +120,9 @@ export const updateProductAction = createAsyncThunk(
           };
         })
         .concat(values.existingImages);
-      const { existingImages, ...rest } = values;
+      const { productId, existingImages, ...rest } = values;
 
-      const { data } = await updateProductCall(rest, user.token);
+      const { data } = await updateProductCall(productId, rest, user.token);
 
       dispatch(apiCallSuccessAction(`Product '${data.product.title}' updated`));
 
