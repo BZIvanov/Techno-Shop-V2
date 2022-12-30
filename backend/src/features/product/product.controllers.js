@@ -26,7 +26,15 @@ const handleRating = (rating) =>
   ]);
 
 const handleQueryParams = async (params) => {
-  const { text, price, categories, rating, category, subcategory } = params;
+  const {
+    text,
+    price,
+    categories,
+    subcategories,
+    rating,
+    category,
+    subcategory,
+  } = params;
 
   const aggregates = rating && (await handleRating(rating));
 
@@ -39,6 +47,7 @@ const handleQueryParams = async (params) => {
       },
     }),
     ...(categories && { category: categories.split(',') }),
+    ...(subcategories && { subcategories: { $in: subcategories.split(',') } }),
     ...(rating && { _id: aggregates }),
     ...(category && { category }), // category from params will override categories from query
     ...(subcategory && { subcategories: subcategory }),

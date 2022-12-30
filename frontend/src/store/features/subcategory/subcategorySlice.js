@@ -13,12 +13,6 @@ import {
   apiCallFailAction,
 } from '../api-call/apiCallSlice';
 
-const initialState = {
-  subcategories: [],
-  selectedSubcategory: null,
-  selectedSubcategoryProducts: { products: [], totalCount: 0 },
-};
-
 export const getSubcategoriesAction = createAsyncThunk(
   'subcategory/getSubcategoriesAction',
   async (_, { dispatch, rejectWithValue }) => {
@@ -140,6 +134,12 @@ export const getSubcategoryProductsAction = createAsyncThunk(
     }
   }
 );
+
+const initialState = {
+  subcategories: [],
+  selectedSubcategory: null,
+  selectedSubcategoryProducts: { products: [], totalCount: 0 },
+};
 
 const subcategorySlice = createSlice({
   name: 'subcategory',

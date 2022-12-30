@@ -304,18 +304,18 @@ describe('ProductsCardsList component', () => {
       render(<ProductsCardsList />);
 
       // wait for the initial products to be loaded
-      await screen.findByText(products[0].title, {}, { timeout: 2000 });
+      await screen.findByText(products[0].title, {}, { timeout: 1000 });
 
       const page2Button = screen.getByRole('button', { name: /page 2/i });
       await userEvent.click(page2Button);
 
       // wait for the next page products to be loaded
-      await screen.findByText(products[12].title, {}, { timeout: 2000 });
+      await screen.findByText(products[12].title, {}, { timeout: 1000 });
 
       const editButtons = await screen.findAllByText(
         /edit/i,
         {},
-        { timeout: 2000 }
+        { timeout: 1000 }
       );
 
       expect(editButtons.length).toBe(2);
