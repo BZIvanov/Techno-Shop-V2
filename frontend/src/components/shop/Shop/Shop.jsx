@@ -14,14 +14,18 @@ import { FilterListItem } from '../../common/lists/FilterListItem';
 import { getProductsAction } from '../../../store/features/product/productSlice';
 import { filterAction } from '../../../store/features/products-filter/productsFilterSlice';
 import { getAllCategoriesAction } from '../../../store/features/category/categorySlice';
+import { getSubcategoriesAction } from '../../../store/features/subcategory/subcategorySlice';
 import { PRODUCTS_LIST_TYPES, MAX_RATING_VALUE } from '../../../constants';
 
 const ShopPage = () => {
   const { products, totalCount } = useSelector((state) => state.product.all);
-  const { text, price, categories, rating } = useSelector(
+  const { text, price, categories, subcategories, rating } = useSelector(
     (state) => state.productsFilter
   );
   const allCategories = useSelector((state) => state.category.categories);
+  const allSubcategories = useSelector(
+    (state) => state.subcategory.subcategories
+  );
 
   const [page, setPage] = useState(1);
   const [localPrice, setLocalPrice] = useState(price);
@@ -30,6 +34,7 @@ const ShopPage = () => {
 
   useEffect(() => {
     dispatch(getAllCategoriesAction());
+    dispatch(getSubcategoriesAction());
   }, [dispatch]);
 
   useEffect(() => {
@@ -41,13 +46,16 @@ const ShopPage = () => {
           text,
           price: price.join(','),
           categories: categories.map((category) => category._id).join(','),
+          subcategories: subcategories
+            .map((subcategory) => subcategory._id)
+            .join(','),
           rating,
         })
       );
     }, 500);
 
     return () => clearTimeout(throttle);
-  }, [dispatch, page, text, price, categories, rating]);
+  }, [dispatch, page, text, price, categories, subcategories, rating]);
 
   return (
     <Box sx={{ display: 'flex' }}>
@@ -102,6 +110,36 @@ const ShopPage = () => {
               value={categories}
               onChange={(event, values) => {
                 dispatch(filterAction({ categories: values }));
+              }}
+            />
+          </Box>
+        </FilterListItem>
+
+        <FilterListItem title='Subcategory'>
+          <Box sx={{ padding: '0 20px' }}>
+            <Autocomplete
+              multiple={true}
+              options={allSubcategories}
+              disableCloseOnSelect={true}
+              getOptionLabel={(option) => option.name}
+              renderOption={(props, option, { selected }) => {
+                return (
+                  <li {...props}>
+                    <Checkbox checked={selected} />
+                    {option.name}
+                  </li>
+                );
+              }}
+              renderInput={(params) => {
+                return <TextField {...params} variant='standard' />;
+              }}
+              limitTags={3}
+              isOptionEqualToValue={(v, a) => {
+                return v._id === a._id;
+              }}
+              value={subcategories}
+              onChange={(event, values) => {
+                dispatch(filterAction({ subcategories: values }));
               }}
             />
           </Box>

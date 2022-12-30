@@ -100,6 +100,25 @@ describe('Product routes', () => {
       });
       expect(response.body.products.length).toBe(2);
     });
+
+    test('it should get products with rating value', async () => {
+      const INCOMING_RATING = 4;
+      const response = await request(app)
+        .get('/v1/products')
+        .query({ rating: INCOMING_RATING })
+        .expect('Content-Type', /application\/json/)
+        .expect(200);
+
+      expect(response.body).toHaveProperty('totalCount', 3);
+      expect(response.body.products.length).toBe(3);
+
+      response.body.products.forEach((product) => {
+        const productRatings = product.ratings.map((rating) => rating.stars);
+        const ratingsSum = productRatings.reduce((acc, curr) => acc + curr, 0);
+        const averagetRating = Math.ceil(ratingsSum / productRatings.length);
+        expect(averagetRating).toBe(INCOMING_RATING);
+      });
+    });
   });
 
   describe('Get product controller', () => {
