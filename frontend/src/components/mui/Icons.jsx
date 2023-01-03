@@ -18,6 +18,7 @@ import {
   Gradient as GradientIcon,
   Home as HomeIcon,
   ListAlt as ListAltIcon,
+  LocalShipping as LocalShippingIcon,
   Login as LoginIcon,
   Password as PasswordIcon,
   PersonAdd as PersonAddIcon,
@@ -51,6 +52,7 @@ export const Favorite = (props) => <FavoriteIcon {...props} />;
 export const Gradient = (props) => <GradientIcon {...props} />;
 export const Home = (props) => <HomeIcon {...props} />;
 export const ListAlt = (props) => <ListAltIcon {...props} />;
+export const LocalShipping = (props) => <LocalShippingIcon {...props} />;
 export const Login = (props) => <LoginIcon {...props} />;
 export const Password = (props) => <PasswordIcon {...props} />;
 export const PersonAdd = (props) => <PersonAddIcon {...props} />;

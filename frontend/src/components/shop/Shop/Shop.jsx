@@ -8,7 +8,17 @@ import {
   Checkbox,
   TextField,
   Rating,
+  FormControl,
+  Select,
+  MenuItem,
 } from '@mui/material';
+import {
+  AttachMoney,
+  Category,
+  AutoAwesomeMosaic,
+  Star,
+  LocalShipping,
+} from '../../mui/Icons';
 import { ProductsList } from '../../product/ProductsList';
 import { FilterListItem } from '../../common/lists/FilterListItem';
 import { getProductsAction } from '../../../store/features/product/productSlice';
@@ -19,9 +29,8 @@ import { PRODUCTS_LIST_TYPES, MAX_RATING_VALUE } from '../../../constants';
 
 const ShopPage = () => {
   const { products, totalCount } = useSelector((state) => state.product.all);
-  const { text, price, categories, subcategories, rating } = useSelector(
-    (state) => state.productsFilter
-  );
+  const { text, price, categories, subcategories, rating, shipping } =
+    useSelector((state) => state.productsFilter);
   const allCategories = useSelector((state) => state.category.categories);
   const allSubcategories = useSelector(
     (state) => state.subcategory.subcategories
@@ -50,12 +59,22 @@ const ShopPage = () => {
             .map((subcategory) => subcategory._id)
             .join(','),
           rating,
+          shipping,
         })
       );
     }, 500);
 
     return () => clearTimeout(throttle);
-  }, [dispatch, page, text, price, categories, subcategories, rating]);
+  }, [
+    dispatch,
+    page,
+    text,
+    price,
+    categories,
+    subcategories,
+    rating,
+    shipping,
+  ]);
 
   return (
     <Box sx={{ display: 'flex' }}>
@@ -63,7 +82,10 @@ const ShopPage = () => {
         dense={true}
         sx={{ minWidth: '300px', width: '300px', bgcolor: 'background.paper' }}
       >
-        <FilterListItem title={`Price (${price[0]}-${price[1]})`}>
+        <FilterListItem
+          title={`Price (${price[0]}-${price[1]})`}
+          icon={<AttachMoney fontSize='small' />}
+        >
           <Box sx={{ padding: '0 32px' }}>
             <Slider
               value={localPrice}
@@ -85,7 +107,7 @@ const ShopPage = () => {
           </Box>
         </FilterListItem>
 
-        <FilterListItem title='Category'>
+        <FilterListItem title='Category' icon={<Category fontSize='small' />}>
           <Box sx={{ padding: '0 20px' }}>
             <Autocomplete
               multiple={true}
@@ -115,7 +137,10 @@ const ShopPage = () => {
           </Box>
         </FilterListItem>
 
-        <FilterListItem title='Subcategory'>
+        <FilterListItem
+          title='Subcategory'
+          icon={<AutoAwesomeMosaic fontSize='small' />}
+        >
           <Box sx={{ padding: '0 20px' }}>
             <Autocomplete
               multiple={true}
@@ -145,7 +170,7 @@ const ShopPage = () => {
           </Box>
         </FilterListItem>
 
-        <FilterListItem title='Rating'>
+        <FilterListItem title='Rating' icon={<Star fontSize='small' />}>
           <Box sx={{ padding: '0 20px' }}>
             <Rating
               value={rating}
@@ -156,6 +181,29 @@ const ShopPage = () => {
               size='large'
               max={MAX_RATING_VALUE}
             />
+          </Box>
+        </FilterListItem>
+
+        <FilterListItem
+          title='Shipping'
+          icon={<LocalShipping fontSize='small' />}
+        >
+          <Box sx={{ padding: '0 20px' }}>
+            <FormControl sx={{ width: '100%' }}>
+              <Select
+                variant='standard'
+                value={shipping}
+                onChange={(event) => {
+                  dispatch(filterAction({ shipping: event.target.value }));
+                }}
+              >
+                <MenuItem value=''>
+                  <em>None</em>
+                </MenuItem>
+                <MenuItem value='Yes'>Yes</MenuItem>
+                <MenuItem value='No'>No</MenuItem>
+              </Select>
+            </FormControl>
           </Box>
         </FilterListItem>
       </List>

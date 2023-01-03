@@ -6,6 +6,7 @@ const initialState = {
   categories: [],
   subcategories: [],
   rating: null,
+  shipping: '',
 };
 
 const productsFilterSlice = createSlice({
