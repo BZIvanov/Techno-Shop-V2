@@ -136,6 +136,38 @@ describe('Product routes', () => {
       });
     });
 
+    test('it should get products with shipping option Yes selected', async () => {
+      const response = await request(app)
+        .get('/v1/products')
+        .query({ shipping: 'Yes' })
+        .expect('Content-Type', /application\/json/)
+        .expect(200);
+
+      expect(response.body).toHaveProperty('totalCount', 10);
+      expect(response.body.products.length).toBe(10);
+
+      const productsShippingOption = response.body.products
+        .map((product) => product.shipping)
+        .filter((shipping) => shipping !== 'Yes');
+      expect(productsShippingOption.length).toBe(0);
+    });
+
+    test('it should get products with shipping option No selected', async () => {
+      const response = await request(app)
+        .get('/v1/products')
+        .query({ shipping: 'No' })
+        .expect('Content-Type', /application\/json/)
+        .expect(200);
+
+      expect(response.body).toHaveProperty('totalCount', 4);
+      expect(response.body.products.length).toBe(4);
+
+      const productsShippingOption = response.body.products
+        .map((product) => product.shipping)
+        .filter((shipping) => shipping !== 'No');
+      expect(productsShippingOption.length).toBe(0);
+    });
+
     test('it should get products for specific category', async () => {
       const response = await request(app).get(
         `/v1/categories/${products[2].category}/products`
