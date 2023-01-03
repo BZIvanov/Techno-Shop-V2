@@ -71,6 +71,71 @@ describe('Product routes', () => {
       expect(response.body.products[0].price).toBe(18.88);
     });
 
+    test('it should get products with rating value', async () => {
+      const INCOMING_RATING = 4;
+      const response = await request(app)
+        .get('/v1/products')
+        .query({ rating: INCOMING_RATING })
+        .expect('Content-Type', /application\/json/)
+        .expect(200);
+
+      expect(response.body).toHaveProperty('totalCount', 3);
+      expect(response.body.products.length).toBe(3);
+
+      response.body.products.forEach((product) => {
+        const productRatings = product.ratings.map((rating) => rating.stars);
+        const ratingsSum = productRatings.reduce((acc, curr) => acc + curr, 0);
+        const averagetRating = Math.ceil(ratingsSum / productRatings.length);
+        expect(averagetRating).toBe(INCOMING_RATING);
+      });
+    });
+
+    test('it should get products with selected subcategory', async () => {
+      const response = await request(app)
+        .get('/v1/products')
+        .query({ subcategories: subcategories[10]._id })
+        .expect('Content-Type', /application\/json/)
+        .expect(200);
+
+      expect(response.body).toHaveProperty('totalCount', 1);
+      expect(response.body.products.length).toBe(1);
+
+      response.body.products.forEach((product) => {
+        const productSubcategoriesNames = product.subcategories.map(
+          (subcategory) => subcategory.name
+        );
+        const correctCategoryName = productSubcategoriesNames.find(
+          (subcategoryName) => subcategoryName === subcategories[10].name
+        );
+        expect(correctCategoryName).toBeDefined();
+      });
+    });
+
+    test('it should get products with multiple selected subcategories', async () => {
+      const response = await request(app)
+        .get('/v1/products')
+        .query({
+          subcategories: `${subcategories[10]._id},${subcategories[14]._id}`,
+        })
+        .expect('Content-Type', /application\/json/)
+        .expect(200);
+
+      expect(response.body).toHaveProperty('totalCount', 3);
+      expect(response.body.products.length).toBe(3);
+
+      response.body.products.forEach((product) => {
+        const productSubcategoriesNames = product.subcategories.map(
+          (subcategory) => subcategory.name
+        );
+        const correctCategoryName = productSubcategoriesNames.find(
+          (subcategoryName) =>
+            subcategoryName === subcategories[10].name ||
+            subcategoryName === subcategories[14].name
+        );
+        expect(correctCategoryName).toBeDefined();
+      });
+    });
+
     test('it should get products for specific category', async () => {
       const response = await request(app).get(
         `/v1/categories/${products[2].category}/products`
@@ -99,25 +164,6 @@ describe('Product routes', () => {
         expect(productSubcategoriesIds.includes(subcategoryId)).toBe(true);
       });
       expect(response.body.products.length).toBe(2);
-    });
-
-    test('it should get products with rating value', async () => {
-      const INCOMING_RATING = 4;
-      const response = await request(app)
-        .get('/v1/products')
-        .query({ rating: INCOMING_RATING })
-        .expect('Content-Type', /application\/json/)
-        .expect(200);
-
-      expect(response.body).toHaveProperty('totalCount', 3);
-      expect(response.body.products.length).toBe(3);
-
-      response.body.products.forEach((product) => {
-        const productRatings = product.ratings.map((rating) => rating.stars);
-        const ratingsSum = productRatings.reduce((acc, curr) => acc + curr, 0);
-        const averagetRating = Math.ceil(ratingsSum / productRatings.length);
-        expect(averagetRating).toBe(INCOMING_RATING);
-      });
     });
   });
 
