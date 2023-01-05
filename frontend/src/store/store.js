@@ -5,6 +5,7 @@ import categoryReducer from './features/category/categorySlice';
 import subcategoryReducer from './features/subcategory/subcategorySlice';
 import productReducer from './features/product/productSlice';
 import productsFilterReducer from './features/products-filter/productsFilterSlice';
+import cartReducer from './features/cart/cartSlice';
 
 const rootReducer = combineReducers({
   apiCall: apiCallReducer,
@@ -13,6 +14,7 @@ const rootReducer = combineReducers({
   subcategory: subcategoryReducer,
   product: productReducer,
   productsFilter: productsFilterReducer,
+  cart: cartReducer,
 });
 
 export const store = (preloadedState) => {
