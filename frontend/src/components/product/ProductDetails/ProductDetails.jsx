@@ -27,6 +27,7 @@ import {
   getSimilarProductsAction,
   rateProductAction,
 } from '../../../store/features/product/productSlice';
+import { addToCart } from '../../../store/features/cart/cartSlice';
 import { ApiCallAlert } from '../../common/async/ApiCallAlert';
 import { ApiCallLoader } from '../../common/async/ApiCallLoader';
 
@@ -35,6 +36,9 @@ const ProductDetails = () => {
   const { product, similarProducts } = useSelector(
     (state) => state.product.selectedProduct
   );
+  const cart = useSelector((state) => state.cart.cart);
+
+  const currentProductCart = product && cart[product._id];
 
   const [rating, setRating] = useState(0);
   const [showRatingModal, setShowRatingModal] = useState(false);
@@ -212,12 +216,19 @@ const ProductDetails = () => {
 
               <CardActions>
                 <Button
-                  onClick={() => console.log('works')}
+                  onClick={() => {
+                    if (!currentProductCart) {
+                      dispatch(addToCart({ product, count: 1 }));
+                    }
+                  }}
                   sx={{ display: 'flex', flexDirection: 'column' }}
                 >
                   <AddShoppingCart />
-                  <Typography variant='caption'>Add to cart</Typography>
+                  <Typography variant='caption'>
+                    {currentProductCart ? 'Already in the cart' : 'Add to cart'}
+                  </Typography>
                 </Button>
+
                 <Button
                   onClick={() => console.log('works')}
                   sx={{ display: 'flex', flexDirection: 'column' }}
@@ -225,6 +236,7 @@ const ProductDetails = () => {
                   <Favorite />
                   <Typography variant='caption'>Add to wishlist</Typography>
                 </Button>
+
                 <Button
                   onClick={() => {
                     if (user) {

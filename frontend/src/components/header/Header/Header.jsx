@@ -8,6 +8,7 @@ import {
   ExitToApp,
   Dashboard,
   AddBusiness,
+  AddShoppingCart,
 } from '../../mui/Icons';
 import { HeaderNavLink } from '../HeaderNavLink';
 import { HeaderSearch } from '../HeaderSearch';
@@ -60,8 +61,14 @@ const Header = () => {
                   linkText='Shop'
                   Icon={AddBusiness}
                 />
+                <HeaderNavLink
+                  toLink='/cart'
+                  linkText='Cart'
+                  Icon={AddShoppingCart}
+                />
               </Box>
             </Grid>
+
             <Grid item={true}>
               <Box sx={{ display: 'flex', alignItems: 'center' }}>
                 <HeaderSearch />

@@ -15,6 +15,7 @@ import ManageProduct from '../../components/product/ManageProduct/ManageProduct'
 import ProductDetails from '../../components/product/ProductDetails/ProductDetails';
 import { ProtectedRoute } from '../../components/user/routes/ProtectedRoute';
 import { NonUserRoute } from '../../components/user/routes/NonUserRoute';
+import CartProducts from '../../components/cart/CartProducts/CartProducts';
 
 const AppRoutes = () => {
   return (
@@ -45,7 +46,7 @@ const AppRoutes = () => {
         }
       />
       <Route
-        path='user'
+        path='/user'
         element={
           <ProtectedRoute authRedirectTo='/login'>
             <NavigationLayout />
@@ -57,7 +58,7 @@ const AppRoutes = () => {
         <Route path='password' element={<PasswordUpdateForm />} />
       </Route>
       <Route
-        path='admin'
+        path='/admin'
         element={
           <ProtectedRoute
             authRedirectTo='/login'
@@ -83,6 +84,7 @@ const AppRoutes = () => {
         path='/subcategory/:subcategoryId'
         element={<SubcategoryProducts />}
       />
+      <Route path='/cart' element={<CartProducts />} />
     </Routes>
   );
 };
