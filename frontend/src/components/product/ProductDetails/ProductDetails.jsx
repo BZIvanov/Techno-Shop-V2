@@ -21,7 +21,7 @@ import { ImagesCarousel } from '../../common/images/ImagesCarousel';
 import RatingDialog from '../../common/dialogs/RatingDialog/RatingDialog';
 import AverageRating from '../../common/rating/AverageRating/AverageRating';
 import { ProductInfoTabs } from '../ProductInfoTabs';
-import { ProductsList } from '../ProductsList';
+import ProductsList from '../ProductsList/ProductsList';
 import {
   getProductAction,
   getSimilarProductsAction,

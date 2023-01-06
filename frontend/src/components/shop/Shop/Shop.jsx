@@ -19,7 +19,7 @@ import {
   Star,
   LocalShipping,
 } from '../../mui/Icons';
-import { ProductsList } from '../../product/ProductsList';
+import ProductsList from '../../product/ProductsList/ProductsList';
 import { FilterListItem } from '../../common/lists/FilterListItem';
 import { getProductsAction } from '../../../store/features/product/productSlice';
 import { filterAction } from '../../../store/features/products-filter/productsFilterSlice';
