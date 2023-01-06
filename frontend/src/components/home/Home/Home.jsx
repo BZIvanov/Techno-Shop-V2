@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from '../../../store/hooks';
 import { Box } from '@mui/material';
 import { TypeWriterText } from '../../common/texts/TypeWriter';
-import { ProductsList } from '../../product/ProductsList';
+import ProductsList from '../../product/ProductsList/ProductsList';
 import ChipsList from '../../common/lists/ChipsList/ChipsList';
 import { ApiCallAlert } from '../../common/async/ApiCallAlert';
 import { ApiCallLoader } from '../../common/async/ApiCallLoader';
@@ -67,48 +67,38 @@ const HomePage = () => {
     <>
       <TypeWriterText texts={TYPEWRITER_TEXTS} />
 
-      <Box
-        sx={{
-          display: 'flex',
-          flexDirection: 'column',
-          justifyContent: 'center',
-          alignItems: 'center',
-          marginTop: { xs: '10px', sm: '20px', md: '40px' },
-        }}
-      >
-        <ProductsList
-          header={TYPEWRITER_TEXTS[0]}
-          products={newestProducts}
-          page={latestProductsPage}
-          handlePageChange={handleLatestPageChange}
-          totalCount={newestProductsTotalCount}
-          productsPerPage={PRODUCTS_PER_PAGE}
+      <ProductsList
+        header={TYPEWRITER_TEXTS[0]}
+        products={newestProducts}
+        page={latestProductsPage}
+        handlePageChange={handleLatestPageChange}
+        totalCount={newestProductsTotalCount}
+        productsPerPage={PRODUCTS_PER_PAGE}
+      />
+
+      <ProductsList
+        header={TYPEWRITER_TEXTS[1]}
+        products={bestsellingProducts}
+        page={bestsellingProductsPage}
+        handlePageChange={handleBestsellingPageChange}
+        totalCount={bestsellingProductsTotalCount}
+        productsPerPage={PRODUCTS_PER_PAGE}
+      />
+
+      <Box sx={{ padding: 2 }}>
+        <ChipsList
+          title='Categories'
+          parameter='category'
+          chipsList={categories}
         />
+      </Box>
 
-        <ProductsList
-          header={TYPEWRITER_TEXTS[1]}
-          products={bestsellingProducts}
-          page={bestsellingProductsPage}
-          handlePageChange={handleBestsellingPageChange}
-          totalCount={bestsellingProductsTotalCount}
-          productsPerPage={PRODUCTS_PER_PAGE}
+      <Box sx={{ padding: 2 }}>
+        <ChipsList
+          title='Subcategories'
+          parameter='subcategory'
+          chipsList={subcategories}
         />
-
-        <Box sx={{ padding: 2 }}>
-          <ChipsList
-            title='Categories'
-            parameter='category'
-            chipsList={categories}
-          />
-        </Box>
-
-        <Box sx={{ padding: 2 }}>
-          <ChipsList
-            title='Subcategories'
-            parameter='subcategory'
-            chipsList={subcategories}
-          />
-        </Box>
       </Box>
 
       <ApiCallLoader />

@@ -54,14 +54,15 @@ describe('ProductCard component', () => {
   });
 
   describe('Children elements', () => {
-    test('renders the children elements', () => {
-      render(
-        <ProductCard product={commonProduct}>
-          <button type='button'>Edit</button>
-        </ProductCard>
-      );
+    test('renders edit and delete buttons for admin user', () => {
+      const preloadedState = {
+        user: { token: '123', user: { name: 'Iva', role: 'admin' } },
+      };
 
-      screen.getByRole('button', { name: /edit/i });
+      render(<ProductCard product={commonProduct} />, { preloadedState });
+
+      screen.getByText('Edit');
+      screen.getByText('Delete');
     });
   });
 });

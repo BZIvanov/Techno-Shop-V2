@@ -2,7 +2,7 @@ import userEvent from '@testing-library/user-event';
 import { rest } from 'msw';
 import { setupServer } from 'msw/node';
 import { render, screen } from '../../../test-utils/test-utils';
-import ProductsCardsList from './ProductsCardsList';
+import Products from './Products';
 
 const products = [
   {
@@ -130,7 +130,7 @@ const handlers = [
 
 const server = setupServer(...handlers);
 
-describe('ProductsCardsList component', () => {
+describe('AdminProducts component', () => {
   beforeAll(() => server.listen());
 
   afterEach(() => server.resetHandlers());
@@ -139,7 +139,7 @@ describe('ProductsCardsList component', () => {
 
   describe('Products list title', () => {
     test('renders the title', () => {
-      render(<ProductsCardsList />);
+      render(<Products />);
 
       const listTitle = screen.getByRole('heading', {
         name: /products list/i,
@@ -151,9 +151,9 @@ describe('ProductsCardsList component', () => {
 
   describe('Products list', () => {
     test('renders no products text if the products list is empty', () => {
-      render(<ProductsCardsList />);
+      render(<Products />);
 
-      screen.getByText('No products found');
+      screen.getByText('No products found.');
     });
 
     test('renders product title and description', async () => {
@@ -170,7 +170,7 @@ describe('ProductsCardsList component', () => {
         })
       );
 
-      render(<ProductsCardsList />);
+      render(<Products />);
 
       // use findByText to give enough time to load the products data and also for the Transition effects to avoid act rtl warnings
       await screen.findByText(products[0].title, {}, { timeout: 2000 });
@@ -193,7 +193,11 @@ describe('ProductsCardsList component', () => {
         })
       );
 
-      render(<ProductsCardsList />);
+      const preloadedState = {
+        user: { token: '123', user: { name: 'Iva', role: 'admin' } },
+      };
+
+      render(<Products />, { preloadedState });
 
       const editButtons = await screen.findAllByText(
         /edit/i,
@@ -222,7 +226,7 @@ describe('ProductsCardsList component', () => {
         })
       );
 
-      render(<ProductsCardsList />);
+      render(<Products />);
 
       const notRatedProducts = await screen.findAllByText(
         'Not rated yet',
@@ -251,7 +255,7 @@ describe('ProductsCardsList component', () => {
         })
       );
 
-      render(<ProductsCardsList />);
+      render(<Products />);
 
       // make sure we wait enough to load the products
       await screen.findByText(products[0].title, {}, { timeout: 2000 });
@@ -274,7 +278,7 @@ describe('ProductsCardsList component', () => {
         })
       );
 
-      render(<ProductsCardsList />);
+      render(<Products />);
 
       await screen.findByText(products[0].title, {}, { timeout: 2000 });
 
@@ -301,7 +305,7 @@ describe('ProductsCardsList component', () => {
         })
       );
 
-      render(<ProductsCardsList />);
+      render(<Products />);
 
       // wait for the initial products to be loaded
       await screen.findByText(products[0].title, {}, { timeout: 1000 });
@@ -312,13 +316,13 @@ describe('ProductsCardsList component', () => {
       // wait for the next page products to be loaded
       await screen.findByText(products[12].title, {}, { timeout: 1000 });
 
-      const editButtons = await screen.findAllByText(
-        /edit/i,
+      const detailsButtons = await screen.findAllByText(
+        /details/i,
         {},
         { timeout: 1000 }
       );
 
-      expect(editButtons.length).toBe(2);
+      expect(detailsButtons.length).toBe(2);
     });
   });
 });

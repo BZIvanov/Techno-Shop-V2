@@ -8,7 +8,7 @@ import { Shop } from '../../components/shop/Shop';
 import { NavigationLayout } from '../../components/user/layouts/NavigationLayout';
 import { CategoryProducts } from '../../components/category/CategoryProducts';
 import { SubcategoryProducts } from '../../components/subcategory/SubcategoryProducts';
-import ProductsCardsList from '../../components/product/ProductsCardsList/ProductsCardsList';
+import Products from '../../components/product/Products/Products';
 import { ManageCategory } from '../../components/category/ManageCategory';
 import { ManageSubcategory } from '../../components/subcategory/ManageSubcategory';
 import ManageProduct from '../../components/product/ManageProduct/ManageProduct';
@@ -69,12 +69,12 @@ const AppRoutes = () => {
           </ProtectedRoute>
         }
       >
-        <Route path='dashboard' element={<ProductsCardsList />} />
+        <Route path='dashboard' element={<Products />} />
         <Route path='category' element={<ManageCategory />} />
         <Route path='subcategory' element={<ManageSubcategory />} />
         <Route path='product' element={<ManageProduct />} />
         <Route path='product/:productId' element={<ManageProduct />} />
-        <Route path='products-list' element={<ProductsCardsList />} />
+        <Route path='products-list' element={<Products />} />
         <Route path='password' element={<PasswordUpdateForm />} />
       </Route>
       <Route path='/shop' element={<Shop />} />

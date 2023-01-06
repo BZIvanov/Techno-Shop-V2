@@ -1,16 +1,5 @@
-import { Link } from 'react-router-dom';
-import {
-  Box,
-  Typography,
-  Button,
-  Grid,
-  Paper,
-  Stack,
-  Pagination,
-} from '@mui/material';
-import { AddShoppingCart, Preview } from '../../mui/Icons';
+import { Box, Typography, Grid, Paper, Stack, Pagination } from '@mui/material';
 import ProductCard from '../ProductCard/ProductCard';
-import AverageRating from '../../common/rating/AverageRating/AverageRating';
 
 const ProductsList = ({
   header,
@@ -22,10 +11,19 @@ const ProductsList = ({
   showPagination = true,
 }) => {
   return (
-    <Box sx={{ width: '100%' }}>
+    <Box
+      sx={{
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginTop: { xs: '10px', sm: '20px' },
+      }}
+    >
       <Typography
         variant='h5'
         sx={{
+          width: '100%',
           textAlign: 'center',
           backgroundColor: (theme) => theme.palette.grey[300],
         }}
@@ -33,7 +31,7 @@ const ProductsList = ({
         {header}
       </Typography>
 
-      <Paper sx={{ padding: 2 }}>
+      <Paper sx={{ width: '100%', padding: 2 }}>
         {products.length > 0 ? (
           <Grid container={true} spacing={3}>
             {products.map((product) => (
@@ -46,35 +44,17 @@ const ProductsList = ({
                 lg={3}
                 xl={2}
               >
-                <AverageRating ratings={product.ratings} size='small' />
-
-                <ProductCard product={product}>
-                  <Button
-                    component={Link}
-                    to={`/product/${product._id}`}
-                    sx={{ display: 'flex', flexDirection: 'column' }}
-                  >
-                    <Preview />
-                    <Typography variant='caption'>Details</Typography>
-                  </Button>
-                  <Button
-                    onClick={() => console.log('works')}
-                    sx={{ display: 'flex', flexDirection: 'column' }}
-                  >
-                    <AddShoppingCart />
-                    <Typography variant='caption'>Add to cart</Typography>
-                  </Button>
-                </ProductCard>
+                <ProductCard product={product} />
               </Grid>
             ))}
           </Grid>
         ) : (
           <Typography sx={{ textAlign: 'center' }} variant='subtitle2'>
-            No Products found.
+            No products found.
           </Typography>
         )}
 
-        {showPagination && products.length > 0 && (
+        {showPagination && totalCount > productsPerPage && (
           <Stack sx={{ margin: 2, display: 'flex', alignItems: 'center' }}>
             <Pagination
               page={page}

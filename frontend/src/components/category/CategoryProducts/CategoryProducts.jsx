@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from '../../../store/hooks';
 import { useParams } from 'react-router-dom';
 import { Box } from '@mui/material';
-import { ProductsList } from '../../product/ProductsList';
+import ProductsList from '../../product/ProductsList/ProductsList';
 import {
   getCategoryAction,
   getCategoryProductsAction,
