@@ -34,6 +34,7 @@ describe('Header component', () => {
 
       const homeLinkElement = screen.getByRole('link', { name: /home/i });
       const shopLinkElement = screen.getByRole('link', { name: /shop/i });
+      const cartLinkElement = screen.getByRole('link', { name: /cart/i });
       const loginLinkElement = screen.getByRole('link', { name: /login/i });
       const registerLinkElement = screen.getByRole('link', {
         name: /register/i,
@@ -41,6 +42,7 @@ describe('Header component', () => {
 
       expect(homeLinkElement).toHaveStyle({ color: 'rgb(255, 255, 255)' });
       expect(shopLinkElement).toHaveStyle({ color: 'rgb(0, 0, 0)' });
+      expect(cartLinkElement).toHaveStyle({ color: 'rgb(0, 0, 0)' });
       expect(loginLinkElement).toHaveStyle({ color: 'rgb(0, 0, 0)' });
       expect(registerLinkElement).toHaveStyle({ color: 'rgb(0, 0, 0)' });
     });
@@ -61,11 +63,13 @@ describe('Header component', () => {
 
       const homeLinkElement = screen.getByRole('link', { name: /home/i });
       const shopLinkElement = screen.getByRole('link', { name: /shop/i });
+      const cartLinkElement = screen.getByRole('link', { name: /cart/i });
 
       await userEvent.click(shopLinkElement);
 
       expect(homeLinkElement).toHaveStyle({ color: 'rgb(0, 0, 0)' });
       expect(shopLinkElement).toHaveStyle({ color: 'rgb(255, 255, 255)' });
+      expect(cartLinkElement).toHaveStyle({ color: 'rgb(0, 0, 0)' });
     });
   });
 

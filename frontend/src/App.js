@@ -1,6 +1,6 @@
-import { useEffect } from 'react';
+import { Fragment, useEffect } from 'react';
 import { useDispatch } from './store/hooks';
-import { Header } from './components/header/Header';
+import Header from './components/header/Header/Header';
 import AppRoutes from './providers/router/AppRoutes';
 import { getCurrentUserAction } from './store/features/user/userSlice';
 
@@ -15,11 +15,11 @@ const App = () => {
   }, [dispatch]);
 
   return (
-    <>
+    <Fragment>
       <Header />
 
       <AppRoutes />
-    </>
+    </Fragment>
   );
 };
 

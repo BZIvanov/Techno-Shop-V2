@@ -1,7 +1,7 @@
 import { NavLink } from 'react-router-dom';
 import { Box, Typography, useTheme } from '@mui/material';
 
-const HeaderNavLink = ({ toLink, Icon, linkText }) => {
+const HeaderNavLink = ({ toLink, icon, linkText }) => {
   const theme = useTheme();
 
   return (
@@ -25,7 +25,7 @@ const HeaderNavLink = ({ toLink, Icon, linkText }) => {
           cursor: 'pointer',
         }}
       >
-        <Icon />
+        {icon}
         <Typography variant='caption'>{linkText}</Typography>
       </Box>
     </NavLink>
