@@ -5,7 +5,7 @@ import { Home } from '../../mui/Icons';
 describe('HeaderNavLink component', () => {
   describe('Renders link element successfully', () => {
     test('renders the link with correct text and icon', () => {
-      render(<HeaderNavLink toLink='/' linkText='Home' Icon={Home} />);
+      render(<HeaderNavLink toLink='/' linkText='Home' icon={<Home />} />);
 
       screen.getByRole('link', { name: /home/i });
       screen.getByTestId('HomeIcon');
@@ -14,7 +14,7 @@ describe('HeaderNavLink component', () => {
 
   describe('Link route', () => {
     test('renders white text color link if matches the route', () => {
-      render(<HeaderNavLink toLink='/' linkText='Home' Icon={Home} />);
+      render(<HeaderNavLink toLink='/' linkText='Home' icon={<Home />} />);
 
       const homeLinkElement = screen.getByRole('link', { name: /home/i });
 
@@ -22,7 +22,9 @@ describe('HeaderNavLink component', () => {
     });
 
     test('renders black text color link if does not match the route', () => {
-      render(<HeaderNavLink toLink='/products' linkText='Home' Icon={Home} />);
+      render(
+        <HeaderNavLink toLink='/products' linkText='Home' icon={<Home />} />
+      );
 
       const homeLinkElement = screen.getByRole('link', { name: /home/i });
 

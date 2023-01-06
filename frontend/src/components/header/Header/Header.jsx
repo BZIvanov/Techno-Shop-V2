@@ -1,6 +1,6 @@
 import { Fragment } from 'react';
 import { useSelector, useDispatch } from '../../../store/hooks';
-import { AppBar, Box, Toolbar, Grid, Typography } from '@mui/material';
+import { AppBar, Box, Toolbar, Grid, Typography, Badge } from '@mui/material';
 import {
   Home,
   PersonAdd,
@@ -10,19 +10,19 @@ import {
   AddBusiness,
   AddShoppingCart,
 } from '../../mui/Icons';
-import { HeaderNavLink } from '../HeaderNavLink';
+import HeaderNavLink from '../HeaderNavLink/HeaderNavLink';
 import { HeaderSearch } from '../HeaderSearch';
 import { logoutUserAction } from '../../../store/features/user/userSlice';
 
 const noUserLinks = [
   {
     toLink: '/login',
-    Icon: Login,
+    icon: <Login />,
     linkText: 'Login',
   },
   {
     toLink: '/register',
-    Icon: PersonAdd,
+    icon: <PersonAdd />,
     linkText: 'Register',
   },
 ];
@@ -30,13 +30,14 @@ const noUserLinks = [
 const userLinks = [
   {
     toLink: '/user/dashboard',
-    Icon: Dashboard,
+    icon: <Dashboard />,
     linkText: 'Dashboard',
   },
 ];
 
 const Header = () => {
-  const { user } = useSelector((state) => state.user);
+  const user = useSelector((state) => state.user.user);
+  const cart = useSelector((state) => state.cart.cart);
 
   const dispatch = useDispatch();
 
@@ -55,16 +56,23 @@ const Header = () => {
           >
             <Grid item={true}>
               <Box sx={{ display: 'flex' }}>
-                <HeaderNavLink toLink='/' linkText='Home' Icon={Home} />
+                <HeaderNavLink toLink='/' linkText='Home' icon={<Home />} />
                 <HeaderNavLink
                   toLink='/shop'
                   linkText='Shop'
-                  Icon={AddBusiness}
+                  icon={<AddBusiness />}
                 />
                 <HeaderNavLink
                   toLink='/cart'
                   linkText='Cart'
-                  Icon={AddShoppingCart}
+                  icon={
+                    <Badge
+                      badgeContent={Object.keys(cart).length}
+                      color='secondary'
+                    >
+                      <AddShoppingCart />
+                    </Badge>
+                  }
                 />
               </Box>
             </Grid>
