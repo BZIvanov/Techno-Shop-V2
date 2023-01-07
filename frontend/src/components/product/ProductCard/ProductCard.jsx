@@ -16,7 +16,10 @@ import { ConfirmDialog } from '../../common/dialogs/ConfirmDialog';
 import AverageRating from '../../common/rating/AverageRating/AverageRating';
 import { useSelector, useDispatch } from '../../../store/hooks';
 import { deleteProductAction } from '../../../store/features/product/productSlice';
-import { addToCart } from '../../../store/features/cart/cartSlice';
+import {
+  addToCart,
+  setDrawerOpen,
+} from '../../../store/features/cart/cartSlice';
 import productImage from '../../../assets/images/product.png';
 
 const ProductCard = ({ product }) => {
@@ -160,6 +163,7 @@ const ProductCard = ({ product }) => {
                     onClick={() => {
                       if (!currentProductCart) {
                         dispatch(addToCart({ product, count: 1 }));
+                        dispatch(setDrawerOpen(true));
                       }
                     }}
                     sx={{ display: 'flex', flexDirection: 'column' }}

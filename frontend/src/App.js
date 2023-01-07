@@ -1,6 +1,7 @@
 import { Fragment, useEffect } from 'react';
 import { useDispatch } from './store/hooks';
 import Header from './components/header/Header/Header';
+import CartDrawer from './components/cart/CartDrawer/CartDrawer';
 import AppRoutes from './providers/router/AppRoutes';
 import { getCurrentUserAction } from './store/features/user/userSlice';
 
@@ -19,6 +20,8 @@ const App = () => {
       <Header />
 
       <AppRoutes />
+
+      <CartDrawer />
     </Fragment>
   );
 };

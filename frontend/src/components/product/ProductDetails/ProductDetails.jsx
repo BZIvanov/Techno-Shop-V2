@@ -27,7 +27,10 @@ import {
   getSimilarProductsAction,
   rateProductAction,
 } from '../../../store/features/product/productSlice';
-import { addToCart } from '../../../store/features/cart/cartSlice';
+import {
+  addToCart,
+  setDrawerOpen,
+} from '../../../store/features/cart/cartSlice';
 import { ApiCallAlert } from '../../common/async/ApiCallAlert';
 import { ApiCallLoader } from '../../common/async/ApiCallLoader';
 
@@ -219,6 +222,7 @@ const ProductDetails = () => {
                   onClick={() => {
                     if (!currentProductCart) {
                       dispatch(addToCart({ product, count: 1 }));
+                      dispatch(setDrawerOpen(true));
                     }
                   }}
                   sx={{ display: 'flex', flexDirection: 'column' }}
