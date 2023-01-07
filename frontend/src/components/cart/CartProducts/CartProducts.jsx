@@ -73,8 +73,16 @@ const CartProducts = () => {
             <TableBody>
               {cartProductsKeys.map((cartProductKey) => {
                 const { product, count } = cart[cartProductKey];
-                const { _id, title, images, price, brand, color, shipping } =
-                  product;
+                const {
+                  _id,
+                  title,
+                  images,
+                  price,
+                  quantity,
+                  brand,
+                  color,
+                  shipping,
+                } = product;
 
                 return (
                   <TableRow key={cartProductKey}>
@@ -109,7 +117,7 @@ const CartProducts = () => {
                         value={count}
                         onChange={(e) => {
                           const value = +e.target.value;
-                          if (value > 0 && value <= 999) {
+                          if (value > 0 && value <= quantity) {
                             dispatch(
                               addToCart({ product, count: +e.target.value })
                             );
