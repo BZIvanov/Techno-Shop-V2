@@ -14,7 +14,7 @@ const cartSlice = createSlice({
     },
     removeFromCart: (state, action) => {
       const cartProducts = Object.assign(state.cart, {});
-      delete cartProducts[action.payload._id];
+      delete cartProducts[action.payload];
       state.cart = cartProducts;
     },
   },

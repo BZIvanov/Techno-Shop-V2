@@ -5,7 +5,7 @@ import { useSelector } from '../../../../store/hooks';
 const NonUserRoute = ({ children }) => {
   const location = useLocation();
   const navigate = useNavigate();
-  const { user } = useSelector((state) => state.user);
+  const user = useSelector((state) => state.user.user);
 
   useEffect(() => {
     if (user) {

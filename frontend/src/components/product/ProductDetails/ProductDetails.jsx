@@ -32,7 +32,7 @@ import { ApiCallAlert } from '../../common/async/ApiCallAlert';
 import { ApiCallLoader } from '../../common/async/ApiCallLoader';
 
 const ProductDetails = () => {
-  const { user } = useSelector((state) => state.user);
+  const user = useSelector((state) => state.user.user);
   const { product, similarProducts } = useSelector(
     (state) => state.product.selectedProduct
   );

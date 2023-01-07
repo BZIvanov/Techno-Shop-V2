@@ -12,7 +12,7 @@ import { useFormContext } from '../../../../providers/form/hooks';
 const SelectDropdownAdapter = ({ name, label, options, extendedOnChange }) => {
   const { control } = useFormContext();
 
-  const { loading } = useSelector((state) => state.apiCall);
+  const loading = useSelector((state) => state.apiCall.loading);
 
   return (
     <Controller

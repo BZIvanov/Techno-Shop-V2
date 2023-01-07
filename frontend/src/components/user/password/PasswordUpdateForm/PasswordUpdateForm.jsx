@@ -9,7 +9,7 @@ import { useForm } from '../../../../providers/form/hooks';
 import FormProvider from '../../../../providers/form/FormProvider';
 
 const PasswordUpdateForm = () => {
-  const { loading } = useSelector((state) => state.apiCall);
+  const loading = useSelector((state) => state.apiCall.loading);
 
   const dispatch = useDispatch();
 

@@ -30,7 +30,7 @@ const ManageProduct = () => {
 
   const { productId } = useParams();
 
-  const { loading } = useSelector((state) => state.apiCall);
+  const loading = useSelector((state) => state.apiCall.loading);
   const { categories, selectedCategorySubcategories } = useSelector(
     (state) => state.category
   );

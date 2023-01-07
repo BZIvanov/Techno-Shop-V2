@@ -63,7 +63,7 @@ const adminLinks = [
 ];
 
 const NavMenu = () => {
-  const { user } = useSelector((state) => state.user);
+  const user = useSelector((state) => state.user.user);
 
   const links = user.role === 'admin' ? adminLinks : userLinks;
 

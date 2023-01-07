@@ -4,6 +4,8 @@ import {
   AttachMoney as AttachMoneyIcon,
   AutoAwesomeMosaic as AutoAwesomeMosaicIcon,
   Category as CategoryIcon,
+  Check as CheckIcon,
+  Clear as ClearIcon,
   CloseOutlined as CloseOutlinedIcon,
   CloudUpload as CloudUploadIcon,
   Dashboard as DashboardIcon,
@@ -38,6 +40,8 @@ export const AutoAwesomeMosaic = (props) => (
   <AutoAwesomeMosaicIcon {...props} />
 );
 export const Category = (props) => <CategoryIcon {...props} />;
+export const Check = (props) => <CheckIcon {...props} />;
+export const Clear = (props) => <ClearIcon {...props} />;
 export const CloseOutlined = (props) => <CloseOutlinedIcon {...props} />;
 export const CloudUpload = (props) => <CloudUploadIcon {...props} />;
 export const Dashboard = (props) => <DashboardIcon {...props} />;
