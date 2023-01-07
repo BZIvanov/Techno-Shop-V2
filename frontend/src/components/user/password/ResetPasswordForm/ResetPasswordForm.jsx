@@ -12,7 +12,7 @@ import FormProvider from '../../../../providers/form/FormProvider';
 const ResetPasswordForm = () => {
   const navigate = useNavigate();
 
-  const { loading } = useSelector((state) => state.apiCall);
+  const loading = useSelector((state) => state.apiCall.loading);
 
   const dispatch = useDispatch();
 

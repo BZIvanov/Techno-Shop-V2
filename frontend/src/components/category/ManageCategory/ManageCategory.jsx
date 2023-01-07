@@ -26,7 +26,7 @@ import { useForm } from '../../../providers/form/hooks';
 import FormProvider from '../../../providers/form/FormProvider';
 
 const ManageCategory = () => {
-  const { loading } = useSelector((state) => state.apiCall);
+  const loading = useSelector((state) => state.apiCall.loading);
   const { categories } = useSelector((state) => state.category);
 
   const [selectedCategory, setSelectedCategory] = useState(null);

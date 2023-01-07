@@ -28,7 +28,7 @@ import { useForm } from '../../../providers/form/hooks';
 import FormProvider from '../../../providers/form/FormProvider';
 
 const ManageSubcategory = () => {
-  const { loading } = useSelector((state) => state.apiCall);
+  const loading = useSelector((state) => state.apiCall.loading);
   const { categories } = useSelector((state) => state.category);
   const { subcategories } = useSelector((state) => state.subcategory);
 

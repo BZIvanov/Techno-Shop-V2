@@ -62,5 +62,6 @@
 ### Other
 
 - `react-responsive-carousel` - carousel for displaying images in a slider
+- `react-modal-image` - full screen preview for images
 - `react-image-file-resizer` - for manipulating image files
 - `typewriter-effect` - for displaying animated texts

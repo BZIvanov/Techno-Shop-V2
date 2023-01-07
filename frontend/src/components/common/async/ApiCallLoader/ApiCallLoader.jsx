@@ -2,7 +2,7 @@ import { useSelector } from '../../../../store/hooks';
 import { Backdrop, CircularProgress } from '@mui/material';
 
 const ApiCallLoader = () => {
-  const { loading } = useSelector((state) => state.apiCall);
+  const loading = useSelector((state) => state.apiCall.loading);
 
   return (
     <Backdrop

@@ -15,7 +15,7 @@ import FormProvider from '../../../../providers/form/FormProvider';
 const LoginForm = () => {
   const [showForgotPasswordModal, setShowForgotPasswordModal] = useState(false);
 
-  const { loading } = useSelector((state) => state.apiCall);
+  const loading = useSelector((state) => state.apiCall.loading);
 
   const dispatch = useDispatch();
 

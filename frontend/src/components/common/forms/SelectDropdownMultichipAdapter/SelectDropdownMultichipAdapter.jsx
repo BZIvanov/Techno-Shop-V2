@@ -25,7 +25,7 @@ const MenuProps = {
 const SelectDropdownMultichipAdapter = ({ name, label, options }) => {
   const { control } = useFormContext();
 
-  const { loading } = useSelector((state) => state.apiCall);
+  const loading = useSelector((state) => state.apiCall.loading);
 
   return (
     <Controller
