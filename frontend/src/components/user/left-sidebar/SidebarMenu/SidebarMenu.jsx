@@ -8,6 +8,7 @@ import {
   AutoAwesomeMosaic,
   Gradient,
   PhoneAndroid,
+  Discount,
 } from '../../../mui/Icons';
 import { SidebarMenuLink } from '../SidebarMenuLink';
 
@@ -54,6 +55,11 @@ const adminLinks = [
     toLink: 'products-list',
     Icon: PhoneAndroid,
     linkText: 'Products List',
+  },
+  {
+    toLink: 'coupon',
+    Icon: Discount,
+    linkText: 'Coupon',
   },
   {
     toLink: 'password',

@@ -28,6 +28,8 @@
 - `@emotion/styled` - mui core
 - `@mui/icons-material` - icons
 - `@mui/lab` - additional experimental components
+- `@mui/x-date-pickers` - for working with datepickers
+- `@date-io/date-fns` - adapter for mui datepicker to use date-fns as dates library
 
 ### Forms
 
@@ -58,6 +60,10 @@
 ### Routing
 
 - `react-router-dom` - for url routes
+
+### Dates
+
+- `date-fns` - for working with dates. Also used by mui date picker.
 
 ### Other
 
