@@ -1,21 +1,35 @@
+import { useEffect } from 'react';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Divider from '@mui/material/Divider';
 import Button from '@mui/material/Button';
-import { useSelector } from '../../../store/hooks';
+import { useSelector, useDispatch } from '../../../store/hooks';
 import { TextFieldAdapter } from '../../common/forms/TextFieldAdapter';
 import DatePickerFieldAdapter from '../../common/forms/DatePickerFieldAdapter/DatePickerFieldAdapter';
 import { useForm } from '../../../providers/form/hooks';
 import FormProvider from '../../../providers/form/FormProvider';
+import {
+  getCouponsAction,
+  createCouponAction,
+} from '../../../store/features/coupon/couponSlice';
 import { formConfig } from './form-schema';
 
 const Coupon = () => {
+  const dispatch = useDispatch();
+
+  const coupons = useSelector((state) => state.coupon.coupons);
   const loading = useSelector((state) => state.apiCall.loading);
 
   const formMethods = useForm(formConfig);
   const { formState, reset } = formMethods;
 
-  const handleCategorySubmit = () => {
+  useEffect(() => {
+    dispatch(getCouponsAction());
+  }, [dispatch]);
+
+  const handleCategorySubmit = (values) => {
+    dispatch(createCouponAction(values));
+
     reset();
   };
 
@@ -28,7 +42,7 @@ const Coupon = () => {
       <Box>
         <FormProvider onSubmit={handleCategorySubmit} methods={formMethods}>
           <Box my={1}>
-            <TextFieldAdapter name='coupon' label='Coupon Name' />
+            <TextFieldAdapter name='name' label='Coupon Name' />
           </Box>
 
           <Box my={1}>
@@ -54,6 +68,12 @@ const Coupon = () => {
             Create
           </Button>
         </FormProvider>
+      </Box>
+
+      <Box>
+        {coupons.map((coupon) => (
+          <Typography key={coupon._id}>{coupon.name}</Typography>
+        ))}
       </Box>
     </Box>
   );

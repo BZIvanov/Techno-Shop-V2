@@ -7,6 +7,7 @@ const categoryRoutes = require('../features/category/category.routes');
 const subcategoryRoutes = require('../features/subcategory/subcategory.routes');
 const productRoutes = require('../features/product/product.routes');
 const imageRoutes = require('../features/image/image.routes');
+const couponRoutes = require('../features/coupon/coupon.routes');
 const globalError = require('../middlewares/global-error');
 
 const app = express();
@@ -20,6 +21,7 @@ app.use('/v1/categories', categoryRoutes);
 app.use('/v1/subcategories', subcategoryRoutes);
 app.use('/v1/products', productRoutes);
 app.use('/v1/images', imageRoutes);
+app.use('/v1/coupons', couponRoutes);
 // globalError has to be the last route
 app.use(globalError);
 
