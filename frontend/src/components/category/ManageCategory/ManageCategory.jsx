@@ -27,7 +27,7 @@ import FormProvider from '../../../providers/form/FormProvider';
 
 const ManageCategory = () => {
   const loading = useSelector((state) => state.apiCall.loading);
-  const { categories } = useSelector((state) => state.category);
+  const categories = useSelector((state) => state.category.categories);
 
   const [selectedCategory, setSelectedCategory] = useState(null);
   const [removeCategoryDialog, setRemoveCategoryDialog] = useState({
