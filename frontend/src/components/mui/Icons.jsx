@@ -10,6 +10,7 @@ import {
   CloudUpload as CloudUploadIcon,
   Dashboard as DashboardIcon,
   Delete as DeleteIcon,
+  Discount as DiscountIcon,
   Edit as EditIcon,
   Email as EmailIcon,
   ExitToApp as ExitToAppIcon,
@@ -46,6 +47,7 @@ export const CloseOutlined = (props) => <CloseOutlinedIcon {...props} />;
 export const CloudUpload = (props) => <CloudUploadIcon {...props} />;
 export const Dashboard = (props) => <DashboardIcon {...props} />;
 export const Delete = (props) => <DeleteIcon {...props} />;
+export const Discount = (props) => <DiscountIcon {...props} />;
 export const Edit = (props) => <EditIcon {...props} />;
 export const Email = (props) => <EmailIcon {...props} />;
 export const ExitToApp = (props) => <ExitToAppIcon {...props} />;
