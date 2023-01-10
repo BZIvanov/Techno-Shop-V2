@@ -1,5 +1,9 @@
 const express = require('express');
-const { getCoupons, createCoupon } = require('./coupon.controllers');
+const {
+  getCoupons,
+  createCoupon,
+  deleteCoupon,
+} = require('./coupon.controllers');
 const validateRequestBody = require('../../middlewares/validate-request-body');
 const authenticate = require('../../middlewares/authenticate');
 const authorize = require('../../middlewares/authorize');
@@ -19,5 +23,7 @@ router
     authorize(admin),
     createCoupon
   );
+
+router.route('/:couponId').delete(authenticate, authorize(admin), deleteCoupon);
 
 module.exports = router;
