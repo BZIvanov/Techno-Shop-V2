@@ -4,10 +4,12 @@ const User = require('../src/features/user/user.model');
 const Category = require('../src/features/category/category.model');
 const Subcategory = require('../src/features/subcategory/subcategory.model');
 const Product = require('../src/features/product/product.model');
+const Coupon = require('../src/features/coupon/coupon.model');
 const users = require('./users.json');
 const categories = require('./categories.json');
 const subcategories = require('./subcategories.json');
 const products = require('./products.json');
+const coupons = require('./coupons.json');
 
 mongoose.connect(process.env.DATABASE_URI, {});
 
@@ -17,11 +19,13 @@ const seedData = async () => {
     await Category.deleteMany();
     await Subcategory.deleteMany();
     await Product.deleteMany();
+    await Coupon.deleteMany();
 
     await User.create(users);
     await Category.create(categories);
     await Subcategory.create(subcategories);
     await Product.create(products);
+    await Coupon.create(coupons);
 
     console.log('Data seeded');
     process.exit();

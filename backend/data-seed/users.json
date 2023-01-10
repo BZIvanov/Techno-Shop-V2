@@ -41,5 +41,12 @@
     "email": "misho@mail.bg",
     "password": "12345678",
     "address": "Sofia, blvd Sofia 151"
+  },
+  {
+    "_id": "63bdc0e114e911b1a4333eb6",
+    "username": "Eva",
+    "email": "eva@mail.bg",
+    "password": "12345678",
+    "address": "Sofia, Some cool str. 23"
   }
 ]
