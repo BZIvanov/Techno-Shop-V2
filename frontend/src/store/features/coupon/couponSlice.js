@@ -1,5 +1,9 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import { getCouponsCall, createCouponCall } from '../../../api/coupons';
+import {
+  getCouponsCall,
+  createCouponCall,
+  deleteCouponCall,
+} from '../../../api/coupons';
 import {
   apiCallStartAction,
   apiCallSuccessAction,
@@ -8,17 +12,19 @@ import {
 
 export const getCouponsAction = createAsyncThunk(
   'coupon/getCouponsAction',
-  async (_, { dispatch, rejectWithValue, getState }) => {
+  async (params, { dispatch, rejectWithValue, getState }) => {
     try {
       const { user } = getState();
 
       dispatch(apiCallStartAction());
 
-      const { data } = await getCouponsCall(user.token);
+      const {
+        data: { coupons, totalCount },
+      } = await getCouponsCall(params, user.token);
 
       dispatch(apiCallSuccessAction());
 
-      return data.coupons;
+      return { coupons, totalCount };
     } catch (error) {
       dispatch(apiCallFailAction(error.response.data.error));
 
@@ -48,8 +54,29 @@ export const createCouponAction = createAsyncThunk(
   }
 );
 
+export const deleteCouponAction = createAsyncThunk(
+  'coupon/deleteCouponAction',
+  async (couponId, { dispatch, rejectWithValue, getState }) => {
+    try {
+      const { user } = getState();
+      dispatch(apiCallStartAction());
+
+      await deleteCouponCall(couponId, user.token);
+
+      dispatch(apiCallSuccessAction('Coupon deleted'));
+
+      return couponId;
+    } catch (error) {
+      dispatch(apiCallFailAction(error.response.data.error));
+
+      return rejectWithValue(error.response.data.error);
+    }
+  }
+);
+
 const initialState = {
   coupons: [],
+  totalCount: 0,
 };
 
 const couponSlice = createSlice({
@@ -57,10 +84,17 @@ const couponSlice = createSlice({
   initialState,
   extraReducers: (builder) => {
     builder.addCase(getCouponsAction.fulfilled, (state, action) => {
-      state.coupons = action.payload;
+      state.coupons = action.payload.coupons;
+      state.totalCount = action.payload.totalCount;
     });
     builder.addCase(createCouponAction.fulfilled, (state, action) => {
       state.coupons = [...state.coupons, action.payload];
+    });
+    builder.addCase(deleteCouponAction.fulfilled, (state, action) => {
+      const filteredCoupons = state.coupons.filter(
+        (coupon) => coupon._id !== action.payload
+      );
+      state.coupons = filteredCoupons;
     });
   },
 });
