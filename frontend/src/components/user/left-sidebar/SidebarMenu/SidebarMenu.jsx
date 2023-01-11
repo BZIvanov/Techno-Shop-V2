@@ -15,17 +15,17 @@ import { SidebarMenuLink } from '../SidebarMenuLink';
 const userLinks = [
   {
     toLink: 'dashboard',
-    Icon: Dashboard,
+    icon: <Dashboard fontSize='small' />,
     linkText: 'Dashboard',
   },
   {
     toLink: 'wishlist',
-    Icon: ListAlt,
+    icon: <ListAlt fontSize='small' />,
     linkText: 'Wishlist',
   },
   {
     toLink: 'password',
-    Icon: Password,
+    icon: <Password fontSize='small' />,
     linkText: 'Password',
   },
 ];
@@ -33,37 +33,37 @@ const userLinks = [
 const adminLinks = [
   {
     toLink: 'dashboard',
-    Icon: Dashboard,
+    icon: <Dashboard fontSize='small' />,
     linkText: 'Dashboard',
   },
   {
     toLink: 'category',
-    Icon: Category,
+    icon: <Category fontSize='small' />,
     linkText: 'Manage categories',
   },
   {
     toLink: 'subcategory',
-    Icon: AutoAwesomeMosaic,
+    icon: <AutoAwesomeMosaic fontSize='small' />,
     linkText: 'Manage subcategories',
   },
   {
     toLink: 'product',
-    Icon: Gradient,
+    icon: <Gradient fontSize='small' />,
     linkText: 'Manage products',
   },
   {
     toLink: 'products-list',
-    Icon: PhoneAndroid,
+    icon: <PhoneAndroid fontSize='small' />,
     linkText: 'Products List',
   },
   {
     toLink: 'coupon',
-    Icon: Discount,
+    icon: <Discount fontSize='small' />,
     linkText: 'Coupon',
   },
   {
     toLink: 'password',
-    Icon: Password,
+    icon: <Password fontSize='small' />,
     linkText: 'Password',
   },
 ];

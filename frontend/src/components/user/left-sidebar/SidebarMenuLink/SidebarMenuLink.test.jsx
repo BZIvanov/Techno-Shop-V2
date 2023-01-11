@@ -8,7 +8,7 @@ describe('SidebarMenuLink component', () => {
       render(
         <SidebarMenuLink
           toLink='/wishlist'
-          Icon={Dashboard}
+          icon={<Dashboard />}
           linkText='Dashboard'
         />
       );
@@ -25,7 +25,7 @@ describe('SidebarMenuLink component', () => {
 
     test('renders menu link with blue color, when matching current route', () => {
       render(
-        <SidebarMenuLink toLink='/' Icon={Dashboard} linkText='Dashboard' />
+        <SidebarMenuLink toLink='/' icon={<Dashboard />} linkText='Dashboard' />
       );
 
       const menuLink = screen.getByRole('link', { name: /dashboard/i });

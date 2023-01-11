@@ -8,7 +8,7 @@ import {
   DialogActions,
 } from '@mui/material';
 import { Email } from '../../../mui/Icons';
-import { TextFieldAdapter } from '../../../common/forms/TextFieldAdapter';
+import TextFieldAdapter from '../../../common/forms/TextFieldAdapter/TextFieldAdapter';
 import { forgotPasswordAction } from '../../../../store/features/user/userSlice';
 import { formConfig } from './form-schema';
 import { useForm } from '../../../../providers/form/hooks';
@@ -42,7 +42,7 @@ const ForgotPasswordDialog = ({
             To reset your password provide your e-mail for reset password link.
           </DialogContentText>
 
-          <TextFieldAdapter name='email' label='Email' Icon={Email} />
+          <TextFieldAdapter name='email' label='Email' icon={<Email />} />
         </DialogContent>
         <DialogActions>
           <Button

@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useSelector, useDispatch } from '../../../../store/hooks';
 import { Box, Typography, Button } from '@mui/material';
 import { Email } from '../../../mui/Icons';
-import { TextFieldAdapter } from '../../../common/forms/TextFieldAdapter';
+import TextFieldAdapter from '../../../common/forms/TextFieldAdapter/TextFieldAdapter';
 import { PasswordTextFieldAdapter } from '../../../common/forms/PasswordTextFieldAdapter';
 import { ForgotPasswordDialog } from '../../password/ForgotPasswordDialog';
 import { ApiCallAlert } from '../../../common/async/ApiCallAlert';
@@ -45,7 +45,7 @@ const LoginForm = () => {
       <Box sx={{ width: { xs: '90%', sm: '290px' } }}>
         <FormProvider onSubmit={handleFormSubmit} methods={formMethods}>
           <Box my={1}>
-            <TextFieldAdapter name='email' label='Email' Icon={Email} />
+            <TextFieldAdapter name='email' label='Email' icon={<Email />} />
           </Box>
 
           <Box my={1}>

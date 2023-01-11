@@ -1,6 +1,6 @@
 import { useSelector, useDispatch } from '../../../../store/hooks';
 import { Box, Typography, Button } from '@mui/material';
-import { PasswordTextFieldAdapter } from '../../../common/forms/PasswordTextFieldAdapter';
+import PasswordTextFieldAdapter from '../../../common/forms/PasswordTextFieldAdapter/PasswordTextFieldAdapter';
 import { ApiCallAlert } from '../../../common/async/ApiCallAlert';
 import { ApiCallLoader } from '../../../common/async/ApiCallLoader';
 import { updatePasswordAction } from '../../../../store/features/user/userSlice';
