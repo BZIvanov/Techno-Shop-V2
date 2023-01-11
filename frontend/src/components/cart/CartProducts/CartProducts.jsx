@@ -20,6 +20,7 @@ import { Delete, Check, Clear } from '../../mui/Icons';
 import {
   addToCart,
   removeFromCart,
+  clearCart,
 } from '../../../store/features/cart/cartSlice';
 import productImage from '../../../assets/images/product.png';
 
@@ -41,17 +42,27 @@ const CartProducts = () => {
           </Typography>
 
           <Button
+            sx={{ marginRight: 1 }}
+            onClick={() => dispatch(clearCart())}
+            size='small'
+          >
+            Clear cart
+          </Button>
+
+          <Button
             variant='contained'
             disabled={cartProductsKeys.length === 0}
             onClick={() => {
               if (user) {
+                navigate('/checkout');
               } else {
                 // if the user was trying to buy products from cart while not logged in, redirect it back to the cart page after login
                 navigate('/login', { state: { customNavigateTo: '/cart' } });
               }
             }}
+            size='small'
           >
-            Buy
+            Go to Checkout
           </Button>
         </Toolbar>
 

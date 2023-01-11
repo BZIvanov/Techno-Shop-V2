@@ -17,6 +17,7 @@ import Coupon from '../../components/coupon/Coupon/Coupon';
 import ProtectedRoute from '../../components/user/routes/ProtectedRoute/ProtectedRoute';
 import NonUserRoute from '../../components/user/routes/NonUserRoute/NonUserRoute';
 import CartProducts from '../../components/cart/CartProducts/CartProducts';
+import Checkout from '../../components/checkout/Checkout/Checkout';
 
 const AppRoutes = () => {
   return (
@@ -87,6 +88,14 @@ const AppRoutes = () => {
         element={<SubcategoryProducts />}
       />
       <Route path='/cart' element={<CartProducts />} />
+      <Route
+        path='/checkout'
+        element={
+          <ProtectedRoute authRedirectTo='/login'>
+            <Checkout />
+          </ProtectedRoute>
+        }
+      />
     </Routes>
   );
 };
