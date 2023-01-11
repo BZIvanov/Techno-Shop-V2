@@ -1,7 +1,7 @@
 import { useSelector, useDispatch } from '../../../../store/hooks';
 import { useParams, useNavigate } from 'react-router-dom';
 import { Box, Typography, Button } from '@mui/material';
-import { PasswordTextFieldAdapter } from '../../../common/forms/PasswordTextFieldAdapter';
+import PasswordTextFieldAdapter from '../../../common/forms/PasswordTextFieldAdapter/PasswordTextFieldAdapter';
 import { ApiCallAlert } from '../../../common/async/ApiCallAlert';
 import { ApiCallLoader } from '../../../common/async/ApiCallLoader';
 import { resetPasswordAction } from '../../../../store/features/user/userSlice';

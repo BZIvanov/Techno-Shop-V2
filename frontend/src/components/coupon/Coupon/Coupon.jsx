@@ -14,7 +14,7 @@ import TablePagination from '@mui/material/TablePagination';
 import Paper from '@mui/material/Paper';
 import IconButton from '@mui/material/IconButton';
 import { useSelector, useDispatch } from '../../../store/hooks';
-import { TextFieldAdapter } from '../../common/forms/TextFieldAdapter';
+import TextFieldAdapter from '../../common/forms/TextFieldAdapter/TextFieldAdapter';
 import DatePickerFieldAdapter from '../../common/forms/DatePickerFieldAdapter/DatePickerFieldAdapter';
 import { useForm } from '../../../providers/form/hooks';
 import FormProvider from '../../../providers/form/FormProvider';

@@ -1,7 +1,7 @@
 import { NavLink } from 'react-router-dom';
 import { MenuItem, ListItemText, ListItemIcon, useTheme } from '@mui/material';
 
-const SidebarMenuLink = ({ toLink, Icon, linkText }) => {
+const SidebarMenuLink = ({ toLink, icon, linkText }) => {
   const theme = useTheme();
 
   return (
@@ -17,9 +17,7 @@ const SidebarMenuLink = ({ toLink, Icon, linkText }) => {
       to={toLink}
     >
       <MenuItem>
-        <ListItemIcon sx={{ color: 'inherit' }}>
-          <Icon fontSize='small' />
-        </ListItemIcon>
+        <ListItemIcon sx={{ color: 'inherit' }}>{icon}</ListItemIcon>
         <ListItemText>{linkText}</ListItemText>
       </MenuItem>
     </NavLink>

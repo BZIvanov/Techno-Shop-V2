@@ -11,7 +11,7 @@ import {
   FormControl,
 } from '@mui/material';
 import { SelectDropdownAdapter } from '../../common/forms/SelectDropdownAdapter';
-import { TextFieldAdapter } from '../../common/forms/TextFieldAdapter';
+import TextFieldAdapter from '../../common/forms/TextFieldAdapter/TextFieldAdapter';
 import { ListItem } from '../../common/lists/ListItem';
 import { ConfirmDialog } from '../../common/dialogs/ConfirmDialog';
 import { getAllCategoriesAction } from '../../../store/features/category/categorySlice';

@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from '../../../store/hooks';
 import { useParams } from 'react-router-dom';
 import { Box, Typography, Button, Divider, Stack } from '@mui/material';
-import { TextFieldAdapter } from '../../common/forms/TextFieldAdapter';
+import TextFieldAdapter from '../../common/forms/TextFieldAdapter/TextFieldAdapter';
 import { SelectDropdownAdapter } from '../../common/forms/SelectDropdownAdapter';
 import { SelectDropdownMultichipAdapter } from '../../common/forms/SelectDropdownMultichipAdapter';
 import { ImagesFieldAdapter } from '../../common/forms/ImagesFieldAdapter';
