@@ -28,3 +28,7 @@ Prerequisites:
 ## Testing
 
 The test command in package.json file are valid for setting environment variable for Windows.
+
+## Seeding test data
+
+Run `npm run seed-data` in the root folder (package.json) to seed dummy data. Note that the seeding data is also used in the tests.
