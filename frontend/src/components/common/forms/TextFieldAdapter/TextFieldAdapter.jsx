@@ -9,6 +9,7 @@ const TextFieldAdapter = ({
   multiline = false,
   minRows,
   maxRows,
+  placeholder,
   icon,
 }) => {
   // After we provided the form methods to the FormProvider, we can now get them from the context
@@ -38,9 +39,10 @@ const TextFieldAdapter = ({
                     }
                   : {}
               }
-              multiline={multiline}
+              multiline={multiline} // textarea type
               minRows={multiline && minRows ? minRows : undefined}
               maxRows={multiline && maxRows ? maxRows : undefined}
+              placeholder={placeholder}
             />
           </FormControl>
         );
