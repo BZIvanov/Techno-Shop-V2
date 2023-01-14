@@ -14,9 +14,9 @@ import { SidebarMenuLink } from '../SidebarMenuLink';
 
 const userLinks = [
   {
-    toLink: 'dashboard',
+    toLink: 'orders',
     icon: <Dashboard fontSize='small' />,
-    linkText: 'Dashboard',
+    linkText: 'Orders',
   },
   {
     toLink: 'wishlist',
@@ -32,9 +32,9 @@ const userLinks = [
 
 const adminLinks = [
   {
-    toLink: 'dashboard',
+    toLink: 'orders',
     icon: <Dashboard fontSize='small' />,
-    linkText: 'Dashboard',
+    linkText: 'Orders',
   },
   {
     toLink: 'category',

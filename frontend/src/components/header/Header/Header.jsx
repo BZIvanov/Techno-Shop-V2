@@ -29,9 +29,9 @@ const noUserLinks = [
 
 const userLinks = [
   {
-    toLink: '/user/dashboard',
+    toLink: '/user/orders',
     icon: <Dashboard />,
-    linkText: 'Dashboard',
+    linkText: 'Orders',
   },
 ];
 

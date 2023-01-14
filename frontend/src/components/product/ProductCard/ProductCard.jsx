@@ -23,7 +23,7 @@ import {
 import productImage from '../../../assets/images/product.png';
 
 const ProductCard = ({ product }) => {
-  const { _id, title, price, description, images, ratings } = product;
+  const { _id, title, price, description, quantity, images, ratings } = product;
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -161,7 +161,7 @@ const ProductCard = ({ product }) => {
 
                   <Button
                     onClick={() => {
-                      if (!currentProductCart) {
+                      if (!currentProductCart && quantity > 0) {
                         dispatch(addToCart({ product, count: 1 }));
                         dispatch(setDrawerOpen(true));
                       }
@@ -170,7 +170,9 @@ const ProductCard = ({ product }) => {
                   >
                     <AddShoppingCart />
                     <Typography variant='caption'>
-                      {currentProductCart
+                      {quantity < 1
+                        ? 'Out of stock'
+                        : currentProductCart
                         ? 'Already in the cart'
                         : 'Add to cart'}
                     </Typography>

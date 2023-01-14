@@ -74,14 +74,14 @@ describe('Header component', () => {
   });
 
   describe('Logged in user navigation links', () => {
-    test('render dashboard and logout links if user in the state', async () => {
+    test('render orders and logout links if user in the state', async () => {
       const preloadedState = {
         user: { token: null, user: { name: 'Iva' } },
       };
 
       render(<Header />, { preloadedState });
 
-      screen.getByRole('link', { name: /dashboard/i });
+      screen.getByRole('link', { name: /orders/i });
       screen.getByRole('link', { name: /logout/i });
     });
   });

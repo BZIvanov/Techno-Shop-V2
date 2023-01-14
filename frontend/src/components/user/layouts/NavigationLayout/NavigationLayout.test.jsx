@@ -11,10 +11,10 @@ describe('NavigationLayout component', () => {
       render(<NavigationLayout />, { preloadedState });
 
       const menuitem = screen.getByRole('menuitem', {
-        name: /dashboard/i,
+        name: /orders/i,
       });
 
-      within(menuitem).getByText(/dashboard/i);
+      within(menuitem).getByText(/orders/i);
     });
   });
 });
