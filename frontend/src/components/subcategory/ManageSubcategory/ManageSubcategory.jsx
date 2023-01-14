@@ -13,7 +13,7 @@ import {
 import { SelectDropdownAdapter } from '../../common/forms/SelectDropdownAdapter';
 import TextFieldAdapter from '../../common/forms/TextFieldAdapter/TextFieldAdapter';
 import { ListItem } from '../../common/lists/ListItem';
-import { ConfirmDialog } from '../../common/dialogs/ConfirmDialog';
+import ConfirmDialog from '../../common/dialogs/ConfirmDialog/ConfirmDialog';
 import { getAllCategoriesAction } from '../../../store/features/category/categorySlice';
 import {
   getSubcategoriesAction,

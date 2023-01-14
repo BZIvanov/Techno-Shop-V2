@@ -12,7 +12,7 @@ import {
 } from '@mui/material';
 import TextFieldAdapter from '../../common/forms/TextFieldAdapter/TextFieldAdapter';
 import { ListItem } from '../../common/lists/ListItem';
-import { ConfirmDialog } from '../../common/dialogs/ConfirmDialog';
+import ConfirmDialog from '../../common/dialogs/ConfirmDialog/ConfirmDialog';
 import {
   getAllCategoriesAction,
   createCategoryAction,
