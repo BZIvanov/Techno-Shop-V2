@@ -4,6 +4,33 @@ const Coupon = require('../coupon/coupon.model');
 const Product = require('../product/product.model');
 const catchAsync = require('../../middlewares/catch-async');
 const AppError = require('../../utils/app-error');
+const {
+  userTypes: { admin },
+} = require('../user/user.constants');
+
+module.exports.getOrders = catchAsync(async (req, res) => {
+  const { sortColumn = 'createdAt', order = 'desc', page, perPage } = req.query;
+
+  const pageNumber = parseInt(page || 0, 10);
+  const perPageNumber = parseInt(perPage || 5, 10);
+
+  const builder = { orderedBy: req.user._id };
+  if (req.user.role === admin) {
+    delete builder.orderedBy;
+  }
+
+  const orders = await Order.find(builder)
+    .skip(pageNumber * perPageNumber)
+    .limit(perPageNumber)
+    .populate('coupon', 'name discount')
+    .populate('orderedBy', '_id username')
+    .populate('products.product', '_id title')
+    .sort([[sortColumn, order]])
+    .exec();
+  const totalCount = await Order.where(builder).countDocuments();
+
+  res.status(status.OK).json({ success: true, orders, totalCount });
+});
 
 module.exports.createOrder = catchAsync(async (req, res, next) => {
   const currentUser = req.user;

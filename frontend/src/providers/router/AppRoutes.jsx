@@ -18,6 +18,7 @@ import ProtectedRoute from '../../components/user/routes/ProtectedRoute/Protecte
 import NonUserRoute from '../../components/user/routes/NonUserRoute/NonUserRoute';
 import CartProducts from '../../components/cart/CartProducts/CartProducts';
 import Checkout from '../../components/checkout/Checkout/Checkout';
+import OrdersList from '../../components/order/OrdersList/OrdersList';
 
 const AppRoutes = () => {
   return (
@@ -55,7 +56,7 @@ const AppRoutes = () => {
           </ProtectedRoute>
         }
       >
-        <Route path='orders' element={<PasswordUpdateForm />} />
+        <Route path='orders' element={<OrdersList />} />
         <Route path='wishlist' element={<PasswordUpdateForm />} />
         <Route path='password' element={<PasswordUpdateForm />} />
       </Route>
@@ -71,7 +72,7 @@ const AppRoutes = () => {
           </ProtectedRoute>
         }
       >
-        <Route path='orders' element={<Products />} />
+        <Route path='orders' element={<OrdersList />} />
         <Route path='category' element={<ManageCategory />} />
         <Route path='subcategory' element={<ManageSubcategory />} />
         <Route path='product' element={<ManageProduct />} />
