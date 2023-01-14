@@ -7,6 +7,7 @@ import productReducer from './features/product/productSlice';
 import productsFilterReducer from './features/products-filter/productsFilterSlice';
 import cartReducer from './features/cart/cartSlice';
 import couponReducer from './features/coupon/couponSlice';
+import orderReducer from './features/order/orderSlice';
 
 const rootReducer = combineReducers({
   apiCall: apiCallReducer,
@@ -17,6 +18,7 @@ const rootReducer = combineReducers({
   productsFilter: productsFilterReducer,
   cart: cartReducer,
   coupon: couponReducer,
+  order: orderReducer,
 });
 
 export const store = (preloadedState) => {
