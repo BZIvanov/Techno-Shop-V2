@@ -220,7 +220,7 @@ const ProductDetails = () => {
               <CardActions>
                 <Button
                   onClick={() => {
-                    if (!currentProductCart) {
+                    if (!currentProductCart && product.quantity > 0) {
                       dispatch(addToCart({ product, count: 1 }));
                       dispatch(setDrawerOpen(true));
                     }
@@ -229,7 +229,11 @@ const ProductDetails = () => {
                 >
                   <AddShoppingCart />
                   <Typography variant='caption'>
-                    {currentProductCart ? 'Already in the cart' : 'Add to cart'}
+                    {product.quantity < 1
+                      ? 'Out of stock'
+                      : currentProductCart
+                      ? 'Already in the cart'
+                      : 'Add to cart'}
                   </Typography>
                 </Button>
 

@@ -10,10 +10,10 @@ describe('SidebarMenu component', () => {
 
       render(<SidebarMenu />, { preloadedState });
 
-      const dashboardMenuitem = screen.getByRole('menuitem', {
-        name: /dashboard/i,
+      const ordersMenuitem = screen.getByRole('menuitem', {
+        name: 'Orders',
       });
-      within(dashboardMenuitem).getByText(/^dashboard$/i);
+      within(ordersMenuitem).getByText('Orders');
 
       const wishlistMenuitem = screen.getByRole('menuitem', {
         name: /wishlist/i,
@@ -33,10 +33,10 @@ describe('SidebarMenu component', () => {
 
       render(<SidebarMenu />, { preloadedState });
 
-      const dashboardMenuitem = screen.getByRole('menuitem', {
-        name: /dashboard/i,
+      const ordersMenuitem = screen.getByRole('menuitem', {
+        name: 'Orders',
       });
-      within(dashboardMenuitem).getByText(/^dashboard$/i);
+      within(ordersMenuitem).getByText('Orders');
 
       const categoriesMenuitem = screen.getByRole('menuitem', {
         name: /manage categories/i,

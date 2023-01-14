@@ -9,26 +9,26 @@ describe('SidebarMenuLink component', () => {
         <SidebarMenuLink
           toLink='/wishlist'
           icon={<Dashboard />}
-          linkText='Dashboard'
+          linkText='Orders'
         />
       );
 
-      const menuLink = screen.getByRole('link', { name: /dashboard/i });
+      const menuLink = screen.getByRole('link', { name: 'Orders' });
       expect(menuLink).toHaveStyle({ color: 'rgb(0, 0, 0)' });
 
       const menuitem = screen.getByRole('menuitem', {
-        name: /dashboard/i,
+        name: 'Orders',
       });
-      const menuItemText = within(menuitem).getByText(/^dashboard$/i);
+      const menuItemText = within(menuitem).getByText('Orders');
       expect(menuItemText).toHaveStyle({ 'font-weight': 400 });
     });
 
     test('renders menu link with blue color, when matching current route', () => {
       render(
-        <SidebarMenuLink toLink='/' icon={<Dashboard />} linkText='Dashboard' />
+        <SidebarMenuLink toLink='/' icon={<Dashboard />} linkText='Orders' />
       );
 
-      const menuLink = screen.getByRole('link', { name: /dashboard/i });
+      const menuLink = screen.getByRole('link', { name: 'Orders' });
       expect(menuLink).toHaveStyle({ color: 'rgb(25, 118, 210)' });
     });
   });

@@ -55,7 +55,7 @@ const AppRoutes = () => {
           </ProtectedRoute>
         }
       >
-        <Route path='dashboard' element={<PasswordUpdateForm />} />
+        <Route path='orders' element={<PasswordUpdateForm />} />
         <Route path='wishlist' element={<PasswordUpdateForm />} />
         <Route path='password' element={<PasswordUpdateForm />} />
       </Route>
@@ -71,7 +71,7 @@ const AppRoutes = () => {
           </ProtectedRoute>
         }
       >
-        <Route path='dashboard' element={<Products />} />
+        <Route path='orders' element={<Products />} />
         <Route path='category' element={<ManageCategory />} />
         <Route path='subcategory' element={<ManageSubcategory />} />
         <Route path='product' element={<ManageProduct />} />

@@ -16,9 +16,9 @@ const NonUserRoute = ({ children }) => {
       }
 
       if (user.role === 'admin') {
-        return navigate('/admin/dashboard');
+        return navigate('/admin/orders');
       }
-      return navigate('/user/dashboard');
+      return navigate('/user/orders');
     }
   }, [location, navigate, user]);
 
