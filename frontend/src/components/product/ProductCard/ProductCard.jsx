@@ -12,7 +12,7 @@ import {
   Button,
 } from '@mui/material';
 import { Edit, Delete, Preview, AddShoppingCart } from '../../mui/Icons';
-import { ConfirmDialog } from '../../common/dialogs/ConfirmDialog';
+import ConfirmDialog from '../../common/dialogs/ConfirmDialog/ConfirmDialog';
 import AverageRating from '../../common/rating/AverageRating/AverageRating';
 import { useSelector, useDispatch } from '../../../store/hooks';
 import { deleteProductAction } from '../../../store/features/product/productSlice';

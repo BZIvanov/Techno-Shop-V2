@@ -13,6 +13,7 @@ import TableBody from '@mui/material/TableBody';
 import TablePagination from '@mui/material/TablePagination';
 import Paper from '@mui/material/Paper';
 import IconButton from '@mui/material/IconButton';
+import ConfirmDialog from '../../common/dialogs/ConfirmDialog/ConfirmDialog';
 import { useSelector, useDispatch } from '../../../store/hooks';
 import TextFieldAdapter from '../../common/forms/TextFieldAdapter/TextFieldAdapter';
 import DatePickerFieldAdapter from '../../common/forms/DatePickerFieldAdapter/DatePickerFieldAdapter';
@@ -53,6 +54,22 @@ const Coupon = () => {
     dispatch(createCouponAction(values));
 
     reset();
+  };
+
+  const [removeCouponDialog, setRemoveCouponDialog] = useState({
+    open: false,
+    text: '',
+    onConfirm: () => {},
+  });
+
+  const handleProductDeleteClick = (couponId) => () => {
+    setRemoveCouponDialog({
+      open: false,
+      text: '',
+      onConfirm: () => {},
+    });
+
+    dispatch(deleteCouponAction(couponId));
   };
 
   return (
@@ -125,7 +142,13 @@ const Coupon = () => {
                         <TableCell align='center'>
                           <IconButton
                             size='small'
-                            onClick={() => dispatch(deleteCouponAction(_id))}
+                            onClick={() =>
+                              setRemoveCouponDialog({
+                                open: true,
+                                text: 'Are you sure you want to delete this coupon?',
+                                onConfirm: handleProductDeleteClick(_id),
+                              })
+                            }
                           >
                             <Delete fontSize='inherit' />
                           </IconButton>
@@ -137,6 +160,7 @@ const Coupon = () => {
               </TableBody>
             </Table>
           </TableContainer>
+
           <TablePagination
             rowsPerPageOptions={ROWS_PER_PAGE_OPTIONS}
             component='div'
@@ -151,6 +175,11 @@ const Coupon = () => {
           />
         </Paper>
       </Box>
+
+      <ConfirmDialog
+        dialogConfig={removeCouponDialog}
+        setDialogConfig={setRemoveCouponDialog}
+      />
     </Box>
   );
 };

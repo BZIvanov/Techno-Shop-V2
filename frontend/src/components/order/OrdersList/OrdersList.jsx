@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'react';
-import { format, parseISO } from 'date-fns';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Divider from '@mui/material/Divider';
@@ -11,15 +10,11 @@ import TableCell from '@mui/material/TableCell';
 import TableBody from '@mui/material/TableBody';
 import TablePagination from '@mui/material/TablePagination';
 import Paper from '@mui/material/Paper';
+import OrderTableRow from '../OrderTableRow/OrderTableRow';
 import { useSelector, useDispatch } from '../../../store/hooks';
 import { getOrdersAction } from '../../../store/features/order/orderSlice';
 
 const ROWS_PER_PAGE_OPTIONS = [10, 25, 50];
-
-const currencyFormatter = new Intl.NumberFormat('en-US', {
-  style: 'currency',
-  currency: 'USD',
-});
 
 const OrdersList = () => {
   const dispatch = useDispatch();
@@ -53,6 +48,7 @@ const OrdersList = () => {
             <Table size='small'>
               <TableHead>
                 <TableRow>
+                  <TableCell />
                   <TableCell align='center'>Order ID</TableCell>
                   <TableCell align='center'>Created At</TableCell>
                   {isUserAdmin && (
@@ -64,7 +60,15 @@ const OrdersList = () => {
                   <TableCell align='center'>Order Status</TableCell>
                 </TableRow>
               </TableHead>
-              <TableBody>
+              <TableBody
+                sx={{
+                  // make every two rows with different color (1 and 2, then 5 and 6)
+                  // should be every two, because of the additional expandable row
+                  '& > tr:nth-of-type(4n-2), & > tr:nth-of-type(4n-3)': {
+                    backgroundColor: (theme) => theme.palette.action.hover,
+                  },
+                }}
+              >
                 {orders.length === 0 && (
                   <TableRow>
                     <TableCell colSpan={6} align='center'>
@@ -76,33 +80,12 @@ const OrdersList = () => {
                 )}
 
                 {orders.map((order) => {
-                  const {
-                    _id,
-                    createdAt,
-                    orderedBy: { username },
-                    totalAmount,
-                    deliveryAddress,
-                    orderStatus,
-                    coupon,
-                  } = order;
-                  const { name: couponName } = coupon || {};
-
                   return (
-                    <TableRow key={_id}>
-                      <TableCell align='center'>{_id}</TableCell>
-                      <TableCell align='center'>
-                        {format(parseISO(createdAt), 'dd-MMM-yyyy')}
-                      </TableCell>
-                      {isUserAdmin && (
-                        <TableCell align='center'>{username}</TableCell>
-                      )}
-                      <TableCell align='center'>
-                        {currencyFormatter.format(totalAmount)}
-                      </TableCell>
-                      <TableCell align='center'>{deliveryAddress}</TableCell>
-                      <TableCell align='center'>{couponName || '-'}</TableCell>
-                      <TableCell align='center'>{orderStatus}</TableCell>
-                    </TableRow>
+                    <OrderTableRow
+                      key={order._id}
+                      order={order}
+                      isAdminCell={isUserAdmin}
+                    />
                   );
                 })}
               </TableBody>

@@ -20,6 +20,8 @@ import {
   Favorite as FavoriteIcon,
   Gradient as GradientIcon,
   Home as HomeIcon,
+  KeyboardArrowDown as KeyboardArrowDownIcon,
+  KeyboardArrowUp as KeyboardArrowUpIcon,
   ListAlt as ListAltIcon,
   LocalShipping as LocalShippingIcon,
   Login as LoginIcon,
@@ -57,6 +59,10 @@ export const Face = (props) => <FaceIcon {...props} />;
 export const Favorite = (props) => <FavoriteIcon {...props} />;
 export const Gradient = (props) => <GradientIcon {...props} />;
 export const Home = (props) => <HomeIcon {...props} />;
+export const KeyboardArrowDown = (props) => (
+  <KeyboardArrowDownIcon {...props} />
+);
+export const KeyboardArrowUp = (props) => <KeyboardArrowUpIcon {...props} />;
 export const ListAlt = (props) => <ListAltIcon {...props} />;
 export const LocalShipping = (props) => <LocalShippingIcon {...props} />;
 export const Login = (props) => <LoginIcon {...props} />;

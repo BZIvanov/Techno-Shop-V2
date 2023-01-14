@@ -24,7 +24,7 @@ module.exports.getOrders = catchAsync(async (req, res) => {
     .limit(perPageNumber)
     .populate('coupon', 'name discount')
     .populate('orderedBy', '_id username')
-    .populate('products.product', '_id title')
+    .populate('products.product', '_id title price')
     .sort([[sortColumn, order]])
     .exec();
   const totalCount = await Order.where(builder).countDocuments();
