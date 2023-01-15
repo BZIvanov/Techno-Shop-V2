@@ -89,3 +89,20 @@ module.exports.createOrder = catchAsync(async (req, res, next) => {
 
   res.status(status.CREATED).json({ success: true, order });
 });
+
+module.exports.updateOrderStatus = catchAsync(async (req, res) => {
+  const { orderId } = req.params;
+  const { orderStatus } = req.body;
+
+  const order = await Order.findByIdAndUpdate(
+    orderId,
+    { orderStatus },
+    { new: true }
+  )
+    .populate('coupon', 'name discount')
+    .populate('orderedBy', '_id username')
+    .populate('products.product', '_id title price')
+    .exec();
+
+  res.status(status.OK).json({ success: true, order });
+});
