@@ -12,3 +12,13 @@ export const createOrderCall = (data, token) => {
     headers: { authorization: `Bearer ${token}` },
   });
 };
+
+export const updateOrderStatusCall = (data, token) => {
+  const { orderId, orderStatus } = data;
+
+  return axios.put(
+    `/orders/${orderId}`,
+    { orderStatus },
+    { headers: { authorization: `Bearer ${token}` } }
+  );
+};

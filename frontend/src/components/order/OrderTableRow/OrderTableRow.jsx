@@ -9,7 +9,13 @@ import Collapse from '@mui/material/Collapse';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import IconButton from '@mui/material/IconButton';
+import FormControl from '@mui/material/FormControl';
+import Select from '@mui/material/Select';
+import MenuItem from '@mui/material/MenuItem';
+import { useDispatch } from '../../../store/hooks';
 import { KeyboardArrowDown, KeyboardArrowUp } from '../../mui/Icons';
+import { updateOrderStatusAction } from '../../../store/features/order/orderSlice';
+import { orderStatuses } from '../constants';
 
 const currencyFormatter = new Intl.NumberFormat('en-US', {
   style: 'currency',
@@ -17,6 +23,8 @@ const currencyFormatter = new Intl.NumberFormat('en-US', {
 });
 
 const OrderTableRow = ({ order, isAdminCell }) => {
+  const dispatch = useDispatch();
+
   const [isRowExpanded, setIsRowExpanded] = useState(false);
 
   const {
@@ -52,7 +60,41 @@ const OrderTableRow = ({ order, isAdminCell }) => {
         </TableCell>
         <TableCell align='center'>{deliveryAddress}</TableCell>
         <TableCell align='center'>{couponName || '-'}</TableCell>
-        <TableCell align='center'>{orderStatus}</TableCell>
+        <TableCell align='center'>
+          {isAdminCell ? (
+            <FormControl
+              sx={{
+                width: '100%',
+              }}
+            >
+              <Select
+                variant='standard'
+                value={orderStatus}
+                onChange={(event) => {
+                  dispatch(
+                    updateOrderStatusAction({
+                      orderId: _id,
+                      orderStatus: event.target.value,
+                    })
+                  );
+                }}
+              >
+                {Object.keys(orderStatuses).map((orderStatusKey) => {
+                  return (
+                    <MenuItem
+                      key={orderStatusKey}
+                      value={orderStatuses[orderStatusKey]}
+                    >
+                      {orderStatuses[orderStatusKey]}
+                    </MenuItem>
+                  );
+                })}
+              </Select>
+            </FormControl>
+          ) : (
+            orderStatus
+          )}
+        </TableCell>
       </TableRow>
 
       <TableRow sx={{ '& > *': { borderBottom: 'unset', borderTop: 'unset' } }}>
