@@ -31,6 +31,7 @@ import {
   addToCart,
   setDrawerOpen,
 } from '../../../store/features/cart/cartSlice';
+import { addToWishlistAction } from '../../../store/features/wishlist/wishlistSlice';
 import { ApiCallAlert } from '../../common/async/ApiCallAlert';
 import { ApiCallLoader } from '../../common/async/ApiCallLoader';
 
@@ -238,7 +239,7 @@ const ProductDetails = () => {
                 </Button>
 
                 <Button
-                  onClick={() => console.log('works')}
+                  onClick={() => dispatch(addToWishlistAction(product._id))}
                   sx={{ display: 'flex', flexDirection: 'column' }}
                 >
                   <Favorite />

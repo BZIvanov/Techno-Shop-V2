@@ -19,6 +19,7 @@ import NonUserRoute from '../../components/user/routes/NonUserRoute/NonUserRoute
 import CartProducts from '../../components/cart/CartProducts/CartProducts';
 import Checkout from '../../components/checkout/Checkout/Checkout';
 import OrdersList from '../../components/order/OrdersList/OrdersList';
+import WishList from '../../components/wishlist/WishList/WishList';
 
 const AppRoutes = () => {
   return (
@@ -57,7 +58,7 @@ const AppRoutes = () => {
         }
       >
         <Route path='orders' element={<OrdersList />} />
-        <Route path='wishlist' element={<PasswordUpdateForm />} />
+        <Route path='wishlist' element={<WishList />} />
         <Route path='password' element={<PasswordUpdateForm />} />
       </Route>
       <Route

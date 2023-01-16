@@ -62,7 +62,7 @@ const Coupon = () => {
     onConfirm: () => {},
   });
 
-  const handleProductDeleteClick = (couponId) => () => {
+  const handleCouponDeleteClick = (couponId) => () => {
     setRemoveCouponDialog({
       open: false,
       text: '',
@@ -146,7 +146,7 @@ const Coupon = () => {
                               setRemoveCouponDialog({
                                 open: true,
                                 text: 'Are you sure you want to delete this coupon?',
-                                onConfirm: handleProductDeleteClick(_id),
+                                onConfirm: handleCouponDeleteClick(_id),
                               })
                             }
                           >
