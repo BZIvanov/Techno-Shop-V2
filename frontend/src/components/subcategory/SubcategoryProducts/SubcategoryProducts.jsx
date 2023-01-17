@@ -8,7 +8,7 @@ import {
   getSubcategoryProductsAction,
 } from '../../../store/features/subcategory/subcategorySlice';
 
-const SubcategoryProductsPage = () => {
+const SubcategoryProducts = () => {
   const subcategory = useSelector(
     (state) => state.subcategory.selectedSubcategory
   );
@@ -50,4 +50,4 @@ const SubcategoryProductsPage = () => {
   );
 };
 
-export default SubcategoryProductsPage;
+export default SubcategoryProducts;

@@ -10,9 +10,9 @@ import {
   TextField,
   FormControl,
 } from '@mui/material';
-import { SelectDropdownAdapter } from '../../common/forms/SelectDropdownAdapter';
+import SelectDropdownAdapter from '../../common/forms/SelectDropdownAdapter/SelectDropdownAdapter';
 import TextFieldAdapter from '../../common/forms/TextFieldAdapter/TextFieldAdapter';
-import { ListItem } from '../../common/lists/ListItem';
+import ListItem from '../../common/lists/ListItem/ListItem';
 import ConfirmDialog from '../../common/dialogs/ConfirmDialog/ConfirmDialog';
 import { getAllCategoriesAction } from '../../../store/features/category/categorySlice';
 import {
@@ -21,8 +21,8 @@ import {
   updateSubcategoryAction,
   deleteSubcategoryAction,
 } from '../../../store/features/subcategory/subcategorySlice';
-import { ApiCallAlert } from '../../common/async/ApiCallAlert';
-import { ApiCallLoader } from '../../common/async/ApiCallLoader';
+import ApiCallAlert from '../../common/async/ApiCallAlert/ApiCallAlert';
+import ApiCallLoader from '../../common/async/ApiCallLoader/ApiCallLoader';
 import { formConfig } from './form-schema';
 import { useForm } from '../../../providers/form/hooks';
 import FormProvider from '../../../providers/form/FormProvider';

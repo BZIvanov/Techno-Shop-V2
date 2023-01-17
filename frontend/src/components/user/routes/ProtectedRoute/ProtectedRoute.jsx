@@ -1,5 +1,5 @@
 import { useSelector } from '../../../../store/hooks';
-import { CountdownProgress } from '../../../common/feedback/CountdownProgress';
+import CountdownProgress from '../../../common/feedback/CountdownProgress/CountdownProgress';
 
 const ProtectedRoute = ({
   children,

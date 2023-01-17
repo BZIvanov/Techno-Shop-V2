@@ -8,7 +8,7 @@ import {
   getCategoryProductsAction,
 } from '../../../store/features/category/categorySlice';
 
-const CategoryProductsPage = () => {
+const CategoryProducts = () => {
   const category = useSelector((state) => state.category.selectedCategory);
   const { products, totalCount } = useSelector(
     (state) => state.category.selectedCategoryProducts
@@ -48,4 +48,4 @@ const CategoryProductsPage = () => {
   );
 };
 
-export default CategoryProductsPage;
+export default CategoryProducts;

@@ -11,7 +11,7 @@ import {
   FormControl,
 } from '@mui/material';
 import TextFieldAdapter from '../../common/forms/TextFieldAdapter/TextFieldAdapter';
-import { ListItem } from '../../common/lists/ListItem';
+import ListItem from '../../common/lists/ListItem/ListItem';
 import ConfirmDialog from '../../common/dialogs/ConfirmDialog/ConfirmDialog';
 import {
   getAllCategoriesAction,
@@ -19,8 +19,8 @@ import {
   updateCategoryAction,
   deleteCategoryAction,
 } from '../../../store/features/category/categorySlice';
-import { ApiCallAlert } from '../../common/async/ApiCallAlert';
-import { ApiCallLoader } from '../../common/async/ApiCallLoader';
+import ApiCallAlert from '../../common/async/ApiCallAlert/ApiCallAlert';
+import ApiCallLoader from '../../common/async/ApiCallLoader/ApiCallLoader';
 import { formConfig } from './form-schema';
 import { useForm } from '../../../providers/form/hooks';
 import FormProvider from '../../../providers/form/FormProvider';

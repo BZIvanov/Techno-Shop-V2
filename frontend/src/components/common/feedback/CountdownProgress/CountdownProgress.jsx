@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { CircularProgress, Typography, Box, Backdrop } from '@mui/material';
 
-const CountdownProgress = ({ redirectTo, seconds = 3 }) => {
+const CountdownProgress = ({ redirectTo, seconds = 2 }) => {
   const navigate = useNavigate();
 
   const [progress, setProgress] = useState(seconds);

@@ -18,11 +18,7 @@ import {
   addToWishlistAction,
 } from '../../../store/features/wishlist/wishlistSlice';
 import { Delete } from '../../mui/Icons';
-
-const currencyFormatter = new Intl.NumberFormat('en-US', {
-  style: 'currency',
-  currency: 'USD',
-});
+import { currencyFormatter } from '../../../utils/currency-formatter';
 
 const WishList = () => {
   const dispatch = useDispatch();
