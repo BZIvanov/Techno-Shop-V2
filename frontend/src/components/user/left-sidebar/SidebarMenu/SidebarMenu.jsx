@@ -10,7 +10,7 @@ import {
   PhoneAndroid,
   Discount,
 } from '../../../mui/Icons';
-import { SidebarMenuLink } from '../SidebarMenuLink';
+import SidebarMenuLink from '../SidebarMenuLink/SidebarMenuLink';
 
 const userLinks = [
   {
@@ -68,7 +68,7 @@ const adminLinks = [
   },
 ];
 
-const NavMenu = () => {
+const SidebarMenu = () => {
   const user = useSelector((state) => state.user.user);
 
   const links = user.role === 'admin' ? adminLinks : userLinks;
@@ -83,4 +83,4 @@ const NavMenu = () => {
   );
 };
 
-export default NavMenu;
+export default SidebarMenu;

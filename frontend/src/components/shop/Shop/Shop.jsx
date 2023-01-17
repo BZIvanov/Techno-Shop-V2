@@ -20,14 +20,14 @@ import {
   LocalShipping,
 } from '../../mui/Icons';
 import ProductsList from '../../product/ProductsList/ProductsList';
-import { FilterListItem } from '../../common/lists/FilterListItem';
+import FilterListItem from '../../common/lists/FilterListItem/FilterListItem';
 import { getProductsAction } from '../../../store/features/product/productSlice';
 import { filterAction } from '../../../store/features/products-filter/productsFilterSlice';
 import { getAllCategoriesAction } from '../../../store/features/category/categorySlice';
 import { getSubcategoriesAction } from '../../../store/features/subcategory/subcategorySlice';
 import { PRODUCTS_LIST_TYPES, MAX_RATING_VALUE } from '../../../constants';
 
-const ShopPage = () => {
+const Shop = () => {
   const { products, totalCount } = useSelector((state) => state.product.all);
   const { text, price, categories, subcategories, rating, shipping } =
     useSelector((state) => state.productsFilter);
@@ -222,4 +222,4 @@ const ShopPage = () => {
   );
 };
 
-export default ShopPage;
+export default Shop;

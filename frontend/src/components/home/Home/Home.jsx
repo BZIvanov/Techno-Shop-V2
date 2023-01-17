@@ -1,11 +1,11 @@
 import { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from '../../../store/hooks';
 import { Box } from '@mui/material';
-import { TypeWriterText } from '../../common/texts/TypeWriter';
+import TypeWriterText from '../../common/texts/TypeWriter/TypeWriterText';
 import ProductsList from '../../product/ProductsList/ProductsList';
 import ChipsList from '../../common/lists/ChipsList/ChipsList';
-import { ApiCallAlert } from '../../common/async/ApiCallAlert';
-import { ApiCallLoader } from '../../common/async/ApiCallLoader';
+import ApiCallAlert from '../../common/async/ApiCallAlert/ApiCallAlert';
+import ApiCallLoader from '../../common/async/ApiCallLoader/ApiCallLoader';
 import { getAllCategoriesAction } from '../../../store/features/category/categorySlice';
 import { getSubcategoriesAction } from '../../../store/features/subcategory/subcategorySlice';
 import { getProductsAction } from '../../../store/features/product/productSlice';
@@ -13,7 +13,7 @@ import { PRODUCTS_LIST_TYPES, TYPEWRITER_TEXTS } from '../../../constants';
 
 const PRODUCTS_PER_PAGE = 3;
 
-const HomePage = () => {
+const Home = () => {
   const { products: newestProducts, totalCount: newestProductsTotalCount } =
     useSelector((state) => state.product.newest);
   const {
@@ -108,4 +108,4 @@ const HomePage = () => {
   );
 };
 
-export default HomePage;
+export default Home;

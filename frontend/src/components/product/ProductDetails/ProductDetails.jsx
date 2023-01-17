@@ -17,10 +17,10 @@ import {
   Star,
   StarBorderOutlined,
 } from '../../mui/Icons';
-import { ImagesCarousel } from '../../common/images/ImagesCarousel';
+import ImagesCarousel from '../../common/images/ImagesCarousel/ImagesCarousel';
 import RatingDialog from '../../common/dialogs/RatingDialog/RatingDialog';
 import AverageRating from '../../common/rating/AverageRating/AverageRating';
-import { ProductInfoTabs } from '../ProductInfoTabs';
+import ProductInfoTabs from '../ProductInfoTabs/ProductInfoTabs';
 import ProductsList from '../ProductsList/ProductsList';
 import {
   getProductAction,
@@ -32,8 +32,8 @@ import {
   setDrawerOpen,
 } from '../../../store/features/cart/cartSlice';
 import { addToWishlistAction } from '../../../store/features/wishlist/wishlistSlice';
-import { ApiCallAlert } from '../../common/async/ApiCallAlert';
-import { ApiCallLoader } from '../../common/async/ApiCallLoader';
+import ApiCallAlert from '../../common/async/ApiCallAlert/ApiCallAlert';
+import ApiCallLoader from '../../common/async/ApiCallLoader/ApiCallLoader';
 
 const ProductDetails = () => {
   const user = useSelector((state) => state.user.user);

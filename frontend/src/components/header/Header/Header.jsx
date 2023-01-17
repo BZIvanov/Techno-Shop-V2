@@ -11,7 +11,7 @@ import {
   AddShoppingCart,
 } from '../../mui/Icons';
 import HeaderNavLink from '../HeaderNavLink/HeaderNavLink';
-import { HeaderSearch } from '../HeaderSearch';
+import HeaderSearch from '../HeaderSearch/HeaderSearch';
 import { logoutUserAction } from '../../../store/features/user/userSlice';
 
 const noUserLinks = [

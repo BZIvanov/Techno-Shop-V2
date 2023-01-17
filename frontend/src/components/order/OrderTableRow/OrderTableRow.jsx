@@ -16,11 +16,7 @@ import { useDispatch } from '../../../store/hooks';
 import { KeyboardArrowDown, KeyboardArrowUp } from '../../mui/Icons';
 import { updateOrderStatusAction } from '../../../store/features/order/orderSlice';
 import { orderStatuses } from '../constants';
-
-const currencyFormatter = new Intl.NumberFormat('en-US', {
-  style: 'currency',
-  currency: 'USD',
-});
+import { currencyFormatter } from '../../../utils/currency-formatter';
 
 const OrderTableRow = ({ order, isAdminCell }) => {
   const dispatch = useDispatch();
