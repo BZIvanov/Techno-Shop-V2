@@ -239,7 +239,10 @@ const ProductDetails = () => {
                 </Button>
 
                 <Button
-                  onClick={() => dispatch(addToWishlistAction(product._id))}
+                  onClick={() => {
+                    dispatch(addToWishlistAction(product._id));
+                    navigate('/user/wishlist');
+                  }}
                   sx={{ display: 'flex', flexDirection: 'column' }}
                 >
                   <Favorite />

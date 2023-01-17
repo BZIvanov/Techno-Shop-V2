@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Divider from '@mui/material/Divider';
@@ -73,7 +74,9 @@ const WishList = () => {
                   ({ _id, title, brand, color, price, quantity }) => {
                     return (
                       <TableRow key={_id}>
-                        <TableCell align='center'>{title}</TableCell>
+                        <TableCell align='center'>
+                          <Link to={`/product/${_id}`}>{title}</Link>
+                        </TableCell>
                         <TableCell align='center'>
                           {currencyFormatter.format(price)}
                         </TableCell>
