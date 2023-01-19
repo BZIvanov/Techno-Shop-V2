@@ -9,7 +9,8 @@ import ApiCallLoader from '../../common/async/ApiCallLoader/ApiCallLoader';
 import { getAllCategoriesAction } from '../../../store/features/category/categorySlice';
 import { getSubcategoriesAction } from '../../../store/features/subcategory/subcategorySlice';
 import { getProductsAction } from '../../../store/features/product/productSlice';
-import { PRODUCTS_LIST_TYPES, TYPEWRITER_TEXTS } from '../../../constants';
+import { PRODUCTS_LIST_TYPES } from '../../product/constants';
+import { TYPEWRITER_TEXTS } from '../../common/constants';
 
 const PRODUCTS_PER_PAGE = 3;
 

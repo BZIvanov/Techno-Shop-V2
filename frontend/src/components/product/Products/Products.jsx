@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from '../../../store/hooks';
 import { getProductsAction } from '../../../store/features/product/productSlice';
 import ProductsList from '../ProductsList/ProductsList';
-import { PRODUCTS_LIST_TYPES } from '../../../constants';
+import { PRODUCTS_LIST_TYPES } from '../constants';
 
 const PRODUCTS_PER_PAGE = 12;
 

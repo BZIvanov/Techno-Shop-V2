@@ -1,5 +1,5 @@
 import { Box, Rating, Typography } from '@mui/material';
-import { MAX_RATING_VALUE } from '../../../../constants';
+import { MAX_RATING_VALUE } from '../../constants';
 
 const AverageRating = ({ ratings = [], size = 'large' }) => {
   const allStarsSum = ratings

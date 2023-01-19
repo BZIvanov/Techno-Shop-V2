@@ -25,7 +25,8 @@ import { getProductsAction } from '../../../store/features/product/productSlice'
 import { filterAction } from '../../../store/features/products-filter/productsFilterSlice';
 import { getAllCategoriesAction } from '../../../store/features/category/categorySlice';
 import { getSubcategoriesAction } from '../../../store/features/subcategory/subcategorySlice';
-import { PRODUCTS_LIST_TYPES, MAX_RATING_VALUE } from '../../../constants';
+import { PRODUCTS_LIST_TYPES } from '../../product/constants';
+import { MAX_RATING_VALUE } from '../../common/constants';
 
 const Shop = () => {
   const { products, totalCount } = useSelector((state) => state.product.all);
