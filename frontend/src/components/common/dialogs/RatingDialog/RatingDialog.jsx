@@ -6,7 +6,7 @@ import {
   DialogActions,
   Rating,
 } from '@mui/material';
-import { MAX_RATING_VALUE } from '../../../../constants';
+import { MAX_RATING_VALUE } from '../../constants';
 
 const RatingDialog = ({
   showRatingModal,
