@@ -71,7 +71,7 @@ const OrdersList = () => {
               >
                 {orders.length === 0 && (
                   <TableRow>
-                    <TableCell colSpan={6} align='center'>
+                    <TableCell colSpan={7} align='center'>
                       <Typography variant='body2'>
                         <strong>No orders found</strong>
                       </Typography>
