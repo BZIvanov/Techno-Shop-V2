@@ -1,11 +1,15 @@
 const request = require('supertest');
 const { mongoDbConnect, mongoDbDisconnect } = require('../../db/mongo');
 const app = require('../../app/express');
+const User = require('./user.model');
 const signJwtToken = require('./utils/signJwtToken');
+const users = require('../../../data-seed/users.json');
 
 describe('User routes', () => {
   beforeAll(async () => {
     await mongoDbConnect();
+
+    await User.create(users);
   });
 
   afterAll(async () => {
@@ -16,7 +20,7 @@ describe('User routes', () => {
     test('it should register an user successfully', async () => {
       const response = await request(app)
         .post('/v1/users/register')
-        .send({ username: 'Ivo', email: 'ivo@mail.com', password: '12345678' })
+        .send({ username: 'Ivo', email: 'ivo@mail.com', password: '1Uio!#689' })
         .expect('Content-Type', /application\/json/)
         .expect('Authorization', /Bearer [A-Za-z0-9.-]+/)
         .expect(201);
@@ -32,7 +36,7 @@ describe('User routes', () => {
     test('it should not allow to register with incorrect email', async () => {
       const response = await request(app)
         .post('/v1/users/register')
-        .send({ username: 'Iva', email: 'iva@mail', password: '12345678' })
+        .send({ username: 'Milko', email: 'milko@mail', password: '1Uio!#689' })
         .expect('Content-Type', /application\/json/)
         .expect(400);
 
@@ -47,8 +51,8 @@ describe('User routes', () => {
         .post('/v1/users/register')
         .send({
           username: 'Ivaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa',
-          email: 'iva@mail',
-          password: '12345678',
+          email: 'iva11@mail',
+          password: '1Uio!#689',
         })
         .expect('Content-Type', /application\/json/)
         .expect(400);
@@ -64,9 +68,9 @@ describe('User routes', () => {
       const response = await request(app)
         .post('/v1/users/register')
         .send({
-          username: 'Iva',
-          email: 'iva@mail.com',
-          password: '12345678',
+          username: 'Ivelina',
+          email: 'ivelina@mail.com',
+          password: '1Uio!#689',
           role: 'admin', // joi will reject any key which is not part of the validation schema
         })
         .expect('Content-Type', /application\/json/)
@@ -77,6 +81,60 @@ describe('User routes', () => {
         error: '"role" is not allowed',
       });
     });
+
+    test('it should not allow register with simple password', async () => {
+      const response = await request(app)
+        .post('/v1/users/register')
+        .send({
+          username: 'Milena',
+          email: 'milena@mail.com',
+          password: '123456789',
+        })
+        .expect('Content-Type', /application\/json/)
+        .expect(400);
+
+      expect(response.body).toMatchObject({
+        success: false,
+        error:
+          'Password must contain at least one uppercase, lowercase, number, special char and legnth 8-30',
+      });
+    });
+
+    test('it should not allow register with password not containing special characters', async () => {
+      const response = await request(app)
+        .post('/v1/users/register')
+        .send({
+          username: 'Milena',
+          email: 'milena@mail.com',
+          password: '123UIty78',
+        })
+        .expect('Content-Type', /application\/json/)
+        .expect(400);
+
+      expect(response.body).toMatchObject({
+        success: false,
+        error:
+          'Password must contain at least one uppercase, lowercase, number, special char and legnth 8-30',
+      });
+    });
+
+    test('it should not allow register with too short password', async () => {
+      const response = await request(app)
+        .post('/v1/users/register')
+        .send({
+          username: 'Milena',
+          email: 'milena@mail.com',
+          password: '1Uj$',
+        })
+        .expect('Content-Type', /application\/json/)
+        .expect(400);
+
+      expect(response.body).toMatchObject({
+        success: false,
+        error:
+          'Password must contain at least one uppercase, lowercase, number, special char and legnth 8-30',
+      });
+    });
   });
 
   describe('Login user controller', () => {
@@ -84,7 +142,7 @@ describe('User routes', () => {
       const response = await request(app)
         .post('/v1/users/login')
         // we will have this user from the register tests
-        .send({ email: 'ivo@mail.com', password: '12345678' })
+        .send({ email: 'pepi@mail.com', password: '1Uio!#689' })
         .expect('Content-Type', /application\/json/)
         .expect('Authorization', /Bearer [A-Za-z0-9.-]+/)
         .expect(200);
@@ -93,21 +151,21 @@ describe('User routes', () => {
       expect(response.body).toHaveProperty('token');
       expect(response.body).toHaveProperty('user');
       expect(response.body).not.toHaveProperty('email');
-      expect(response.body).toHaveProperty('user.username', 'Ivo');
+      expect(response.body).toHaveProperty('user.username', 'Pepi');
       expect(response.body).not.toHaveProperty('user.password');
     });
 
     test('it should send cors headers', async () => {
       await request(app)
         .post('/v1/users/login')
-        .send({ email: 'ivo@mail.com', password: '12345678' })
+        .send({ email: 'pepi@mail.com', password: '1Uio!#689' })
         .expect('access-control-allow-origin', '*');
     });
 
     test('it should not allow to login with invalid email', async () => {
       const response = await request(app)
         .post('/v1/users/login')
-        .send({ email: 'iva21@mail', password: '12345678' })
+        .send({ email: 'pepi@mail', password: '1Uio!#689' })
         .expect('Content-Type', /application\/json/)
         .expect(400);
 
@@ -120,7 +178,7 @@ describe('User routes', () => {
     test('it should not allow to login with not exisiting email', async () => {
       const response = await request(app)
         .post('/v1/users/login')
-        .send({ email: 'iva21@mail.com', password: '12345678' })
+        .send({ email: 'pepi223@mail.com', password: '1Uio!#689' })
         .expect(401);
 
       expect(response.body).toMatchObject({
@@ -135,7 +193,7 @@ describe('User routes', () => {
     beforeAll(async () => {
       userResponse = await request(app)
         .post('/v1/users/login')
-        .send({ email: 'ivo@mail.com', password: '12345678' });
+        .send({ email: 'pepi@mail.com', password: '1Uio!#689' });
     });
 
     test('it should logout an user successfully', async () => {
@@ -167,7 +225,7 @@ describe('User routes', () => {
     beforeAll(async () => {
       userResponse = await request(app)
         .post('/v1/users/login')
-        .send({ email: 'ivo@mail.com', password: '12345678' });
+        .send({ email: 'pepi@mail.com', password: '1Uio!#689' });
     });
 
     test('it should get the current user based on the authorization header', async () => {
@@ -182,7 +240,7 @@ describe('User routes', () => {
         'user._id',
         userResponse.body.user._id
       );
-      expect(response.body).toHaveProperty('user.username', 'Ivo');
+      expect(response.body).toHaveProperty('user.username', 'Pepi');
       expect(response.body).toHaveProperty('user.role', 'user');
     });
 
@@ -245,16 +303,18 @@ describe('User routes', () => {
   describe('Update password controller', () => {
     let userResponse;
     beforeAll(async () => {
-      userResponse = await request(app)
-        .post('/v1/users/register')
-        .send({ username: 'Ema', email: 'ema@mail.com', password: '12345678' });
+      userResponse = await request(app).post('/v1/users/register').send({
+        username: 'Tatqna',
+        email: 'tatqna@mail.com',
+        password: '1Uty!#689',
+      });
     });
 
     test('it should return success for correct request', async () => {
       const response = await request(app)
         .put('/v1/users/update-password')
         .set('Authorization', userResponse.headers.authorization)
-        .send({ oldPassword: '12345678', newPassword: '123456789' })
+        .send({ oldPassword: '1Uty!#689', newPassword: '2Uio!#589' })
         .expect('Content-Type', /application\/json/)
         .expect(200);
 
@@ -265,7 +325,7 @@ describe('User routes', () => {
       const response = await request(app)
         .put('/v1/users/update-password')
         .set('Authorization', userResponse.headers.authorization)
-        .send({ oldPassword: 'test1234', newPassword: '123456789' })
+        .send({ oldPassword: 'test1234', newPassword: '3Uip!#589' })
         .expect('Content-Type', /application\/json/)
         .expect(401);
 
@@ -277,7 +337,7 @@ describe('User routes', () => {
       const response = await request(app)
         .put('/v1/users/update-password')
         .set('Authorization', userResponse.headers.authorization)
-        .send({ newPassword: '123456789' })
+        .send({ newPassword: '1Cip!#589' })
         .expect('Content-Type', /application\/json/)
         .expect(400);
 
@@ -291,7 +351,7 @@ describe('User routes', () => {
     test('it should return error if authentication header is not provided', async () => {
       const response = await request(app)
         .put('/v1/users/update-password')
-        .send({ oldPassword: '123456789', newPassword: '1234567890' })
+        .send({ oldPassword: '1Uty!#689', newPassword: '1Eio!#689' })
         .expect('Content-Type', /application\/json/)
         .expect(401);
 

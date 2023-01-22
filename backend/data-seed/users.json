@@ -30,8 +30,8 @@
   },
   {
     "_id": "63ac935cf2bb507ce39da8a2",
-    "username": "Pepi",
-    "email": "pepi@mail.com",
+    "username": "Jeni",
+    "email": "jeni@mail.com",
     "password": "12345678",
     "address": "Sofia, blvd Sofia 129"
   },
@@ -48,5 +48,19 @@
     "email": "eva@mail.com",
     "password": "12345678",
     "address": "Sofia, Some cool str. 23"
+  },
+  {
+    "_id": "63cd0626c4b3aeaf0ac560b4",
+    "username": "Pepi",
+    "email": "pepi@mail.com",
+    "password": "1Uio!#689",
+    "address": "Sofia, blvd Mall 123"
+  },
+  {
+    "_id": "63cd07939f2a0f56206c55b3",
+    "username": "Elena",
+    "email": "elena@mail.com",
+    "password": "1Cio!$589",
+    "address": "Sofia, blvd Mall 124"
   }
 ]
