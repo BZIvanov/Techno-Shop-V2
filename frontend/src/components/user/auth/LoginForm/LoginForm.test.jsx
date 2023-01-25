@@ -66,6 +66,7 @@ describe('LoginForm component', () => {
       });
       await userEvent.click(dialogCancelButton);
 
+      // await after the click above, because the UI will not instantly update
       await waitFor(() => {
         const forgotPasswordDialogTitle = screen.queryByRole('heading', {
           name: 'Forgot Password',

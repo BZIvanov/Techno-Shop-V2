@@ -29,7 +29,7 @@ describe('PasswordTextFieldAdapter component', () => {
       const passwordField = screen.getByLabelText(/password/i);
       await userEvent.type(passwordField, '12345');
 
-      expect(passwordField.value).toBe('12345');
+      expect(passwordField).toHaveValue('12345');
     });
   });
 
@@ -44,7 +44,7 @@ describe('PasswordTextFieldAdapter component', () => {
 
       const passwordField = screen.getByLabelText(/password/i);
       await userEvent.type(passwordField, '12345');
-      expect(passwordField.value).toBe('12345');
+      expect(passwordField).toHaveValue('12345');
       expect(passwordField).toHaveAttribute('type', 'password');
 
       const passwordTextHiddenIcon = screen.getByTestId('VisibilityOffIcon');
