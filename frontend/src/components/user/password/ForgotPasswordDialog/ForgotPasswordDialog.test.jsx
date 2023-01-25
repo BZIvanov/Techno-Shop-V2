@@ -47,6 +47,7 @@ describe('ForgotPasswordDialog component', () => {
     });
 
     test('should call close modal function if cancel is clicked', async () => {
+      // jest.fn is a mock function which keeps track of how many time it was called and with what arguments
       const handleShowForgotModal = jest.fn();
 
       render(
@@ -60,6 +61,7 @@ describe('ForgotPasswordDialog component', () => {
       await userEvent.click(cancelButton);
 
       expect(handleShowForgotModal).toHaveBeenCalledTimes(1);
+      expect(handleShowForgotModal).toHaveBeenCalledWith(false);
     });
   });
 

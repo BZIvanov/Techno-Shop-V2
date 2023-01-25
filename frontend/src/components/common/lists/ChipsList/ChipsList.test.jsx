@@ -45,8 +45,8 @@ describe('ChipsList component', () => {
     render(
       <ChipsList title='My chips' parameter='category' chipsList={chipsList} />
     );
-    const chipsCount = screen.getAllByRole('button');
-    expect(chipsCount.length).toBe(3);
+    const chips = screen.getAllByRole('button');
+    expect(chips).toHaveLength(3);
   });
 
   test('clickin the chip should redirect the user to the respective page', async () => {
