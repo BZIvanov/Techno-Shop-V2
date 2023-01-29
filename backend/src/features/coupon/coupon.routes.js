@@ -14,16 +14,14 @@ const { createCouponValidationSchema } = require('./coupon.validationSchema');
 
 const router = express.Router();
 
+// the below 2 middlewares will apply to all coupon routes
+router.use(authenticate, authorize(admin));
+
 router
   .route('/')
-  .get(authenticate, authorize(admin), getCoupons)
-  .post(
-    validateRequestBody(createCouponValidationSchema),
-    authenticate,
-    authorize(admin),
-    createCoupon
-  );
+  .get(getCoupons)
+  .post(validateRequestBody(createCouponValidationSchema), createCoupon);
 
-router.route('/:couponId').delete(authenticate, authorize(admin), deleteCoupon);
+router.route('/:couponId').delete(deleteCoupon);
 
 module.exports = router;
