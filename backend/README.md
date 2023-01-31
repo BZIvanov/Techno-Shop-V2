@@ -23,10 +23,6 @@ Prerequisites:
 
 The test command in package.json file are valid for setting environment variable for Windows.
 
-#### Jest configs
-
-The `-o` option for the test-watch script in package.json will allow interactive mode, where for example you can specify running only one test file at a time.
-
 ## Seeding test data
 
 Run `npm run seed-data` in the root folder (package.json) to seed dummy data. Note that the seeding data is also used in the tests.
