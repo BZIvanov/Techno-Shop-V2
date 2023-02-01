@@ -17,6 +17,6 @@ router.use('/products', productRoutes);
 router.use('/images', imageRoutes);
 router.use('/coupons', couponRoutes);
 router.use('/orders', orderRoutes);
-router.use('/wishlist', wishlistRoutes);
+router.use('/wishlists', wishlistRoutes);
 
 module.exports = router;
