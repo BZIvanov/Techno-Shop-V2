@@ -1,0 +1,14 @@
+[
+  {
+    "_id": "63dab1f372ea2415c76ac4cc",
+    "orderedBy": "6171c360168d11250b4e15d9",
+    "deliveryAddress": "My cool street 23.",
+    "products": [
+      {
+        "count": 1,
+        "product": "61b2eb398026fa02fca82721"
+      }
+    ],
+    "totalAmount": 39.99
+  }
+]
