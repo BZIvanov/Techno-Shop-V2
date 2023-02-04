@@ -19,6 +19,51 @@ describe('Category routes', () => {
     await mongoDbDisconnect();
   });
 
+  describe('Get categories controller', () => {
+    test('it should get categories successfully', async () => {
+      const response = await request(app)
+        .get('/v1/categories')
+        .expect('Content-Type', /application\/json/)
+        .expect(200);
+
+      expect(response.body).toHaveProperty('success', true);
+      expect(response.body).toHaveProperty('categories');
+      expect(response.body.categories[0]).toHaveProperty('_id');
+      expect(response.body.categories[0]).toHaveProperty('createdAt');
+      expect(response.body.categories[0]).toHaveProperty('updatedAt');
+      expect(response.body.categories[0]).toHaveProperty('name');
+      expect(response.body.categories[0]).toHaveProperty('slug');
+    });
+
+    test('with helmet, it should not send x-powered-by header, which is usually applied by express', async () => {
+      const response = await request(app)
+        .get('/v1/categories')
+        .expect('Content-Type', /application\/json/)
+        .expect(200);
+      console.log(response.headers);
+      expect(response.headers).not.toHaveProperty('x-powered-by');
+    });
+
+    test('with helmet, it should send content-security-policy header', async () => {
+      const response = await request(app)
+        .get('/v1/categories')
+        .expect('Content-Type', /application\/json/)
+        .expect(200);
+
+      expect(response.headers).toHaveProperty('content-security-policy');
+    });
+
+    test('with helmet, it should send strict-transport-security header', async () => {
+      const response = await request(app)
+        .get('/v1/categories')
+        .expect('Content-Type', /application\/json/)
+        .expect(200);
+
+      console.log(response.headers);
+      expect(response.headers).toHaveProperty('strict-transport-security');
+    });
+  });
+
   describe('Create category controller', () => {
     test('it should create a category successfully', async () => {
       const response = await request(app)
@@ -71,23 +116,6 @@ describe('Category routes', () => {
         'error',
         '"name" length must be less than or equal to 32 characters long'
       );
-    });
-  });
-
-  describe('Get categories controller', () => {
-    test('it should get categories successfully', async () => {
-      const response = await request(app)
-        .get('/v1/categories')
-        .expect('Content-Type', /application\/json/)
-        .expect(200);
-
-      expect(response.body).toHaveProperty('success', true);
-      expect(response.body).toHaveProperty('categories');
-      expect(response.body.categories[0]).toHaveProperty('_id');
-      expect(response.body.categories[0]).toHaveProperty('createdAt');
-      expect(response.body.categories[0]).toHaveProperty('updatedAt');
-      expect(response.body.categories[0]).toHaveProperty('name');
-      expect(response.body.categories[0]).toHaveProperty('slug');
     });
   });
 
