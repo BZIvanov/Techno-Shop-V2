@@ -8,6 +8,7 @@ const globalError = require('../middlewares/global-error');
 
 const app = express();
 
+// helmet should be on top of middlewares chain, because we want it to be applied for all our routes
 app.use(helmet());
 app.use(cors());
 app.use(express.json({ limit: '5mb' }));
